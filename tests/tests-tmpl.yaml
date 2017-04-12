@@ -1,0 +1,26 @@
+  - feature:
+      subject:
+      tests:
+        errors:
+          - error: &
+              name:
+              desc:
+        reports:
+          balance:
+            - test: *
+          balance-group:
+            - test: *
+          registry:
+            - test: *
+          identity:
+            - test: *
+        operations:
+          - test: &
+              name:
+              descriptions:
+                - desc:
+              references:
+                - ref: bal
+                - ref: balgrp
+                - ref: reg
+                - ref: id

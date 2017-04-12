@@ -1,0 +1,36 @@
+Tackler has been originally written by Jani Averbach 
+from scratch.
+
+Following projects have provided valuable contributions, 
+feedback, inspiration and ideas for this project.
+
+Thank you for your help!
+
+Components (used with Tackler):
+
+ * link:http://www.antlr.org/[ANTLR (ANother Tool for Language Recognition)]
+ * link:http://typelevel.org/cats/[Cats]
+ * link:https://logback.qos.ch/[Logback Project]
+ * link:https://github.com/jsuereth/scala-arm[Scala-ARM (automatic resource mgmt)]
+ * link:https://github.com/scallop/scallop[Scallop]
+ * link:https://github.com/typesafehub/config[Typesafe Config]
+
+
+Build-tools (used to build Tackler):
+
+ * link:http://www.scala-sbt.org/[SBT]
+ * link:https://github.com/ihji/sbt-antlr4[sbt-antlr4]
+ * link:https://github.com/sbt/sbt-assembly[sbt-assembly]
+ * link:https://github.com/sbt/sbt-buildinfo[sbt-buildinfo]
+ * link:https://github.com/scoverage/sbt-scoverage[sbt-scoverage]
+ * link:https://github.com/wartremover/wartremover[WartRemover]
+
+
+Ideas and inspiration:
+
+ * link:http://ledger-cli.org/[Ledger]
+ * link:https://github.com/hrj/abandon[Abandon]
+ * link:http://furius.ca/beancount/[Beancount]
+ * link:http://hledger.org/[hledger]
+
+

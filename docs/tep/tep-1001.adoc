@@ -1,0 +1,27 @@
+= Commoditieds and Units
+
+
+ 
+....
+diff --git a/core/src/main/antlr4/TxnParser.g4 b/core/src/main/antlr4/TxnParser.g4
+index 896e519..b9b3f23 100644
+--- a/core/src/main/antlr4/TxnParser.g4
++++ b/core/src/main/antlr4/TxnParser.g4
+@@ -36,7 +36,7 @@ comment: ';' ' ' text;
+ 
+ postings: posting+ (posting|last_posting);
+ 
+-posting:  indent account (' '|'\t')+ amount (' '|'\t')* comment? NL;
++posting:  indent account (' '|'\t')+ amount ((' '|'\t')+ unit)? (' '|'\t')* comment? NL;
+ 
+ last_posting: indent account (' '|'\t')* comment? NL;
+ 
+@@ -44,4 +44,6 @@ account: ID (':' ID)*;
+ 
+ amount: NUMBER;
+ 
++unit: ID;
++
+ blankline: (' '|'\t')* NL;
+....
+

@@ -1,0 +1,17 @@
+# format: exec
+# test:uuid: f2284891-82da-4efd-a705-9e8f612c88af
+#
+# CLI args Errors (wrong combinations)
+#
+# Missing input or dir
+# => this is allowed with default config system
+# input and dir
+exec:--basedir;/tmp;--input.file;f.txn;--input.txn.dir;/tmp/txn;
+# input and glob
+exec:--basedir;/tmp;--input.file;f.txn;--input.txn.glob;**.txn;
+# input, dir and glob glob
+exec:--basedir;/tmp;--input.file;f.txn;--input.txn.dir;/tmp/txn;--input.txn.glob;**.txn;
+# dir, missing glob
+exec:--basedir;/tmp;--input.txn.dir;/tmp/txn;
+# glob, missing dir
+# => this is allowed with default config system

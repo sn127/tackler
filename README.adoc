@@ -1,0 +1,150 @@
+= Tackler
+
+Tackler Ain't Calculator and Kernel for link:http://ledger-cli.org/[Ledger] Equivalent Records
+
+Why not?  - Because it uses simplified Ledger syntax!
+
+So in other words, Tackler is accounting engine and reporting tool for link:http://plaintextaccounting.org/[text
+based double-entry accounting].
+
+
+== Features
+
+* ISO 8601 timestamps with timezones and nanosecond resolution
+* Supports international characters in transaction data (descriptions, comments, account names)
+* Strict account name validation with `Chart of Accounts`
+* Reports (`Balance`, `Balance Groups`, `Register`)
+* Exports (`Equity`, `Identity`)
+* Can handle large set of transactions
+** Tackler is faster than link:docs/perf-others.adoc[Ledger], and it has similar memory foot print!
+** Tackler is tested up to link:./perf[one million txns], with processing time link:docs/performance.adoc[about 30sec]
+* Near 100% test coverage, link:tests/tests.yaml[all features are extensively tested]
+* Good documentation (link:./docs/index.adoc[Index of Docs])
+
+
+== Why Tackler?
+
+Tackler's idea is provide *concise*, *minimal* and *reliable*
+engine to process text-based human readable accounting records.
+
+_Concise_ means that Tackler's journal format is semantically concise
+and easy for humans to *reason about*.
+
+_Minimal_ means that Tackler provides *minimum* set of features which are
+needed for its operation.
+
+_Reliable_ means that Tackler's behaviour is well known, tested
+and it is *documented*.
+
+All that said, Tackler can be used easily from command line
+with normal personal accounting data sets.
+
+
+=== Tackler Goals
+
+* Minimal feature set, very simple and well defined input format
+** *Tackler input journal is supposed to be produced by software and to be audited by human.*
+    However, it must be possible to edit the journal by hand.
+
+* Well known and defined behaviour
+
+* Extensive user and developer documentation
+
+* Error free, reliable and resilient
+** Near perfect code and permutation test coverage
+
+* Good performance
+** Must be able to process hundreds of thousands of records with reasonable processing time and memory footprint
+** Must have linear processing time characteristics
+** Assumption: All transactions can be held in memory
+
+* Provides backend and core components for text based accounting processing
+
+* JVM and Multi platform support: Linux and Arm-Linux, it should be possible to run it on Windows
+
+* GIT will be used for data distribution and storage (not yet implemented)
+
+Implementation language of Tackler is link:http://scala-lang.org/[Scala] 
+and journal parsing is done with link:http://www.antlr.org/[ANTLR4].
+
+
+== Documentation
+
+User documentation is located under docs:
+
+* link:./docs/index.adoc[Index of all documentation]
+* link:./docs/usage.doc[Usage of Tackler]
+* link:./docs/configuration.adoc[Overview of Tackler Configuration]
+* link:./docs/tackler.conf[Example of Tackler configuration]
+* link:./docs/accounts.conf[Example of Tackler Chart of Accounts]
+
+Documentation for developers is located under docs/devel:
+
+* link:./docs/devel[]
+
+
+== Todo
+
+At the moment, current set of todo items is kept under link:./todo[todo]
+
+
+== Releases
+
+For release information and version history details,
+see link:./CHANGELOG.adoc[CHANGELOG].
+
+Tackler is under development, so if you enjoy calm seas
+then it might be better to look link:./docs/other.adoc[something  else].
+
+However, complex backward non-compatible changes to Txns file format
+should be rare. At the moment Tackler is used in production for
+operational data set.
+
+Configuration files and command line interface are more likely
+to subjects of change.
+
+
+== Contributing to Tackler
+
+Contributions to the project are most welcome. Please see 
+link:./CONTRIBUTING.adoc[CONTRIBUTING] how you could help.
+
+Your pull requests can be merged only if you can certify 
+the link:./DCO[Developer Certificate of Origin (DCO), Version 1.1].
+To certify DCO (e.g. sign-off your commit), you must add 
+a `Signed-off-by` line to **every**  git commit message 
+(e.g. by using `git commit -s`):
+
+    Signed-off-by: github-account <your.real@email.address>
+
+If you set your `user.name` and `user.email` in git config,
+then git will include that line for you with `git commit -s`. 
+These settings can be done per repository basis, 
+so they don't have be global settings in your system. 
+ 
+Please make sure that you sign-off all your PR's commits. 
+
+
+== Credits
+
+Please see link:./THANKS.md[THANKS] for full list of credits.
+
+
+== License
+
+....
+Copyright 2016-2017 SN127.fi Contributors
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+....
+

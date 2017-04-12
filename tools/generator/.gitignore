@@ -1,8 +1,7 @@
 /**/target/
-/bin/
-/tools/bin/
 /tests/**/out.*
 /tmp/
+/.idea/
 /**/*.sc
 *.swp
-
+/data/

@@ -1,0 +1,106 @@
+= Performance tests
+
+Tackler's performance is tested with artificial txn data
+which mimic as well as possible real transcational data.
+
+
+Tests are done with balance report and with setting `accounts.strict=true` 
+(e.g. for each transaction all accounts are checked that they are listed on Chart of Accounts).
+
+Each transaction is located on own file, and files are shard based on dates
+(e.g. `perf-1E6/YYYY/MM/DD/YYYYMMDDTHHMMSS-idx.txn`) where idx is index of txn.
+
+Typical test sets (small and big) are:
+
+ * 1E3 (1000) transactions
+ * 1E6 (1 000 000) transactions
+
+With other programs smaller sets are also used, if they could not handle 1E6 set.
+
+
+== Chart of Accounts for perf tests
+
+Chart of accounts is 380 entries with following structure,
+which is based on txn's dates:
+
+For "assets" (`a:ay<year>:am<month>`):
+
+ ...
+ "a:ay2016:am10",
+ "a:ay2016:am11",
+ "a:ay2016:am12",
+ ...
+
+
+For "expenses" (`e:ey<year>:em<month>:ed<day>`):
+
+ ...
+ "e:ey2016:em01:ed01",
+ "e:ey2016:em01:ed02",
+ "e:ey2016:em01:ed03",
+ ...
+
+
+== Performance test hardware
+
+Perf tests are done with normal laptop:
+ 
+ * cpu: Intel(R) Core(TM) i5-2540M CPU @ 2.60GHz
+ * hd: Intel(R) SSD 535
+ * mem: 16GB
+
+Especially no note: there are two cores and four threads on CPU, 
+and all txns data (disk cache) and program data can be be held 
+and cached in memory with this test setup.
+
+
+== Performance
+
+Tackler has good performance, and it is actually faster than native app 
+ledger-cli with similar memory footprint.
+
+Tackler will utilize all available cores and threads on machine it runs.
+
+
+== With sharded data
+
+Tacklers processing time with shard-data is following:
+
+ * 1E3: 3.1 sec
+ * 1E6: 31 sec
+
+With 1E6 data set used memory peaks around 2.2GB.
+
+Full results are located under link:../perf/results[perf results].
+
+
+=== Single file / single input String
+
+With single file Tackler has basically same processing time performance than with
+sharded data.
+
+
+However, with 1E6 txns in single input file or in one single string (about 73MB),
+Tackler has non-optimal memory usage behaviour.  With that single-file input, 
+it's memory usage peaks around 6-7GB. 
+
+To work around this, do not put one million (1E6) transactions in single file or input string. 
+For example, shard this dataset to ten 1E5-txns files. 
+
+Even sharding every single txn to its own file (as tested with basic shard performance test), 
+has same processing time than putting them in one big file (this is with fast SSD and good disk cache).
+
+
+Single file performance:
+
+....
+time java -Xms8192M -jar tackler-cli-0.4.0.jar --cfg perf.conf --input.file single/perf-1E6.txn --output out/foo
+Txns size: 1000000
+
+Total processing time: 28351, input: 1, parse: 24766, reporting: 1308
+
+real	0m28.962s
+user	0m49.389s
+sys	0m2.644s
+.....
+

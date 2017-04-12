@@ -1,0 +1,50 @@
+= Main TODO
+
+
+== Machinery
+
+ * [ ] The big question about time with output
+ ** [ ] Time-resolution
+ *** [ ] conf: txn.mandatory-time = true | false
+ 
+=== Settings
+
+ * [ ] verify conf-file, e.g. no typos (which will be silently backed-up by default config)
+
+
+=== ANTLR / parser
+ 
+ * [ ] Refactor meta:key (uuid) handling
+ ** [ ] Parse/validate form of UUID on ANTLR level
+
+
+== Storage
+
+=== GIT
+
+ * [ ] bare repo as backend
+ ** [ ] HEAD
+ ** [ ] refId
+ ** [ ] tag
+ ** [ ] branches
+ * Far-Far-Away
+ ** [ ] Ketch
+
+
+== Reporting
+
+ * [ ] different formats
+ ** [ ] json
+
+=== Equity report
+
+ * [x] basic equity report 
+ ** [ ] check link:../docs/tep-1000.adoc
+ ** [ ] special input handling for equity (input-path by conf)
+
+=== Reporting API
+
+ * [ ] server interface
+ * [ ] Far-Far-Away
+ ** [ ] Reporting shell a'la jline?
+

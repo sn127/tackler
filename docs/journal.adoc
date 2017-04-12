@@ -1,0 +1,166 @@
+= Journal format
+
+[cols="1,5a,3a", options="header"]
+|===
+|
+| Journal entry
+| Comments
+
+| Basic example
+|
+----
+2017-01-01 opening balance
+ assets:checking      500.00
+ equity:opening_balances
+
+2017-01-05  farmer's market
+    expenses:groceries       50.00
+    assets:checking
+
+----
+| This is sequence of Transactions (Txns). There could one
+or many Txn per input file.
+
+
+| Basic transaction
+|
+----
+DATE [(code)] [DESCRIPTION]
+  ACCOUNT  AMOUNT
+  ACCOUNT  [AMOUNT]
+----
+| There must be two or more accounts (postings) which
+must have zero sum if all accounts have amount.
+
+Amount of *last* account could be omitted, in that case it will be 
+calculated automatically.
+
+Account's amount can not be zero.
+
+There has to be at least one space between account and amount.
+If compatibility with other systems is needed, then two spaces should be used.
+
+
+| Dates and Timestamps (`ISO-8601`)
+|
+----
+YYYY-MM-DD
+YYYY-MM-DDTHH:MM:SS[.SSS]
+YYYY-MM-DDTHH:MM:SS[.SSS]Z
+YYYY-MM-DDTHH:MM:SS[.SSS]±hh:mm
+
+2016-12-31
+2016-12-31T13:01:01
+2016-12-31T13:01:01.123
+2016-12-31T13:01:01Z
+2016-12-31T13:01:01+02:00
+2016-12-31T13:01:01.123456789+02:00
+----
+| These are ISO-8601 dates and times with nanosecond resolution.
+
+* If time part is missing then `00:00:00` is used.
+* If ZoneId is missing then configured default ZoneId is used.
+
+| Transaction code
+|
+----
+DATE '(' code ')' [description]
+ ...
+----
+----
+2017-01-01 (#123) Ice cream!
+ Expences:Jäätelö
+ Assets:Bank:Checking
+----
+| Transaction code, which is terminated by`)` character.
+
+For example this could be check number or wire transfer id.
+
+
+| Account names
+|
+----
+TOPACCT[:SUBACCT[:...]]
+----
+
+e.g.
+
+----
+Expenses:Jäätelö
+----
+| Account names begin with a letter (`UTF-8`),
+Letters, digits, hyphen and underscore are allowed (no spaces).
+Sub-accounts are separated by `:`
+
+All accounts must be declared in Chart of Accounts, if not, `accounts.strict=false` could be used.
+
+
+| Amounts
+|
+----
+1234567.1234
+
+1.12345678 is printed as 1.1234568
+----
+| *Output* precision is between 2..7 decimal points.
+
+Internally these are Scala's BigDecimals, and the precision
+approximately matches that of IEEE 128-bit floating point numbers
+(34 decimal digits, HALF_EVEN rounding mode).
+
+
+| Comments
+|
+----
+2017-01-01 description
+ ; txn level comment
+ Expenses:groceries 12.00 ; posting comment
+ assets:checking
+----
+| There must be space after `;` character
+
+
+| Transaction comments
+|
+----
+2017-01-01 description
+ ; it was hot
+ ; and sunny day
+ Expenses:Jäätelö 2.12
+ Assets:Cash
+----
+| Could have multiple comments, there has to be space after `;` char.
+
+
+| Posting comments
+|
+----
+2017-01-01 description
+ Expenses:Jäätelö 2.12 ; Strawberry ice cream!
+ Assets:Cash
+----
+|
+
+
+| Transaction metadata
+|
+----
+2017-01-01 description
+ ;:uuid: 83976d4b-8ea8-4cec-804f-931e4f171c3b
+ Expenses:Ice_cream 2.12
+ Assets:Cash
+----
+|
+
+
+| Posting metadata
+|
+----
+2017-01-01 description
+ Expenses:Ice_cream 2.12 ;:date:2017-01-03
+ Assets:Cash
+----
+| *WAPORWARE*
+
+
+|===

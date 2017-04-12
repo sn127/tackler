@@ -1,0 +1,64 @@
+commit 7a3d8df7e88c871416633970009154ab1d6d341b
+[info] Statement coverage.: 94.76%
+[info] Branch coverage....: 93.94%
+[info] Coverage reports completed
+[info] Aggregation complete. Coverage was [94.76]
+
+
+commit 5ef243236b6406b4fee0b11be0ae08460467b963
+[info] Statement coverage.: 99.36%
+[info] Branch coverage....: 100.00%
+[info] Coverage reports completed
+[info] Aggregation complete. Coverage was [99.36]
+
+
+commit e18b12294f20c5d89827bf749c836945fbaaf380
+[info] Statement coverage.: 99.37%
+[info] Branch coverage....: 100.00%
+[info] Coverage reports completed
+[info] Aggregation complete. Coverage was [99.37]
+
+
+commit 60a533a44859a7f738b5cfc14b5e690ef27c67f4
+[info] Statement coverage.: 94.26%
+[info] Branch coverage....: 83.33%
+[info] Coverage reports completed
+[info] Aggregation complete. Coverage was [94.26]
+
+
+commit 21bed83c04e33fb6a6a7112cf09cfc490adad327
+[info] Statement coverage.: 99.53%
+[info] Branch coverage....: 100.00%
+[info] Coverage reports completed
+[info] Aggregation complete. Coverage was [99.53]
+
+
+commit 2bbc88de3fec3b1a7cd5beee5863814e17c3f7d7
+[info] Statement coverage.: 99.54%
+[info] Branch coverage....: 100.00%
+[info] Coverage reports completed
+[info] Aggregation complete. Coverage was [99.54]
+
+
+commit 1c752af60bc938677b476f8d700008c26ecb6dd5
+[info] Statement coverage.: 99.68%
+[info] Branch coverage....: 100.00%
+[info] Coverage reports completed
+[info] Aggregation complete. Coverage was [99.68]
+[info] All done. Coverage was [99.68%]
+
+
+commit a8ae71b56f5362aa28fac98826c23d538528b9ee
+[info] Statement coverage.: 99.21%
+[info] Branch coverage....: 100.00%
+[info] Coverage reports completed
+[info] Aggregation complete. Coverage was [99.21]
+[info] All done. Coverage was [99.21%]
+
+
+commit bae603d6288b4c3acfaaad3d39884422c4e8b93c
+[info] Statement coverage.: 99.70%
+[info] Branch coverage....: 100.00%
+[info] Coverage reports completed
+[info] Aggregation complete. Coverage was [99.70]
+[info] All done. Coverage was [99.70%]

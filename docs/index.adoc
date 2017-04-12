@@ -1,0 +1,27 @@
+= Index of documentation
+
+=== User documentation
+
+* link:./installation.adoc[Installation]
+* link:./configuration.adoc[Configuration]
+* link:./usage.adoc[Usage]
+* link:./journal.adoc[Journal format]
+* link:./performance.adoc[Performance]
+
+=== Internal documentation
+
+* link:./devel/build.adoc[How to build]
+* link:./devel/design.adoc[General Design]
+
+=== Tackler enhancement proposals
+
+* link:./tep[]
+
+=== Licenses of other components
+
+* link:./licenses/ANTLR4-LICENSE.txt[]
+* link:./licenses/CATS-LICENSE.txt[]
+* link:./licenses/CONFIG-LICENSE.txt[]
+* link:./licenses/LOGBACK-LICENSE.txt[]
+* link:./licenses/SLF4J-LICENSE.txt[]
+

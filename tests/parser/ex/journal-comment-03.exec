@@ -1,0 +1,3 @@
+# format: exec
+# test:uuid: 132f11c4-facd-4fbc-9550-eafd751a2cd8
+exec:--cfg;tests/parser/ex.conf;--input.file;journal-comment-03.txns;

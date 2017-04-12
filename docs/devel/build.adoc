@@ -1,0 +1,36 @@
+= Building Tackler
+
+Tackler build is done by link:http://www.scala-sbt.org/[SBT].
+
+
+== Building and testing
+
+ sbt clean test
+
+
+== Generating binaries
+
+ sbt cli/assembly
+
+
+== Code coverage
+
+ sbt clean coveraOn test coverateReport
+ sbt coverageAggregate
+
+
+== IntelliJ
+
+If IntelliJ can not compile e.g. unit tests, make sure that under settings 
+for all subprojects (`tackler`, `cli`, `core`) compile order is `java then scala`.
+
+Easiest way to generate parser definition is run `sbt compile`.
+You can also install ANTLR plugin, but it must be configured correctly for package-names
+and output paths.
+
+
+== ANTLR
+
+IntelliJ ANTLR plugin has really nice graphical tree display to visualize and test parser rules.
+
+

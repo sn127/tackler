@@ -1,0 +1,78 @@
+= Contributor's Guide
+
+Contributions to the project are most welcome!
+
+
+== Open and planned tasks
+
+At the moment project todo items are maintained in link:./docs/todo/[todo files].
+Before starting working on something, please first check via gitter or by issue if your plan is feasible and viable
+from project's perspective.
+
+
+== How to build and test
+
+. You do have sbt, don't you? If not, get it from here: http://www.scala-sbt.org/[http://www.scala-sbt.org/]
++
+. Get source code
++
+    git clone https://github.com/sn127/tackler.git
+    cd tackler
++
+. Build and test
+.. Build and run tests
++
+    sbt clean test
++
+.. Generate test coverage reports
++
+    sbt clean coverageOn test coverageReport
+    sbt coverageAggregate
++
+. Explore code
++
+Directory structure follows Maven's layout and code has been divided to sub-projects
++
+link:./core[core]::
+Tackler Core
++
+** link:./core/src/main/*antlr4*/[] ANTLR4 Grammar definition for Tackler input
+** link:./core/src/main/*java*/fi/sn127/tackler/parser/[] Java helpers for parser
+** link:./core/src/main/*scala*/fi/sn127/tackler/parser/[] Scala interface for Parser
+** link:./core/src/main/*scala*/fi/sn127/tackler/model/[]  Model object (Txn, Posting, etc)
+** link:./core/src/main/*scala*/fi/sn127/tackler/core/[] Core modules
+** link:./core/src/main/*scala*/fi/sn127/tackler/report/[] Reporting code
++
+link:./cli[cli]::
+Command Line Interface code
+** link:./cli/src/main/scala/fi/sn127/tackler/cli/[]
++
+link:./tests[tests]::
+link:https://github.com/sn127/utils[DirSuite] based integration tests for Tackler.
++
+** link:./tests/tests.yaml[] List of all tests and tested features
+** link:./tests/accumulator[] Tests for validating calculator and Accumulator operations
+** link:./tests/cli[] Tests for Command Line Interface verification
+** link:./tests/parser[] Parser and input recognition tests (valid and non-valid input)
+** link:./tests/core[] Tests for core components and features
+** link:./tests/reporting[] Tests to validate reporting
+** link:./tests/reset-ref.sh[] Tool to reset reference vectors with current output
+
+
+== Developer Certificate of Origin
+
+Your pull requests can be merged only if you can certify 
+the link:../DCO[Developer Certificate of Origin (DCO), Version 1.1].
+To certify DCO (e.g. sign-off your commit), you must add 
+a `Signed-off-by` line to **every**  git commit message 
+(e.g. by using `git commit -s`):
+
+    Signed-off-by: github-account <your.real@email.address>
+
+If you set your `user.name` and `user.email` in git configs,
+then git will include that line for you with `git commit -s`. 
+These settings can be done per repository basis, 
+so they don't have be global settings in your system. 
+ 
+Please make sure that you sign-off all your PR's commits.
+

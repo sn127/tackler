@@ -1,0 +1,3 @@
+# format: exec
+# test:uuid: bc8f6399-fd7a-420a-8deb-9cc0ae97c9f6
+exec:--cfg;tests/parser/id-chars.conf;--input.file;id-chars.txns;--output;out.id-chars-01;

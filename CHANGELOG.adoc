@@ -1,0 +1,106 @@
+= Tackler releases
+
+
+=== 0.4.1
+
+* Documentation updates
+* Internal cleanups
+
+* Perf:
+** Single file 1E3
+** Single file 1E6
+** Generator 0.2.1
+
+
+=== 0.4.0
+
+* Supports single star globs (`*.txn`) for flat directories
+
+* Internal: better-files
+* Internal: logback 1.2.3
+
+
+=== 0.3.2
+
+* Documentation and test updates
+* Equity report
+** own account selection
+
+* Internal clean ups
+
+
+=== 0.3.1
+
+* Change register report output
+
+
+=== 0.3.0
+
+* Txns file changes
+** meta:uuid: feature
+** Account names
+*** hyphen '-'
+*** underscore '_'
+*** wide range of characters (e.g. kanji) in account names
+** Txn comments are printend with identity report
+
+* TS with offset is used for Txn sorting and group-by
+
+* Change automatic scale to (2-7 decimals)
+
+* Do not allow zero postings
+
+* reporting.console = true
+
+* RegisterReport
+** prints meta:uuid:
+** prints txn comments
+** Stream based implementation
+
+* IdentityReport
+** Stream based implementation
+
+* EquityReport
+** printing
+
+* Perf:
+** 1E3: (1000) txns testing
+** 1E6: (1_000_000) txns testing
+** Generator (0.1.4)
+
+
+=== 0.2.1
+
+* Reporting
+** initial support for reports and accounts as cli opt
+** Automatic scale (2-6 decimals)
+** Register report title format
+
+
+=== 0.2.0
+
+* reporting
+** renamed balgrp -> balance-group
+** report names from conf
+** balance-group: group-by from conf
+** balance summary line
+
+
+=== 0.1.90
+
+* Reporting: account definitions
+
+
+=== 0.1.0
+
+* conf-settings
+* Z as UTC marker
+* conf: timezone
+* Chart of Accounts
+* cli+conf: accounts.coa
+* cli+conf: accounts.strict
+
+
+=== 0.0.1
+
+* initial release, hardcoded account filters, no config

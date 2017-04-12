@@ -1,0 +1,98 @@
+= Tackler
+
+Tackler operates on stream of transactions, and over this
+transaction stream (or sub-selection of it)
+Tackler can generate different kind of reports.
+
+Stream is immutable, so it is possible to make multiple reports
+over same data in one go.
+
+Currently all transactions are held in memory. 
+
+For parsing Tackler uses http://www.antlr.org/[ANTLR4].
+
+
+== Consepts and names
+
+Typically singular form of something is one instance, and plural is sequence.
+For example Txn (single Transaction) or Txns (sequence of Transactions).
+
+In case of e.g. tree-structures, child (singular) and childs (plural) is misspelled by purpose.
+
+Tackler data model classes and objects are defined in link:../core/src/main/scala/fi/sn127/tackler/model[core / model] package.
+
+
+===== Date
+
+All dates use subset of link:https://en.wikipedia.org/wiki/ISO_8601[ISO 8601] format.
+
+* ISO date `YYYY-MM-DD`
+* ISO DateTime up to nanosecond resolutioin: `YYYY-MM-DDTHH:MM:SS.SSS`
+* ISO DateTime with timezone offset or ZoneId
+
+Internally all dates and time is handled as datetime with zone. If txn date does not have zone info,
+then configured default zone is used.
+
+If timezone is offset (`+02:00`) then it is *not* adjusted by daylight saving times. Timezone as ZoneId (`Europe/Helsinki`) is adjusted by daylight saving time.
+
+
+===== Transaction (Txn, Txns)
+
+This is one isolated, self-containing accounting activity,
+containing two or more postings which are involved with this activity.
+Txn also holds (meta) information about this accounting action.
+
+Sum of Transaction's postings must be zero.
+
+
+===== Posting (post, posts)
+
+This is activity on one account, and it contains information about
+account name and amount.
+
+If this posting is last listed account on current transaction
+then amount could be left empty.
+
+Posting with zero amount is not allowed.
+
+
+===== Account (acc)
+
+Account is single entry of structural hierarchy of accounts.
+
+ Assets:Bank:Checking
+
+In above `Assets` is root account, `Bank` is child of `Assets` and parent of `Checking`. 
+If there are no other accounts under `Checking` in Chart of Accounts,
+then `Checking` is leaf.
+
+
+===== AccountTreeNode (AccTN, AccTNs)
+
+One entry of Chart of Accounts, e.g. one entry in account tree,
+where all used accounts are listed.
+
+This contains information about tree structure: parent-name, depths,
+own leaf-names, etc.
+
+
+=== Accumulator + Reporting
+
+* AccountTreeNode, node in account tree (Chart of Accounts)
+* BalanceTreeNode, node (row) in balance report, contains it's own balance and balance of childs
+* RegisterPosting, posting which contains running total so far for this account
+
+
+== Parser
+
+For parsing Tackler uses http://www.antlr.org/[ANTLR4].
+
+Parser definition is located 
+
+ * link:../../core/src/main/antlr4/TxnLexer.g4[]
+ * link:../../core/src/main/antlr4/TxnParser.g4[]
+
+Converting from ANTLR Parser Context to the Tackler Model is done
+by link:../core/src/main/scala/fi/sn127/tackler/parser/TacklerTxns.scala[core / parser / TacklerTxns]
+helper class.
+

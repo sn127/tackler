@@ -1,0 +1,3 @@
+# format: exec
+# test:uuid: a52914e4-0887-4255-abea-c0b457802f56
+exec:--cfg;tests/reporting/group-by/month.conf;--output;out.month;

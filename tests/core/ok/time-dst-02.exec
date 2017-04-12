@@ -1,0 +1,4 @@
+# format: exec
+# test:uuid: 23ee5075-ca27-4f08-876e-e29de77cfc59
+# Spring / Autum DST switch
+exec:--cfg;tests/core/zoneid-helsinki.conf;--input.file;time-dst.txns;--output;out.time-dst-02;

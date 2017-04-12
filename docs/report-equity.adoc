@@ -1,0 +1,23 @@
+= equity report
+
+Equity report produces a transaction which records
+current state of accounts.
+
+== Account filtering
+
+Accounts for Equity report can be filtered with global 
+`reporting.accounts` (conf+cli) or report specific `reports.equity.accounts` 
+setting (conf-only).
+
+
+== Metadata
+
+Transaction timestamp is same as timestamp of the last transaction
+which was used to calculate equity.
+
+If the last transaction had an uuid, then it is recorded into equity's description
+field.
+
+....
+2017-01-03T16:00:00.123Z last equity txn:uuid: a92caa4b-7d94-4b29-a418-2715a7b1cfff
+....

@@ -1,0 +1,7 @@
+= 
+
+== ANTLR 4.6 vs. 4.7
+
+ * antlr 4.7: 36e501e2963450265a1a35428da6cb0a5f45e235
+ * antlr 4.6: e05641165d4d209caeef69bdd20d74bef627ca09
+

@@ -1,0 +1,3 @@
+# format: exec
+# test:uuid: 0f06fe78-83ca-46a9-a5cd-b873ab6be807
+exec:--cfg;tests/parser/comments.conf;--input.file;post-comments-01.txns;--output;out.post-comments-01;

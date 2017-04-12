@@ -1,0 +1,45 @@
+= Installation
+
+To use tackler you need
+
+  * Java Runtime Environment (Java 8)
+  * Tackler binaries
+
+
+== Default layout
+
+Default layout for installation is:
+
+----
+bin/   - binaries (takler-cli.jar) and configuration
+txns/  - transaction data in one or multiple txn-files (txn-extension)
+logs/  - logs
+----
+
+By default Tackler will try to find configuration file (`tackler.conf`) next to its jar-file.
+You can also provide path to configuration file with `--cfg` option.
+
+
+== Configuration
+
+Please see link:./configuration.adoc[] for information about how to configure system.
+
+You can override some of the configuration varibles with CLI arguments.
+These configuration variables, and command line switches are documented
+in link:./tackler.conf[].
+
+
+=== Chart of Accounts
+
+By default it is fatal error if there is an unknown account within
+transactions.  This can be turned off with:
+
+`--accounts.strict=false`,
+
+but then there is no safety net against typos with account names.
+
+With production systems, it is highly recommended to provide valid
+Chart of Accounts and not to disable account name check.
+
+Chart of accounts is defined either as part of main configuration or
+as separate configuration file. See link:./accounts.conf[] for example configuration.

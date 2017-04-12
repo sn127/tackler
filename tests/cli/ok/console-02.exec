@@ -1,0 +1,4 @@
+# format: exec
+# test:uuid: e01a2d45-9977-4089-8a54-e29368b2d5cf
+# Console off
+exec:--cfg;tests/cli/ok-console-off.conf;--input.txn.dir;console-txns;--input.txn.glob;**.txns;--output;out.console-02;--accounts.strict;false;

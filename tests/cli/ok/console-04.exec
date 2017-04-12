@@ -1,0 +1,4 @@
+# format: exec
+# test:uuid: a9a8c149-a584-45e5-b4f1-0f901cfd1831
+# No output at all (no files, no console)
+exec:--cfg;tests/cli/ok.conf;--input.txn.dir;console-txns;--input.txn.glob;**.txns;--accounts.strict;false;--reporting.console;false;

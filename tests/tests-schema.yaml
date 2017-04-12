@@ -1,0 +1,67 @@
+type: map
+mapping:
+  features:
+    type: seq
+    sequence:
+      - type: map
+        mapping:
+          feature:
+            type: map
+            mapping:
+              subject:
+                type: str
+              tests:
+                type: map
+                mapping:
+                  errors:
+                    type: seq
+                    sequence:
+                      - type: map
+                        mapping:
+                          error:
+                            type: map
+                            mapping:
+                              name:
+                                type: str
+                              desc:
+                                type: str
+                  reports:
+                    type: map
+                    mapping:
+                      balance:
+                        type: seq
+                        sequence:
+                          - type: map
+                            mapping:
+                              test:
+                                type: any
+                      balance-group:
+                        type: seq
+                        sequence:
+                          - type: map
+                            mapping:
+                              test:
+                                type: any
+                      registry:
+                        type: seq
+                        sequence:
+                          - type: map
+                            mapping:
+                              test:
+                                type: any
+                      identity:
+                        type: seq
+                        sequence:
+                          - type: map
+                            mapping:
+                              test:
+                                type: any
+                  operations:
+                    type: seq
+                    sequence:
+                      - type: map
+                        mapping:
+                          test:
+                            type: str
+                          name:
+                            type: str
