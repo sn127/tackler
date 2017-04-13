@@ -1,0 +1,5 @@
+= DirSuite test directory
+
+WARNING: test output files are deleted before each test run under this directory tree. 
+See `dirsuite.conf` for used glob-pattern.
+

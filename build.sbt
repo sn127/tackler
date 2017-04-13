@@ -48,7 +48,7 @@ lazy val cli = (project in file("cli")).
     fork in run := true,
     // fork := true,
     // baseDirectory in Test := file((baseDirectory in Test).value + "/.."),
-    testOptions in Test += Tests.Setup( () => TacklerTests.setup() ),
+    testOptions in Test += Tests.Setup( () => TacklerTests.setup("tests", streams.value.log) ),
     assemblyJarName in assembly := "tackler-cli" + "-" + version.value + ".jar",
     test in assembly := {},
     buildInfoKeys := Seq[BuildInfoKey](name, version, scalaVersion, sbtVersion),
