@@ -1,22 +1,37 @@
   - feature:
+      id:
       subject:
       tests:
         errors:
-          - error: &
+          - error:
+              id:
+              refid:
               name:
               desc:
+              desciptions:
+                - desc:
         reports:
           balance:
-            - test: *
+            - test:
+                refid:
           balance-group:
-            - test: *
+            - test:
+                refid:
           registry:
-            - test: *
+            - test:
+                refid:
           identity:
-            - test: *
+            - test:
+                refid:
+          equity:
+            - test:
+                refid:
         operations:
-          - test: &
+          - test:
+              id:
+              refid:
               name:
+              desc:
               descriptions:
                 - desc:
               references:
@@ -24,3 +39,4 @@
                 - ref: balgrp
                 - ref: reg
                 - ref: id
+                - ref: equity

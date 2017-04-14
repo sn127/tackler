@@ -2,6 +2,16 @@
 
 exe_dir=$(dirname $0)
 
-grep error: "$exe_dir/tests.yaml" | sed 's/.*error: //' | grep '&' | sort | uniq -d
-grep test: "$exe_dir/tests.yaml" | sed 's/.*test: //' | grep '&' | sort | uniq -d
+test_db="$exe_dir/tests.yaml"
 
+pykwalify -v -s  "$exe_dir/tests-schema.yaml" -d  "$test_db"
+
+grep ' id:' "$test_db" | sed 's/.*id: //' | sort | uniq -d
+
+# good enough for know
+grep ' refid:' "$test_db" | sed 's/.*refid: //' | while read refid; 
+do  
+	egrep -q -L '.* id: +'$refid' *$' "$test_db" || echo $refid
+done
+
+echo "silence is gold"

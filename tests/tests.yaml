@@ -1,17 +1,20 @@
 features:
-
-  - feature: 0dc3f86b-e44b-4ae6-b258-9e68acf63a25
-      subject: txn: very basic txns file
+  - feature:
+      id: 0dc3f86b-e44b-4ae6-b258-9e68acf63a25
+      subject: "txn: very basic txns file"
       tests:
         errors:
-          - error: &4078aee1-b2e7-40fc-ae82-661d29cbaa74
+          - error:
+              id: 4078aee1-b2e7-40fc-ae82-661d29cbaa74
               name: tests/parser/ex/perr-01.exec
               desc: account with missing indentation
-          - error: &399fb5f8-0f03-4aa7-8f2e-1ae8ab2d6645
+          - error:
+              id: 399fb5f8-0f03-4aa7-8f2e-1ae8ab2d6645
               name: tests/parser/ex/perr-03.exec
               desc: missing blank line
         operations:
-          - test: &ba71f292-cc3e-406f-991e-8dd82a7cf87c
+          - test:
+              id: ba71f292-cc3e-406f-991e-8dd82a7cf87c
               name: tests/parser/ok/basic.exec
               descriptions:
                 - desc: basic txns file
@@ -21,22 +24,28 @@ features:
                 - ref: reg
                 - ref: id
 
-  - feature: 7e842423-6535-4558-819a-23c06cc416df
+  - feature:
+      id: 7e842423-6535-4558-819a-23c06cc416df
       subject: input sharding
       tests:
         errors:
-          - test: &90d57e1a-eda6-4856-b757-bfc678ac2a82
+          - error:
+              id: 90d57e1a-eda6-4856-b757-bfc678ac2a82
               name: tests/cli/ex/TxnException-empty-txns-01.exec
-              desc: cli: missing input txn.dir (empty txn set with glob)
-          - test: &8722a7e2-04fd-4b32-a259-e16ca882a725
+              desc: "cli: missing input txn.dir (empty txn set with glob)"
+          - error:
+              id: 8722a7e2-04fd-4b32-a259-e16ca882a725
               name: tests/core/ex/TxnException-empty-txns-01.exec
-              desc: conf: missing input txn.dir (by conf)
+              desc: "conf: missing input txn.dir (by conf)"
         operations:
-          - test: *f6ee1b19-c16d-4219-a9cb-3252a38834ee
-              - desc: 1E3 input files / txns
-          - test: *66b32e8b-ce65-4dc1-9108-5ee5cd009cd3
-              - desc: 1E6 input files / txns
-          - test: &31a128f5-d1a2-4d93-beee-6599344ece57
+          - test:
+              refid: f6ee1b19-c16d-4219-a9cb-3252a38834ee
+              desc: 1E3 input files / txns
+          - test:
+              refid: 66b32e8b-ce65-4dc1-9108-5ee5cd009cd3
+              desc: 1E6 input files / txns
+          - test:
+              id: 31a128f5-d1a2-4d93-beee-6599344ece57
               name: tests/parser/ok/shard-glob.exec
               descriptions:
                 - desc: --input.txn.dir, --input.txn.glob
@@ -44,11 +53,13 @@ features:
               references:
                 - ref: registry
 
-  - feature: 70b1b529-f8f9-4fd7-bede-ea41cd00c02c
-      subject: Perf test 1E3 (1_000) txns.
+  - feature:
+      id: 70b1b529-f8f9-4fd7-bede-ea41cd00c02c
+      subject: "Perf test 1E3 (1_000) txns."
       tests:
         operations:
-          - test: &f6ee1b19-c16d-4219-a9cb-3252a38834ee
+          - test:
+              id: f6ee1b19-c16d-4219-a9cb-3252a38834ee
               name: perf/perf-1E3.txt
               descriptions:
                 - desc: 1E3 tests / generator 0.1.4
@@ -56,11 +67,13 @@ features:
                 - ref: bal
                 - ref: balgrp
 
-  - feature: 846cc9e5-aad9-439d-adae-f56609beef5f
-      subject: Perf test 1E6 1_000_000)
+  - feature:
+      id: 846cc9e5-aad9-439d-adae-f56609beef5f
+      subject: "Perf test 1E6 1_000_000)"
       tests:
         operations:
-          - test: &66b32e8b-ce65-4dc1-9108-5ee5cd009cd3
+          - test:
+              id: 66b32e8b-ce65-4dc1-9108-5ee5cd009cd3
               name: perf/perf-1E6.txt
               descriptions:
                 - desc: 1E6 tests / generator 0.1.4
@@ -69,204 +82,258 @@ features:
                 - ref: balgrp
 
 ### Time, timezones etc.
-  - feature: 9bd4be35-5676-4def-a4ea-f6977287781c
-      subject: txn: date, time, timezone, nano-second resolution
+  - feature:
+      id: 9bd4be35-5676-4def-a4ea-f6977287781c
+      subject: "txn: date, time, timezone, nano-second resolution"
       tests:
         errors:
-          - error: todo: missing parser error tests
-              desc:
-              name:
+          - error:
+              desc: "todo: missing parser error tests"
         operations:
-          - test: *51fad435-682f-42fc-bb66-7d7d5d710042
-          - test: *2c4566b8-0424-4561-9265-087215c2d243
-          - test: &39902850-63aa-4c88-a9c3-4065da8b181e
+          - test:
+              refid: 51fad435-682f-42fc-bb66-7d7d5d710042
+          - test:
+              refid: 2c4566b8-0424-4561-9265-087215c2d243
+          - test:
+              id: 39902850-63aa-4c88-a9c3-4065da8b181e
               name: tests/parser/ok/par-03.exec
               descriptions:
-                - desc: YYYY-mm-dd
-                - desc: YYYY-mm-ddTMM:HH:SS
-                - desc: YYYY-mm-ddTMM:HH:SSZ
-                - desc: YYYY-mm-ddTMM:HH:SS+HH:MM
-                - desc: YYYY-mm-ddTMM:HH:SS-HH:MM
-                - desc: YYYY-mm-ddTMM:HH:SS.SSSZ
-                - desc: YYYY-mm-ddTMM:HH:SS.SSS+HH:MM
-                - desc: YYYY-mm-ddTMM:HH:SS.SSS-HH:MM
+                - desc: "YYYY-mm-dd"
+                - desc: "YYYY-mm-ddTMM:HH:SS"
+                - desc: "YYYY-mm-ddTMM:HH:SSZ"
+                - desc: "YYYY-mm-ddTMM:HH:SS+HH:MM"
+                - desc: "YYYY-mm-ddTMM:HH:SS-HH:MM"
+                - desc: "YYYY-mm-ddTMM:HH:SS.SSSZ"
+                - desc: "YYYY-mm-ddTMM:HH:SS.SSS+HH:MM"
+                - desc: "YYYY-mm-ddTMM:HH:SS.SSS-HH:MM"
               references:
                 - ref: reg
                 - ref: id
-          - test: &de406118-eb73-4621-9b9b-6e26d512cf05
+          - test:
+              id: de406118-eb73-4621-9b9b-6e26d512cf05
               name: tests/core/ok/time-nano-01.exec
               descriptions:
-                - desc: Time with nano-second resolution (2007-10-02T13:45:30.123456789)
+                - desc: "Time with nano-second resolution (2007-10-02T13:45:30.123456789)"
               references:
                 - ref: reg
                 - ref: id
-          - test: &203c42c0-6660-4c0a-b991-e55c86e06da3
+          - test:
+              id: 203c42c0-6660-4c0a-b991-e55c86e06da3
               name: tests/core/ok/time-dst-01.exec
               descriptions:
-                - desc: timezone: offset, TS during DST switch (spring/autumn)
+                - desc: "timezone: offset, TS during DST switch (spring/autumn)"
               references:
                 - ref: id
-          - test: &23ee5075-ca27-4f08-876e-e29de77cfc59
+          - test:
+              id: 23ee5075-ca27-4f08-876e-e29de77cfc59
               name: tests/core/ok/time-dst-02.exec
               descriptions:
-                - desc: timezone: ZoneId (Europe/Helsinki), TS during DST switch (spring/autumn)
+                - desc: "timezone: ZoneId (Europe/Helsinki), TS during DST switch (spring/autumn)"
               references:
                 - ref: id
 
 ### conf: timezone
-  - feature: b01b4c9b-ebb9-4e38-b910-fb932374057c
-      subject: conf: timezone
+  - feature:
+      id: b01b4c9b-ebb9-4e38-b910-fb932374057c
+      subject: "conf: timezone"
       tests:
         operations:
-          - test: &51fad435-682f-42fc-bb66-7d7d5d710042
+          - test:
+              id: 51fad435-682f-42fc-bb66-7d7d5d710042
               name: tests/core/ok/time-conf-01.exec
               descriptions:
-                - desc: conf: timezone: offset, txn with winter/summer TS
+                - desc: "conf: timezone: offset, txn with winter/summer TS"
               references:
                 - ref: id
-          - test: &2c4566b8-0424-4561-9265-087215c2d243
+          - test:
+              id: 2c4566b8-0424-4561-9265-087215c2d243
               name: tests/core/ok/time-conf-02.exec
               descriptions:
-                - desc: conf: timezone: ZoneId (Europe/Helsinki), txn with winter/summer TS
+                - desc: "conf: timezone: ZoneId (Europe/Helsinki), txn with winter/summer TS"
               references:
                 - ref: id
 
 ### conf: basedir
-  - feature: 4d7f9feb-2d2f-4c50-b195-60b024bc9999
-      subject: conf: basedir
+  - feature:
+      id: 4d7f9feb-2d2f-4c50-b195-60b024bc9999
+      subject: "conf: basedir"
       tests:
         operations:
-          - test: *ba71f292-cc3e-406f-991e-8dd82a7cf87c
+          - test:
+              refid: ba71f292-cc3e-406f-991e-8dd82a7cf87c
 
 ### conf: input.txn
-  - feature: b3f82d40-1e18-4457-8050-61759a0c0cac
-      subject: conf: input.txn.dir
+  - feature:
+      id: b3f82d40-1e18-4457-8050-61759a0c0cac
+      subject: "conf: input.txn.dir"
       tests:
         errors:
-          - error: &ba7e3b73-c1f7-4a82-832d-c75dc866149b
+          - error:
+              id: ba7e3b73-c1f7-4a82-832d-c75dc866149b
               name: tests/core/ex/NoSuchFileException-txn.dir-not-found-01.exec
               desc: txn.dir not found by conf
         operations:
-          - test: *8a046e2a-2bed-4ac3-aa42-1dbc31fd78fd
+          - test:
+              refid: 8a046e2a-2bed-4ac3-aa42-1dbc31fd78fd
 
-  - feature: cf543686-e36f-4f5f-91ed-06498e37c4bb
-      subject: conf: input.txn.glob
+  - feature:
+      id: cf543686-e36f-4f5f-91ed-06498e37c4bb
+      subject: "conf: input.txn.glob"
       tests:
         operations:
-          - test: *8a046e2a-2bed-4ac3-aa42-1dbc31fd78fd
+          - test:
+              refid: 8a046e2a-2bed-4ac3-aa42-1dbc31fd78fd
 
 ### conf: reporting.
-  - feature: 048dca18-eba8-4875-baa5-524ff8c8f903
-      subject: conf: reporting.reports
+  - feature:
+      id: 048dca18-eba8-4875-baa5-524ff8c8f903
+      subject: "conf: reporting.reports"
       tests:
         operations:
-          - test: *c6da0aef-125f-4d33-9780-ffaa9e724499
-          - test: *ba71f292-cc3e-406f-991e-8dd82a7cf87c
+          - test:
+              refid: c6da0aef-125f-4d33-9780-ffaa9e724499
+          - test:
+              refid: ba71f292-cc3e-406f-991e-8dd82a7cf87c
 
-  - feature: 4f83e4ad-4bc9-46a1-9f1e-b4863e8a2839
-      subject: conf: reporting.accounts
+  - feature:
+      id: 4f83e4ad-4bc9-46a1-9f1e-b4863e8a2839
+      subject: "conf: reporting.accounts"
       tests:
         operations:
-          - test: *c6da0aef-125f-4d33-9780-ffaa9e724499
-          - test: *53f67fea-6307-44ca-9834-7a2f9b71a15a
-          - test: *3ec3e091-dc23-455b-963a-4ba66db7223f
-          - test: *7d95bef8-6aaa-4706-a276-d206752d017b
-          - test: *289df07b-a047-488f-bbe0-4d61cce21421
+          - test:
+              refid: c6da0aef-125f-4d33-9780-ffaa9e724499
+          - test:
+              refid: 53f67fea-6307-44ca-9834-7a2f9b71a15a
+          - test:
+              refid: 3ec3e091-dc23-455b-963a-4ba66db7223f
+          - test:
+              refid: 7d95bef8-6aaa-4706-a276-d206752d017b
+          - test:
+              refid: 289df07b-a047-488f-bbe0-4d61cce21421
 
-  - feature: ebc16b71-b5df-46f7-bba6-e0d9ac37d6ee
-      subject: conf: reporting.console
+  - feature:
+      id: ebc16b71-b5df-46f7-bba6-e0d9ac37d6ee
+      subject: "conf: reporting.console"
       tests:
         operations:
-          - test: &940ed68b-7f1c-41fe-bab9-aefd8cf60b3a
+          - test:
+              id: 940ed68b-7f1c-41fe-bab9-aefd8cf60b3a
               name: tests/cli/ok/console-on-01.exec
               descriptions:
-                - desc: conf: console on
-                - desc: validate stdout + stderr
-          - test: &e01a2d45-9977-4089-8a54-e29368b2d5cf
+                - desc: "conf: console on"
+                - desc: "validate stdout + stderr"
+          - test:
+              id: e01a2d45-9977-4089-8a54-e29368b2d5cf
               name: tests/cli/ok/console-on-02.exec
               descriptions:
-                - desc: conf: console off
-                - desc: validate stdout + stderr
-          - test: *ba71f292-cc3e-406f-991e-8dd82a7cf87c
+                - desc: "conf: console off"
+                - desc: "validate stdout + stderr"
+          - test:
+              refid: ba71f292-cc3e-406f-991e-8dd82a7cf87c
               name: tests/parser/ok/basic.exec
 
 ### conf: reports.balance
-  - feature: 9f348a4c-7d6d-4c64-8f67-da34b63b916a
-      subject: conf: reports.balance.title
+  - feature:
+      id: 9f348a4c-7d6d-4c64-8f67-da34b63b916a
+      subject: "conf: reports.balance.title"
       tests:
         operations:
-          - test: *c6da0aef-125f-4d33-9780-ffaa9e724499
+          - test:
+              refid: c6da0aef-125f-4d33-9780-ffaa9e724499
 
-  - feature: 8aa7e91d-b738-44af-af72-4ef160e1f87f
-      subject: conf: reports.balance.accounts
+  - feature:
+      id: 8aa7e91d-b738-44af-af72-4ef160e1f87f
+      subject: "conf: reports.balance.accounts"
       tests:
         operations:
-          - test: *53f67fea-6307-44ca-9834-7a2f9b71a15a
+          - test:
+              refid: 53f67fea-6307-44ca-9834-7a2f9b71a15a
 
 ### conf reports.balance-group
-  - feature: c7e846f8-ba22-47be-9e02-c76badc42a65
-      subject: conf: reports.balance-group.title
+  - feature:
+      id: c7e846f8-ba22-47be-9e02-c76badc42a65
+      subject: "conf: reports.balance-group.title"
       tests:
         operations:
-          - test: *c6da0aef-125f-4d33-9780-ffaa9e724499
+          - test:
+              refid: c6da0aef-125f-4d33-9780-ffaa9e724499
 
-  - feature: 33ba3703-7232-4974-8e5d-23b567413bcd
-      subject: conf: reports.balance-group.accounts
+  - feature:
+      id: 33ba3703-7232-4974-8e5d-23b567413bcd
+      subject: "conf: reports.balance-group.accounts"
       tests:
         operations:
-          - test: *3ec3e091-dc23-455b-963a-4ba66db7223f
+          - test:
+              refid: 3ec3e091-dc23-455b-963a-4ba66db7223f
 
-  - feature: 1957610a-5ea2-4582-8114-e6fe87986adf
-      subject: conf: reports.balance-group.group-by
+  - feature:
+      id: 1957610a-5ea2-4582-8114-e6fe87986adf
+      subject: "conf: reports.balance-group.group-by"
       tests:
         errors:
-          - error: *31e0bd80-d4a9-4d93-915d-fa2424aedb84
+          - error:
+              refid: 31e0bd80-d4a9-4d93-915d-fa2424aedb84
         operations:
-          - test: *ed89d638-70fa-474c-b88f-be03df6231df
-          - test: *66692492-2b9f-46c2-8e09-a49573ba0cec
-          - test: *053ca6b0-6be6-4fc1-9dd8-6abc754d98d1
-          - test: *a52914e4-0887-4255-abea-c0b457802f56
-          - test: *9fff9c03-c94b-4d67-9180-ac7d22edf0c7
+          - test:
+              refid: ed89d638-70fa-474c-b88f-be03df6231df
+          - test:
+              refid: 66692492-2b9f-46c2-8e09-a49573ba0cec
+          - test:
+              refid: 053ca6b0-6be6-4fc1-9dd8-6abc754d98d1
+          - test:
+              refid: a52914e4-0887-4255-abea-c0b457802f56
+          - test:
+              refid: 9fff9c03-c94b-4d67-9180-ac7d22edf0c7
 
 ### conf: reports.register
-  - feature: 11eaf2b4-b55c-4bb0-bd63-8de82aed62a9
-      subject: conf: reports.register.title
+  - feature:
+      id: 11eaf2b4-b55c-4bb0-bd63-8de82aed62a9
+      subject: "conf: reports.register.title"
       tests:
         operations:
-          - test: *c6da0aef-125f-4d33-9780-ffaa9e724499
+          - test:
+              refid: c6da0aef-125f-4d33-9780-ffaa9e724499
 
-  - feature: a65cc023-93e3-4b19-a9aa-9a35f590bea7
-      subject: conf: reports.register.accounts
+  - feature:
+      id: a65cc023-93e3-4b19-a9aa-9a35f590bea7
+      subject: "conf: reports.register.accounts"
       tests:
         operations:
-          - test: *7d95bef8-6aaa-4706-a276-d206752d017b
+          - test:
+              refid: 7d95bef8-6aaa-4706-a276-d206752d017b
 
 ### conf: accounts
-  - feature: acfee245-078c-45c6-8a87-e3d47598a3ef
-      subject: conf: accounts.strict
+  - feature:
+      id: acfee245-078c-45c6-8a87-e3d47598a3ef
+      subject: "conf: accounts.strict"
       tests:
         operations:
-          - test: *a11c536e-ce20-4e2b-8abf-cd8a47cdaf07
-              - desc: accounts.strict = true
-          - test: &8a046e2a-2bed-4ac3-aa42-1dbc31fd78fd
+          - test:
+              refid: a11c536e-ce20-4e2b-8abf-cd8a47cdaf07
+              desc: "accounts.strict = true"
+          - test:
+              id: 8a046e2a-2bed-4ac3-aa42-1dbc31fd78fd
               name: tests/parser/ok/no-cao.exec
               descriptions:
                 - desc: missing  / empty CoA
-                - desc: conf: input.txn.dir + glob
-                - desc: accounts.strict = false
+                - desc: "conf: input.txn.dir + glob"
+                - desc: "accounts.strict = false"
               references:
                 - ref: identity
 
 ### Txn components
-  - feature: 5b8e63d4-80f3-4b23-bb99-4f6cc48b18b7
-      subject: txn: code
+  - feature:
+      id: 5b8e63d4-80f3-4b23-bb99-4f6cc48b18b7
+      subject: "txn: code"
       tests:
         errors:
-          - error: &fd2e49c0-bb60-4f5b-8ddd-f3745fcc6015
+          - error:
+              id: fd2e49c0-bb60-4f5b-8ddd-f3745fcc6015
               name: tests/parser/ex/perr-code.exec
               desc: Ensure that code is not over eager in case of txn syntax error
         operations:
-          - test: &8ab8a08b-2348-4c20-8971-b357b2a8b6e1
+          - test:
+              id: 8ab8a08b-2348-4c20-8971-b357b2a8b6e1
               name: tests/parser/ok/code-01.exec
               descriptions:
                 - desc: plain numbers
@@ -277,17 +344,20 @@ features:
                 - ref: registry
                 - ref: identity
 
-  - feature: bcf52e63-e70e-4b94-b8f1-7321a6a353e8
-      subject: txn: description
+  - feature:
+      id: bcf52e63-e70e-4b94-b8f1-7321a6a353e8
+      subject: "txn: description"
       tests:
         operations:
-          - test: &641c44ab-0ac3-4247-b16e-a4acea5a78ec
+          - test:
+              id: 641c44ab-0ac3-4247-b16e-a4acea5a78ec
               name: TacklerParserTest
               descriptions:
                 - desc: input2Txns(str)
                 - desc: latin
                 - desc: kanji
-          - test: &2564946b-3afb-4edc-9ee5-3c0f37baa1a1
+          - test:
+              id: 2564946b-3afb-4edc-9ee5-3c0f37baa1a1
               name: tests/parser/ok/par-02.exec
               descriptions:
                 - desc: plain numbers
@@ -299,50 +369,62 @@ features:
                 - ref: registry
                 - ref: identity
 
-  - feature: a9324c68-8d86-4bf5-b653-cea0ff1da609
-      subject: txn: meta: UUID
+  - feature:
+      id: a9324c68-8d86-4bf5-b653-cea0ff1da609
+      subject: "txn: meta: UUID"
       tests:
         errors:
-          - error: &4391990c-83f4-4ea2-8c25-78a87beae219
+          - error:
+              id: 4391990c-83f4-4ea2-8c25-78a87beae219
               desc: missing uuid
               name: TacklerParserTest
-          - error: &56042ba1-89ca-48da-a55a-d6fea2946c59
+          - error:
+              id: 56042ba1-89ca-48da-a55a-d6fea2946c59
               name: TacklerParserTest
               desc: invalid uuid
         reports:
           registry:
-            - test: *2564946b-3afb-4edc-9ee5-3c0f37baa1a1
+            - test:
+                refid: 2564946b-3afb-4edc-9ee5-3c0f37baa1a1
           identity:
-            - test: *2564946b-3afb-4edc-9ee5-3c0f37baa1a1
+            - test:
+                refid: 2564946b-3afb-4edc-9ee5-3c0f37baa1a1
         operations:
-          - test: *39902850-63aa-4c88-a9c3-4065da8b181e
+          - test:
+              refid: 39902850-63aa-4c88-a9c3-4065da8b181e
               name: tests/parser/ok/par-03.exec
               desc: txn sorting
 
 ### Account names etc.
-  - feature: e9e2b481-225a-4344-b27e-a51c237959a8
-      subject: txn: account names
+  - feature:
+      id: e9e2b481-225a-4344-b27e-a51c237959a8
+      subject: "txn: account names"
       tests:
         errors:
-          - error: &9c836932-718c-491d-8cf0-30e35a0d1533
+          - error:
+              id: 9c836932-718c-491d-8cf0-30e35a0d1533
               name: TacklerParserTest
               desc: missing account name part
-          - error: &4a8f98d6-fb07-46ea-89ea-5ef4e7f4a3f8
+          - error:
+              id: 4a8f98d6-fb07-46ea-89ea-5ef4e7f4a3f8
               name: TacklerParserTest
-              desc: name starts with ':'
-          - error: &d8e4e643-1b1b-46c7-b84c-e6cf04952971
+              desc: "name starts with ':'"
+          - error:
+              id: d8e4e643-1b1b-46c7-b84c-e6cf04952971
               name: TacklerParserTest
-              desc: name ends with ':'
+              desc: "name ends with ':'"
         operations:
-          - test: &e997a1a0-4f96-4212-a565-31565c87a7a2
+          - test:
+              id: e997a1a0-4f96-4212-a565-31565c87a7a2
               name: tests/parser/ok/id-01.exec
               descriptions:
-                - desc: name contains '-'
-                - desc: name contains '_'
+                - desc: "name contains '-'"
+                - desc: "name contains '_'"
               references:
                 - ref: identity
                 - ref: registry
-          - test: &bc8f6399-fd7a-420a-8deb-9cc0ae97c9f6
+          - test:
+              id: bc8f6399-fd7a-420a-8deb-9cc0ae97c9f6
               name: tests/parser/ok/id-chars-01.exec
               descriptions:
                 - desc: high bit latin chars
@@ -350,42 +432,53 @@ features:
               references:
                 - ref: identity
 
-  - feature: 893da4ec-5ce2-4108-b446-f86ab26a4c4c
+  - feature:
+      id: 893da4ec-5ce2-4108-b446-f86ab26a4c4c
       subject: Chart of Accounts
       tests:
         errors:
-          - error: &a11c536e-ce20-4e2b-8abf-cd8a47cdaf07
+          - error:
+              id: a11c536e-ce20-4e2b-8abf-cd8a47cdaf07
               name: tests/cli/ex/AccountException-unknown-acc-01.exec
               desc: Unknown account name (no entry in CoA)
         operations:
-          - test: *e997a1a0-4f96-4212-a565-31565c87a7a2
-          - test: *bc8f6399-fd7a-420a-8deb-9cc0ae97c9f6
+          - test:
+              refid: e997a1a0-4f96-4212-a565-31565c87a7a2
+          - test:
+              refid: bc8f6399-fd7a-420a-8deb-9cc0ae97c9f6
 
-  - feature: 1d7b6ba2-5a63-481f-9c74-527e203e5f4b
-      subject: Comments, txn -level
+  - feature:
+      id: 1d7b6ba2-5a63-481f-9c74-527e203e5f4b
+      subject: "Comments, txn -level"
       tests:
         operations:
-          - test: *1d731709-1e85-4fe6-b209-aad46cca5551
-          - test: &5f80093d-6e90-4108-a18c-d76c91cacb55
+          - test:
+              refid: 1d731709-1e85-4fe6-b209-aad46cca5551
+          - test:
+              id: 5f80093d-6e90-4108-a18c-d76c91cacb55
               name: tests/parser/ok/txn-comments-01.exec
               descriptions:
                 - desc: one comment
                 - desc: multiple comments
-                - desc: meta data + comments
+                - desc: "meta data + comments"
               references:
                 - ref: id
                 - ref: bal
                 - ref: balgrp
                 - ref: reg
 
-  - feature: 81149412-4c82-41fb-861c-ab0c224975ce
-      subject: Comments, posting -level
+  - feature:
+      id: 81149412-4c82-41fb-861c-ab0c224975ce
+      subject: "Comments, posting -level"
       tests:
         operations:
-          - test: &6ce68af4-5349-44e0-8fbc-35bebd8ac1ac
+          - test:
+              id: 6ce68af4-5349-44e0-8fbc-35bebd8ac1ac
               name: PostingTest
-          - test: *1d731709-1e85-4fe6-b209-aad46cca5551
-          - test: &0f06fe78-83ca-46a9-a5cd-b873ab6be807
+          - test:
+              refid: 1d731709-1e85-4fe6-b209-aad46cca5551
+          - test:
+              id: 0f06fe78-83ca-46a9-a5cd-b873ab6be807
               name: tests/parser/ok/post-comments-01.exec
               descriptions:
                 - desc: normal posting with comment
@@ -397,103 +490,136 @@ features:
                 - ref: balgrp
                 - ref: reg
 
-  - feature: a94d4a60-40dc-4ec0-97a3-eeb69399f01b
-      subject: TxnParser: string input
+  - feature:
+      id: a94d4a60-40dc-4ec0-97a3-eeb69399f01b
+      subject: "TxnParser: string input"
       tests:
         errors:
-          - error: &52836ff9-94de-4575-bfae-6b5afa971351
+          - error:
+              id: 52836ff9-94de-4575-bfae-6b5afa971351
               name: TacklerTxnsTest
               desc: Detect unbalanced transaction (str-input)
-          - error: &b0d7d5b1-8927-43c4-80c1-bfda9d0b149f
+          - error:
+              id: b0d7d5b1-8927-43c4-80c1-bfda9d0b149f
               name: TacklerTxnsTest
               desc: handle long error message (str-input)
-          - error: &6880deae-8cbc-4b36-b148-feb3d4e71137
+          - error:
+              id: 6880deae-8cbc-4b36-b148-feb3d4e71137
               name: TacklerTxnsTest
               desc: check TacklerParseError with invalid input (str-input)
         operations:
-          - test: *641c44ab-0ac3-4247-b16e-a4acea5a78ec
-          - test: *4391990c-83f4-4ea2-8c25-78a87beae219
-          - test: *56042ba1-89ca-48da-a55a-d6fea2946c59
-          - test: *9c836932-718c-491d-8cf0-30e35a0d1533
-          - test: *4a8f98d6-fb07-46ea-89ea-5ef4e7f4a3f8
-          - test: *d8e4e643-1b1b-46c7-b84c-e6cf04952971
-          - test: &b591d5d3-0be8-4264-8ec0-75b464ff86dc
+          - test:
+              refid: 641c44ab-0ac3-4247-b16e-a4acea5a78ec
+          - test:
+              refid: 4391990c-83f4-4ea2-8c25-78a87beae219
+          - test:
+              refid: 56042ba1-89ca-48da-a55a-d6fea2946c59
+          - test:
+              refid: 9c836932-718c-491d-8cf0-30e35a0d1533
+          - test:
+              refid: 4a8f98d6-fb07-46ea-89ea-5ef4e7f4a3f8
+          - test:
+              refid: d8e4e643-1b1b-46c7-b84c-e6cf04952971
+          - test:
+              id: b591d5d3-0be8-4264-8ec0-75b464ff86dc
               name: TacklerParserTest
               desc: valid simple input
-          - test: &200aad57-9275-4d16-bdad-2f1c484bcf17
+          - test:
+              id: 200aad57-9275-4d16-bdad-2f1c484bcf17
               name: TacklerTxnsTest
               descriptions:
                 - desc: Multiple txns
                 - desc: Txn sorting
 
-  - feature: 3f9390d6-3a8c-466b-8548-373696daa912
-      subject: Txn's postings must have zero sum
+  - feature:
+      id: 3f9390d6-3a8c-466b-8548-373696daa912
+      subject: "Txn's postings must have zero sum"
       tests:
         errors:
-          - error: *52836ff9-94de-4575-bfae-6b5afa971351
+          - error:
+              refid: 52836ff9-94de-4575-bfae-6b5afa971351
               desc: Detect unbalanced transaction (Str-input)
-          - error: &178a3269-76e9-4bb4-abcd-62806817573e
+          - error:
+              id: 178a3269-76e9-4bb4-abcd-62806817573e
               name: tests/cli/ex/TxnException-unbalanced-01.exec
               desc: Detect unbalanced transaction (file-input)
 
-  - feature: 51e6b270-0a1b-4262-aae0-52ff0b93bdb4
-      subject: txn: amounts (big integer and very small fractional parts)
+  - feature:
+      id: 51e6b270-0a1b-4262-aae0-52ff0b93bdb4
+      subject: "txn: amounts (big integer and very small fractional parts)"
       tests:
         reports:
           balance:
-            - test: *0f862997-95b1-4e06-bc5f-bc170c7594ff
+            - test:
+                refid: 0f862997-95b1-4e06-bc5f-bc170c7594ff
           balance-group:
-            - test: *0f862997-95b1-4e06-bc5f-bc170c7594ff
+            - test:
+                refid: 0f862997-95b1-4e06-bc5f-bc170c7594ff
           registry:
-            - test: *0f862997-95b1-4e06-bc5f-bc170c7594ff
+            - test:
+                refid: 0f862997-95b1-4e06-bc5f-bc170c7594ff
           identity:
-            - test: *0f862997-95b1-4e06-bc5f-bc170c7594ff
+            - test:
+                refid: 0f862997-95b1-4e06-bc5f-bc170c7594ff
         operations:
-          - test: &e3c97b66-318c-4396-8857-0cd2c1dfb0d2
+          - test:
+              id: e3c97b66-318c-4396-8857-0cd2c1dfb0d2
               name: PostingTest
-          - test: &0f862997-95b1-4e06-bc5f-bc170c7594ff
+          - test:
+              id: 0f862997-95b1-4e06-bc5f-bc170c7594ff
               name: tests/reporting/ok/big-01.exec
               descriptions:
-                - desc: reading and output BigDecimals 20 digit, 9 decimals
+                - desc: "reading and output BigDecimals 20 digit, 9 decimals"
               references:
                 - ref: bal
                 - ref: balgrp
                 - ref: reg
                 - ref: id
 
-  - feature: 9b2dd31d-2818-406b-a0e5-f44598432878
+  - feature:
+      id: 9b2dd31d-2818-406b-a0e5-f44598432878
       subject: Postings with zero amount (not allowed)
       tests:
         errors:
-          - test: &42ad9d32-64aa-4fcd-a4ab-1e8521b921e3
+          - error:
+              id: 42ad9d32-64aa-4fcd-a4ab-1e8521b921e3
               name: PostingTest
-          - test: &144bd8b1-aa94-4454-a490-b0e8fdaddc1e
+          - error:
+              id: 144bd8b1-aa94-4454-a490-b0e8fdaddc1e
               name: tests/core/ex/TxnException-zero-posting.exec
               desc: posting with zero amount
 
 ### Reports
-  - feature: d7fb1eed-211d-42b9-857f-5ee3e08b4666
-      subject: conf: Report selection
+  - feature:
+      id: d7fb1eed-211d-42b9-857f-5ee3e08b4666
+      subject: "conf: Report selection"
       tests:
         errors:
-          - error: &88ef188c-b8f8-47f0-88b6-7af3577aa133
+          - error:
+              id: 88ef188c-b8f8-47f0-88b6-7af3577aa133
               name: tests/reporting/ex/ReportException-unknown-type.exec
-              desc: conf: reporting.reports unknown report
+              desc: "conf: reporting.reports unknown report"
         reports:
           balance:
-            - test: *c6da0aef-125f-4d33-9780-ffaa9e724499
+            - test:
+                refid: c6da0aef-125f-4d33-9780-ffaa9e724499
           balance-group:
-            - test: *c6da0aef-125f-4d33-9780-ffaa9e724499
+            - test:
+                refid: c6da0aef-125f-4d33-9780-ffaa9e724499
           registry:
-            - test: *c6da0aef-125f-4d33-9780-ffaa9e724499
+            - test:
+                refid: c6da0aef-125f-4d33-9780-ffaa9e724499
           identity:
-            - test: *ba71f292-cc3e-406f-991e-8dd82a7cf87c
+            - test:
+                refid: ba71f292-cc3e-406f-991e-8dd82a7cf87c
 
-  - feature: 346b2cd0-5601-43d6-aa16-436d7ce645a1
-      subject: report: Balance
+  - feature:
+      id: 346b2cd0-5601-43d6-aa16-436d7ce645a1
+      subject: "report: Balance"
       tests:
         operations:
-          - test: &e094ee52-1742-4da1-bc54-15662c293a69
+          - test:
+              id: e094ee52-1742-4da1-bc54-15662c293a69
               name: tests/accumulator/ok/bal-01.exec
               descriptions:
                 - desc: basic balance and balance group
@@ -501,7 +627,8 @@ features:
                 - ref: bal
                 - ref: balgrp
                 - ref: reg
-          - test: &fb5c09d2-dfbf-41b7-9412-81bcf37f0c76
+          - test:
+              id: fb5c09d2-dfbf-41b7-9412-81bcf37f0c76
               name: tests/accumulator/ok/bal-02.exec
               descriptions:
                 - desc: todo
@@ -509,96 +636,113 @@ features:
                 - ref: bal
                 - ref: balgrp
                 - ref: reg
-          - test: &9220c02f-1b2a-4f7b-9ae5-8dc16bf1f071
+          - test:
+              id: 9220c02f-1b2a-4f7b-9ae5-8dc16bf1f071
               name: tests/accumulator/ok/bal-gap-01.exec
               descriptions:
                 - desc: top part of account tree is not part of txns
               references:
                 - ref: bal
-          - test: &cb7e3f4c-a709-4f0e-9f22-336755dfe6b2
+          - test:
+              id: cb7e3f4c-a709-4f0e-9f22-336755dfe6b2
               name: tests/accumulator/ok/bal-gap-02.exec
               descriptions:
                 - desc: top and middle accounts of account tree are not part of txns
               references:
                 - ref: bal
-          - test: &9e00e09f-8ac4-4fd7-b3c1-e383d711d48c
+          - test:
+              id: 9e00e09f-8ac4-4fd7-b3c1-e383d711d48c
               name: tests/accumulator/ok/bal-gap-03.exec
               descriptions:
                 - desc: two consecutive middle accounts of account tree are not part of txns
               references:
                 - ref: bal
-          - test: *c6da0aef-125f-4d33-9780-ffaa9e724499
-              descriptions:
-                - desc: Print balance delta
+          - test:
+              refid: c6da0aef-125f-4d33-9780-ffaa9e724499
+              desc: Print balance delta
 
-  - feature: b0b9fbbc-064b-4102-aa4b-beb2f8871606
-      subject: report: Balance Groups
+  - feature:
+      id: b0b9fbbc-064b-4102-aa4b-beb2f8871606
+      subject: "report: Balance Groups"
       tests:
         errors:
-          - error: &31e0bd80-d4a9-4d93-915d-fa2424aedb84
+          - error:
+              id: 31e0bd80-d4a9-4d93-915d-fa2424aedb84
               name: tests/reporting/ex/GroupByException-unknown-group-by.exec
               desc: Unknown group-by operator
         operations:
-          - test: *c6da0aef-125f-4d33-9780-ffaa9e724499
-              descriptions:
-                - desc: Print balance delta
-          - test: &9fff9c03-c94b-4d67-9180-ac7d22edf0c7
+          - test:
+              refid: c6da0aef-125f-4d33-9780-ffaa9e724499
+              desc: Print balance delta
+          - test:
+              id: 9fff9c03-c94b-4d67-9180-ac7d22edf0c7
               name: tests/reporting/group-by/year.exec
               descriptions:
-                - desc: (conf) group-by: year
+                - desc: "(conf) group-by: year"
               references:
                 - ref: bal
                 - ref: balgrp
-          - test: &a52914e4-0887-4255-abea-c0b457802f56
+          - test:
+              id: a52914e4-0887-4255-abea-c0b457802f56
               name: tests/reporting/group-by/month.exec
               descriptions:
                 - desc: group-by month, (conf)
               references:
                 - ref: bal
                 - ref: balgrp
-          - test: &053ca6b0-6be6-4fc1-9dd8-6abc754d98d1
+          - test:
+              id: 053ca6b0-6be6-4fc1-9dd8-6abc754d98d1
               name: tests/reporting/group-by/iso-week.exec
               descriptions:
-                - desc: (conf) group-by: iso-week
+                - desc: (conf) group-by iso-week
                 - desc: over and around difficult years (2009/2010)
               references:
                 - ref: bal
                 - ref: balgrp
-          - test: &ed89d638-70fa-474c-b88f-be03df6231df
+          - test:
+              id: ed89d638-70fa-474c-b88f-be03df6231df
               name: tests/reporting/group-by/date.exec
               descriptions:
-                - desc: (conf) group-by: date
+                - desc: (conf) group-by date
               references:
                 - ref: bal
                 - ref: balgrp
-          - test: &66692492-2b9f-46c2-8e09-a49573ba0cec
+          - test:
+              id: 66692492-2b9f-46c2-8e09-a49573ba0cec
               name: tests/reporting/group-by/iso-week-date.exec
               descriptions:
-                - desc: (conf) group-by: iso-week-date
+                - desc: (conf) group-by iso-week-date
                 - desc: over and around difficult years (2009/2010)
               references:
                 - ref: bal
                 - ref: balgrp
 
-  - feature: 3872da6a-e772-41f5-a8f0-4eff24552c0d
-      subject: Report: Equity
+  - feature:
+      id: 3872da6a-e772-41f5-a8f0-4eff24552c0d
+      subject: "Report: Equity"
       tests:
         operations:
-          - test: *e094ee52-1742-4da1-bc54-15662c293a69
-              - desc: basic-01
-          - test: *fb5c09d2-dfbf-41b7-9412-81bcf37f0c76
-              - desc: basic-02
-          - test: *9220c02f-1b2a-4f7b-9ae5-8dc16bf1f071
-              - desc: gap-1
-          - test: *cb7e3f4c-a709-4f0e-9f22-336755dfe6b2
-              - desc: gap-2
-          - test: *9e00e09f-8ac4-4fd7-b3c1-e383d711d48c
-              - desc: gap-3
-          - test: &76da1ba6-b17d-4260-bc2d-7d1dcca54d50
+          - test:
+              refid: e094ee52-1742-4da1-bc54-15662c293a69
+              desc: basic-01
+          - test:
+              refid: fb5c09d2-dfbf-41b7-9412-81bcf37f0c76
+              desc: basic-02
+          - test:
+              refid: 9220c02f-1b2a-4f7b-9ae5-8dc16bf1f071
+              desc: gap-1
+          - test:
+              refid: cb7e3f4c-a709-4f0e-9f22-336755dfe6b2
+              desc: gap-2
+          - test:
+              refid: 9e00e09f-8ac4-4fd7-b3c1-e383d711d48c
+              desc: gap-3
+          - test:
+              id: 76da1ba6-b17d-4260-bc2d-7d1dcca54d50
               name: tests/accumulator/ok/eq-uuid-01.exec
               descriptions:
-                - desc: Last txn ts + sorting + (uuid check by 2nd stage register-report)
-                - desc: feed equity report back to Tackler (txns => Eq => Identity)
+                - desc: "Last txn ts + sorting + (uuid check by 2nd stage register-report)"
+                - desc: "feed equity report back to Tackler (txns => Eq => Identity)"
                 - desc: account filtering
               references:
                 - ref: bal
@@ -606,7 +750,8 @@ features:
                 - ref: reg
                 - ref: equity
                 - ref: identity
-          - test: &2abde44e-929a-467b-9f57-87c8945451c7
+          - test:
+              id: 2abde44e-929a-467b-9f57-87c8945451c7
               name: tests/accumulator/ok/eq-zeros.exec
               descriptions:
                 - desc: All accounts zero out
@@ -615,83 +760,125 @@ features:
                 - ref: balgrp
                 - ref: reg
                 - ref: equity
-          - test: &f46b00a3-b4dc-44e0-a8ae-b8039e2a33a7
+          - test:
+              id: f46b00a3-b4dc-44e0-a8ae-b8039e2a33a7
               name: tests/accumulator/ok/eq-uuid-02.exec
               descriptions:
-                - desc: direct check of txn:uuid in equity report
+                - desc: "direct check of txn:uuid in equity report"
               references:
                 - ref: bal
                 - ref: balgrp
                 - ref: reg
                 - ref: equity
 
-  - feature: c17e7d39-49b9-4681-9dc9-c2693a955fe8
-      subject: report: Register
+  - feature:
+      id: c17e7d39-49b9-4681-9dc9-c2693a955fe8
+      subject: "report: Register"
       tests:
         reports:
           registry:
-            - test: *7d95bef8-6aaa-4706-a276-d206752d017b
-            - test: *53f67fea-6307-44ca-9834-7a2f9b71a15a
-            - test: *3ec3e091-dc23-455b-963a-4ba66db7223f
-            - test: *289df07b-a047-488f-bbe0-4d61cce21421
-            - test: *c6da0aef-125f-4d33-9780-ffaa9e724499
+            - test:
+                refid: 7d95bef8-6aaa-4706-a276-d206752d017b
+            - test:
+                refid: 53f67fea-6307-44ca-9834-7a2f9b71a15a
+            - test:
+                refid: 3ec3e091-dc23-455b-963a-4ba66db7223f
+            - test:
+                refid: 289df07b-a047-488f-bbe0-4d61cce21421
+            - test:
+                refid: c6da0aef-125f-4d33-9780-ffaa9e724499
 
-  - feature: 0bac8d81-fa95-4501-be2e-c58a4f95017c
-      subject: report: Identity
+  - feature:
+      id: 0bac8d81-fa95-4501-be2e-c58a4f95017c
+      subject: "report: Identity"
       tests:
         reports:
           registry:
-            - test: *ba71f292-cc3e-406f-991e-8dd82a7cf87c
+            - test:
+                refid: ba71f292-cc3e-406f-991e-8dd82a7cf87c
         operations:
-          - test: &1d731709-1e85-4fe6-b209-aad46cca5551
+          - test:
+              id: 1d731709-1e85-4fe6-b209-aad46cca5551
               name: tests/core/ok/id2id-01.exec
               descriptions:
-                - desc: txns -> identity -> identity
+                - desc: "txns -> identity -> identity"
               references:
                 - ref: id2id
 
 ### MISC
-  - feature: 7e8e9aaf-4bd7-4d74-86b0-ddb6d7c54381
+  - feature:
+      id: 7e8e9aaf-4bd7-4d74-86b0-ddb6d7c54381
       subject: Account filtering with reports
       tests:
         reports:
           balance:
-            - test: *53f67fea-6307-44ca-9834-7a2f9b71a15a
-            - test: *3ec3e091-dc23-455b-963a-4ba66db7223f
-            - test: *7d95bef8-6aaa-4706-a276-d206752d017b
-            - test: *29d24d2e-702f-4c27-b5de-82ac88ca68ca
-            - test: *289df07b-a047-488f-bbe0-4d61cce21421
-            - test: *c6da0aef-125f-4d33-9780-ffaa9e724499
+            - test:
+                refid: 53f67fea-6307-44ca-9834-7a2f9b71a15a
+            - test:
+                refid: 3ec3e091-dc23-455b-963a-4ba66db7223f
+            - test:
+                refid: 7d95bef8-6aaa-4706-a276-d206752d017b
+            - test:
+                refid: 29d24d2e-702f-4c27-b5de-82ac88ca68ca
+            - test:
+                refid: 289df07b-a047-488f-bbe0-4d61cce21421
+            - test:
+                refid: c6da0aef-125f-4d33-9780-ffaa9e724499
           balance-group:
-            - test: *3ec3e091-dc23-455b-963a-4ba66db7223f
-            - test: *53f67fea-6307-44ca-9834-7a2f9b71a15a
-            - test: *7d95bef8-6aaa-4706-a276-d206752d017b
-            - test: *29d24d2e-702f-4c27-b5de-82ac88ca68ca
-            - test: *289df07b-a047-488f-bbe0-4d61cce21421
-            - test: *c6da0aef-125f-4d33-9780-ffaa9e724499
+            - test:
+                refid: 3ec3e091-dc23-455b-963a-4ba66db7223f
+            - test:
+                refid: 53f67fea-6307-44ca-9834-7a2f9b71a15a
+            - test:
+                refid: 7d95bef8-6aaa-4706-a276-d206752d017b
+            - test:
+                refid: 29d24d2e-702f-4c27-b5de-82ac88ca68ca
+            - test:
+                refid: 289df07b-a047-488f-bbe0-4d61cce21421
+            - test:
+                refid: c6da0aef-125f-4d33-9780-ffaa9e724499
           registry:
-            - test: *7d95bef8-6aaa-4706-a276-d206752d017b
-            - test: *53f67fea-6307-44ca-9834-7a2f9b71a15a
-            - test: *3ec3e091-dc23-455b-963a-4ba66db7223f
-            - test: *29d24d2e-702f-4c27-b5de-82ac88ca68ca
-            - test: *289df07b-a047-488f-bbe0-4d61cce21421
-            - test: *c6da0aef-125f-4d33-9780-ffaa9e724499
+            - test:
+                refid: 7d95bef8-6aaa-4706-a276-d206752d017b
+            - test:
+                refid: 53f67fea-6307-44ca-9834-7a2f9b71a15a
+            - test:
+                refid: 3ec3e091-dc23-455b-963a-4ba66db7223f
+            - test:
+                refid: 29d24d2e-702f-4c27-b5de-82ac88ca68ca
+            - test:
+                refid: 289df07b-a047-488f-bbe0-4d61cce21421
+            - test:
+                refid: c6da0aef-125f-4d33-9780-ffaa9e724499
           equity:
-            - test: *29d24d2e-702f-4c27-b5de-82ac88ca68ca
-            - test: *53f67fea-6307-44ca-9834-7a2f9b71a15a
-            - test: *3ec3e091-dc23-455b-963a-4ba66db7223f
-            - test: *7d95bef8-6aaa-4706-a276-d206752d017b
-            - test: *289df07b-a047-488f-bbe0-4d61cce21421
-            - test: *c6da0aef-125f-4d33-9780-ffaa9e724499
+            - test:
+                refid: 29d24d2e-702f-4c27-b5de-82ac88ca68ca
+            - test:
+                refid: 53f67fea-6307-44ca-9834-7a2f9b71a15a
+            - test:
+                refid: 3ec3e091-dc23-455b-963a-4ba66db7223f
+            - test:
+                refid: 7d95bef8-6aaa-4706-a276-d206752d017b
+            - test:
+                refid: 289df07b-a047-488f-bbe0-4d61cce21421
+            - test:
+                refid: c6da0aef-125f-4d33-9780-ffaa9e724499
           identity:
-            - test: *53f67fea-6307-44ca-9834-7a2f9b71a15a
-            - test: *3ec3e091-dc23-455b-963a-4ba66db7223f
-            - test: *7d95bef8-6aaa-4706-a276-d206752d017b
-            - test: *29d24d2e-702f-4c27-b5de-82ac88ca68ca
-            - test: *289df07b-a047-488f-bbe0-4d61cce21421
-            - test: *c6da0aef-125f-4d33-9780-ffaa9e724499
+            - test:
+                refid: 53f67fea-6307-44ca-9834-7a2f9b71a15a
+            - test:
+                refid: 3ec3e091-dc23-455b-963a-4ba66db7223f
+            - test:
+                refid: 7d95bef8-6aaa-4706-a276-d206752d017b
+            - test:
+                refid: 29d24d2e-702f-4c27-b5de-82ac88ca68ca
+            - test:
+                refid: 289df07b-a047-488f-bbe0-4d61cce21421
+            - test:
+                refid: c6da0aef-125f-4d33-9780-ffaa9e724499
         operations:
-          - test: &53f67fea-6307-44ca-9834-7a2f9b71a15a
+          - test:
+              id: 53f67fea-6307-44ca-9834-7a2f9b71a15a
               name: tests/reporting/ok/bal-acc-01.exec
               descriptions:
                 - desc: balance and global filters
@@ -701,7 +888,8 @@ features:
                 - ref: reg
                 - ref: equity
                 - ref: identity
-          - test: &3ec3e091-dc23-455b-963a-4ba66db7223f
+          - test:
+              id: 3ec3e091-dc23-455b-963a-4ba66db7223f
               name: tests/reporting/ok/balgrp-acc-01.exec
               descriptions:
                 - desc: balance group and global filters
@@ -711,7 +899,8 @@ features:
                 - ref: reg
                 - ref: equity
                 - ref: identity
-          - test: &7d95bef8-6aaa-4706-a276-d206752d017b
+          - test:
+              id: 7d95bef8-6aaa-4706-a276-d206752d017b
               name: tests/reporting/ok/register-acc-01.exec
               descriptions:
                 - desc: register and global filters
@@ -721,7 +910,8 @@ features:
                 - ref: reg
                 - ref: equity
                 - ref: identity
-          - test: &29d24d2e-702f-4c27-b5de-82ac88ca68ca
+          - test:
+              id: 29d24d2e-702f-4c27-b5de-82ac88ca68ca
               name: tests/reporting/ok/equity-acc-01.exec
               descriptions:
                 - desc: equity and global filters
@@ -731,7 +921,8 @@ features:
                 - ref: reg
                 - ref: equity
                 - ref: identity
-          - test: &289df07b-a047-488f-bbe0-4d61cce21421
+          - test:
+              id: 289df07b-a047-488f-bbe0-4d61cce21421
               name: tests/reporting/ok/rep-02-nothing.exec
               descriptions:
                 - desc: Filter out everything
@@ -741,7 +932,8 @@ features:
                 - ref: reg
                 - ref: equity
                 - ref: identity
-          - test: &c6da0aef-125f-4d33-9780-ffaa9e724499
+          - test:
+              id: c6da0aef-125f-4d33-9780-ffaa9e724499
               name: tests/reporting/ok/rep-01.exec
               descriptions:
                 - desc: Use global setting for reports
@@ -753,45 +945,53 @@ features:
                 - ref: identity
 
 # CLI START
-  - feature: 32f0054b-6c82-42e4-a109-4f624b7e1d4d
-      subject: cli: args: error handling
+  - feature:
+      id: 32f0054b-6c82-42e4-a109-4f624b7e1d4d
+      subject: "cli: args: error handling"
       tests:
         errors:
-          - error: &7a20d61f-c1ab-4aaa-993c-73cc39978c6f
+          - error:
+              id: 7a20d61f-c1ab-4aaa-993c-73cc39978c6f
               name: tests/cli/ex/ExcessArguments-01.exec
               desc: excessive cli arguments
-          - error: &47485d81-ef64-4a6a-9cd6-5f1e15ac130b
+          - error:
+              id: 47485d81-ef64-4a6a-9cd6-5f1e15ac130b
               name: tests/cli/ex/UnknownOption-01.exec
               desc: unknown option
-          - error: &f2284891-82da-4efd-a705-9e8f612c88af
+          - error:
+              id: f2284891-82da-4efd-a705-9e8f612c88af
               name: tests/cli/ex/ValidationFailure-01.exec
               descriptions:
                 - desc: both input and dir
                 - desc: both input and glob
-                - desc: input, dir and glob glob
-                - desc: dir, missing glob
+                - desc: "input, dir and glob glob"
+                - desc: "dir, missing glob"
 
-  - feature: ddcd813e-7396-43e7-8bfd-76e3dcbe04f0
-      subject: cli: args: cfg file path
+  - feature:
+      id: ddcd813e-7396-43e7-8bfd-76e3dcbe04f0
+      subject: "cli: args: cfg file path"
       tests:
         operations:
-          - test: *ba71f292-cc3e-406f-991e-8dd82a7cf87c
-              descriptions:
-                - desc: --cfg
+          - test:
+              refid: ba71f292-cc3e-406f-991e-8dd82a7cf87c
+              desc: --cfg
 
-  - feature: 5ec11c1f-ba61-4ca8-8166-1c722ab6a7da
-      subject: cli: args: input file selector
+  - feature:
+      id: 5ec11c1f-ba61-4ca8-8166-1c722ab6a7da
+      subject: "cli: args: input file selector"
       tests:
         operations:
-          - test: *9f0d3896-ce0b-415b-8d96-ad40e5177b45
-              descriptions:
-                - desc: --input.file;
+          - test:
+              refid: 9f0d3896-ce0b-415b-8d96-ad40e5177b45
+              desc: --input.file
 
-  - feature: db7ca808-4eef-44a9-b61e-3811c41b642a
-      subject: cli: args: reporting.reports
+  - feature:
+      id: db7ca808-4eef-44a9-b61e-3811c41b642a
+      subject: "cli: args: reporting.reports"
       tests:
         operations:
-          - test: &9f0d3896-ce0b-415b-8d96-ad40e5177b45
+          - test:
+              id: 9f0d3896-ce0b-415b-8d96-ad40e5177b45
               name: tests/  reporting/ok/cli-args-01.exec
               descriptions:
                 - desc: --reporting.reports
@@ -799,11 +999,13 @@ features:
                 - ref: bal
                 - ref: balgrp
 
-  - feature: 6b8b9f4a-20e8-45e7-b0ea-1daf99d6589b
-      subject: cli: args: reporting.accounts
+  - feature:
+      id: 6b8b9f4a-20e8-45e7-b0ea-1daf99d6589b
+      subject: "cli: args: reporting.accounts"
       tests:
         operations:
-          - test: &25d62f31-e420-4c46-8397-664983753c7f
+          - test:
+              id: 25d62f31-e420-4c46-8397-664983753c7f
               name: tests/reporting/ok/cli-args-02.exec
               descriptions:
                 - desc: --reporting.accounts
@@ -811,16 +1013,19 @@ features:
                 - ref: bal
                 - ref: balgrp
 
-  - feature: d78b7fec-502e-404e-b5d2-8551f96bcf8c
-      subject: cli: args: reporting.console
+  - feature:
+      id: d78b7fec-502e-404e-b5d2-8551f96bcf8c
+      subject: "cli: args: reporting.console"
       tests:
         operations:
-          - test: &fd250432-9b13-4cdd-83a1-1aedff1593ed
+          - test:
+              id: fd250432-9b13-4cdd-83a1-1aedff1593ed
               name: tests/cli/ok/console-03.exec
               descriptions:
                 - desc: validate stdout + stderr
-                - desc: conf: console = off, --reporting.console=true
-          - test: &fe7017ec-8c26-463b-bf6f-9c2d3cd83220
+                - desc: "conf: console = off, --reporting.console=true"
+          - test:
+              id: fe7017ec-8c26-463b-bf6f-9c2d3cd83220
               name: tests/reporting/ok/cli-args-04.exec
               descriptions:
                 - desc: --reporting.console=true
@@ -830,64 +1035,80 @@ features:
                 - ref: reg
                 - ref: id
 
-  - feature: ed988446-3e8c-4dd5-a0f4-d02c1a145e2e
-      subject: cli: args: reports and account selector combination
+  - feature:
+      id: ed988446-3e8c-4dd5-a0f4-d02c1a145e2e
+      subject: "cli: args: reports and account selector combination"
       tests:
         operations:
-          - test: &3ef0b17b-3e0f-4033-962b-0ca1de8d2ca4
+          - test:
+              id: 3ef0b17b-3e0f-4033-962b-0ca1de8d2ca4
               name: tests/reporting/ok/cli-args-03.exec
               descriptions:
-                - desc: CLI Args: --reporting.reports, --reporting.accounts
+                - desc: "CLI Args: --reporting.reports, --reporting.accounts"
               references:
                 - ref: bal
                 - ref: balgrp
 
-  - feature: 4d07602f-c3f2-4a26-9166-3f371e6670d2
-      subject: cli: args: basedir
+  - feature:
+      id: 4d07602f-c3f2-4a26-9166-3f371e6670d2
+      subject: "cli: args: basedir"
       tests:
         operations:
-          - test: *cd54250a-8af2-4daa-9d8e-7870b5987da9
+          - test:
+              id: cd54250a-8af2-4daa-9d8e-7870b5987da9
               name: tests/cli/ok/unknown-acc-01.exec
               descriptions:
                 - desc: --basedir
               references:
                 - ref: identity
 
-  - feature: 7ae035a1-3ebc-43f4-87af-0439e2d3b2e5
-      subject: cli: args: input.txn.dir
+  - feature:
+      id: 7ae035a1-3ebc-43f4-87af-0439e2d3b2e5
+      subject: "cli: args: input.txn.dir"
       tests:
         errors:
-          - error: &97c7193f-281f-4103-b5e2-7397433ba79c
+          - error:
+              id: 97c7193f-281f-4103-b5e2-7397433ba79c
               name: tests/cli/ex/NoSuchFileException-txn.dir-not-found-01.exec
               desc: file not found (txn.input.dir)
         operations:
-          - test: *31a128f5-d1a2-4d93-beee-6599344ece57
+          - test:
+              refid: 31a128f5-d1a2-4d93-beee-6599344ece57
 
-  - feature: 78889e89-065a-4bd0-bcd6-9db2d2d6e8cf
-      subject: cli: args: input.txn.glob
+  - feature:
+      id: 78889e89-065a-4bd0-bcd6-9db2d2d6e8cf
+      subject: "cli: args: input.txn.glob"
       tests:
         operations:
-          - test: *31a128f5-d1a2-4d93-beee-6599344ece57
+          - test:
+              refid: 31a128f5-d1a2-4d93-beee-6599344ece57
 
-  - feature: 58bc821a-b231-4c3d-9a7a-36e57f93147f
-      subject: cli: args: accounts.strict
+  - feature:
+      id: 58bc821a-b231-4c3d-9a7a-36e57f93147f
+      subject: "cli: args: accounts.strict"
       tests:
         operations:
-          - test: &cd54250a-8af2-4daa-9d8e-7870b5987da9
+          - test:
+              refid: cd54250a-8af2-4daa-9d8e-7870b5987da9
 
-  - feature: 00e155fe-694e-4e06-b152-25cba438a4a2
-      subject: cli: args: --output
+  - feature:
+      id: 00e155fe-694e-4e06-b152-25cba438a4a2
+      subject: "cli: args: --output"
       tests:
         errors:
-          - error: &f04577b6-49b2-460f-92f6-7886a4b49152
+          - error:
+              id: f04577b6-49b2-460f-92f6-7886a4b49152
               name: tests/cli/ex/NoSuchFileException-output-not-found-01.exec
               desc: output path not found
-          - error: &a9a8c149-a584-45e5-b4f1-0f901cfd1831
+          - error:
+              id: a9a8c149-a584-45e5-b4f1-0f901cfd1831
               name: tests/cli/ok/console-04.exec
               desc: no output, no console (this is WARN at the moment)
         operations:
-          - test: *25d62f31-e420-4c46-8397-664983753c7f
+          - test:
+              refid: 25d62f31-e420-4c46-8397-664983753c7f
               name: tests/reporting/ok/cli-args-02.exec
-          - test: *940ed68b-7f1c-41fe-bab9-aefd8cf60b3a
+          - test:
+              refid: 940ed68b-7f1c-41fe-bab9-aefd8cf60b3a
               name: tests/cli/ok/console-01.exec
 ### CLI END

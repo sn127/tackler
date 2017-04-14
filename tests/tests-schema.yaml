@@ -1,3 +1,4 @@
+---
 type: map
 mapping:
   features:
@@ -8,8 +9,8 @@ mapping:
           feature:
             type: map
             mapping:
-              subject:
-                type: str
+              id: { type: str }
+              subject: { type: str }
               tests:
                 type: map
                 mapping:
@@ -21,10 +22,16 @@ mapping:
                           error:
                             type: map
                             mapping:
-                              name:
-                                type: str
-                              desc:
-                                type: str
+                              id: { type: str }
+                              refid: { type: str }
+                              name: { type: str }
+                              desc: { type: str }
+                              descriptions:
+                                type: seq
+                                sequence:
+                                  - type: map
+                                    mapping:
+                                      desc: { type: str }
                   reports:
                     type: map
                     mapping:
@@ -34,34 +41,67 @@ mapping:
                           - type: map
                             mapping:
                               test:
-                                type: any
+                                type: map
+                                mapping:
+                                  refid: { type: str }
                       balance-group:
                         type: seq
                         sequence:
                           - type: map
                             mapping:
                               test:
-                                type: any
+                                type: map
+                                mapping:
+                                  refid: { type: str }
                       registry:
                         type: seq
                         sequence:
                           - type: map
                             mapping:
                               test:
-                                type: any
+                                type: map
+                                mapping:
+                                  refid: { type: str }
                       identity:
                         type: seq
                         sequence:
                           - type: map
                             mapping:
                               test:
-                                type: any
+                                type: map
+                                mapping:
+                                  refid: { type: str }
+                      equity:
+                        type: seq
+                        sequence:
+                          - type: map
+                            mapping:
+                              test:
+                                type: map
+                                mapping:
+                                  refid: { type: str }
                   operations:
                     type: seq
                     sequence:
                       - type: map
                         mapping:
                           test:
-                            type: str
-                          name:
-                            type: str
+                            type: map
+                            mapping:
+                              id: { type: str }
+                              refid: { type: str }
+                              name: { type: str }
+                              desc: { type: str }
+                              descriptions:
+                                type: seq
+                                sequence:
+                                  - type: map
+                                    mapping:
+                                      desc: { type: str }
+                              references:
+                                type: seq
+                                sequence:
+                                  - type: map
+                                    mapping:
+                                      ref: { type: str }
+
