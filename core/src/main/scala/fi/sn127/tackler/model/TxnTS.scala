@@ -6,6 +6,24 @@ import java.time.temporal.ChronoField.DAY_OF_WEEK
 import java.time.temporal.IsoFields
 
 object TxnTS {
+  private val frmtISOWeek = new DateTimeFormatterBuilder()
+    .appendValue(IsoFields.WEEK_BASED_YEAR, 4, 10, SignStyle.EXCEEDS_PAD)
+    .appendLiteral("-W")
+    .appendValue(IsoFields.WEEK_OF_WEEK_BASED_YEAR, 2)
+    .appendOffset("+HH:MM", "Z")
+    .toFormatter
+
+  // no zoneId as with ISO_WEEK_DATE
+  // no localized day number as with 'e' (e.g. en_US => sunday == 1)
+  private val frmtISOWeekDate = new DateTimeFormatterBuilder()
+    .appendValue(IsoFields.WEEK_BASED_YEAR, 4, 10, SignStyle.EXCEEDS_PAD)
+    .appendLiteral("-W")
+    .appendValue(IsoFields.WEEK_OF_WEEK_BASED_YEAR, 2)
+    .appendLiteral('-')
+    .appendValue(DAY_OF_WEEK, 1)
+    .appendOffset("+HH:MM", "Z")
+    .toFormatter
+
   /**
    * ISO-8601 Timestamp with offset.
    *
@@ -50,7 +68,7 @@ object TxnTS {
    * @return ISO-8601 week (without date): 2010-01-01 => 2009-W53+03:00
    */
   def isoWeek(ts: ZonedDateTime): String = {
-    ts.format(DateTimeFormatter.ofPattern("YYYY'-W'wwXXX"))
+    ts.format(frmtISOWeek)
   }
 
   /**
@@ -59,17 +77,6 @@ object TxnTS {
    * @return ISO-8601 week date: 2010-01-01 => 2009-W53-5+03:00
    */
   def isoWeekDate(ts: ZonedDateTime): String = {
-    // no zoneId as with ISO_WEEK_DATE
-    // no localized day number as with 'e' (e.g. en_US => sunday == 1)
-    val frmtISOWeekDate = new DateTimeFormatterBuilder()
-      .appendValue(IsoFields.WEEK_BASED_YEAR, 4, 10, SignStyle.EXCEEDS_PAD)
-      .appendLiteral("-W")
-      .appendValue(IsoFields.WEEK_OF_WEEK_BASED_YEAR, 2)
-      .appendLiteral('-')
-      .appendValue(DAY_OF_WEEK, 1)
-      .appendOffset("+HH:MM", "Z")
-      .toFormatter
-
     ts.format(frmtISOWeekDate)
   }
 }
