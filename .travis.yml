@@ -1,0 +1,40 @@
+###
+### SN127: tackler
+### https://github.com/sn127/tackler
+###
+
+language: scala
+
+jdk: oraclejdk8
+
+scala:
+   - 2.12.1
+
+addons:
+  apt:
+    packages:
+      - oracle-java8-installer
+
+cache:
+  directories:
+    - $HOME/.ivy2/cache
+    - $HOME/.sbt/boot/
+
+before_cache:
+  # Tricks to avoid unnecessary cache updates
+  - find $HOME/.ivy2 -name "ivydata-*.properties" -delete
+  - find $HOME/.sbt -name "*.lock" -delete
+
+###
+### Actual build definition
+###
+
+script:
+   - sbt clean coverage test
+
+after_success:
+   # coverageAggregate must be on separate step by sbt-coveralls
+   # because this is multiproject build
+   - sbt coverageReport
+   - sbt coverageAggregate coveralls
+
