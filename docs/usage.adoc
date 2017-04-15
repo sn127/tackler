@@ -51,9 +51,10 @@ path can be absolute or relative path to the basedir.
 
 ===== Multiple `txn` -files and sharding
 
- * `--input.txn.dir`: directory which holds `txn` -files (absolute or relative path to basedir).
- * `--input.txn.glob`: glob to find `txn` -files under `txn.dir`
- ** e.g. `*.txn` for flat directories or `**.txn` for deep directory structures
+* `--input.txn.dir`: directory which holds `txn` -files (absolute or relative path to basedir).
+* `--input.txn.glob`: glob to find `txn` -files under txn.dir
+
+ e.g. *.txn for flat directories or **.txn for deep directory structures
 
 One typical way to shard `txn` data is to use time based sharding, for example:
 
@@ -61,8 +62,8 @@ One typical way to shard `txn` data is to use time based sharding, for example:
  * `year/iso-week/iso-week-date`
 
 
-With sharding and glob-pattern it is very easy to generate reports with
-only selected accounting data.  For example With iso-week-date sharding 
+With data shard and glob-pattern it is very easy to generate reports with
+only selected accounting data.  For example with shard based on iso-week-date
 it is possible to generate weekly reports with following piece of bash:
 
 ....
@@ -77,9 +78,9 @@ java \
    "$@"
 ....
 
-If either shell or 
-link:https://github.com/typesafehub/config#optional-system-or-env-variable-overrides[environment arguments are used with conf] 
-then it is good to use those on `input.txn.dir` so that scanned file set is as small as possible.
+If this feature is used (e.g. with shell or
+link:https://github.com/typesafehub/config#optional-system-or-env-variable-overrides[environment arguments are used with conf])
+then it is good idea to use as specialized `input.txn.dir` as possible. In that case scanned file set is as small as possible.
 File scanning and glob matching starts from `input.txn.dir` and descents from there.
 
 Tackler doesn't care how do you shard your data or if you don't shard it at all. 
@@ -90,10 +91,10 @@ However, with sharding memory requirements are smaller,
 there isn't basically any performance inpact with shard input, 
 and sharding makes more sense with version control backend.
 
-So it's recommened to select some sharding scheme with production systems.
+It's recommended to select some data shard scheme with production systems.
 
 Regardless of used sharding scheme, it is possible to group txns with different
-groupBy operators. 
+`group-by` operators.
 
 
 ==== Reporting
@@ -112,28 +113,37 @@ Produced reports can be selected either by configuration or CLI options:
 
  * `--reporting.reports "report1" "report2"`
 
-Valid options are: `balance`, `balance-group`, `register`, `equity`, `identity`
+Valid options are:
+link:./report-balance.adoc[`balance`],
+link:./report-balance-group.adoc[`balance-group`],
+link:./report-register.adoc[`register`],
+link:./report-equity.adoc[`equity`],
+link:./report-identity.adoc[`identity`]
+
 
 ===== Selecting accounts for reports
 
 Accounts included with reports are selected with option:
 
- * `--reporting.accounts "^Assets:.*", "^Expenses:.*"`
+ --reporting.accounts "^Assets:.*", "^Expenses:.*"`
 
 All accounts are selected with empty selection.
 
 If There are no accounts matched for report then report's sub-section
 is not printed / outputted at all (balance Group, register report).
 
+
 ===== Balance Group Report and GroupBy
 
-Balance Group report is like Balance report, but it will produce
-several sub-reports for group of transactions. Typical examples are balance over month
+link:./report-balance-group.adoc[Balance Group] report is
+like link:./report-balance.adoc[Balance] report, but it will produce
+several sub-reports for group of transactions. Typical examples are Balance report over month
 and Balance Group report by weeks, or Balance report for week and Balance Group report based on iso-week-date or plain date.
 
 Criteria could be: `year`, `month`, `date`, `iso-week`, `iso-week-date`
 
 GroupBy is set by link:./tackler.conf[configuration (tackler.conf)].
+
 
 ==== Output
 
@@ -149,9 +159,9 @@ Actual file names will be:
 
 For reports:
 
-* `<output>.bal.txt`: Balance report
-* `<output>.balgrp.txt`: Balance Groups report
-* `<output>.reg.txt`: Registry report
+* `<output>.bal.txt`: link:./report-balance.adoc[Balance report]
+* `<output>.balgrp.txt`: link:./report-balance-group.adoc[Balance Groups report]
+* `<output>.reg.txt`: link:./report-register.adoc[Registry report]
 
 For exports:
 

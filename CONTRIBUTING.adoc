@@ -5,9 +5,9 @@ Contributions to the project are most welcome!
 
 == Open and planned tasks
 
-At the moment project todo items are maintained in link:./docs/todo/[todo files].
-Before starting working on something, please first check via gitter or by issue if your plan is feasible and viable
-from project's perspective.
+At the moment project todo items are maintained in link:../todo/[todo files].
+Before starting working on something, please first check with Github issue
+if your plan is feasible and viable from project's perspective.
 
 
 == How to build and test
@@ -36,12 +36,12 @@ Directory structure follows Maven's layout and code has been divided to sub-proj
 link:./core[core]::
 Tackler Core
 +
-** link:./core/src/main/*antlr4*/[] ANTLR4 Grammar definition for Tackler input
-** link:./core/src/main/*java*/fi/sn127/tackler/parser/[] Java helpers for parser
-** link:./core/src/main/*scala*/fi/sn127/tackler/parser/[] Scala interface for Parser
-** link:./core/src/main/*scala*/fi/sn127/tackler/model/[]  Model object (Txn, Posting, etc)
-** link:./core/src/main/*scala*/fi/sn127/tackler/core/[] Core modules
-** link:./core/src/main/*scala*/fi/sn127/tackler/report/[] Reporting code
+** link:./core/src/main/antlr4/[] ANTLR4 Grammar definition for Tackler input
+** link:./core/src/main/java/fi/sn127/tackler/parser/[] Java helpers for parser
+** link:./core/src/main/scala/fi/sn127/tackler/parser/[] Scala interface for Parser
+** link:./core/src/main/scala/fi/sn127/tackler/model/[]  Model object (Txn, Posting, etc)
+** link:./core/src/main/scala/fi/sn127/tackler/core/[] Core modules
+** link:./core/src/main/scala/fi/sn127/tackler/report/[] Reporting code
 +
 link:./cli[cli]::
 Command Line Interface code

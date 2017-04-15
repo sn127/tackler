@@ -1,14 +1,11 @@
-Tackler has been originally written by Jani Averbach 
-from scratch.
-
-Following projects have provided valuable contributions, 
-feedback, inspiration and ideas for this project.
-
-Thank you for your help!
+Tackler has been originally written by Jani Averbach from scratch.
+Following projects have provided valuable contributions,
+feedback, inspiration and ideas for this project. Thank you for your help!
 
 Components (used with Tackler):
 
  * link:http://www.antlr.org/[ANTLR (ANother Tool for Language Recognition)]
+ * link:https://github.com/pathikrit/better-files[Better-files]
  * link:http://typelevel.org/cats/[Cats]
  * link:https://logback.qos.ch/[Logback Project]
  * link:https://github.com/jsuereth/scala-arm[Scala-ARM (automatic resource mgmt)]

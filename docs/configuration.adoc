@@ -8,7 +8,7 @@ have example values and documentation for all configuration variables.
 
 You can override some of the configuration varibles with CLI options.
 These configuration options, and command line switches are documented
-on link:./tackler.conf[].
+on link:./tackler.conf[tackler.conf].
 
 Tackler configuration file format is HOCON, there is extensive 
 documentation available on by

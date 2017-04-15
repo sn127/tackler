@@ -13,15 +13,21 @@
 * link:./devel/build.adoc[How to build]
 * link:./devel/design.adoc[General Design]
 
-=== Tackler enhancement proposals
+=== Tackler Enhancement Proposals
 
-* link:./tep[]
+Tackler Enhancement Proposals (TEP) are:
+
+* link:./tep/tep-1000.adoc[TEP-0001: TEP template]
+* link:./tep/tep-1000.adoc[TEP-1000: Equity]
+* link:./tep/tep-1000.adoc[TEP-1001: Units/Commodities]
 
 === Licenses of other components
 
-* link:./licenses/ANTLR4-LICENSE.txt[]
-* link:./licenses/CATS-LICENSE.txt[]
-* link:./licenses/CONFIG-LICENSE.txt[]
-* link:./licenses/LOGBACK-LICENSE.txt[]
-* link:./licenses/SLF4J-LICENSE.txt[]
-
+* link:./licenses/ANTLR4-LICENSE.txt[ANTLR4]
+* link:./licenses/BETTER-FILES-LICENSE.txt[Better-files]
+* link:./licenses/CATS-LICENSE.txt[Cats]
+* link:./licenses/CONFIG-LICENSE.txt[Typelevel Config]
+* link:./licenses/LOGBACK-LICENSE.txt[Logback]
+* link:./licenses/SLF4J-LICENSE.txt[SLF4J]
+* link:./licenses/SCALA-ARM-LICENSE.txt[Scala-ARM]
+* link:./licenses/SCALLOP-LICENSE.txt[Scallop]

@@ -22,11 +22,11 @@ You can also provide path to configuration file with `--cfg` option.
 
 == Configuration
 
-Please see link:./configuration.adoc[] for information about how to configure system.
+Please see link:./configuration.adoc[configuration] for information about how to configure system.
 
 You can override some of the configuration varibles with CLI arguments.
 These configuration variables, and command line switches are documented
-in link:./tackler.conf[].
+in link:./tackler.conf[tackler.conf].
 
 
 === Chart of Accounts
@@ -42,4 +42,4 @@ With production systems, it is highly recommended to provide valid
 Chart of Accounts and not to disable account name check.
 
 Chart of accounts is defined either as part of main configuration or
-as separate configuration file. See link:./accounts.conf[] for example configuration.
+as separate configuration file. See link:./accounts.conf[accounts.conf] for example configuration.

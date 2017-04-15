@@ -6,9 +6,10 @@ are grouped by selected criteria.
 Available group by criteria at the moment is:
 `year`, `month`, `day`, `iso-week` and `iso-week-date`.
 See link:./tackler.conf[reports.balance-group.group-by] configuration option.
+ISO-8601 rules are used for `iso-week` and `iso-week-date`.
 
-Typically balance group report could be by weeks, if main report is month,
-or it could be monthly grouping is main report is over year.  Curre
+For example balance group report could be by weeks, when main report is done for month,
+or it could be monthly grouping when main balance report is year.
 
 Other than that, the output same as with balance report.
 

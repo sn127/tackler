@@ -1,8 +1,11 @@
 = Performance tests
 
-Tackler's performance is tested with artificial txn data
+Tackler's performance is tested to validate sanity of used algorithms and overall performance.
+
+Performance testing is done with artificial transaction data
 which mimics as well as possible real transactional data.
 
+Test data is generated with link:../tools/generator[generator].
 
 Tests are done with balance report and with setting `accounts.strict=true` 
 (e.g. for each transaction it is checked that all accounts are listed in
@@ -100,6 +103,6 @@ Total processing time: 28351, input: 1, parse: 24766, reporting: 1308
 real	0m28.962s
 user	0m49.389s
 sys	0m2.644s
-.....
+....
 
 This is not part of routine perf testing.
