@@ -1,7 +1,9 @@
+image:https://travis-ci.org/sn127/tackler.svg?branch=stable["Build Status", link="https://travis-ci.org/sn127/tackler"]
+image:https://coveralls.io/repos/github/sn127/tackler/badge.svg?branch=stable["Build Status", link="https://coveralls.io/github/sn127/tackler?branch=stable"]
+
 = Tackler
 
-Tackler Ain't Calculator and Kernel for link:http://ledger-cli.org/[Ledger] Equivalent Records
-
+Tackler Ain't Calculator and Kernel for link:http://ledger-cli.org/[Ledger] Equivalent Records.
 Why not?  - Because it uses simplified Ledger syntax!
 
 So in other words, Tackler is accounting engine and reporting tool for link:http://plaintextaccounting.org/[text
@@ -78,14 +80,12 @@ User documentation is located under docs:
 * link:./docs/tackler.conf[Example of Tackler configuration]
 * link:./docs/accounts.conf[Example of Tackler Chart of Accounts]
 
-Documentation for developers is located under docs/devel:
-
-* link:./docs/devel[]
+Documentation for developers is located under: link:./docs/devel[]
 
 
 == Todo
 
-At the moment, current set of todo items is kept under link:./todo[todo]
+At the moment, current set of todo items is kept under link:./todo[]
 
 
 == Releases
@@ -94,7 +94,8 @@ For release information and version history details,
 see link:./CHANGELOG.adoc[CHANGELOG].
 
 Tackler is under development, so if you enjoy calm seas
-then it might be better to look link:./docs/other.adoc[something  else].
+then it might be better to look
+link:http://plaintextaccounting.org/[something else].
 
 However, complex backward non-compatible changes to Txns file format
 should be rare. At the moment Tackler is used in production for
@@ -127,7 +128,7 @@ Please make sure that you sign-off all your PR's commits.
 
 == Credits
 
-Please see link:./THANKS.md[THANKS] for full list of credits.
+Please see link:./THANKS.adoc[THANKS] for full list of credits.
 
 
 == License
@@ -147,4 +148,3 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ....
-

@@ -1,5 +1,9 @@
 = Tackler releases
 
+=== next
+
+* Use always ISO-8601 week rules regardless of system locale
+
 
 === 0.4.1
 

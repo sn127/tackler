@@ -3,11 +3,14 @@
 With 1E6 txn about 2min 20sec, utilizing 1 core and 2.1GB of memory.
 
 ....
+ledger --version
+Ledger 3.1.1-20160111, the command-line accounting tool
+
 time ledger balance --no-pager -f single/perf-1E6.txn 
 
-real	2m18.936s
-user	2m17.263s
-sys	0m1.253s
+real    2m18.936s
+user    2m17.263s
+sys     0m1.253s
 ....
 
 
@@ -21,27 +24,26 @@ hledger 0.27.1
 
 time hledger balance -f ldg-single/perf-1E6.txn
 
-real	3m0.005s
-user	2m54.963s
-sys	0m4.327s
+real    3m0.005s
+user    2m54.963s
+sys     0m4.327s
 .....
 
 
 == Abandon
 
-Currently abandon can not handle test data set.
+Abandon (v0.4.0) can not handle test data set.
 
 There is an exception with too many open files with shard data (1E4), 
-and with single txn-file performance is not linear (O^2?).  
-
-With 10x input size increase, Abandon's execution time increases 
+and with single txn-file performance is not linear (O^2?).
+With 10x input size increase, Abandon's execution time increases
 about 100x (1E4: 11sec  -> 1E5 16min).
 
 
-=== Sharded data: 1E4 txns
+=== Shard txn data
 
 ....
-time java -jar ../tackler/tools/bin/abandon-cli-assembly-0.4.0.jar -c abandon-perf.conf 
+time java -jar abandon-cli-assembly-0.4.0.jar -c abandon-perf.conf
 Processing: ledger/perf-1E4/2016/01/01/20160101T005242-1.txn
 Processing: ledger/perf-1E4/2016/01/01/20160101T014524-2.txn
 ...
@@ -53,26 +55,24 @@ java.io.FileNotFoundException: ledger/perf-1E4/2016/05/29/20160529T110648-4084.t
 === Single files
 
 ....
-time java -jar ../tackler/tools/bin/abandon-cli-assembly-0.4.0.jar -c abandon-perf.conf
+time java -jar abandon-cli-assembly-0.4.0.jar -c abandon-perf.conf
 Processing: single/perf-1E4.txn
 
 Writing Balance Sheet to: tperf/abandon.bal.txt
 
-real	0m11.391s
-user	0m20.702s
-sys	0m0.619s
+real    0m11.391s
+user    0m20.702s
+sys     0m0.619s
 ....
 
 
 ....
-time java -jar ../tackler/tools/bin/abandon-cli-assembly-0.4.0.jar -c abandon-perf.conf
+time java -jar abandon-cli-assembly-0.4.0.jar -c abandon-perf.conf
 Processing: single/perf-1E5.txn
 
 Writing Balance Sheet to: tperf/abandon.bal.txt
 
-real	16m42.977s
-user	17m55.173s
-sys	0m1.666s
+real    16m42.977s
+user    17m55.173s
+sys     0m1.666s
 ....
-
-

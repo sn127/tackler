@@ -1,7 +1,30 @@
-= 
+= Performance results
 
-== ANTLR 4.6 vs. 4.7
+These are ballpark results.
+They are mostly used to validate sanity of used algorithms and overall performance.
 
- * antlr 4.7: 36e501e2963450265a1a35428da6cb0a5f45e235
- * antlr 4.6: e05641165d4d209caeef69bdd20d74bef627ca09
+Typically there are five runs, and slowest and fastest are dropped off from results.
+Then Average is calculated based on remaining three.
 
+Results with versions correspond to different ANTLR versions, and
+most current version is without version string.
+
+Current result is located here: link:./hw01/perf-1E6.txt[]
+
+== ANTRL versions
+
+=== ANTLR 4.7
+
+link:https://github.com/antlr/antlr4/releases/tag/4.7[Major changes of ANTLR 4.7]
+include full 21-bit unicode support and deprecated `ANTLRFileStream et.al.`
+These changes had no visible impact on Tackler's performance:
+
+ * link:./hw01/perf-1E3-antlr-4.7.txt[]
+ * link:./hw01/perf-1E6-antlr-4.7.txt[]
+
+=== ANTLR 4.6
+
+Initially used version
+
+ * link:./hw01/perf-1E3-antlr-4.6.txt[]
+ * link:./hw01/perf-1E6-antlr-4.6.txt[]
