@@ -14,14 +14,14 @@ based double-entry accounting].
 
 * ISO 8601 timestamps with timezones and nanosecond resolution
 * Supports international characters in transaction data (descriptions, comments, account names)
-* Strict account name validation with link:./accounts.conf[Chart of Accounts]
-* Reports (link:./report-balance.adoc[Balance], link:./report-balance-group.adoc[Balance Groups], link:./report-register.adoc[Register])
-* Exports (link:./report-equity.adoc[Equity], link:./report-identity.adoc[Identity])
+* Strict account name validation with link:./docs/accounts.conf[Chart of Accounts]
+* Reports (link:docs/report-balance.adoc[Balance], link:docs/report-balance-group.adoc[Balance Groups], link:docs/report-register.adoc[Register])
+* Exports (link:docs/report-equity.adoc[Equity], link:docs/report-identity.adoc[Identity])
 * Can handle large set of transactions
 ** Tackler is faster than link:docs/perf-others.adoc[Ledger], and it has similar memory foot print!
-** Tackler is tested up to link:./perf[one million txns], with processing time link:docs/performance.adoc[about 30sec]
+** Tackler is tested up to link:perf[one million txns], with processing time link:docs/performance.adoc[about 30sec]
 * Near 100% test coverage, link:tests/tests.yaml[all features are extensively tested]
-* Extensive documentation (link:./docs/index.adoc[Index of Docs])
+* Extensive documentation (link:docs/index.adoc[Index of Docs])
 
 
 == Why Tackler?
