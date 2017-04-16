@@ -33,14 +33,15 @@ final case class Posting(
   override
   def toString: String = {
     val missingSign = if (amount < 0) "" else " "
-    "   " + acctn.toString + "  " +
+    acctn.toString + "  " +
       missingSign + amount.toString() +
       comment.map(c => " ; " + c).getOrElse("")
   }
 }
 
 object Posting {
-  def sumPosts(posts: Posts): BigDecimal = {
+
+  def sum(posts: Posts): BigDecimal = {
     posts.foldLeft(BigDecimal(0))(_ + _.amount)
   }
 }

@@ -152,7 +152,7 @@ class TacklerTxns(val settings: Settings) {
 
     val last_posting = Option(txnCtx.postings().last_posting()).map(lp => {
         val ate = handleAccount(lp.account())
-        val amount = Posting.sumPosts(posts)
+        val amount = Posting.sum(posts)
         val comment = Option(lp.comment()).map(c => c.text().getText)
         List(Posting(ate, -amount, comment))
       })

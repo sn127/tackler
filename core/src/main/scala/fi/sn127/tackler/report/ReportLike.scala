@@ -16,13 +16,11 @@
  */
 package fi.sn127.tackler.report
 
-import fi.sn127.tackler.core.Settings
 import fi.sn127.tackler.model.Txns
 
-trait ReportLike {
-  val settings: Settings
+trait ReportLike extends OutputLike {
   /**
-   * Name of output file.
+   * Report name part of output filename.
    */
   val name: String
 
@@ -73,14 +71,15 @@ trait ReportLike {
     getFillFormat(width, v).format(v)
   }
 
-  def textWriter(writers: Writers, rows: Seq[String]): Unit = {
-
+  /**
+   * Output multiple rows to multiple outputs
+   *
+   * @param writers sequence of outputs
+   * @param rows to be output
+   */
+  protected def doRowOutputs(writers: Writers, rows: Seq[String]): Unit = {
     writers.foreach(w => {
-      rows.foreach(row => {
-        w.write(row)
-        w.write("\n")
-      })
-      w.flush()
+      doRowOutput(w, rows)
     })
   }
 

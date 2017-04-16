@@ -49,6 +49,6 @@ class EquityReport(val settings: Settings) extends ExportLike {
   def doExport(writer: Writer, txns: Txns): Unit = {
 
     val txtEqReport = txnEquity(txns)
-    txnWriter(writer, txtEqReport)
+    doRowOutput(writer, txtEqReport)
   }
 }

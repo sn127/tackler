@@ -49,13 +49,13 @@ class RegisterReport(val name: String, val settings: Settings) extends ReportLik
   }
 
   private def doHeaders(formats: Formats): Unit = {
-    formats.foreach({case (format, w ) =>
+    formats.foreach({case (format, writers) =>
       format match {
         case TextFormat() =>
           val reportHeader = List(
             mySettings.title,
             "-" * mySettings.title.length)
-          textWriter(w, reportHeader)
+          doRowOutputs(writers, reportHeader)
 
         //case JsonFormat() => ???
       }
@@ -65,11 +65,11 @@ class RegisterReport(val name: String, val settings: Settings) extends ReportLik
   private def doBody(formats: Formats, filter: Filtering[RegisterPosting], txns: Txns): Unit = {
 
     Accumulator.registerStream(txns)({regEntry: RegisterEntry =>
-      formats.foreach({case (format, w) =>
+      formats.foreach({case (format, writers) =>
         format match {
           case TextFormat() =>
             val txtRegEntry = txtRegisterEntry(regEntry, filter)
-            textWriter(w, txtRegEntry)
+            doRowOutputs(writers, txtRegEntry)
 
           //case JsonFormat() => ???
         }

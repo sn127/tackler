@@ -49,7 +49,7 @@ class PostingTest extends FlatSpec {
       BigDecimal("123456789012345678901234567890.123456789012345678901234567890123456789012")
     val p = Posting(acctn, v, None)
 
-    assert(p.toString === "   a:b   123456789012345678901234567890.123456789012345678901234567890123456789012")
+    assert(p.toString === "a:b   123456789012345678901234567890.123456789012345678901234567890123456789012")
   }
 
   /**
@@ -59,6 +59,6 @@ class PostingTest extends FlatSpec {
     val v = BigDecimal("123.01")
     val p = Posting(acctn, v, Some("comment"))
 
-    assert(p.toString === "   a:b   123.01 ; comment")
+    assert(p.toString === "a:b   123.01 ; comment")
   }
 }

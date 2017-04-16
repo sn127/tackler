@@ -17,13 +17,23 @@
 package fi.sn127.tackler.report
 
 import fi.sn127.tackler.core.Settings
-import fi.sn127.tackler.model.Txns
 
-class IdentityReport(val settings: Settings) extends ExportLike {
+trait OutputLike {
+  val settings: Settings
 
-  def doExport(writer: Writer, txns: Txns): Unit = {
-    txns.foreach(txn => {
-      doRowOutput(writer, List(txn.toString))
+  /**
+   * Output of multiple rows to single output.
+   * This uses hardcoded LF line endings.
+   * Writer is flushed after all rows are written.
+   *
+   * @param writer to do output
+   * @param rows to be output
+   */
+  protected def doRowOutput(writer: Writer, rows: Seq[String]): Unit = {
+    rows.foreach(row => {
+      writer.write(row)
+      writer.write("\n")
     })
+    writer.flush()
   }
 }

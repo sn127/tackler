@@ -36,22 +36,22 @@ final case class Transaction(
   comments: Option[List[String]],
   posts: Posts) {
 
-  if (BigDecimal(0).compareTo(Posting.sumPosts(posts)) =!= 0) {
-    throw new TxnException("TXN postings do not zero: " + Posting.sumPosts(posts).toString())
+  if (BigDecimal(0).compareTo(Posting.sum(posts)) =!= 0) {
+    throw new TxnException("TXN postings do not zero: " + Posting.sum(posts).toString())
   }
 
   /**
    * Txn sorting logic.
    *
-   * Input order of Txn is not significant, so there should
+   * Input order of Txn can not be mandated, so there should
    * be a stable way to sort transactions.
    *
    * Txn components are used in following order to find sort order
-   * (in case of previous components have been same):
-   *  date, code, description, uuid
+   * (in case of previous components have produced "same" sort order):
+   *  timestamp, code, description, uuid
    *
-   * If fully deterministic sort order is needed, then transactions must have
-   * uuid field.
+   * If fully deterministic and safe "distributed txn source"-proof
+   * sort order is needed, then transactions must have UUIDs.
    *
    * @param otherTxn to be compared to this Txn
    * @return 0 if the argument txn is equal to this Txn.
@@ -78,6 +78,13 @@ final case class Transaction(
     }
   }
 
+  /**
+   * Get header part of txn as string.
+   *
+   * @param indent indent string for meta and comment parts
+   * @param tsFormatter timestamp formatter
+   * @return new line terminated header of txn
+   */
   def txnHeaderToString(indent: String, tsFormatter: (ZonedDateTime => String)): String = {
     val codeStr = code.map(c => " (" + c + ") ")
 
@@ -95,6 +102,6 @@ final case class Transaction(
     val indent = " " * 3
 
     txnHeaderToString(indent, TxnTS.isoZonedTS) +
-      posts.map(p => p.toString).mkString("\n") + "\n"
+      posts.map(p => indent + p.toString).mkString("\n") + "\n"
   }
 }

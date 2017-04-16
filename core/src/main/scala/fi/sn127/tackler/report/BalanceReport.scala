@@ -78,10 +78,10 @@ class BalanceReport(val name: String, val settings: Settings) extends  BalanceRe
   def doReport(formats: Formats, txns: Txns): Unit = {
     val txtBalanceReport = txtReporter(txns)(txtBalance)
 
-    formats.foreach({case (format, w ) =>
+    formats.foreach({case (format, writers) =>
       format match {
         case TextFormat() =>
-          textWriter(w, txtBalanceReport)
+          doRowOutputs(writers, txtBalanceReport)
 
         //case JsonFormat() => ???
       }
@@ -149,10 +149,10 @@ class BalanceGroupReport(val name: String, val settings: Settings) extends Balan
 
     val txtBalgrpReport = txtBalanceGroups(txns)
 
-    formats.foreach({case (format, w ) =>
+    formats.foreach({case (format, writers) =>
       format match {
         case TextFormat() =>
-          textWriter(w, txtBalgrpReport)
+          doRowOutputs(writers, txtBalgrpReport)
 
         //case JsonFormat() => ???
       }
