@@ -4,7 +4,14 @@ Identity report produces an export of transactions as they are interpreted by Ta
 
 This report is valid input for Tackler, so it can be used for example archiving purposes.
 
-If internal order of transaction stream is important, then it is mandatory to provide
-unique sorting information for each transaction. This means that each Txns must have
-either `uuid` meta info field, or unique combination of `time`, `code` and `description`
-field values (it is enough that combination or one field of above is unique).
+Input order of Txn can not be mandated. So there should be a stable way to sort transactions if
+internal order of identity report (e.g. order of txns during one day and without time information)
+is important.  In that case it is mandatory to provide  unique sorting information for each transaction.
+
+Txn components are used in following order to find sort order
+(in case of previous components have produced "same" sort order):
+
+ timestamp, code, description, uuid
+
+If fully deterministic and safe "distributed txn source"-proof sort
+order is needed, then transactions must have UUIDs.
