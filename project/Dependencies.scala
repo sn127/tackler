@@ -27,7 +27,7 @@ object Dependencies {
   val scallopVersion = "2.1.1"
   val configVersion = "1.3.1"
   val sn127UtilsTestingVersion = "0.6.0"
-  //val jgitVersion = "4.6.0.201612231935-r"
+  val jgitVersion = "4.7.0.201704051617-r"
   val logbackVersion = "1.2.3"
   val scalaArmVersion = "2.0"
 
@@ -44,7 +44,7 @@ object Dependencies {
   val scalaArm = "com.jsuereth" %% "scala-arm" % scalaArmVersion
 
   /* lib: java */
-  // val jgit = "org.eclipse.jgit" % "org.eclipse.jgit" % jgitVersion
+  val jgit = "org.eclipse.jgit" % "org.eclipse.jgit" % jgitVersion
   val logback = "ch.qos.logback" % "logback-classic" % logbackVersion
   val typesafeConfig = "com.typesafe" % "config" % configVersion
 

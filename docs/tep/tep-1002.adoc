@@ -28,12 +28,27 @@ Changes to machinery
 
 === New dependecies
 
-* [ ] link:http://www.eclipse.org/jgit/[jgit]
-** [ ] license: link:http://www.eclipse.org/org/documents/edl-v10.php[Eclipse Distribution License v1.0]
+* [ ] new dependency
+** [ ] Add and check licenses?
+** [ ] Is there NOTICE files?
+** [ ] Add license under link:../licenses[doc/licenses]
+** [ ] Add link of license to link:../index.adoc[index]
+** [ ] Add link:../../THANKS.adoc[THANKS]
+
+* [x] link:http://www.eclipse.org/jgit/[jgit]
+** [x] Add and check licenses: link:http://git.eclipse.org/c/jgit/jgit.git/plain/LICENSE[EDL]
+** [x] Is there NOTICE files? No
+** [x] Add license under link:../licenses[doc/licenses]
+** [x] Add link of license to link:../index.adoc[index]
+** [x] Add link:../../THANKS.adoc[THANKS]
 
 === Examples
-* [ ] link:https://github.com/centic9/jgit-cookbook[jgit-cookbook]
-** [ ] license: link:https://github.com/centic9/jgit-cookbook/blob/master/LICENSE.md[Apache License 2.0] 
+* [x] link:https://github.com/centic9/jgit-cookbook[jgit-cookbook]
+** [x] Add and check licenses: link:https://github.com/centic9/jgit-cookbook/blob/master/LICENSE.md[Apache License 2.0]
+** [x] Is there NOTICE files? No
+** [x] Add license under link:../licenses[doc/licenses]
+** [x] Add link of license to link:../index.adoc[index]
+** [x] Add link:../../THANKS.adoc[THANKS]
 
 
 === Phase-2

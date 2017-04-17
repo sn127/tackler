@@ -27,6 +27,8 @@ Tackler Enhancement Proposals (TEP) are:
 * link:./licenses/BETTER-FILES-LICENSE.txt[Better-files]
 * link:./licenses/CATS-LICENSE.txt[Cats]
 * link:./licenses/CONFIG-LICENSE.txt[Typelevel Config]
+* link:./licenses/JGIT-LICENSE.txt[jgit]
+* link:./licenses/JGIT-COOKBOOK-LICENSE.txt[jgit-Cookbook]
 * link:./licenses/LOGBACK-LICENSE.txt[Logback]
 * link:./licenses/SLF4J-LICENSE.txt[SLF4J]
 * link:./licenses/SCALA-ARM-LICENSE.txt[Scala-ARM]

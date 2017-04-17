@@ -7,10 +7,15 @@ Components (used with Tackler):
  * link:http://www.antlr.org/[ANTLR (ANother Tool for Language Recognition)]
  * link:https://github.com/pathikrit/better-files[Better-files]
  * link:http://typelevel.org/cats/[Cats]
+ * link:http://www.eclipse.org/jgit/[jgit]
  * link:https://logback.qos.ch/[Logback Project]
  * link:https://github.com/jsuereth/scala-arm[Scala-ARM (automatic resource mgmt)]
  * link:https://github.com/scallop/scallop[Scallop]
  * link:https://github.com/typesafehub/config[Typesafe Config]
+
+Code samples and examples:
+
+ * link:https://github.com/centic9/jgit-cookbook[jgit-cookbook]
 
 
 Build-tools (used to build Tackler):
@@ -30,5 +35,3 @@ Ideas and inspiration:
  * link:https://github.com/hrj/abandon[Abandon]
  * link:http://furius.ca/beancount/[Beancount]
  * link:http://hledger.org/[hledger]
-
-
