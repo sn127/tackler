@@ -1,6 +1,7 @@
 = Main TODO
 
 
+
 == Machinery
 
  * [ ] The big question about time with output
@@ -22,11 +23,7 @@
 
 === GIT
 
- * [ ] bare repo as backend
- ** [ ] HEAD
- ** [ ] refId
- ** [ ] tag
- ** [ ] branches
+ * [ ] link:../docs/tep/tep-1002.adoc[TEP-1002]
  * Far-Far-Away
  ** [ ] Ketch
 
@@ -39,7 +36,7 @@
 === Equity report
 
  * [x] basic equity report 
- ** [ ] check link:../docs/tep-1000.adoc
+ ** [ ] check link:../docs/tep/tep-1000.adoc[TEP-1000]
  ** [ ] special input handling for equity (input-path by conf)
 
 === Reporting API

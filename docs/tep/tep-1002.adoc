@@ -1,0 +1,156 @@
+= TEP-1002: Git backend
+
+Add git as backend for transaction data store.
+
+
+== Journal file format
+
+No changes needed to directly to support this feature,
+but from reporting perspective some changes are useful later on.
+
+=== Equity report
+
+Record with Equity txn commit id of used revision.
+
+This probably needs parser level changes to format 
+to support `meta: commit` or similar.
+
+
+== Machinery
+
+Changes to machinery
+
+* [ ] git backend
+** [ ] high level Tackler specific java interface?
+* [ ] bifurcation point for Filesyste (FS) and GIT backend and data feeding for parser
+** [ ] way to re-feed git streams to ANTLR lexer streams?
+
+
+=== New dependecies
+
+* [ ] link:http://www.eclipse.org/jgit/[jgit]
+** [ ] license: link:http://www.eclipse.org/org/documents/edl-v10.php[Eclipse Distribution License v1.0]
+
+=== Examples
+* [ ] link:https://github.com/centic9/jgit-cookbook[jgit-cookbook]
+** [ ] license: link:https://github.com/centic9/jgit-cookbook/blob/master/LICENSE.md[Apache License 2.0] 
+
+
+=== Phase-2
+
+* [ ] Integration with link:https://github.com/gitblit/gitblit[Gitblit]?
+** [ ] License: link:https://github.com/gitblit/gitblit/blob/master/LICENSE[Apache License 2.0]
+*** [ ] link:https://github.com/gitblit/gitblit/blob/master/NOTICE[NOTICE]
+
+
+=== CLI changes
+
+Changes to command line interface
+
+* [ ] set branch/refs
+* [ ] set commit
+
+
+=== CONF changes
+
+Changes to conf-settings
+
+* [ ] set backend type (FS or GIT)
+* [ ] set default branch/refs to be used
+**  [ ] fixed commit is not supported by conf?
+
+== Reporting
+
+Changes to general reporting
+
+* [ ] Reports should produce meta information about txns and report
+** [ ] human readable output (text-format)
+** [ ] machine readable: JSON?
+
+* [ ] Git backend specific information
+** [ ] commit
+
+
+=== Balance report
+
+Changes to balance report
+
+* [ ] Output meta-info
+** [ ] Git backend: commit
+
+
+=== Balance Group report
+
+Changes to balance group report
+
+* [ ] Output meta-info
+** [ ] Git backend: commit
+
+
+=== Register report
+
+Changes to register report
+
+* [ ] Output meta-info
+** [ ] Git backend: commit
+
+
+=== Equity report
+
+Changes to equity report. See Journal changes.
+
+* [ ] record used tree (commit id)
+
+
+=== Identity report
+
+None at the moment (journal sidecar file?)
+
+== Documentation
+
+* [ ] CHANGELOG item
+* [ ] User docs
+** [ ] user manual
+** [ ] tackler.conf
+** [ ] accounts.conf
+** [ ] examples
+* [ ] Developer docs
+
+
+== Tests
+
+* [ ] single file
+* [ ] data shard with glob
+* [ ] effective commit id (e.g. not latest commit)
+** [ ] data shard
+** [ ] single file
+* [ ] UTF-8 data from git backend
+* [ ] t
+
+
+=== Errors
+
+* [ ] e: commit not found
+* [ ] e: path not found
+* [ ] e: empty txns set with commit + path
+* [ ] e
+
+=== Perf
+
+* [ ] git backend perf tests
+
+
+=== Metadata for test coverage tracking
+
+....
+features:
+  - feature:
+      id: 06b4a9b1-f48c-4b33-8811-1f32cdc44d7b
+      subject: "git backend"
+
+  - feature:
+      id: uuid
+      parent: uuid
+      subject: "one-line description"
+....
+
