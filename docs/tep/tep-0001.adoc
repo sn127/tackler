@@ -1,0 +1,97 @@
+= TEP-XXXX: name
+
+Description
+
+
+== Journal file format
+
+Journal file format changes, if any
+
+
+== Machinery
+
+Changes to machinery
+
+* [ ] item1
+* [ ] item2
+
+
+=== CLI changes
+
+Changes to command line interface
+
+* [ ] item1
+
+
+=== CONF changes
+
+Changes to conf-settings
+
+* [ ] item1
+
+
+== Reporting
+
+Changes to general reporting
+
+* [ ] item1
+
+
+=== Balance report
+
+Changes to balance report
+
+* [ ] item1
+
+
+=== Balance Group report
+
+Changes to balance group report
+
+* [ ] item1
+
+
+=== Register report
+
+Changes to register report
+
+* [ ] item1
+
+
+=== Equity report
+
+Changes to equity report
+
+* [ ] item1
+
+
+=== Identity report
+
+Changes to identity report
+
+* [ ] item1
+
+
+== Documentation
+
+* [ ] CHANGELOG item
+* [ ] User docs
+** [ ] user manual
+** [ ] tackler.conf
+** [ ] accounts.conf
+** [ ] examples
+* [ ] Developer docs
+
+== Tests
+
+* [ ] test1
+
+=== Metadata for test coverage tracking
+
+....
+features:
+  - feature:
+      id: uuid
+      parent: uuid
+      subject: "one-line description"
+....
