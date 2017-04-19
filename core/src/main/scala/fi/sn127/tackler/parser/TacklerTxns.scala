@@ -22,7 +22,6 @@
  *
  */
 package fi.sn127.tackler.parser
-import java.io.{File => JFile}
 import java.nio.file.{Path, Paths}
 import java.time._
 

@@ -16,7 +16,7 @@
  */
 package fi.sn127.tackler.core
 
-import java.io.{IOException, File => JFile}
+import java.io.IOException
 import java.nio.file.Path
 import java.time.{LocalTime, ZoneId}
 

@@ -15,7 +15,6 @@
  *
  */
 package fi.sn127.tackler.cli
-import java.io.{File => JFile}
 import java.nio.file.{Files, NoSuchFileException, Path, Paths}
 
 import better.files._
