@@ -1,6 +1,13 @@
 /*
  * Copyright 2016-2017 Jani Averbach
  *
+ * git2Txns is based on example
+ * by: Copyright 2013, 2014 Dominik Stadler
+ * license: Apache License v2.0
+ * url: https://raw.githubusercontent.com/centic9/jgit-cookbook/
+ * commit: 276ad0fecb4f1c616ef459ed8b7feb6d503724eb
+ * file: jgit-cookbook/src/main/java/org/dstadler/jgit/api/ReadFileFromCommit.java
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -16,15 +23,22 @@
  */
 package fi.sn127.tackler.parser
 import java.io.{File => JFile}
-import java.nio.file.Path
+import java.nio.file.{Path, Paths}
 import java.time._
 
+import better.files.File
 import cats.implicits._
+import org.eclipse.jgit.lib.{FileMode, Repository}
+import org.eclipse.jgit.revwalk.RevWalk
+import org.eclipse.jgit.storage.file.FileRepositoryBuilder
+import org.eclipse.jgit.treewalk.TreeWalk
+import org.eclipse.jgit.treewalk.filter.{AndTreeFilter, PathFilter, PathSuffixFilter}
 import org.slf4j.{Logger, LoggerFactory}
+import resource._
 
 import scala.collection.JavaConverters
 
-import fi.sn127.tackler.core.{AccountException, Settings}
+import fi.sn127.tackler.core.{AccountException, Settings, TacklerException}
 import fi.sn127.tackler.model.{AccountTreeNode, OrderByTxn, Posting, Posts, Transaction, Txns}
 import fi.sn127.tackler.parser.TxnParser._
 
@@ -44,6 +58,86 @@ class TacklerTxns(val settings: Settings) {
       val txnsCtx = TacklerParser.txnsFile(inputPath)
       handleTxns(txnsCtx)
     }).seq.sorted(OrderByTxn)
+  }
+
+  @SuppressWarnings(Array("org.wartremover.warts.While"))
+  def git2Txns(): Txns = {
+    def getRepo(gitdir: File): Repository = {
+      try {
+        (new FileRepositoryBuilder)
+          .setGitDir(gitdir.toJava)
+          .setMustExist(true)
+          .setBare()
+          .build()
+      } catch {
+        case e: org.eclipse.jgit.errors.RepositoryNotFoundException => {
+          val msg =
+            "Git repository is not found, check config for basedir\n" +
+              "Message: [" + e.getMessage + "]"
+          throw new TacklerException(msg)
+        }
+      }
+    }
+
+    val repository = getRepo(Paths.get("../tmp/test.git"))
+
+    // a RevWalk allows to walk over commits based on some filtering that is defined
+    val revWalk = new RevWalk(repository)
+
+    //
+    // find the HEAD
+    //
+
+    //val lastCommitId = repository.resolve(Constants.HEAD)
+    //val commit = revWalk.parseCommit(lastCommitId)
+    val head = repository.findRef("mini") // todo: null if not found
+    val commitId = head.getObjectId
+
+    val commit = revWalk.parseCommit(commitId)
+    val tree = commit.getTree
+
+    // now try to find files
+    val foo: Seq[Transaction] = managed(new TreeWalk(repository))
+      .map(treeWalk => {
+        treeWalk.addTree(tree)
+        treeWalk.setRecursive(true)
+
+        treeWalk.setFilter(AndTreeFilter.create(
+          PathFilter.create("txns-mini"),
+          PathSuffixFilter.create(".txn")))
+
+        // Handle files
+        val txns: Iterator[Seq[Transaction]] = for {
+          n <- Iterator.continually(treeWalk.next()).takeWhile(p => p === true)
+        } yield {
+
+          if (FileMode.REGULAR_FILE.equals(treeWalk.getFileMode(0))) {
+            log.debug("txn: {}", treeWalk.getPathString)
+
+            val objectId = treeWalk.getObjectId(0)
+            val loader = repository.open(objectId)
+
+            managed(loader.openStream).map(stream => {
+              handleTxns(TacklerParser.txnsStream(stream))
+            }).opt match {
+              case Some(t) => t
+              case None => Seq.empty[Transaction]
+            }
+          } else {
+            log.warn("Found matching object, but it is directory?!?: {}", treeWalk.getPathString)
+            Seq.empty[Transaction]
+          }
+        }
+        //treeWalk.close()
+        txns.flatten.toSeq
+      }).opt match {
+      case Some(t) => t
+      case None => Seq.empty[Transaction]
+    }
+
+    revWalk.dispose()
+    repository.close()
+    foo.sorted(OrderByTxn)
   }
 
   /**

@@ -108,20 +108,20 @@ object TacklerCli {
     val cliCfg = new TacklerCliArgs(args)
     val settings = new Settings(getCfgPath(cliCfg.cfg.toOption), cliCfg.toConfig)
 
-    val tsInputStart = System.currentTimeMillis()
-    val inputs = getInputs(cliCfg, settings)
-    val tsInputEnd = System.currentTimeMillis()
-
     val output: Option[Path] = cliCfg.output.toOption.map(o => settings.getPathWithSettings(o))
 
-    val tsParseStart = System.currentTimeMillis()
-
     val tt = new TacklerTxns(settings)
-    val txns: Txns = tt.inputs2Txns(inputs)
+
+    val tsParseStart = System.currentTimeMillis()
+    val txns: Txns = if (true) {
+      tt.git2Txns()
+    } else {
+      val inputs = getInputs(cliCfg, settings)
+      tt.inputs2Txns(inputs)
+    }
     if (txns.isEmpty) {
       throw new TxnException("Empty transaction set")
     }
-
     val tsParseEnd = System.currentTimeMillis()
 
     println("Txns size: " + txns.size.toString)
@@ -136,9 +136,8 @@ object TacklerCli {
 
     val tsEnd = System.currentTimeMillis()
 
-    Console.err.println("\nTotal processing time: %d, input: %d, parse: %d, reporting: %d".format(
+    Console.err.println("\nTotal processing time: %d, parse: %d, reporting: %d".format(
       tsEnd - tsStart,
-      tsInputEnd - tsInputStart,
       tsParseEnd - tsParseStart,
       tsReportsEnd - tsReportsStart))
   }

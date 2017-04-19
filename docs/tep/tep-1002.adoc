@@ -138,22 +138,26 @@ None at the moment (journal sidecar file?)
 * [ ] data shard with glob
 * [ ] effective commit id (e.g. not latest commit)
 ** [ ] data shard
-** [ ] single file
+** [ ] single file (1E5)
 * [ ] UTF-8 data from git backend
-* [ ] t
+* [ ] shard: check not-to-included case
+* [ ] shard: check effective dir
 
 
 === Errors
 
+* [ ] e: simple parse error with shard
 * [ ] e: commit not found
 * [ ] e: path not found
 * [ ] e: empty txns set with commit + path
-* [ ] e
+* [ ] e: non-bare git directory
+* [ ] e: txns/foo.txn as directory
 
 === Perf
 
 * [ ] git backend perf tests
-
+** [ ] shard data
+** [ ] single file
 
 === Metadata for test coverage tracking
 
