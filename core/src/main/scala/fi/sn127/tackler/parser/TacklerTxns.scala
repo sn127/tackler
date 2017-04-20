@@ -33,6 +33,8 @@ import org.eclipse.jgit.storage.file.FileRepositoryBuilder
 import org.eclipse.jgit.treewalk.TreeWalk
 import org.eclipse.jgit.treewalk.filter.{AndTreeFilter, PathFilter, PathSuffixFilter}
 import org.slf4j.{Logger, LoggerFactory}
+import resource.makeManagedResource
+import resource.managed
 import resource._
 
 import scala.collection.JavaConverters
@@ -59,7 +61,9 @@ class TacklerTxns(val settings: Settings) {
     }).seq.sorted(OrderByTxn)
   }
 
-  @SuppressWarnings(Array("org.wartremover.warts.While"))
+  @SuppressWarnings(Array(
+    "org.wartremover.warts.TraversableOps",
+    "org.wartremover.warts.EitherProjectionPartial"))
   def git2Txns(): Txns = {
     def getRepo(gitdir: File): Repository = {
       try {
@@ -78,65 +82,82 @@ class TacklerTxns(val settings: Settings) {
       }
     }
 
-    val repository = getRepo(Paths.get("../tmp/test.git"))
+    val tmpResult = managed(getRepo(Paths.get("../tmp/git-perf-data.git"))).flatMap(repository => {
+      // with managed(new RevWalk(repository))
+      // [error]  ambiguous implicit values:
+      // [error]    both method reflectiveDisposableResource ...
+      // [error]    and method reflectiveCloseableResource ...
+      // Let's use makeMangedResource
+      val revWalkM = makeManagedResource(new RevWalk(repository))(_.dispose())(List.empty[Class[Throwable]])
+      revWalkM.flatMap(revWalk => {
+        // a RevWalk allows to walk over commits based on some filtering that is defined
 
-    // a RevWalk allows to walk over commits based on some filtering that is defined
-    val revWalk = new RevWalk(repository)
+        //val commit = revWalk.parseCommit(lastCommitId)
+        //val refStr = "errors/ParseException"
+        val refStr = "1e3"
 
-    //
-    // find the HEAD
-    //
+        val refOpt = Option(repository.findRef(refStr))
+        val ref = refOpt.getOrElse({
+          throw new RuntimeException("Ref Not found")
+        })
+        val commitId = ref.getObjectId
 
-    //val lastCommitId = repository.resolve(Constants.HEAD)
-    //val commit = revWalk.parseCommit(lastCommitId)
-    val head = repository.findRef("mini") // todo: null if not found
-    val commitId = head.getObjectId
+        //val lastCommitId = repository.resolve(Constants.HEAD)
+        //val commitId = repository.resolve("e690c0ce1b4ec64df5dfb5f761c528587effc6c9")
 
-    val commit = revWalk.parseCommit(commitId)
-    val tree = commit.getTree
+        val commit = revWalk.parseCommit(commitId)
+        log.info("git: using commit: " + commit.getName)
+        val tree = commit.getTree
 
-    // now try to find files
-    val foo: Seq[Transaction] = managed(new TreeWalk(repository))
-      .map(treeWalk => {
-        treeWalk.addTree(tree)
-        treeWalk.setRecursive(true)
+        // now try to find files
+        managed(new TreeWalk(repository)).map(treeWalk => {
+          treeWalk.addTree(tree)
+          treeWalk.setRecursive(true)
 
-        treeWalk.setFilter(AndTreeFilter.create(
-          PathFilter.create("txns-mini"),
-          PathSuffixFilter.create(".txn")))
+          treeWalk.setFilter(AndTreeFilter.create(
+            PathFilter.create("txns"),
+            PathSuffixFilter.create(".txn")))
 
-        // Handle files
-        val txns: Iterator[Seq[Transaction]] = for {
-          n <- Iterator.continually(treeWalk.next()).takeWhile(p => p === true)
-        } yield {
+          // Handle files
+          val txns: Iterator[Seq[Transaction]] = for {
+            n <- Iterator.continually(treeWalk.next()).takeWhile(p => p === true)
+          } yield {
 
-          if (FileMode.REGULAR_FILE.equals(treeWalk.getFileMode(0))) {
-            log.debug("txn: {}", treeWalk.getPathString)
+            if (FileMode.REGULAR_FILE.equals(treeWalk.getFileMode(0))) {
+              val objectId = treeWalk.getObjectId(0)
+              val loader = repository.open(objectId)
+              log.debug("txn: git: object id: " + objectId.getName + ", path: " + treeWalk.getPathString)
 
-            val objectId = treeWalk.getObjectId(0)
-            val loader = repository.open(objectId)
-
-            managed(loader.openStream).map(stream => {
-              handleTxns(TacklerParser.txnsStream(stream))
-            }).opt match {
-              case Some(t) => t
-              case None => Seq.empty[Transaction]
+              val txnsResult = managed(loader.openStream).map(stream => {
+                handleTxns(TacklerParser.txnsStream(stream))
+              })
+              if (txnsResult.either.isLeft) {
+                // todo: handle error, parse error msg, commit id, etc.
+                log.error("Error git: object id: " + objectId.getName + ", path: " + treeWalk.getPathString)
+                throw txnsResult.either.left.get.head
+              } else {
+                txnsResult.either.right.get
+              }
+            } else {
+              log.warn("Found matching object, but it is directory?!?: {}", treeWalk.getPathString)
+              Seq.empty[Transaction]
             }
-          } else {
-            log.warn("Found matching object, but it is directory?!?: {}", treeWalk.getPathString)
-            Seq.empty[Transaction]
           }
-        }
-        //treeWalk.close()
-        txns.flatten.toSeq
-      }).opt match {
-      case Some(t) => t
-      case None => Seq.empty[Transaction]
+          txns.flatten.toSeq
+        }) // treeWalk.close
+      }) // revWalk.dispose
+    }) // repository.close
+
+    // https://github.com/jsuereth/scala-arm/issues/49
+    val result = tmpResult.map(u => u).either
+
+    val txns = if (result.isRight) {
+      result.right.get
+    } else {
+      throw result.left.get.head
     }
 
-    revWalk.dispose()
-    repository.close()
-    foo.sorted(OrderByTxn)
+    txns.sorted(OrderByTxn)
   }
 
   /**
