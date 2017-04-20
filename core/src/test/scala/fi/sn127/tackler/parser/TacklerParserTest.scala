@@ -58,7 +58,7 @@ class TacklerParserTest extends FlatSpec {
         |
         |""".stripMargin
 
-    val txns = tt.input2Txns(txnStr)
+    val txns = tt.string2Txns(txnStr)
     assert(txns.head.desc.getOrElse("") === "äöåÄÖÅéèÿ風空")
   }
 
@@ -69,7 +69,7 @@ class TacklerParserTest extends FlatSpec {
     val txnStr = """2017-01-01 ()) str""" + " " * 1025
 
     val ex = intercept[TacklerParseException] {
-      val txns = tt.input2Txns(txnStr)
+      tt.string2Txns(txnStr)
     }
     assert(ex.getMessage.length === 1097)
     assert(ex.getMessage.startsWith("Txn Parse Error: Invalid input: truncated inputStr(0, 1024)=[2017-01-01 ()) str  "), ex.getMessage)
@@ -84,7 +84,7 @@ class TacklerParserTest extends FlatSpec {
     val txnStr = """2017-01-01 ()) str"""
 
     val ex = intercept[TacklerParseException] {
-      val txns = tt.input2Txns(txnStr)
+      tt.string2Txns(txnStr)
     }
     assert(ex.getMessage === "Txn Parse Error: Invalid input: [2017-01-01 ()) str], msg: null")
   }
@@ -105,7 +105,7 @@ class TacklerParserTest extends FlatSpec {
         |""".stripMargin
 
     val ex = intercept[TacklerParseException] {
-      val txns = tt.input2Txns(txnStr)
+      tt.string2Txns(txnStr)
     }
     assert(ex.getMessage === """Txn Parse Error: Invalid input: [
       |2017-01-01 str
@@ -130,7 +130,7 @@ class TacklerParserTest extends FlatSpec {
         |
         |""".stripMargin
     val ex = intercept[RuntimeException]{
-      tt.input2Txns(txnStr)
+      tt.string2Txns(txnStr)
     }
     assert(ex.getMessage.startsWith("Invalid UUID string: "), ex.getMessage)
   }
@@ -150,7 +150,7 @@ class TacklerParserTest extends FlatSpec {
       |""".stripMargin
 
     val ex = intercept[TacklerParseException] {
-      val txns = tt.input2Txns(txnStr)
+      tt.string2Txns(txnStr)
     }
     assert(ex.getMessage === """Txn Parse Error: Invalid input: [
       |2017-01-01 desc
@@ -173,7 +173,7 @@ class TacklerParserTest extends FlatSpec {
         |""".stripMargin
 
     val ex = intercept[TacklerParseException] {
-      val txns = tt.input2Txns(txnStr)
+      tt.string2Txns(txnStr)
     }
     assert(ex.getMessage === """Txn Parse Error: Invalid input: [
                                |2017-01-01 desc
@@ -197,7 +197,7 @@ class TacklerParserTest extends FlatSpec {
         |""".stripMargin
 
     val ex = intercept[TacklerParseException] {
-      val txns = tt.input2Txns(txnStr)
+      tt.string2Txns(txnStr)
     }
     assert(ex.getMessage === """Txn Parse Error: Invalid input: [
                                |2017-01-01 desc

@@ -116,7 +116,7 @@ object TacklerCli {
       tt.git2Txns()
     } else {
       val inputs = getInputs(cliCfg, settings)
-      tt.inputs2Txns(inputs)
+      tt.paths2Txns(inputs)
     }
     if (txns.isEmpty) {
       throw new TxnException("Empty transaction set")

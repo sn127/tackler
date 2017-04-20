@@ -23,7 +23,6 @@
  */
 package fi.sn127.tackler.parser
 import java.nio.file.{Path, Paths}
-import java.time._
 
 import better.files.File
 import cats.implicits._
@@ -33,26 +32,32 @@ import org.eclipse.jgit.storage.file.FileRepositoryBuilder
 import org.eclipse.jgit.treewalk.TreeWalk
 import org.eclipse.jgit.treewalk.filter.{AndTreeFilter, PathFilter, PathSuffixFilter}
 import org.slf4j.{Logger, LoggerFactory}
-import resource.makeManagedResource
-import resource.managed
-import resource._
+import resource.{makeManagedResource, managed, _}
 
-import scala.collection.JavaConverters
+import fi.sn127.tackler.core.{Settings, TacklerException}
+import fi.sn127.tackler.model.{OrderByTxn, Transaction, Txns}
 
-import fi.sn127.tackler.core.{AccountException, Settings, TacklerException}
-import fi.sn127.tackler.model.{AccountTreeNode, OrderByTxn, Posting, Posts, Transaction, Txns}
-import fi.sn127.tackler.parser.TxnParser._
-
-class TacklerTxns(val settings: Settings) {
+/**
+ * Generate Transactions from selected inputs.
+ *
+ * These take an input(s) as argument and
+ * returns sequence of transactions.
+ *
+ * If there is an error, they throw an exception.
+ *
+ * @param settings to control how inputs and txns are handled
+ */
+class TacklerTxns(val settings: Settings) extends CtxHandler {
   private val log: Logger = LoggerFactory.getLogger(this.getClass)
 
   /**
-   * Parse and convert list of input paths to Txns
+   * Get Transactions from list of input paths.
+   * Throws an exception in case of error.
    *
    * @param inputs input as seq of files
    * @return Txns
    */
-  def inputs2Txns(inputs: Seq[Path]): Txns = {
+  def paths2Txns(inputs: Seq[Path]): Txns = {
 
     inputs.par.flatMap(inputPath => {
       log.debug("txn: {}", inputPath.toString())
@@ -61,17 +66,35 @@ class TacklerTxns(val settings: Settings) {
     }).seq.sorted(OrderByTxn)
   }
 
+  /**
+   * Get Transactions from GIT backend based on configuration
+   * read from Settings.
+   * Throws an exception in case of error.
+   *
+   * feature: 06b4a9b1-f48c-4b33-8811-1f32cdc44d7b
+   * coverage: "sorted" tested by TODO
+   * @return Txns
+   */
   @SuppressWarnings(Array(
     "org.wartremover.warts.TraversableOps",
     "org.wartremover.warts.EitherProjectionPartial"))
   def git2Txns(): Txns = {
-    def getRepo(gitdir: File): Repository = {
+
+    /**
+     * Get Git repository as managed resource.
+     * Repository must be bare.
+     *
+     * @param gitdir path/to/repo.git
+     * @return repository as managed resource
+     */
+    def getRepo(gitdir: File): ManagedResource[Repository] = {
       try {
-        (new FileRepositoryBuilder)
+        val repo = (new FileRepositoryBuilder)
           .setGitDir(gitdir.toJava)
           .setMustExist(true)
           .setBare()
           .build()
+        managed(repo)
       } catch {
         case e: org.eclipse.jgit.errors.RepositoryNotFoundException => {
           val msg =
@@ -82,7 +105,7 @@ class TacklerTxns(val settings: Settings) {
       }
     }
 
-    val tmpResult = managed(getRepo(Paths.get("../tmp/git-perf-data.git"))).flatMap(repository => {
+    val tmpResult = getRepo(Paths.get("../tmp/git-perf-data.git")).flatMap(repository => {
       // with managed(new RevWalk(repository))
       // [error]  ambiguous implicit values:
       // [error]    both method reflectiveDisposableResource ...
@@ -162,122 +185,17 @@ class TacklerTxns(val settings: Settings) {
 
   /**
    * Parse and converts input string to Txns
+   * Throws an exception in case of error.
    *
    * feature: a94d4a60-40dc-4ec0-97a3-eeb69399f01b
-   * coverage: "Sorted" tested by 200aad57-9275-4d16-bdad-2f1c484bcf17
+   * coverage: "sorted" tested by 200aad57-9275-4d16-bdad-2f1c484bcf17
    *
    * @param input as text
    * @return Txns
    */
-  def input2Txns(input: String): Txns = {
+  def string2Txns(input: String): Txns = {
 
     val txnsCtx = TacklerParser.txnsText(input)
     handleTxns(txnsCtx).sorted(OrderByTxn)
-  }
-
-  @SuppressWarnings(Array(
-    "org.wartremover.warts.OptionPartial", "OptionGet"))
-  protected def handleDate(dateCtx: DateContext): ZonedDateTime = {
-
-    val tzDate: ZonedDateTime =
-      Option(dateCtx.TS_TZ()) match {
-        case Some(tzTS) => {
-          ZonedDateTime.parse(tzTS.getText,
-            java.time.format.DateTimeFormatter.ISO_OFFSET_DATE_TIME)
-        }
-        case None => {
-          Option(dateCtx.TS()) match {
-            case Some(localTS) => {
-              val dt = LocalDateTime.parse(localTS.getText,
-                java.time.format.DateTimeFormatter.ISO_LOCAL_DATE_TIME)
-              ZonedDateTime.of(dt, settings.timezone)
-            }
-            case None => {
-              val optDate = Option(dateCtx.DATE())
-              require(optDate.isDefined) // IE if not
-
-              val d = LocalDate.parse(optDate.get.getText,
-                java.time.format.DateTimeFormatter.ISO_DATE)
-
-              ZonedDateTime.of(d, settings.defaultTime, settings.timezone)
-            }
-          }
-        }
-      }
-    tzDate
-  }
-
-  /**
-   * Handle raw parser account entry.
-   *
-   * @param accountCtx from parser
-   * @return Account tree node
-   */
-  @SuppressWarnings(Array(
-    "org.wartremover.warts.TraversableOps",
-    "org.wartremover.warts.ListOps"))
-  protected def handleAccount(accountCtx: AccountContext): AccountTreeNode = {
-
-    val account: String = JavaConverters.asScalaIterator(accountCtx.ID().iterator())
-      .map(_.getText)
-      .mkString(":")
-
-    if (settings.accounts_strict) {
-      settings.accounts_coa.find({ case (key, _) => key === account }) match {
-        case None =>
-          throw new AccountException("Account not found: [" + account + "]")
-        case Some((_, value)) =>
-          value
-      }
-    } else {
-      AccountTreeNode(account)
-    }
-  }
-
-  protected def handleRawPosting(postingCtx: PostingContext): Posting = {
-    val acctn = handleAccount(postingCtx.account())
-    val amount = BigDecimal(postingCtx.amount().NUMBER().getText)
-    val comment = Option(postingCtx.comment()).map(c => c.text().getText)
-
-    Posting(acctn, amount, comment)
-  }
-
-  protected def handleTxn(txnCtx: TxnContext): Transaction = {
-    val date = handleDate(txnCtx.date())
-    val code = Option(txnCtx.code()).map(c => c.code_value().getText.trim)
-    val desc = Option(txnCtx.description()).map(d => d.text().getText.trim)
-
-    val uuid = Option(txnCtx.txn_meta()).map( meta => {
-      val key = meta.txn_meta_key().UUID().getText
-      require(key === "uuid") // IE if not
-
-      java.util.UUID.fromString(meta.text().getText.trim)
-    })
-
-    val comments = Option(txnCtx.txn_comment()).map(cs =>
-      JavaConverters.asScalaIterator(cs.iterator())
-        .map(c => c.comment().text().getText).toList
-    )
-
-    val posts: Posts =
-      JavaConverters.asScalaIterator(txnCtx.postings().posting().iterator()).map(p => {
-        handleRawPosting(p)
-      }).toList
-
-    val last_posting = Option(txnCtx.postings().last_posting()).map(lp => {
-        val ate = handleAccount(lp.account())
-        val amount = Posting.sum(posts)
-        val comment = Option(lp.comment()).map(c => c.text().getText)
-        List(Posting(ate, -amount, comment))
-      })
-
-    Transaction(date, code, desc, uuid, comments, posts ++ last_posting.getOrElse(Nil))
-  }
-
-  protected def handleTxns(txnsCtx: TxnsContext): Txns = {
-    JavaConverters.asScalaIterator(txnsCtx.txn().iterator())
-      .map({ case (rawTxn) =>
-        handleTxn(rawTxn)
-      }).toSeq
   }
 }
