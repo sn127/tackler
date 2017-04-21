@@ -18,7 +18,7 @@ package fi.sn127.tackler.cli
 
 import java.nio.file.NoSuchFileException
 
-import org.rogach.scallop.exceptions.UnknownOption
+import org.rogach.scallop.exceptions.{UnknownOption, ValidationFailure}
 import org.scalatest.FlatSpec
 
 class TacklerCliArgsTest extends FlatSpec {
@@ -78,4 +78,76 @@ class TacklerCliArgsTest extends FlatSpec {
       TacklerCli.runExceptions(Array[String]("--not-an-argument"))
     }
   }
+
+  /**
+   * test:uuid: a2ca374a-1323-413b-aaff-64bc3c8d4d30
+   */
+  it should "git: cli err: ref and commit" in {
+    assertThrows[ValidationFailure] {
+      TacklerCli.runExceptions(
+        Array[String]("--input.git.ref", "ref", "--input.git.commit", "id"))
+    }
+  }
+
+  /**
+   * test:uuid: 1822f1b2-f749-4f63-be44-fa29c58c4fe2
+   */
+  it should "git: cli err: input.file + git.ref" in {
+    assertThrows[ValidationFailure] {
+      TacklerCli.runExceptions(
+        Array[String]("--input.file", "filename", "--input.git.ref", "ref"))
+    }
+  }
+
+  /**
+   * test:uuid: 97bf542e-55b5-437f-9878-7f436f50c428
+   */
+  it should "git: cli err: input.file + git.commit" in {
+    assertThrows[ValidationFailure] {
+      TacklerCli.runExceptions(
+        Array[String]("--input.file", "filename", "--input.git.commit", "id"))
+    }
+  }
+
+
+  /**
+   * test:uuid: 3eba26fe-821d-4d36-94cb-09427b1c004f
+   */
+  it should "git: cli err: txn.dir + git.ref" in {
+    assertThrows[ValidationFailure] {
+      TacklerCli.runExceptions(
+        Array[String]("--input.txn.dir", "txns", "--input.git.ref", "ref"))
+    }
+  }
+
+  /**
+   * test:uuid: 400bd1e9-6f7a-4e0c-913c-45401ee73181
+   */
+  it should "git: cli err: txn.dir + git.commit" in {
+    assertThrows[ValidationFailure] {
+      TacklerCli.runExceptions(
+        Array[String]("--input.txn.dir", "txns", "--input.git.commit", "id"))
+    }
+  }
+
+  /**
+   * test:uuid: 7d4984c7-633f-4403-a2b7-5ea0cd4f07e8
+   */
+  it should "git: cli err: txn.glob + git.ref" in {
+    assertThrows[ValidationFailure] {
+      TacklerCli.runExceptions(
+        Array[String]("--input.txn.glob", "glob", "--input.git.ref", "ref"))
+    }
+  }
+
+  /**
+   * test:uuid: 6ec6431e-a443-4633-8f26-df3218a8657c
+   */
+  it should "git: cli err: txn.glob + git.commit" in {
+    assertThrows[ValidationFailure] {
+      TacklerCli.runExceptions(
+        Array[String]("--input.txn.glob", "glob", "--input.git.commit", "id"))
+    }
+  }
+
 }

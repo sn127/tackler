@@ -22,7 +22,7 @@
  *
  */
 package fi.sn127.tackler.parser
-import java.nio.file.{Path, Paths}
+import java.nio.file.Path
 
 import better.files.File
 import cats.implicits._
@@ -67,18 +67,21 @@ class TacklerTxns(val settings: Settings) extends CtxHandler {
   }
 
   /**
-   * Get Transactions from GIT backend based on configuration
-   * read from Settings.
+   * Get Transactions from GIT based storage.
+   * Basic git repository information is read from settings,
+   * but input setting (ref or commit id) is an argument.
    * Throws an exception in case of error.
    *
    * feature: 06b4a9b1-f48c-4b33-8811-1f32cdc44d7b
-   * coverage: "sorted" tested by TODO
+   * coverage: "sorted" tested by 1d2c22c1-e3fa-4cd4-a526-45318c15d13e
+   *
+   * @param inputRef Left(ref) or Right(commitId)
    * @return Txns
    */
   @SuppressWarnings(Array(
     "org.wartremover.warts.TraversableOps",
     "org.wartremover.warts.EitherProjectionPartial"))
-  def git2Txns(): Txns = {
+  def git2Txns(inputRef: Either[String, String]): Txns = {
 
     /**
      * Get Git repository as managed resource.
@@ -98,14 +101,25 @@ class TacklerTxns(val settings: Settings) extends CtxHandler {
       } catch {
         case e: org.eclipse.jgit.errors.RepositoryNotFoundException => {
           val msg =
-            "Git repository is not found, check config for basedir\n" +
+            "Git repository is not found, check repository config\n" +
               "Message: [" + e.getMessage + "]"
           throw new TacklerException(msg)
         }
       }
     }
 
-    val tmpResult = getRepo(Paths.get("../tmp/git-perf-data.git")).flatMap(repository => {
+    val tmpResult = getRepo(settings.input_git_repository).flatMap(repository => {
+
+      val commitId = if (inputRef.isLeft) {
+        val refOpt = Option(repository.findRef(inputRef.left.get))
+        val ref = refOpt.getOrElse({
+          throw new RuntimeException("Ref Not found")
+        })
+        ref.getObjectId
+      } else {
+        repository.resolve(inputRef.right.get)
+      }
+
       // with managed(new RevWalk(repository))
       // [error]  ambiguous implicit values:
       // [error]    both method reflectiveDisposableResource ...
@@ -114,19 +128,6 @@ class TacklerTxns(val settings: Settings) extends CtxHandler {
       val revWalkM = makeManagedResource(new RevWalk(repository))(_.dispose())(List.empty[Class[Throwable]])
       revWalkM.flatMap(revWalk => {
         // a RevWalk allows to walk over commits based on some filtering that is defined
-
-        //val commit = revWalk.parseCommit(lastCommitId)
-        //val refStr = "errors/ParseException"
-        val refStr = "1e3"
-
-        val refOpt = Option(repository.findRef(refStr))
-        val ref = refOpt.getOrElse({
-          throw new RuntimeException("Ref Not found")
-        })
-        val commitId = ref.getObjectId
-
-        //val lastCommitId = repository.resolve(Constants.HEAD)
-        //val commitId = repository.resolve("e690c0ce1b4ec64df5dfb5f761c528587effc6c9")
 
         val commit = revWalk.parseCommit(commitId)
         log.info("git: using commit: " + commit.getName)
@@ -138,8 +139,8 @@ class TacklerTxns(val settings: Settings) extends CtxHandler {
           treeWalk.setRecursive(true)
 
           treeWalk.setFilter(AndTreeFilter.create(
-            PathFilter.create("txns"),
-            PathSuffixFilter.create(".txn")))
+            PathFilter.create(settings.input_git_dir),
+            PathSuffixFilter.create(settings.input_git_suffix)))
 
           // Handle files
           val txns: Iterator[Seq[Transaction]] = for {
@@ -167,10 +168,9 @@ class TacklerTxns(val settings: Settings) extends CtxHandler {
             }
           }
           txns.flatten.toSeq
-        }) // treeWalk.close
-      }) // revWalk.dispose
-    }) // repository.close
-
+        })
+      })
+    })
     // https://github.com/jsuereth/scala-arm/issues/49
     val result = tmpResult.map(u => u).either
 

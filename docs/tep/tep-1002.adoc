@@ -20,10 +20,10 @@ to support `meta: commit` or similar.
 
 Changes to machinery
 
-* [ ] git backend
+* [x] git backend
 ** [ ] high level Tackler specific java interface?
-* [ ] bifurcation point for Filesyste (FS) and GIT backend and data feeding for parser
-** [ ] way to re-feed git streams to ANTLR lexer streams?
+* [x] bifurcation point for Filesyste (FS) and GIT backend and data feeding for parser
+** [x] way to re-feed git streams to ANTLR lexer streams?
 
 
 === New dependecies
@@ -62,17 +62,23 @@ Changes to machinery
 
 Changes to command line interface
 
-* [ ] set branch/refs
-* [ ] set commit
+* [x] git:
+** [x] set branch/ref
+*** [x] single file as git input (inside repo) is not supported (workaround path+suffix)
+** [x] set commit
 
 
 === CONF changes
 
 Changes to conf-settings
 
-* [ ] set backend type (FS or GIT)
-* [ ] set default branch/refs to be used
-**  [ ] fixed commit is not supported by conf?
+* [x] input: set backend type (FS or GIT)
+* [x] git-specific conf-settings
+** [x] set default branch/refs to be used
+*** [x] (fixed commit is not supported by conf)
+** [x] git input data
+*** [x] set path inside repo
+*** [x] set glob / suffix
 
 == Reporting
 
@@ -126,6 +132,9 @@ None at the moment (journal sidecar file?)
 * [ ] CHANGELOG item
 * [ ] User docs
 ** [ ] user manual
+*** [ ] cli-arguments
+**** [ ] `--input.git.ref`
+**** [ ] `--input.git.commit`
 ** [ ] tackler.conf
 ** [ ] accounts.conf
 ** [ ] examples
@@ -134,15 +143,21 @@ None at the moment (journal sidecar file?)
 
 == Tests
 
-* [ ] single file
-* [ ] data shard with glob
-* [ ] effective commit id (e.g. not latest commit)
-** [ ] data shard
-** [ ] single file (1E5)
-* [ ] UTF-8 data from git backend
-* [ ] shard: check not-to-included case
-* [ ] shard: check effective dir
-
+* [x] UTF-8 data from git backend
+* [x] data shard
+** [x] shard: check effective dir
+** [x] shard: check not-to-included case
+*** [x] not by dir
+*** [x] not by suffix
+* [x] conf-settings
+** [x] `--input.git.repository`
+** [x] `--input.git.ref`
+** [x] `--input.git.dir`
+** [x] `--input.git.suffix`
+* [x] cli-arguments
+** [x] `--input.git.ref`
+** [x] `--input.git.commit`
+*** [x] effective commit id (e.g. not latest commit)
 
 === Errors
 
@@ -152,12 +167,20 @@ None at the moment (journal sidecar file?)
 * [ ] e: empty txns set with commit + path
 * [ ] e: non-bare git directory
 * [ ] e: txns/foo.txn as directory
+* [ ] e: cli: conflicting options
+** [ ] e: git with non-git storage
+** [x] e: cli: --input.git.commit + --input.git.ref
+** [x] e: cli: --input.file + --input.git.ref
+** [x] e: cli: --input.file + --input.git.commit
+** [x] e: cli: --input.txn.dir + --input.git.ref
+** [x] e: cli: --input.txn.dir + --input.git.commit
+** [x] e: cli: --input.txn.glob + --input.git.ref
+** [x] e: cli: --input.txn.glob + --input.git.commit
 
 === Perf
 
 * [ ] git backend perf tests
 ** [ ] shard data
-** [ ] single file
 
 === Metadata for test coverage tracking
 
@@ -173,3 +196,20 @@ features:
       subject: "one-line description"
 ....
 
+basic:
+# test:uuid: 292f250d-7cb2-4114-92e1-10f9a8d5b381
+
+shard + cli ref arg
+# test:uuid: 1d2c22c1-e3fa-4cd4-a526-45318c15d13e
+
+# commit id 1st
+# test:uuid: ede5d6b5-1885-4e02-8f9d-e2e1034fb6e3
+
+# commit-id 2nd
+# test:uuid: 7dfebf19-480c-4bf5-806a-4d560a20a1d4
+
+# commit-id 3rd
+# test:uuid: f44faf05-7019-4c34-b0af-3345feb4ad37
+
+# utf8 data
+# test:uuid: c2f39ef7-c085-4ff4-af4d-85a50d0ee203

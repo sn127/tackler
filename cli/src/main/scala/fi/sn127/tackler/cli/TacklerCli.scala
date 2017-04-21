@@ -20,7 +20,7 @@ import java.nio.file.{Files, NoSuchFileException, Path, Paths}
 import better.files._
 import org.slf4j.{Logger, LoggerFactory}
 
-import fi.sn127.tackler.core.{Settings, TacklerException, TxnException}
+import fi.sn127.tackler.core.{FilesystemStorageType, GitStorageType, Settings, TacklerException, TxnException}
 import fi.sn127.tackler.model.Txns
 import fi.sn127.tackler.parser.{TacklerParseException, TacklerTxns}
 import fi.sn127.tackler.report.Reports
@@ -63,16 +63,16 @@ object TacklerCli {
   }
 
   /**
-   * Get input files.
+   * Get input files paths.
    *
    * @param cliCfg cli args (especially those which are not morphosed to the settings
    * @param settings active set of settings
    * @return list of input files
    */
-  def getInputs(cliCfg: TacklerCliArgs, settings: Settings): Seq[Path] = {
+  def getInputPaths(cliCfg: TacklerCliArgs, settings: Settings): Seq[Path] = {
 
     cliCfg.input_filename.toOption.fold({
-      // No input file
+      // cli: input file: NO
       if (cliCfg.input_txn_glob.isDefined) {
         log.debug("input glob: dir: [" + settings.input_txn_dir.toString + "] " +
           "glob: [" + settings.input_txn_glob.toString() + "]")
@@ -86,12 +86,43 @@ object TacklerCli {
         .glob(settings.input_txn_glob)
         .map(f => f.path)
         .toSeq
-    }) { inputFilename =>
-      // There was an input file on cli
-      val inputPath = settings.getPathWithSettings(inputFilename)
+    }) { cliArgsInputFilename =>
+      // cli: input file: YES
+      val inputPath = settings.getPathWithSettings(cliArgsInputFilename)
 
       log.debug("input file: [" + inputPath.toString + "]")
       List(inputPath)
+    }
+  }
+
+  /**
+   * Get input ref or commit id for Git storage
+   * based on settings and command line arguments.
+   *
+   * Use in that order:
+   * - If cli: commit => use that
+   * - If cli: ref => use that
+   * - If nothing above => use ref from settings
+   *
+   * ref and commit both are strings, but semantically
+   * they are different, hence Either return type.
+   *
+   * @param cliCfg command line args
+   * @param settings configuration
+   * @return either ref or commit
+   */
+  def getInputRef(cliCfg: TacklerCliArgs, settings: Settings): Either[String, String] = {
+
+    cliCfg.input_git_commit.toOption.fold[Either[String, String]]({
+      // cli: git commit: NO => This is LEFT
+
+      // cli: input.git.ref is in any case morphed with settings
+      //   -> no need for special handling for cli args
+      Left[String, String](settings.input_git_ref)
+    }){ cliArgCommit =>
+      // cli: git commit: YES => This is RIGHT
+
+      Right[String, String](cliArgCommit)
     }
   }
 
@@ -112,12 +143,19 @@ object TacklerCli {
     val tt = new TacklerTxns(settings)
 
     val tsParseStart = System.currentTimeMillis()
-    val txns: Txns = if (true) {
-      tt.git2Txns()
-    } else {
-      val inputs = getInputs(cliCfg, settings)
-      tt.paths2Txns(inputs)
+
+    val txns: Txns = settings.input_storage match {
+      case GitStorageType() => {
+        val inputRef = getInputRef(cliCfg, settings)
+        tt.git2Txns(inputRef)
+      }
+
+      case FilesystemStorageType() => {
+        val paths = getInputPaths(cliCfg, settings)
+        tt.paths2Txns(paths)
+      }
     }
+
     if (txns.isEmpty) {
       throw new TxnException("Empty transaction set")
     }
