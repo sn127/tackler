@@ -126,7 +126,6 @@ None at the moment (journal sidecar file?)
 * [ ] CHANGELOG item
 * [ ] User docs
 ** [ ] user manual
-*** [ ] abbreviated sha1 is not supported
 *** [ ] cli-arguments
 **** [ ] `--input.git.ref`
 **** [ ] `--input.git.commit`
@@ -153,6 +152,7 @@ None at the moment (journal sidecar file?)
 ** [x] `--input.git.ref`
 ** [x] `--input.git.commit`
 *** [x] effective commit id (e.g. not latest commit)
+*** [x] abbreviated commit id
 
 === Errors
 
@@ -162,17 +162,15 @@ None at the moment (journal sidecar file?)
 * [x] e: commit
 ** [x] e: commit not found
 ** [x] e: format of commit is not valid
-** [ ] e: abbreviated sha1
 * [x] e: ref
 ** [x] e: ref not found
 ** [x] e: format of ref is not valid?
-* [ ] e: path not found
-* [ ] e: empty txns set with commit + path
-* [ ] e: non-bare git directory
+* [x] e: empty txns set with commit + path
+* [ ] e: non-bare git directory (test post-poned: this needs external support /bc not possible to include git-inside git)
 * [x] e: txns/foo.txn as directory
 * [x] e: txns/foo.txn as link
-* [ ] e: cli: conflicting options
-** [ ] e: git with non-git storage
+* [x] e: cli: conflicting options
+** [x] e: git with non-git storage
 ** [x] e: cli: --input.git.commit + --input.git.ref
 ** [x] e: cli: --input.file + --input.git.ref
 ** [x] e: cli: --input.file + --input.git.commit
@@ -199,30 +197,3 @@ features:
       parent: uuid
       subject: "one-line description"
 ....
-
-basic:
-# test:uuid: 292f250d-7cb2-4114-92e1-10f9a8d5b381
-
-shard + cli ref arg
-# test:uuid: 1d2c22c1-e3fa-4cd4-a526-45318c15d13e
-
-# commit id 1st
-# test:uuid: ede5d6b5-1885-4e02-8f9d-e2e1034fb6e3
-
-# commit-id 2nd
-# test:uuid: 7dfebf19-480c-4bf5-806a-4d560a20a1d4
-
-# commit-id 3rd
-# test:uuid: f44faf05-7019-4c34-b0af-3345feb4ad37
-
-# utf8 data
-# test:uuid: c2f39ef7-c085-4ff4-af4d-85a50d0ee203
-
-# parser error with shard data
-# test:uuid: 25452d77-aae5-414c-a6a6-bd60f090731e
-
-# malformed sha1 (valid but truncated)
-# test:uuid: aeb11f77-ba35-400f-bdae-50d6ebb7e098
-
-# commit not found
-# test:uuid: c233295d-08b9-49b5-b384-634fc8432e64

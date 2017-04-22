@@ -101,7 +101,7 @@ class TacklerTxns(val settings: Settings) extends CtxHandler {
       } catch {
         case e: org.eclipse.jgit.errors.RepositoryNotFoundException => {
           val msg =
-            "Git repository is not found, check repository config\n" +
+            "Git: Did not find usable repository, check repository path, also make sure repository is bare.\n" +
               "Message: [" + e.getMessage + "]"
           log.error(msg)
           throw new TacklerException(msg)
@@ -118,23 +118,21 @@ class TacklerTxns(val settings: Settings) extends CtxHandler {
         })
         ref.getObjectId
       } else {
-        val cidOpt = try {
+        try {
+          // resolve fails either with null or exceptions
           Option(repository.resolve(inputRef.right.get))
+            .getOrElse({
+              // test: uuid: 7cb6af2e-3061-4867-96e3-ee175b87a114
+              val msg = "Can not resolve given id: [" + inputRef.right.get + "]"
+              log.error(msg)
+              throw new TacklerException(msg)
+            })
         } catch {
           case e: RuntimeException =>
-            val msg =
-              "Can not resolve commit by given id: [" + inputRef.right.get + "]\n"
-                "Message: [" + e.getMessage + "]"
+            val msg = "Can not resolve commit by given id: [" + inputRef.right.get + "], Message: [" + e.getMessage + "]"
             log.error(msg)
             throw new TacklerException(msg)
         }
-
-        cidOpt.getOrElse({
-          val msg =
-          "Can not find commit by given id: [" + inputRef.right.get + "]"
-          log.error(msg)
-          throw new TacklerException(msg)
-        })
       }
 
       // with managed(new RevWalk(repository))
@@ -150,8 +148,7 @@ class TacklerTxns(val settings: Settings) extends CtxHandler {
           revWalk.parseCommit(commitId)
         } catch {
           case e: org.eclipse.jgit.errors.MissingObjectException =>
-            val msg = "Can not find commit by given id\n" +
-                "Message: [" + e.getMessage + "]"
+            val msg = "Can not find commit by given id: [" + commitId.getName + "], Message: [" + e.getMessage + "]"
             log.error(msg)
             throw new TacklerException(msg)
         }
