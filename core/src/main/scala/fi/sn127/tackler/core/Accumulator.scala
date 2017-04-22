@@ -18,16 +18,16 @@ package fi.sn127.tackler.core
 
 import scala.collection.mutable
 
-import fi.sn127.tackler.model.{BalanceTreeNode, RegisterEntry, RegisterPosting, Transaction, Txns}
+import fi.sn127.tackler.model.{BalanceTreeNode, RegisterEntry, RegisterPosting, Transaction, Txns, TxnData}
 
 object Accumulator {
 
-  def balanceGroups(txns: Txns, groupOp: (Transaction) => String, balanceFilter: Filtering[BalanceTreeNode]): Seq[Balance] = {
-    txns
+  def balanceGroups(txns: TxnData, groupOp: (Transaction) => String, balanceFilter: Filtering[BalanceTreeNode]): Seq[Balance] = {
+    txns.txns
       .groupBy(groupOp).toSeq
       .sortBy(_._1)
       .par.map({case (groupBy, balGrpTxns) =>
-        Balance(groupBy, balGrpTxns, balanceFilter)
+        Balance(groupBy, TxnData(None, balGrpTxns), balanceFilter)
       }).toList
   }
 

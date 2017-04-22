@@ -21,7 +21,7 @@ import better.files._
 import org.slf4j.{Logger, LoggerFactory}
 
 import fi.sn127.tackler.core.{FilesystemStorageType, GitStorageType, Settings, TacklerException, TxnException}
-import fi.sn127.tackler.model.Txns
+import fi.sn127.tackler.model.TxnData
 import fi.sn127.tackler.parser.{TacklerParseException, TacklerTxns}
 import fi.sn127.tackler.report.Reports
 
@@ -144,7 +144,7 @@ object TacklerCli {
 
     val tsParseStart = System.currentTimeMillis()
 
-    val txns: Txns = settings.input_storage match {
+    val txnData: TxnData = settings.input_storage match {
       case GitStorageType() => {
         val inputRef = getInputRef(cliCfg, settings)
         tt.git2Txns(inputRef)
@@ -156,18 +156,18 @@ object TacklerCli {
       }
     }
 
-    if (txns.isEmpty) {
+    if (txnData.txns.isEmpty) {
       throw new TxnException("Empty transaction set")
     }
     val tsParseEnd = System.currentTimeMillis()
 
-    println("Txns size: " + txns.size.toString)
+    println("Txns size: " + txnData.txns.size.toString)
 
     val tsReportsStart = System.currentTimeMillis()
 
     val reporter = Reports(settings)
 
-    reporter.doReports(output, txns)
+    reporter.doReports(output, txnData)
 
     val tsReportsEnd = System.currentTimeMillis()
 

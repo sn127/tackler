@@ -1,0 +1,11 @@
+Git storage:
+   commit:  a7938d9b61958d2cabea7503a7be89191d4fb31e
+   ref:     FIXED by commit
+   message: commit-id-01: 2nd
+
+BALANCE
+-------
+               110.00    110.00 a
+              -110.00   -110.00 e
+=====================
+                 0.00

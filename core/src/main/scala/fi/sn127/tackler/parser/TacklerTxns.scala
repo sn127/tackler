@@ -35,7 +35,7 @@ import org.slf4j.{Logger, LoggerFactory}
 import resource.{makeManagedResource, managed, _}
 
 import fi.sn127.tackler.core.{Settings, TacklerException}
-import fi.sn127.tackler.model.{OrderByTxn, Transaction, Txns}
+import fi.sn127.tackler.model.{GitMetadata, OrderByTxn, Transaction, Txns, TxnData}
 
 /**
  * Generate Transactions from selected inputs.
@@ -57,13 +57,14 @@ class TacklerTxns(val settings: Settings) extends CtxHandler {
    * @param inputs input as seq of files
    * @return Txns
    */
-  def paths2Txns(inputs: Seq[Path]): Txns = {
+  def paths2Txns(inputs: Seq[Path]): TxnData = {
 
-    inputs.par.flatMap(inputPath => {
+    TxnData(None,
+      inputs.par.flatMap(inputPath => {
       log.debug("txn: {}", inputPath.toString())
       val txnsCtx = TacklerParser.txnsFile(inputPath)
       handleTxns(txnsCtx)
-    }).seq.sorted(OrderByTxn)
+    }).seq.sorted(OrderByTxn))
   }
 
   /**
@@ -81,7 +82,7 @@ class TacklerTxns(val settings: Settings) extends CtxHandler {
   @SuppressWarnings(Array(
     "org.wartremover.warts.TraversableOps",
     "org.wartremover.warts.EitherProjectionPartial"))
-  def git2Txns(inputRef: Either[String, String]): Txns = {
+  def git2Txns(inputRef: Either[String, String]): TxnData = {
 
     /**
      * Get Git repository as managed resource.
@@ -175,15 +176,15 @@ class TacklerTxns(val settings: Settings) extends CtxHandler {
               val loader = repository.open(objectId)
               log.debug("txn: git: object id: " + objectId.getName + ", path: " + treeWalk.getPathString)
 
-              val txnsResult = managed(loader.openStream).map(stream => {
+              val txnsMgmt = managed(loader.openStream).map(stream => {
                 handleTxns(TacklerParser.txnsStream(stream))
               })
-              if (txnsResult.either.isLeft) {
+              if (txnsMgmt.either.isLeft) {
                 // todo: handle error, parse error msg, commit id, etc.
                 log.error("Error git: object id: " + objectId.getName + ", path: " + treeWalk.getPathString)
-                throw txnsResult.either.left.get.head
+                throw txnsMgmt.either.left.get.head
               } else {
-                txnsResult.either.right.get
+                txnsMgmt.either.right.get
               }
             } else {
               val msg = "Found matching object, but it is not regular file\n" +
@@ -194,20 +195,27 @@ class TacklerTxns(val settings: Settings) extends CtxHandler {
               throw new TacklerException(msg)
             }
           }
-          txns.flatten.toSeq
+
+          val meta = new GitMetadata(
+            inputRef.left.getOrElse("FIXED by commit"),
+            commit.getName,
+            commit.getShortMessage
+          )
+
+          TxnData(Some(meta), txns.flatten.toSeq.sorted(OrderByTxn))
         })
       })
     })
     // https://github.com/jsuereth/scala-arm/issues/49
-    val result = tmpResult.map(u => u).either
+    val mgmtResult = tmpResult.map(u => u).either
 
-    val txns = if (result.isRight) {
-      result.right.get
+    val result = if (mgmtResult.isRight) {
+      mgmtResult.right.get
     } else {
-      throw result.left.get.head
+      throw mgmtResult.left.get.head
     }
 
-    txns.sorted(OrderByTxn)
+    result
   }
 
   /**

@@ -1207,8 +1207,13 @@ features:
                 - desc: shard
                 - desc: cli ref arg
                 - desc: txn sorting
+                - desc: "git metadata: git ref"
               references:
                 - ref: identity
+                - ref: equity
+                - ref: balance
+                - ref: balance-group
+                - ref: register
           - test:
               id: 292f250d-7cb2-4114-92e1-10f9a8d5b381
               name: tests/core/ok/git-master-01.exec
@@ -1244,7 +1249,13 @@ features:
           - test:
               id: 7752eee6-d3cf-4084-93c0-cb43a093fdd0
               name: tests/core/ok/git-commit-04.exec
-              desc: abbrev commit id
+              descriptions:
+                - desc: abbrev commit id
+                - desc: "git metadata: fixed commit"
               references:
                 - ref: identity
+                - ref: equity
+                - ref: balance
+                - ref: balance-group
+                - ref: register
 ### GIT END

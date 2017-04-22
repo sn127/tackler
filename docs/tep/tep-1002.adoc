@@ -78,36 +78,36 @@ Changes to conf-settings
 
 Changes to general reporting
 
-* [ ] Reports should produce meta information about txns and report
-** [ ] human readable output (text-format)
+* [x] Reports should produce meta information about txns and report
+** [x] human readable output (text-format)
 ** [ ] machine readable: JSON?
 
-* [ ] Git backend specific information
-** [ ] commit
+* [x] Git backend specific information
+** [x] commit
 
 
 === Balance report
 
 Changes to balance report
 
-* [ ] Output meta-info
-** [ ] Git backend: commit
+* [x] Output meta-info
+** [x] Git backend: commit
 
 
 === Balance Group report
 
 Changes to balance group report
 
-* [ ] Output meta-info
-** [ ] Git backend: commit
+* [x] Output meta-info
+** [x] Git backend: commit
 
 
 === Register report
 
 Changes to register report
 
-* [ ] Output meta-info
-** [ ] Git backend: commit
+* [x] Output meta-info
+** [x] Git backend: commit
 
 
 === Equity report
@@ -166,7 +166,7 @@ None at the moment (journal sidecar file?)
 ** [x] e: ref not found
 ** [x] e: format of ref is not valid?
 * [x] e: empty txns set with commit + path
-* [ ] e: non-bare git directory (test post-poned: this needs external support /bc not possible to include git-inside git)
+* [ ] e: non-bare git directory (test postponed: this needs external support /bc not possible to include non-bare git inside git)
 * [x] e: txns/foo.txn as directory
 * [x] e: txns/foo.txn as link
 * [x] e: cli: conflicting options
