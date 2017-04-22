@@ -103,6 +103,7 @@ class TacklerTxns(val settings: Settings) extends CtxHandler {
           val msg =
             "Git repository is not found, check repository config\n" +
               "Message: [" + e.getMessage + "]"
+          log.error(msg)
           throw new TacklerException(msg)
         }
       }
@@ -113,11 +114,27 @@ class TacklerTxns(val settings: Settings) extends CtxHandler {
       val commitId = if (inputRef.isLeft) {
         val refOpt = Option(repository.findRef(inputRef.left.get))
         val ref = refOpt.getOrElse({
-          throw new RuntimeException("Ref Not found")
+          throw new TacklerException("Git ref not found or it is invalid: [" + inputRef.left.get + "]")
         })
         ref.getObjectId
       } else {
-        repository.resolve(inputRef.right.get)
+        val cidOpt = try {
+          Option(repository.resolve(inputRef.right.get))
+        } catch {
+          case e: RuntimeException =>
+            val msg =
+              "Can not resolve commit by given id: [" + inputRef.right.get + "]\n"
+                "Message: [" + e.getMessage + "]"
+            log.error(msg)
+            throw new TacklerException(msg)
+        }
+
+        cidOpt.getOrElse({
+          val msg =
+          "Can not find commit by given id: [" + inputRef.right.get + "]"
+          log.error(msg)
+          throw new TacklerException(msg)
+        })
       }
 
       // with managed(new RevWalk(repository))
@@ -129,7 +146,16 @@ class TacklerTxns(val settings: Settings) extends CtxHandler {
       revWalkM.flatMap(revWalk => {
         // a RevWalk allows to walk over commits based on some filtering that is defined
 
-        val commit = revWalk.parseCommit(commitId)
+        val commit = try {
+          revWalk.parseCommit(commitId)
+        } catch {
+          case e: org.eclipse.jgit.errors.MissingObjectException =>
+            val msg = "Can not find commit by given id\n" +
+                "Message: [" + e.getMessage + "]"
+            log.error(msg)
+            throw new TacklerException(msg)
+        }
+
         log.info("git: using commit: " + commit.getName)
         val tree = commit.getTree
 
@@ -147,8 +173,8 @@ class TacklerTxns(val settings: Settings) extends CtxHandler {
             n <- Iterator.continually(treeWalk.next()).takeWhile(p => p === true)
           } yield {
 
+            val objectId = treeWalk.getObjectId(0)
             if (FileMode.REGULAR_FILE.equals(treeWalk.getFileMode(0))) {
-              val objectId = treeWalk.getObjectId(0)
               val loader = repository.open(objectId)
               log.debug("txn: git: object id: " + objectId.getName + ", path: " + treeWalk.getPathString)
 
@@ -163,8 +189,12 @@ class TacklerTxns(val settings: Settings) extends CtxHandler {
                 txnsResult.either.right.get
               }
             } else {
-              log.warn("Found matching object, but it is directory?!?: {}", treeWalk.getPathString)
-              Seq.empty[Transaction]
+              val msg = "Found matching object, but it is not regular file\n" +
+                "   commit id: " + commit.getName + "\n" +
+                "   object id: " + objectId.getName + "\n" +
+                "   path: [" + treeWalk.getPathString + "]"
+              log.error(msg)
+              throw new TacklerException(msg)
             }
           }
           txns.flatten.toSeq

@@ -1,0 +1,4 @@
+# format: exec
+# test:uuid: 5c0a2e2c-f82c-400a-a9bb-bc7b83010b3c
+# link inside reposiotyr, not supported
+exec:--cfg;tests/core/git-ok.conf;--input.git.ref;linktxn-01;

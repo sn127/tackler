@@ -1,0 +1,4 @@
+# format: exec
+# test:uuid: aeb11f77-ba35-400f-bdae-50d6ebb7e098
+# malformed sha1
+exec:--cfg;tests/core/git-ok.conf;--input.git.commit;//;
