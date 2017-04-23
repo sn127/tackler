@@ -89,6 +89,7 @@ Tacklers processing time with git storage system is following:
 With 1E6 data set memory usage peaks around 2.0GB.
 
 Full results are here:
+
  * link:../perf/results/readme.adoc[Readme]
  * link:../perf/results/hw01/perf-git-1e3.txt[git 1e3 result]
  * link:../perf/results/hw01/perf-git-1e6.txt[git 1e6 result]

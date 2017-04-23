@@ -185,7 +185,7 @@ None at the moment (journal sidecar file?)
 
 === Perf
 
-* [ ] git backend perf tests
+* [x] git backend perf tests
 
 === Metadata for test coverage tracking
 

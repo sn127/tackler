@@ -93,7 +93,8 @@ Documentation for developers is located under: link:./docs/devel[]
 
 At the moment, current set of todo items is kept under link:./todo[todo].
 
-Tackler Enhancement Proposals are kept under link:docs/tep[tep directory].
+Tackler Enhancement Proposals are kept in tep-directory under docs: link:docs/tep/index.adoc[TEP index].
+
 
 == Releases
 
@@ -155,3 +156,4 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ....
+
