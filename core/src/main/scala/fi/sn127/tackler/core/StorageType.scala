@@ -8,10 +8,10 @@ object StorageType {
   def apply(storageType: String): StorageType = {
     storageType match {
       case "git" => GitStorageType()
-      case "txn" => FilesystemStorageType()
+      case "fs" => FilesystemStorageType()
       /* Error*/
       case storage => throw new TacklerException(
-        "Unknown storage type [" + storage + "]. Valid types are: git, txn")
+        "Unknown storage type [" + storage + "]. Valid types are: git, fs")
     }
   }
 }
