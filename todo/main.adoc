@@ -30,6 +30,7 @@
 
 == Reporting
 
+ * [ ] check reporting.console=true when there is only identity defined
  * [ ] different formats
  ** [ ] json
 

@@ -1,5 +1,6 @@
 = Tests TODO
 
+* [x] git: tag test
 * [ ] shard: check/new test: parse error with shard data
 * [ ] shard: check/new test: not-to-be-included case (txn01.txt vs. txn01.txn)
 * [ ] shard: check/new test: effective dir (do not scan everything)

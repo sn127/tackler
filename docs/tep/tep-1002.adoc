@@ -45,7 +45,11 @@ Changes to machinery
 ** [x] Add link:../../THANKS.adoc[THANKS]
 
 
-=== Phase-2
+=== Future plans
+
+* [ ] support for PGP tags
+** [ ] report signature
+** [ ] verify signature
 
 * [ ] Integration with link:https://github.com/gitblit/gitblit[Gitblit]?
 ** [ ] License: link:https://github.com/gitblit/gitblit/blob/master/LICENSE[Apache License 2.0]
@@ -123,15 +127,15 @@ None at the moment (journal sidecar file?)
 
 == Documentation
 
-* [ ] CHANGELOG item
-* [ ] User docs
-** [ ] user manual
-*** [ ] cli-arguments
-**** [ ] `--input.git.ref`
-**** [ ] `--input.git.commit`
-** [ ] tackler.conf
-** [ ] accounts.conf
-** [ ] examples
+* [x] CHANGELOG item
+* [x] User docs
+** [x] user manual
+*** [x] cli-arguments
+**** [x] `--input.git.ref`
+**** [x] `--input.git.commit`
+** [x] tackler.conf
+** [x] accounts.conf
+** [x] examples
 * [ ] Developer docs
 
 
@@ -182,7 +186,6 @@ None at the moment (journal sidecar file?)
 === Perf
 
 * [ ] git backend perf tests
-** [ ] shard data
 
 === Metadata for test coverage tracking
 

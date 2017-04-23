@@ -3,15 +3,20 @@
 exe_path=$1
 trg=$2
 
+storage=git
+
+ 
+# --input.txn.glob "**.txn" \
+# --input.txn.dir data/perf-$trg/ \
+
 (
 for i in 1 2 3 4 5; do 
 	time java -jar "$exe_path" \
-	--cfg perf.conf \
-	--input.txn.glob "**.txn" \
-	--input.txn.dir data/perf-$trg/ \
-	--output out/perf-$trg
+	--cfg perf-$storage.conf \
+	--input.git.ref $trg \
+	--output out/perf-$storage-$trg
 
 	echo
 done
-) > perf-$trg.txt  2>&1 
+) > results/hw01/perf-$storage-$trg.txt  2>&1 
 

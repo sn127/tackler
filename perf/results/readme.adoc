@@ -9,7 +9,17 @@ Then Average is calculated based on remaining three.
 Results with versions correspond to different ANTLR versions, and
 most current version is without version string.
 
-Current result is located here: link:./hw01/perf-1E6.txt[]
+
+Results for Filesystem based storage:
+
+ * link:./hw01/perf-1E3.txt[FS 1e3]
+ * link:./hw01/perf-1E6.txt[FS 1e6]
+
+Results for Git based storage (currently single thread based implementation):
+
+ * link:./hw01/perf-git-1e3.txt[Git 1e3]
+ * link:./hw01/perf-git-1e6.txt[Git 1e6]
+
 
 == ANTRL versions
 

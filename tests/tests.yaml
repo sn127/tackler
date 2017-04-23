@@ -1258,4 +1258,17 @@ features:
                 - ref: balance
                 - ref: balance-group
                 - ref: register
+          - test:
+              id: 80d3c14d-64ee-46d3-b9fd-37f82384a562
+              name: tests/core/ok/git-tag-01.exec
+              descriptions:
+                - desc: reference by tag
+                - desc: "git metadata: tag name"
+                - desc: "git metadata: correct commit id"
+              references:
+                - ref: identity
+                - ref: equity
+                - ref: balance
+                - ref: balance-group
+                - ref: register
 ### GIT END

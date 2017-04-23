@@ -96,6 +96,17 @@ It's recommended to select some data shard scheme with production systems.
 Regardless of used sharding scheme, it is possible to group txns with different
 `group-by` operators.
 
+===== Git storage
+
+Please see link:git-storage.adoc[git storage] for full information about git based storage.
+
+Addition to configuration, Git reference or commit id can be given from command line:
+
+* `--input.git.ref` is for git reference (e.g. branch name), HEAD of that branch will be used
+* `--input.git.commit` one single commit and tree defined by it will be used
+
+These options are mutually exclusive with each other and with filesystem storage arguments (`input.txn.*`).
+
 
 ==== Reporting
 

@@ -17,6 +17,10 @@ Code samples and examples:
 
  * link:https://github.com/centic9/jgit-cookbook[jgit-cookbook]
 
+Tests:
+
+ * link:https://github.com/sn127/utils[DirSuite]
+ * link:http://www.scalatest.org/[ScalaTest]
 
 Build-tools (used to build Tackler):
 
