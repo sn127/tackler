@@ -1,6 +1,13 @@
 /*
  * Copyright 2016-2017 Jani Averbach
  *
+ * git2Txns is based on example
+ * by: Copyright 2013, 2014 Dominik Stadler
+ * license: Apache License v2.0
+ * url: https://raw.githubusercontent.com/centic9/jgit-cookbook/
+ * commit: 276ad0fecb4f1c616ef459ed8b7feb6d503724eb
+ * file: jgit-cookbook/src/main/java/org/dstadler/jgit/api/ReadFileFromCommit.java
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -15,155 +22,215 @@
  *
  */
 package fi.sn127.tackler.parser
-import java.io.{File => JFile}
 import java.nio.file.Path
-import java.time._
 
+import better.files.File
 import cats.implicits._
+import org.eclipse.jgit.lib.{FileMode, Repository}
+import org.eclipse.jgit.revwalk.RevWalk
+import org.eclipse.jgit.storage.file.FileRepositoryBuilder
+import org.eclipse.jgit.treewalk.TreeWalk
+import org.eclipse.jgit.treewalk.filter.{AndTreeFilter, PathFilter, PathSuffixFilter}
 import org.slf4j.{Logger, LoggerFactory}
+import resource.{makeManagedResource, managed, _}
 
-import scala.collection.JavaConverters
+import fi.sn127.tackler.core.{Settings, TacklerException}
+import fi.sn127.tackler.model.{GitMetadata, OrderByTxn, Transaction, Txns, TxnData}
 
-import fi.sn127.tackler.core.{AccountException, Settings}
-import fi.sn127.tackler.model.{AccountTreeNode, OrderByTxn, Posting, Posts, Transaction, Txns}
-import fi.sn127.tackler.parser.TxnParser._
-
-class TacklerTxns(val settings: Settings) {
+/**
+ * Generate Transactions from selected inputs.
+ *
+ * These take an input(s) as argument and
+ * returns sequence of transactions.
+ *
+ * If there is an error, they throw an exception.
+ *
+ * @param settings to control how inputs and txns are handled
+ */
+class TacklerTxns(val settings: Settings) extends CtxHandler {
   private val log: Logger = LoggerFactory.getLogger(this.getClass)
 
   /**
-   * Parse and convert list of input paths to Txns
+   * Get Transactions from list of input paths.
+   * Throws an exception in case of error.
    *
    * @param inputs input as seq of files
    * @return Txns
    */
-  def inputs2Txns(inputs: Seq[Path]): Txns = {
+  def paths2Txns(inputs: Seq[Path]): TxnData = {
 
-    inputs.par.flatMap(inputPath => {
+    TxnData(None,
+      inputs.par.flatMap(inputPath => {
       log.debug("txn: {}", inputPath.toString())
       val txnsCtx = TacklerParser.txnsFile(inputPath)
       handleTxns(txnsCtx)
-    }).seq.sorted(OrderByTxn)
+    }).seq.sorted(OrderByTxn))
+  }
+
+  /**
+   * Get Transactions from GIT based storage.
+   * Basic git repository information is read from settings,
+   * but input setting (ref or commit id) is an argument.
+   * Throws an exception in case of error.
+   *
+   * feature: 06b4a9b1-f48c-4b33-8811-1f32cdc44d7b
+   * coverage: "sorted" tested by 1d2c22c1-e3fa-4cd4-a526-45318c15d13e
+   *
+   * @param inputRef Left(ref) or Right(commitId)
+   * @return Txns
+   */
+  @SuppressWarnings(Array(
+    "org.wartremover.warts.TraversableOps",
+    "org.wartremover.warts.EitherProjectionPartial"))
+  def git2Txns(inputRef: Either[String, String]): TxnData = {
+
+    /**
+     * Get Git repository as managed resource.
+     * Repository must be bare.
+     *
+     * @param gitdir path/to/repo.git
+     * @return repository as managed resource
+     */
+    def getRepo(gitdir: File): ManagedResource[Repository] = {
+      try {
+        val repo = (new FileRepositoryBuilder)
+          .setGitDir(gitdir.toJava)
+          .setMustExist(true)
+          .setBare()
+          .build()
+        managed(repo)
+      } catch {
+        case e: org.eclipse.jgit.errors.RepositoryNotFoundException => {
+          val msg =
+            "Git: Did not find usable repository, check repository path, also make sure repository is bare.\n" +
+              "Message: [" + e.getMessage + "]"
+          log.error(msg)
+          throw new TacklerException(msg)
+        }
+      }
+    }
+
+    val tmpResult = getRepo(settings.input_git_repository).flatMap(repository => {
+
+      val commitId = if (inputRef.isLeft) {
+        val refOpt = Option(repository.findRef(inputRef.left.get))
+        val ref = refOpt.getOrElse({
+          throw new TacklerException("Git ref not found or it is invalid: [" + inputRef.left.get + "]")
+        })
+        ref.getObjectId
+      } else {
+        try {
+          // resolve fails either with null or exceptions
+          Option(repository.resolve(inputRef.right.get))
+            .getOrElse({
+              // test: uuid: 7cb6af2e-3061-4867-96e3-ee175b87a114
+              val msg = "Can not resolve given id: [" + inputRef.right.get + "]"
+              log.error(msg)
+              throw new TacklerException(msg)
+            })
+        } catch {
+          case e: RuntimeException =>
+            val msg = "Can not resolve commit by given id: [" + inputRef.right.get + "], Message: [" + e.getMessage + "]"
+            log.error(msg)
+            throw new TacklerException(msg)
+        }
+      }
+
+      // with managed(new RevWalk(repository))
+      // [error]  ambiguous implicit values:
+      // [error]    both method reflectiveDisposableResource ...
+      // [error]    and method reflectiveCloseableResource ...
+      // Let's use makeMangedResource
+      val revWalkM = makeManagedResource(new RevWalk(repository))(_.dispose())(List.empty[Class[Throwable]])
+      revWalkM.flatMap(revWalk => {
+        // a RevWalk allows to walk over commits based on some filtering that is defined
+
+        val commit = try {
+          revWalk.parseCommit(commitId)
+        } catch {
+          case e: org.eclipse.jgit.errors.MissingObjectException =>
+            val msg = "Can not find commit by given id: [" + commitId.getName + "], Message: [" + e.getMessage + "]"
+            log.error(msg)
+            throw new TacklerException(msg)
+        }
+
+        log.info("git: using commit: " + commit.getName)
+        val tree = commit.getTree
+
+        // now try to find files
+        managed(new TreeWalk(repository)).map(treeWalk => {
+          treeWalk.addTree(tree)
+          treeWalk.setRecursive(true)
+
+          treeWalk.setFilter(AndTreeFilter.create(
+            PathFilter.create(settings.input_git_dir),
+            PathSuffixFilter.create(settings.input_git_suffix)))
+
+          // Handle files
+          val txns: Iterator[Seq[Transaction]] = for {
+            n <- Iterator.continually(treeWalk.next()).takeWhile(p => p === true)
+          } yield {
+
+            val objectId = treeWalk.getObjectId(0)
+            if (FileMode.REGULAR_FILE.equals(treeWalk.getFileMode(0))) {
+              val loader = repository.open(objectId)
+              log.debug("txn: git: object id: " + objectId.getName + ", path: " + treeWalk.getPathString)
+
+              val txnsMgmt = managed(loader.openStream).map(stream => {
+                handleTxns(TacklerParser.txnsStream(stream))
+              })
+              if (txnsMgmt.either.isLeft) {
+                // todo: handle error, parse error msg, commit id, etc.
+                log.error("Error git: object id: " + objectId.getName + ", path: " + treeWalk.getPathString)
+                throw txnsMgmt.either.left.get.head
+              } else {
+                txnsMgmt.either.right.get
+              }
+            } else {
+              val msg = "Found matching object, but it is not regular file\n" +
+                "   commit id: " + commit.getName + "\n" +
+                "   object id: " + objectId.getName + "\n" +
+                "   path: [" + treeWalk.getPathString + "]"
+              log.error(msg)
+              throw new TacklerException(msg)
+            }
+          }
+
+          val meta = new GitMetadata(
+            inputRef.left.getOrElse("FIXED by commit"),
+            commit.getName,
+            commit.getShortMessage
+          )
+
+          TxnData(Some(meta), txns.flatten.toSeq.sorted(OrderByTxn))
+        })
+      })
+    })
+    // https://github.com/jsuereth/scala-arm/issues/49
+    val mgmtResult = tmpResult.map(u => u).either
+
+    val result = if (mgmtResult.isRight) {
+      mgmtResult.right.get
+    } else {
+      throw mgmtResult.left.get.head
+    }
+
+    result
   }
 
   /**
    * Parse and converts input string to Txns
+   * Throws an exception in case of error.
    *
    * feature: a94d4a60-40dc-4ec0-97a3-eeb69399f01b
-   * coverage: "Sorted" tested by 200aad57-9275-4d16-bdad-2f1c484bcf17
+   * coverage: "sorted" tested by 200aad57-9275-4d16-bdad-2f1c484bcf17
    *
    * @param input as text
    * @return Txns
    */
-  def input2Txns(input: String): Txns = {
+  def string2Txns(input: String): Txns = {
 
     val txnsCtx = TacklerParser.txnsText(input)
     handleTxns(txnsCtx).sorted(OrderByTxn)
-  }
-
-  @SuppressWarnings(Array(
-    "org.wartremover.warts.OptionPartial", "OptionGet"))
-  protected def handleDate(dateCtx: DateContext): ZonedDateTime = {
-
-    val tzDate: ZonedDateTime =
-      Option(dateCtx.TS_TZ()) match {
-        case Some(tzTS) => {
-          ZonedDateTime.parse(tzTS.getText,
-            java.time.format.DateTimeFormatter.ISO_OFFSET_DATE_TIME)
-        }
-        case None => {
-          Option(dateCtx.TS()) match {
-            case Some(localTS) => {
-              val dt = LocalDateTime.parse(localTS.getText,
-                java.time.format.DateTimeFormatter.ISO_LOCAL_DATE_TIME)
-              ZonedDateTime.of(dt, settings.timezone)
-            }
-            case None => {
-              val optDate = Option(dateCtx.DATE())
-              require(optDate.isDefined) // IE if not
-
-              val d = LocalDate.parse(optDate.get.getText,
-                java.time.format.DateTimeFormatter.ISO_DATE)
-
-              ZonedDateTime.of(d, settings.defaultTime, settings.timezone)
-            }
-          }
-        }
-      }
-    tzDate
-  }
-
-  /**
-   * Handle raw parser account entry.
-   *
-   * @param accountCtx from parser
-   * @return Account tree node
-   */
-  @SuppressWarnings(Array(
-    "org.wartremover.warts.TraversableOps",
-    "org.wartremover.warts.ListOps"))
-  protected def handleAccount(accountCtx: AccountContext): AccountTreeNode = {
-
-    val account: String = JavaConverters.asScalaIterator(accountCtx.ID().iterator())
-      .map(_.getText)
-      .mkString(":")
-
-    if (settings.accounts_strict) {
-      settings.accounts_coa.find({ case (key, _) => key === account }) match {
-        case None =>
-          throw new AccountException("Account not found: [" + account + "]")
-        case Some((_, value)) =>
-          value
-      }
-    } else {
-      AccountTreeNode(account)
-    }
-  }
-
-  protected def handleRawPosting(postingCtx: PostingContext): Posting = {
-    val acctn = handleAccount(postingCtx.account())
-    val amount = BigDecimal(postingCtx.amount().NUMBER().getText)
-    val comment = Option(postingCtx.comment()).map(c => c.text().getText)
-
-    Posting(acctn, amount, comment)
-  }
-
-  protected def handleTxn(txnCtx: TxnContext): Transaction = {
-    val date = handleDate(txnCtx.date())
-    val code = Option(txnCtx.code()).map(c => c.code_value().getText.trim)
-    val desc = Option(txnCtx.description()).map(d => d.text().getText.trim)
-
-    val uuid = Option(txnCtx.txn_meta()).map( meta => {
-      val key = meta.txn_meta_key().UUID().getText
-      require(key === "uuid") // IE if not
-
-      java.util.UUID.fromString(meta.text().getText.trim)
-    })
-
-    val comments = Option(txnCtx.txn_comment()).map(cs =>
-      JavaConverters.asScalaIterator(cs.iterator())
-        .map(c => c.comment().text().getText).toList
-    )
-
-    val posts: Posts =
-      JavaConverters.asScalaIterator(txnCtx.postings().posting().iterator()).map(p => {
-        handleRawPosting(p)
-      }).toList
-
-    val last_posting = Option(txnCtx.postings().last_posting()).map(lp => {
-        val ate = handleAccount(lp.account())
-        val amount = Posting.sum(posts)
-        val comment = Option(lp.comment()).map(c => c.text().getText)
-        List(Posting(ate, -amount, comment))
-      })
-
-    Transaction(date, code, desc, uuid, comments, posts ++ last_posting.getOrElse(Nil))
-  }
-
-  protected def handleTxns(txnsCtx: TxnsContext): Txns = {
-    JavaConverters.asScalaIterator(txnsCtx.txn().iterator())
-      .map({ case (rawTxn) =>
-        handleTxn(rawTxn)
-      }).toSeq
   }
 }

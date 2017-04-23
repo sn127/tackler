@@ -1,0 +1,4 @@
+# format: exec
+# test:uuid: c2f39ef7-c085-4ff4-af4d-85a50d0ee203
+# utf8 data
+exec:--cfg;tests/core/git-ok.conf;--input.git.ref;utf8-01;--output;out.git-utf8-01;

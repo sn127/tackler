@@ -18,10 +18,12 @@ package fi.sn127.tackler.core
 
 import cats.implicits._
 
-import fi.sn127.tackler.model.{AccountTreeNode, BalanceTreeNode, OrderByPost, Posting, Txns}
+import fi.sn127.tackler.model._
 
 
-class Balance(val title: String, val bal: Seq[BalanceTreeNode], val delta: BigDecimal) {
+class Balance(val title: String, val bal: Seq[BalanceTreeNode],
+  val delta: BigDecimal, val metadata: Option[Metadata]) {
+
   def isEmpty: Boolean = bal.isEmpty
 }
 
@@ -156,16 +158,16 @@ object Balance {
     bal.sorted(OrderByPost)
   }
 
-  def apply(title: String, txns: Txns, accounts: Filtering[BalanceTreeNode]): Balance = {
-    val bal = balance(txns)
+  def apply(title: String, txnData: TxnData, accounts: Filtering[BalanceTreeNode]): Balance = {
+    val bal = balance(txnData.txns)
 
     val fbal = bal.filter(accounts.predicate)
     if (fbal.nonEmpty) {
 
       val delta = fbal.map(_.accountSum).sum
-      new Balance(title, fbal, delta)
+      new Balance(title, fbal, delta, txnData.metadata)
     } else {
-      new Balance(title, Seq.empty[BalanceTreeNode], 0.0)
+      new Balance(title, Seq.empty[BalanceTreeNode], 0.0, None)
     }
   }
 }

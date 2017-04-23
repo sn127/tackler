@@ -17,7 +17,7 @@
 package fi.sn127.tackler.report
 
 import fi.sn127.tackler.core._
-import fi.sn127.tackler.model.{OrderByRegPosting, RegisterEntry, RegisterPosting, TxnTS, Txns}
+import fi.sn127.tackler.model._
 
 class RegisterReport(val name: String, val settings: Settings) extends ReportLike {
   private val mySettings = settings.Reports.Register
@@ -48,11 +48,12 @@ class RegisterReport(val name: String, val settings: Settings) extends ReportLik
     }
   }
 
-  private def doHeaders(formats: Formats): Unit = {
+  private def doHeaders(formats: Formats, metadata: Option[Metadata]): Unit = {
     formats.foreach({case (format, writers) =>
       format match {
         case TextFormat() =>
           val reportHeader = List(
+            metadata.fold(""){md => md.text()},
             mySettings.title,
             "-" * mySettings.title.length)
           doRowOutputs(writers, reportHeader)
@@ -83,15 +84,15 @@ class RegisterReport(val name: String, val settings: Settings) extends ReportLik
   }
   */
 
-  def doReport(formats: Formats, txns: Txns): Unit ={
+  def doReport(formats: Formats, txns: TxnData): Unit ={
     val rrf = if (mySettings.accounts.isEmpty) {
       AllRegisterPostings
     } else {
       RegisterFilterByAccount(mySettings.accounts)
     }
 
-    doHeaders(formats)
-    doBody(formats, rrf, txns)
+    doHeaders(formats, txns.metadata)
+    doBody(formats, rrf, txns.txns)
     //doFooters()
   }
 }

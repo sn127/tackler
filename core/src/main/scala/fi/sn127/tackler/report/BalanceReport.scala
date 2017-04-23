@@ -17,7 +17,7 @@
 package fi.sn127.tackler.report
 
 import fi.sn127.tackler.core._
-import fi.sn127.tackler.model.{Transaction, TxnTS, Txns}
+import fi.sn127.tackler.model.{Transaction, TxnTS, TxnData}
 
 trait BalanceReportLike extends ReportLike {
   protected def txtBalanceBody(balance: Balance): (Seq[String], String) = {
@@ -54,6 +54,7 @@ class BalanceReport(val name: String, val settings: Settings) extends  BalanceRe
     val (body, footer) = txtBalanceBody(bal)
 
     val  header = List(
+      bal.metadata.fold(""){md => md.text()},
       bal.title,
       "-" * bal.title.length)
 
@@ -65,7 +66,7 @@ class BalanceReport(val name: String, val settings: Settings) extends  BalanceRe
   }
 
 
-  protected def txtReporter(txns: Txns)(reporter: (Balance) => Seq[String]): Seq[String] = {
+  protected def txtReporter(txns: TxnData)(reporter: (Balance) => Seq[String]): Seq[String] = {
     val bf = if (mySettings.accounts.isEmpty) {
       AllBalanceAccounts
     } else {
@@ -75,8 +76,8 @@ class BalanceReport(val name: String, val settings: Settings) extends  BalanceRe
     reporter(bal)
   }
 
-  def doReport(formats: Formats, txns: Txns): Unit = {
-    val txtBalanceReport = txtReporter(txns)(txtBalance)
+  def doReport(formats: Formats, txnData: TxnData): Unit = {
+    val txtBalanceReport = txtReporter(txnData)(txtBalance)
 
     formats.foreach({case (format, writers) =>
       format match {
@@ -93,7 +94,7 @@ class BalanceReport(val name: String, val settings: Settings) extends  BalanceRe
 class BalanceGroupReport(val name: String, val settings: Settings) extends BalanceReportLike {
   private val mySettings = settings.Reports.BalanceGroup
 
-  protected def txtBalanceGroups(txns: Txns): Seq[String] = {
+  protected def txtBalanceGroups(txnData: TxnData): Seq[String] = {
 
     val balanceFilter = if (mySettings.accounts.isEmpty) {
       AllBalanceAccounts
@@ -102,6 +103,7 @@ class BalanceGroupReport(val name: String, val settings: Settings) extends Balan
     }
 
     val header = List(
+      txnData.metadata.fold(""){md => md.text()},
       mySettings.title,
       "-" * mySettings.title.length)
 
@@ -123,7 +125,7 @@ class BalanceGroupReport(val name: String, val settings: Settings) extends Balan
       }
     }
 
-    val body = Accumulator.balanceGroups(txns, groupOp, balanceFilter)
+    val body = Accumulator.balanceGroups(txnData, groupOp, balanceFilter)
       .par.flatMap(bal => txtBalanceGroup(bal))
 
     header ++ body
@@ -145,9 +147,9 @@ class BalanceGroupReport(val name: String, val settings: Settings) extends Balan
   }
 
   override
-  def doReport(formats: Formats, txns: Txns): Unit = {
+  def doReport(formats: Formats, txnData: TxnData): Unit = {
 
-    val txtBalgrpReport = txtBalanceGroups(txns)
+    val txtBalgrpReport = txtBalanceGroups(txnData)
 
     formats.foreach({case (format, writers) =>
       format match {

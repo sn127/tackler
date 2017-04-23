@@ -2,6 +2,9 @@
 
 Tackler build is done by link:http://www.scala-sbt.org/[SBT].
 
+It is possible that SBT runs out of memory when building Tackler (OutOfMemory Exceptions with Metaspace).
+If that happens then you have to increase memory available to SBT.
+
 
 == Building and testing
 
@@ -32,5 +35,4 @@ and output paths.
 == ANTLR
 
 IntelliJ ANTLR plugin has really nice graphical tree display to visualize and test parser rules.
-
 

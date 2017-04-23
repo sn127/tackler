@@ -4,6 +4,7 @@
 
 * link:./installation.adoc[Installation]
 * link:./configuration.adoc[Configuration]
+* link:./git-storage.adoc[Git Storage]
 * link:./usage.adoc[Usage]
 * link:./journal.adoc[Journal format]
 * link:./performance.adoc[Performance]
@@ -15,11 +16,20 @@
 
 === Tackler Enhancement Proposals
 
-Tackler Enhancement Proposals (TEP) are:
+Tackler Enhancement Proposals (TEP) can be found under link:tep[tep-directory].
 
-* link:./tep/tep-1000.adoc[TEP-0001: TEP template]
+* link:./tep/tep-0001.adoc[TEP-0001: TEP template]
+
+=== Implemented TEPs
+
 * link:./tep/tep-1000.adoc[TEP-1000: Equity]
-* link:./tep/tep-1000.adoc[TEP-1001: Units/Commodities]
+* link:./tep/tep-1002.adoc[TEP-1002: Git Storage system]
+
+
+=== TEPs in planning phase
+
+* link:./tep/tep-1001.adoc[TEP-1001: Units/Commodities]
+
 
 === Licenses of other components
 
@@ -27,6 +37,8 @@ Tackler Enhancement Proposals (TEP) are:
 * link:./licenses/BETTER-FILES-LICENSE.txt[Better-files]
 * link:./licenses/CATS-LICENSE.txt[Cats]
 * link:./licenses/CONFIG-LICENSE.txt[Typelevel Config]
+* link:./licenses/JGIT-LICENSE.txt[jgit]
+* link:./licenses/JGIT-COOKBOOK-LICENSE.txt[jgit-Cookbook]
 * link:./licenses/LOGBACK-LICENSE.txt[Logback]
 * link:./licenses/SLF4J-LICENSE.txt[SLF4J]
 * link:./licenses/SCALA-ARM-LICENSE.txt[Scala-ARM]

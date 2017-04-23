@@ -17,7 +17,6 @@
 package fi.sn127.tackler.parser
 
 import java.nio.file.Paths
-import java.time.ZoneId
 
 import com.typesafe.config.ConfigFactory
 import org.scalatest.FlatSpec
@@ -41,7 +40,7 @@ class TacklerTxnsTest extends FlatSpec {
     val ex = intercept[TxnException]{
       val tt = new TacklerTxns(new Settings(Paths.get(""), ConfigFactory.empty()))
 
-      tt.input2Txns(txnStr)
+      tt.string2Txns(txnStr)
     }
     assert(ex.getMessage === "TXN postings do not zero: 2")
   }
@@ -67,7 +66,7 @@ class TacklerTxnsTest extends FlatSpec {
 
     val tt = new TacklerTxns(new Settings(Paths.get(""), ConfigFactory.empty()))
 
-    val txns = tt.input2Txns(txnStr)
+    val txns = tt.string2Txns(txnStr)
     assert(txns.length === 3)
     assert(txns.head.desc.getOrElse("") === "str1")
     assert(txns.last.desc.getOrElse("") === "str3")

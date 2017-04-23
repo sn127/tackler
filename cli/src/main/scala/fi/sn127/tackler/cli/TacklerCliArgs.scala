@@ -72,34 +72,42 @@ class TacklerCliArgs(args: Seq[String]) extends ScallopConf(args) {
   val input_filename: ScallopOption[String] = opt[String](
     name="input.file", required = false, noshort = true)
 
+  val input_git_commit: ScallopOption[String] = opt[String](
+    name="input.git.commit", required = false, noshort = true)
+
+  //
+  // CLI-args which overrides Config settings.
+  //
   /**
-   * CLI-args which overrides Config settings.
-   */
-  /**
-   * Get CLI Conf-file over-riding arguments as Config.
+   * Get CLI arguments which overrides conf-file settings as Config.
    *
-   * @return config instance with cli-args as config values
+   * @return config instance with cli-args merged as config values
    */
   def toConfig: Config = {
-
-    // simple strings
-    val strConfig = opts2Config(List(
+    // Handle simple strings
+    val stringArgsConf = opts2Config(List(
       basedir,
       input_txn_dir,
       input_txn_glob,
+      input_git_ref,
       accounts_strict,
       console))
 
-    /*
-     * Chain Lists-type cli-arguments and convert to Config
-     */
+    //
+    // Handle List[String] style cli-arguments
+    //
+    // Handle these by making one config (with one key with list-values)
+    // per one cli-argument, and then chain/glue these together
+    // with existing config ("withValue").
+    // End result is one config which have these cli-args
+    // as key[String], valueList[String]
     val reportsConfig = rpts.toOption match {
       case Some(reports) =>
-        strConfig.withValue(
+        stringArgsConf.withValue(
           CfgKeys.reporting_reports,
           ConfigValueFactory.fromIterable(JavaConverters.asJavaIterable(reports)))
       case None =>
-        strConfig
+        stringArgsConf
     }
 
     val reportingAccountsConfig = afilt.toOption match {
@@ -110,14 +118,14 @@ class TacklerCliArgs(args: Seq[String]) extends ScallopConf(args) {
       case None =>
         reportsConfig
     }
-
-    // super-set of all configs
+    // End of Handle List[String] style cli-arguments.
+    // this is super-set of all above configs merged together
     reportingAccountsConfig
   }
 
-  /**
-   * Actual command line arguments which override config settings
-   */
+  //
+  // Actual command line arguments which override config settings
+  //
   val basedir: ScallopOption[String] = opt[String](
     name=CfgKeys.basedir,required = false, noshort = true)
 
@@ -126,6 +134,9 @@ class TacklerCliArgs(args: Seq[String]) extends ScallopConf(args) {
 
   val input_txn_glob: ScallopOption[String] = opt[String](
     name=CfgKeys.input_txn_glob, required = false, noshort = true)
+
+  val input_git_ref: ScallopOption[String] = opt[String](
+    name=CfgKeys.input_git_ref, required = false, noshort = true)
 
   val accounts_strict: ScallopOption[String] = opt[String](
     name=CfgKeys.accounts_strict, required = false, noshort = true)
@@ -139,9 +150,18 @@ class TacklerCliArgs(args: Seq[String]) extends ScallopConf(args) {
   val afilt: ScallopOption[List[String]] = opt[List[String]](
     name=CfgKeys.reporting_accounts, required = false, noshort = true)
 
-  /*
-   * Verify and sanity check cli args
-   */
+  //
+  // Verify and sanity check cli args
+  //
+  // no git.commit and git.ref
+  // no (git.commit | git.ref) && input.file
+  // no (git.ref | git.commit) x (txn.dir | txn.glob)
+  private val gitArgs = List(input_git_ref, input_git_commit)
+  conflicts(input_git_ref, List(input_git_commit))
+  conflicts(input_txn_dir, gitArgs)
+  conflicts(input_txn_glob, gitArgs)
+  conflicts(input_filename, gitArgs)
+
   conflicts(input_filename, List(input_txn_dir, input_txn_glob))
   dependsOnAll(input_txn_dir, List(input_txn_glob))
   verify()

@@ -12,16 +12,22 @@ based double-entry accounting].
 
 == Features
 
-* ISO 8601 timestamps with timezones and nanosecond resolution
-* Supports international characters in transaction data (descriptions, comments, account names)
+* Integrated support with GIT version control system
+** Can use plain filesystem or link:docs/git-storage.adoc[GIT repository] as data storage
+** Natively supports splitting journal data to multiple files (shards)
+* Clean and simple link:docs/journal.adoc[journal format]
+* Supports  UTF-8 characters in transaction data (link:tests/parser/ok/par-02.ref.identity.txn[descriptions], comments, link:tests/parser/ok/id-chars-01.ref.identity.txn[account names])
+* Supports ISO 8601 timestamps with link:tests/core/ok/time-dst-01.ref.identity.txn[timezones]
+  and link:tests/core/ok/time-nano-01.ref.identity.txn[nanosecond] resolution
 * Strict account name validation with link:./docs/accounts.conf[Chart of Accounts]
-* Reports (link:docs/report-balance.adoc[Balance], link:docs/report-balance-group.adoc[Balance Groups], link:docs/report-register.adoc[Register])
-* Exports (link:docs/report-equity.adoc[Equity], link:docs/report-identity.adoc[Identity])
-* Can handle large set of transactions
-** Tackler is faster than link:docs/perf-others.adoc[Ledger], and it has similar memory foot print!
-** Tackler is tested up to link:perf[one million txns], with processing time link:docs/performance.adoc[about 30sec]
+* Multiple report and export types:
+** link:docs/report-balance.adoc[Balance], link:docs/report-balance-group.adoc[Balance Groups] and link:docs/report-register.adoc[Register] Reports
+** link:docs/report-equity.adoc[Equity] and link:docs/report-identity.adoc[Identity] Exports
+* Can handle link:docs/performance.adoc[large set of transactions]
+** Tackler is tested up to link:perf[one million (1E6) transactions], processing time is link:perf/results/hw01/perf-1E6.txt[about 30sec])
+** With large set of transactions Tackler is faster than ledger-cli or link:docs/perf-others.adoc[other similar tools], and it has one of the smallest memory foot prints
 * Near 100% test coverage, link:tests/tests.yaml[all features are extensively tested]
-* Extensive documentation (link:docs/index.adoc[Index of Docs])
+* Extensive documentation: link:docs/index.adoc[Index of Docs]
 
 
 == Why Tackler?
@@ -64,7 +70,7 @@ with normal personal accounting data sets.
 
 * JVM and Multi platform support: Linux and Arm-Linux, it should be possible to run it on Windows
 
-* GIT will be used for data distribution and storage (not yet implemented)
+* GIT is used for data distribution and storage
 
 Implementation language of Tackler is link:http://scala-lang.org/[Scala] 
 and journal parsing is done with link:http://www.antlr.org/[ANTLR4].
@@ -75,7 +81,7 @@ and journal parsing is done with link:http://www.antlr.org/[ANTLR4].
 User documentation is located under docs:
 
 * link:./docs/index.adoc[Index of all documentation]
-* link:./docs/usage.doc[Usage of Tackler]
+* link:./docs/usage.adoc[Usage of Tackler]
 * link:./docs/configuration.adoc[Overview of Tackler Configuration]
 * link:./docs/tackler.conf[Example of Tackler configuration]
 * link:./docs/accounts.conf[Example of Tackler Chart of Accounts]
@@ -83,9 +89,11 @@ User documentation is located under docs:
 Documentation for developers is located under: link:./docs/devel[]
 
 
-== Todo
+== Todo and roadmap
 
 At the moment, current set of todo items is kept under link:./todo[todo].
+
+Tackler Enhancement Proposals are kept in tep-directory under docs: link:docs/tep/index.adoc[TEP index].
 
 
 == Releases
@@ -148,3 +156,4 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ....
+

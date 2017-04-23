@@ -2,6 +2,13 @@
 
 === next
 
+ * Git storage support:
+ ** link:docs/tep/tep-1002.adoc[TEP-1002]
+ ** link:docs/git-storage.adoc[Git Storage Manual]
+
+
+==== Fixes
+
 * Use always ISO-8601 week rules regardless of system locale
 
 

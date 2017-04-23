@@ -16,6 +16,7 @@
  */
 package fi.sn127.tackler.parser
 
+import java.io.InputStream
 import java.nio.charset.Charset
 import java.nio.file.Path
 
@@ -52,6 +53,17 @@ object TacklerParser {
     } catch {
       case ex: ParseCancellationException =>
         val msg = "Txn Parse Error: [" + inputPath.toString + "] msg: " + ex.getMessage
+        log.info(msg)
+        throw new TacklerParseException(msg, ex)
+    }
+  }
+
+  def txnsStream(inputStream: InputStream): TxnsContext = {
+    try {
+      parseTxns(CharStreams.fromStream(inputStream, Charset.forName("UTF-8")))
+    } catch {
+      case ex: ParseCancellationException =>
+        val msg = "Txn Parse Error with input stream, msg: " + ex.getMessage
         log.info(msg)
         throw new TacklerParseException(msg, ex)
     }

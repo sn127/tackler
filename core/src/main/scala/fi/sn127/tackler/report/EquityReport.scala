@@ -17,7 +17,7 @@
 package fi.sn127.tackler.report
 
 import fi.sn127.tackler.core._
-import fi.sn127.tackler.model.{TxnTS, Txns}
+import fi.sn127.tackler.model.{TxnTS, Txns, TxnData}
 
 class EquityReport(val settings: Settings) extends ExportLike {
   private val mySettings = settings.Reports.Equity
@@ -30,7 +30,7 @@ class EquityReport(val settings: Settings) extends ExportLike {
     } else {
       new BalanceFilterNonZeroByAccount(mySettings.accounts)
     }
-    val bal = Balance("", txns, bf)
+    val bal = Balance("", TxnData(None,txns), bf)
 
     if (bal.isEmpty) {
       Nil

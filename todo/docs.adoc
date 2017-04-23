@@ -1,4 +1,5 @@
 = Docs TODO
 
  * [ ] Examples
+ * [ ] Sync tep-0001 with tep-1002 (license section)
 

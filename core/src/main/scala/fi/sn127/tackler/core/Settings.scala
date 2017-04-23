@@ -16,7 +16,7 @@
  */
 package fi.sn127.tackler.core
 
-import java.io.{IOException, File => JFile}
+import java.io.IOException
 import java.nio.file.Path
 import java.time.{LocalTime, ZoneId}
 
@@ -37,6 +37,13 @@ object CfgKeys {
   val timezone: String = "timezone"
 
   val basedir: String = "basedir"
+
+  val input_storage: String = "input.storage"
+
+  val input_git_repository: String = "input.git.repository"
+  val input_git_ref: String = "input.git.ref"
+  val input_git_dir: String = "input.git.dir"
+  val input_git_suffix: String = "input.git.suffix"
 
   val input_txn_dir: String = "input.txn.dir"
   val input_txn_glob: String = "input.txn.glob"
@@ -129,7 +136,18 @@ class Settings(cfgPath: Path, cliCfgSettings: Config) {
 
   val basedir: Path = getPathWithAnchor(cfg.getString(CfgKeys.basedir), cfgPath)
 
-  val input_txn_dir: Path = getPathWithAnchor(cfg.getString(CfgKeys.input_txn_dir), basedir)
+  val input_storage: StorageType = StorageType(cfg.getString(CfgKeys.input_storage))
+
+  val input_git_repository: Path =
+    getPathWithAnchor(cfg.getString(CfgKeys.input_git_repository), basedir)
+  val input_git_ref: String = cfg.getString(CfgKeys.input_git_ref)
+  val input_git_dir: String = cfg.getString(CfgKeys.input_git_dir)
+  val input_git_suffix: String = cfg.getString(CfgKeys.input_git_suffix)
+
+
+  val input_txn_dir: Path =
+    getPathWithAnchor(cfg.getString(CfgKeys.input_txn_dir), basedir)
+
   val input_txn_glob: String = cfg.getString(CfgKeys.input_txn_glob)
 
 

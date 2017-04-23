@@ -1,3 +1,4 @@
+
 REGISTER
 --------
 2017-01-03Z Equity: last txn (uuid): a92caa4b-7d94-4b29-a418-2715a7b1cfff

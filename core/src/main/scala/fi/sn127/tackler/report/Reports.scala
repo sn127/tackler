@@ -22,7 +22,7 @@ import org.slf4j.{Logger, LoggerFactory}
 import resource._
 
 import fi.sn127.tackler.core._
-import fi.sn127.tackler.model.Txns
+import fi.sn127.tackler.model.TxnData
 
 final case class Reports(settings: Settings) {
 
@@ -39,11 +39,11 @@ final case class Reports(settings: Settings) {
    * can produce big amount of report rows (as many as there are txns).
    *
    * @param outputBase basepath and basename of output
-   * @param txns to be used for reporting
+   * @param txnData to be used for reporting
    * @param reporter actual report producer, reporter.doReport is called only once.
    * @param formats formats to be produced (e.g. text, json, etc)
    */
-  def doReport(outputBase: Option[Path], txns: Txns,
+  def doReport(outputBase: Option[Path], txnData: TxnData,
     reporter: ReportLike, formats: Seq[ReportFormat])
   : Unit = {
 
@@ -62,7 +62,7 @@ final case class Reports(settings: Settings) {
        */
       if (consoles.nonEmpty) {
         val frmts: Formats = List((ReportFormat("txt"), consoles))
-        reporter.doReport(frmts, txns)
+        reporter.doReport(frmts, txnData)
       } else {
         log.warn("Reporting: no output at has been defined (no console and no files)!")
       }
@@ -84,7 +84,7 @@ final case class Reports(settings: Settings) {
 
         try {
           val frmts = outputs.map({ case (frmt, closables) => frmt })
-          reporter.doReport(frmts, txns)
+          reporter.doReport(frmts, txnData)
         } finally {
           outputs.foreach({ case (frmt, closables: Writers) => closables.foreach(c => c.close()) })
         }
@@ -110,10 +110,10 @@ final case class Reports(settings: Settings) {
    *
    * @param name of export
    * @param outputBase basepath and basename of output
-   * @param txns to be used for exporting
+   * @param txnData to be used for exporting
    * @param exporter actual export producer, exporter.doExport is called only once.
    */
-  def doExport(name: String, outputBase: Option[Path], txns: Txns,
+  def doExport(name: String, outputBase: Option[Path], txnData: TxnData,
     exporter: ExportLike)
   : Unit = {
     outputBase.fold {
@@ -123,35 +123,35 @@ final case class Reports(settings: Settings) {
         ostream <- managed(Files.newOutputStream(Paths.get(outputPath.toString + "." + name + ".txn")))
       } {
         val strm: Writer = new BufferedWriter(new OutputStreamWriter(ostream, "UTF-8"))
-        exporter.doExport(strm, txns)
+        exporter.doExport(strm, txnData.txns)
       }
     }
   }
 
-  def doReports(outputBase: Option[Path], txns: Txns): Unit ={
+  def doReports(outputBase: Option[Path], txnData: TxnData): Unit ={
     // todo: own set of formats for each report
     val frmts =  List(ReportFormat("txt"))
 
     settings.reports.foreach {
       case BalanceReportType() =>
         val balReport = new BalanceReport("bal", settings)
-        doReport(outputBase, txns, balReport, frmts)
+        doReport(outputBase, txnData, balReport, frmts)
 
       case BalanceGroupReportType() =>
         val balgrpReport = new BalanceGroupReport("balgrp", settings)
-        doReport(outputBase, txns, balgrpReport, frmts)
+        doReport(outputBase, txnData, balgrpReport, frmts)
 
       case RegisterReportType() =>
         val regReport = new RegisterReport("reg", settings)
-        doReport(outputBase, txns, regReport, frmts)
+        doReport(outputBase, txnData, regReport, frmts)
 
       case EquityReportType() =>
         val eqReport = new EquityReport(settings)
-        doExport("equity", outputBase, txns, eqReport)
+        doExport("equity", outputBase, txnData, eqReport)
 
       case IdentityReportType() =>
         val idReport = new IdentityReport(settings)
-        doExport("identity", outputBase, txns, idReport)
+        doExport("identity", outputBase, txnData, idReport)
     }
   }
 }

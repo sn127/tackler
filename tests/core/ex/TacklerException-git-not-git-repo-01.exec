@@ -1,0 +1,4 @@
+# format: exec
+# test:uuid: b0116db0-dd2b-40fb-976e-ee28118bc1e8
+# not git repository
+exec:--cfg;tests/core/ex/git-not-git-repo.conf;

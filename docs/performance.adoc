@@ -1,9 +1,10 @@
 = Performance tests
 
-Tackler's performance is tested to validate sanity of used algorithms and overall performance.
+Tackler's performance test is done to validate sanity of used algorithms
+and check overall performance of system.
 
 Performance testing is done with artificial transaction data
-which mimics as well as possible real transactional data.
+which mimics real journal.
 
 Test data is generated with link:../tools/generator[generator].
 
@@ -12,7 +13,7 @@ Tests are done with balance report and with setting `accounts.strict=true`
 Chart of Accounts).
 
 Each transaction is located on own file, and shard of files is based on txn dates
-(e.g. `perf-1E6/YYYY/MM/DD/YYYYMMDDTHHMMSS-idx.txn`, `idx` is index of txn).
+(e.g. `perf-1E6/YYYY/MM/DD/YYYYMMDDTHHMMSS-idx.txn`, where `idx` is index of txn).
 
 Typical test sets (small and big) are:
 
@@ -64,16 +65,34 @@ utilizes only one core, when in other hand Tackler utilizes all available cores
 and threads.
 
 
-== With shard txn data
+== With filesystem storage and shard txn data
 
 Tacklers processing time with shard txn data is following:
 
  * 1E3: 3.1 sec
  * 1E6: 31 sec
 
-With 1E6 data set used memory peaks around 2.2GB.
+With 1E6 data set memory usage peaks around 2.2GB.
 
-Full results are located under link:../perf/results[perf results].
+Full results are here link:../perf/results[perf results].
+
+== With git storage
+
+Currently Git data processing is done on single thread, so time is about 2-3 times compared
+to multi-threaded filesystem based times on dual core systems.
+
+Tacklers processing time with git storage system is following:
+
+ * 1E3: 4.3 sec
+ * 1E6: 1min 15 sec
+
+With 1E6 data set memory usage peaks around 2.0GB.
+
+Full results are here:
+
+ * link:../perf/results/readme.adoc[Readme]
+ * link:../perf/results/hw01/perf-git-1e3.txt[git 1e3 result]
+ * link:../perf/results/hw01/perf-git-1e6.txt[git 1e6 result]
 
 
 === Single file or single input String
@@ -85,7 +104,7 @@ However, with 1E6 txns in single input file or in one single string (about 73MB)
 Tackler has non-optimal memory usage behaviour, and it's memory usage peaks around 6-7GB.
 
 To work around this, do not put one million (1E6) transactions in single input.
-Instead this should be shard data set this data set of e.g. ten files (1E5 txns on each).
+Instead this should be shard data set, e.g. ten files of hundred thousand transactions on each.
 
 Shard data set could be even structured so that there one or only few txn per file.
 This is basic mode for performance test, and this setup has basically same processing
@@ -94,15 +113,5 @@ time than putting them in one big file (with fast SSD and good disk cache).
 
 ==== Single file performance
 
-....
-time java -Xms8192M -jar tackler-cli-0.4.0.jar --cfg perf.conf --input.file single/perf-1E6.txn --output out/foo
-Txns size: 1000000
-
-Total processing time: 28351, input: 1, parse: 24766, reporting: 1308
-
-real	0m28.962s
-user	0m49.389s
-sys	0m2.644s
-....
-
-This is not part of routine perf testing.
+Tacklers processing time with single file (1e6) is around ~30sec, and memory usage peaks around 6-7G.
+Single file performance testing is not part of routine performance testing.

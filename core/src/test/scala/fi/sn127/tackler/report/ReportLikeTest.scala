@@ -22,11 +22,12 @@ import com.typesafe.config.ConfigFactory
 import org.scalatest.FlatSpec
 
 import fi.sn127.tackler.core.Settings
-import fi.sn127.tackler.model.Txns
+import fi.sn127.tackler.model.TxnData
 
 class ReportLikeTest extends FlatSpec {
+
   class Frmt(val name: String, val settings: Settings) extends ReportLike {
-    override def doReport(formats: Formats, txns: Txns): Unit = ???
+    override def doReport(formats: Formats, txns: TxnData): Unit = ???
   }
 
   val settings = new Settings(Paths.get(""), ConfigFactory.empty())

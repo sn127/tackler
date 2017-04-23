@@ -16,7 +16,7 @@
  */
 package fi.sn127.tackler.report
 
-import fi.sn127.tackler.model.Txns
+import fi.sn127.tackler.model.TxnData
 
 trait ReportLike extends OutputLike {
   /**
@@ -83,5 +83,5 @@ trait ReportLike extends OutputLike {
     })
   }
 
-  def doReport(formats: Formats, txns: Txns): Unit
+  def doReport(formats: Formats, txnData: TxnData): Unit
 }

@@ -1112,3 +1112,163 @@ features:
               refid: 940ed68b-7f1c-41fe-bab9-aefd8cf60b3a
               name: tests/cli/ok/console-01.exec
 ### CLI END
+
+###
+### GIT
+###
+  - feature:
+      id: 06b4a9b1-f48c-4b33-8811-1f32cdc44d7b
+      subject: "git backend"
+      tests:
+        errors:
+          - error:
+              id: 195971d7-f16f-4c1c-a761-6764b28fd4db
+              name: StorageTypeTest
+              desc: detect unknown backend type
+          - error:
+              id: a2ca374a-1323-413b-aaff-64bc3c8d4d30
+              name: TacklerCliArgsTest
+              desc: "git: cli err: ref and commit"
+          - error:
+              id: 1822f1b2-f749-4f63-be44-fa29c58c4fe2
+              name: TacklerCliArgsTest
+              desc: "git: cli err: input.file + git.ref"
+          - error:
+              id: 97bf542e-55b5-437f-9878-7f436f50c428
+              name: TacklerCliArgsTest
+              desc: "git: cli err: input.file + git.commit"
+          - error:
+              id: 3eba26fe-821d-4d36-94cb-09427b1c004f
+              name: TacklerCliArgsTest
+              desc: "git: cli err: txn.dir + git.ref"
+          - error:
+              id: 400bd1e9-6f7a-4e0c-913c-45401ee73181
+              name: TacklerCliArgsTest
+              desc: "git: cli err: txn.dir + git.commit"
+          - error:
+              id: 7d4984c7-633f-4403-a2b7-5ea0cd4f07e8
+              name: TacklerCliArgsTest
+              desc: "git: cli err: txn.glob + git.ref"
+          - error:
+              id: 6ec6431e-a443-4633-8f26-df3218a8657c
+              name: TacklerCliArgsTest
+              desc: "git: cli err: txn.glob + git.commit"
+          - error:
+              id: c233295d-08b9-49b5-b384-634fc8432e64
+              name: tests/core/ex/TacklerException-git-err-commit-01.exec
+              desc: commit not found
+          - error:
+              id: aeb11f77-ba35-400f-bdae-50d6ebb7e098
+              name: tests/core/ex/TacklerException-git-err-commit-02.exec
+              desc: malformed sha1 (commit)
+          - error:
+              id: 7cb6af2e-3061-4867-96e3-ee175b87a114
+              name: tests/core/ex/TacklerException-git-err-commit-03.exec
+              desc: can not resolve commit
+          - error:
+              id: 4b507e08-b90e-4a6f-9c6b-4fef7c58d9fe
+              name: tests/core/ex/TacklerException-git-err-ref-01.exec
+              desc: ref is not found
+          - error:
+              id: 14b7e8eb-d168-48b2-86e7-8d922f306ad0
+              name: tests/core/ex/TacklerException-git-err-ref-02.exec
+              desc: ref format is invalid
+          - error:
+              id: 5c0a2e2c-f82c-400a-a9bb-bc7b83010b3c
+              name: tests/core/ex/TacklerException-git-linktxn-01.exec
+              desc: link inside repository, not supported
+          - error:
+              id: b0116db0-dd2b-40fb-976e-ee28118bc1e8
+              name: tests/core/ex/TacklerException-git-not-git-repo-01.exec
+              desc: not git repository
+          - error:
+              id: 4569085c-04a8-4330-9c03-d07ea0935f22
+              name: tests/core/ex/TacklerException-git-repo-01.exec
+              desc: repository is not found
+          - error:
+              id: 25452d77-aae5-414c-a6a6-bd60f090731e
+              name: tests/core/ex/TacklerParseException-git-error-01.exec
+              desc: parser error with shard data
+          - error:
+              id: a32df7bb-b499-4f7b-98c8-5103ceac82fb
+              name: tests/core/ex/TxnException-git-empty-txns-01.exec
+              desc: empty transaction set
+        operations:
+          - test:
+              id: c2f39ef7-c085-4ff4-af4d-85a50d0ee203
+              name: tests/core/ok/git-utf8-01.exec
+              desc: utf8 data
+              references:
+                - ref: identity
+          - test:
+              id: 1d2c22c1-e3fa-4cd4-a526-45318c15d13e
+              name: tests/core/ok/git-shard-01.exec
+              descriptions:
+                - desc: shard
+                - desc: cli ref arg
+                - desc: txn sorting
+                - desc: "git metadata: git ref"
+              references:
+                - ref: identity
+                - ref: equity
+                - ref: balance
+                - ref: balance-group
+                - ref: register
+          - test:
+              id: 292f250d-7cb2-4114-92e1-10f9a8d5b381
+              name: tests/core/ok/git-master-01.exec
+              descriptions:
+                - desc: basic git test with master branch
+                - desc: default config
+              references:
+                - ref: identity
+          - test:
+              id: eb74f8a7-8f70-413f-a431-15b0a5b09aad
+              name: tests/core/ok/git-dirtxn-01.exec
+              desc: "anomaly testing: directory which match txn filename"
+              references:
+                - ref: identity
+          - test:
+              id: ede5d6b5-1885-4e02-8f9d-e2e1034fb6e3
+              name: tests/core/ok/git-commit-01.exec
+              desc: testing effective commit id (commit-id 1st)
+              references:
+                - ref: identity
+          - test:
+              id: 7dfebf19-480c-4bf5-806a-4d560a20a1d4
+              name: tests/core/ok/git-commit-02.exec
+              desc: testing effective commit id (commit-id 2nd)
+              references:
+                - ref: identity
+          - test:
+              id: f44faf05-7019-4c34-b0af-3345feb4ad37
+              name: tests/core/ok/git-commit-03.exec
+              desc: testing effective commit id (commit-id 3rd)
+              references:
+                - ref: identity
+          - test:
+              id: 7752eee6-d3cf-4084-93c0-cb43a093fdd0
+              name: tests/core/ok/git-commit-04.exec
+              descriptions:
+                - desc: abbrev commit id
+                - desc: "git metadata: fixed commit"
+              references:
+                - ref: identity
+                - ref: equity
+                - ref: balance
+                - ref: balance-group
+                - ref: register
+          - test:
+              id: 80d3c14d-64ee-46d3-b9fd-37f82384a562
+              name: tests/core/ok/git-tag-01.exec
+              descriptions:
+                - desc: reference by tag
+                - desc: "git metadata: tag name"
+                - desc: "git metadata: correct commit id"
+              references:
+                - ref: identity
+                - ref: equity
+                - ref: balance
+                - ref: balance-group
+                - ref: register
+### GIT END

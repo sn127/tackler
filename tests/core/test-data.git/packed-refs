@@ -1,0 +1,11 @@
+# pack-refs with: peeled fully-peeled 
+a35415de4b8b7bf7af8a3e81d801108622bb9d7b refs/heads/commit-id-01
+6330466bdea5658c22a7196cd3e3c6ee53d53750 refs/heads/dirtxn-01
+460a117fbcbd5a48c538dafc35013a5a54768eda refs/heads/empty
+8805152f0a604cf2311fa74ae924a5c46dab9d8e refs/heads/error-01
+922ad4ce580c8fed37558fe3c568e45377561e5f refs/heads/linktxn-01
+80d2a32dccf4d7ef3f7e37077b83e5704fbbf8c2 refs/heads/master
+ebe0ca2f24a44069c179f9df3f72ff04ece965d5 refs/heads/shard-01
+267777d98cfa1fc3aef9d622d7f7e9d8cc6d1fe5 refs/heads/utf8-01
+ea4a4192d48717d90936dcd39ec2e14a1d45f553 refs/tags/tag-test-01
+^a7938d9b61958d2cabea7503a7be89191d4fb31e
