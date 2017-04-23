@@ -5,7 +5,7 @@
  * Git storage support:
  ** link:docs/tep/tep-1002.adoc[TEP-1002]
  ** link:docs/git-storage.adoc[Git Storage Manual]
-
+ * Rename configuration and CLI arg `input.txn` key to `input.fs`
 
 ==== Fixes
 

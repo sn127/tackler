@@ -30,7 +30,7 @@ class TacklerCliArgsTest extends FlatSpec {
      * This is implicit way to test the use of default config.
      * Default config is:
      *  - basedir=../
-     *  - input.txn.dir=txns/
+     *  - input.fs.dir=txns/
      *
      * Let's assert that these path components are used to build basedir,
      * which obviously won't be found under cli/target/scala-2.12
@@ -113,40 +113,40 @@ class TacklerCliArgsTest extends FlatSpec {
   /**
    * test:uuid: 3eba26fe-821d-4d36-94cb-09427b1c004f
    */
-  it should "git: cli err: txn.dir + git.ref" in {
+  it should "git: cli err: fs.dir + git.ref" in {
     assertThrows[ValidationFailure] {
       TacklerCli.runExceptions(
-        Array[String]("--input.txn.dir", "txns", "--input.git.ref", "ref"))
+        Array[String]("--input.fs.dir", "txns", "--input.git.ref", "ref"))
     }
   }
 
   /**
    * test:uuid: 400bd1e9-6f7a-4e0c-913c-45401ee73181
    */
-  it should "git: cli err: txn.dir + git.commit" in {
+  it should "git: cli err: fs.dir + git.commit" in {
     assertThrows[ValidationFailure] {
       TacklerCli.runExceptions(
-        Array[String]("--input.txn.dir", "txns", "--input.git.commit", "id"))
+        Array[String]("--input.fs.dir", "txns", "--input.git.commit", "id"))
     }
   }
 
   /**
    * test:uuid: 7d4984c7-633f-4403-a2b7-5ea0cd4f07e8
    */
-  it should "git: cli err: txn.glob + git.ref" in {
+  it should "git: cli err: fs.glob + git.ref" in {
     assertThrows[ValidationFailure] {
       TacklerCli.runExceptions(
-        Array[String]("--input.txn.glob", "glob", "--input.git.ref", "ref"))
+        Array[String]("--input.fs.glob", "glob", "--input.git.ref", "ref"))
     }
   }
 
   /**
    * test:uuid: 6ec6431e-a443-4633-8f26-df3218a8657c
    */
-  it should "git: cli err: txn.glob + git.commit" in {
+  it should "git: cli err: fs.glob + git.commit" in {
     assertThrows[ValidationFailure] {
       TacklerCli.runExceptions(
-        Array[String]("--input.txn.glob", "glob", "--input.git.commit", "id"))
+        Array[String]("--input.fs.glob", "glob", "--input.git.commit", "id"))
     }
   }
 

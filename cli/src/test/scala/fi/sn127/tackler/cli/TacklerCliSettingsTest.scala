@@ -33,23 +33,23 @@ class TacklerCliSettingsTest extends FlatSpec  with Matchers with Inside {
   it should "respect *ALL* cli args (input.txn)" in {
     val absBasepath = File(respath)
     val args = Array(
-      "--basedir", absBasepath.toString, // this must be real path so that --input.txn.dir works correctly with rel-path
-      "--input.txn.dir", "cli-args-txns/",
-      "--input.txn.glob", "**/cliargs*.txn"
+      "--basedir", absBasepath.toString, // this must be real path so that --input.fs.dir works correctly with rel-path
+      "--input.fs.dir", "cli-args-txns/",
+      "--input.fs.glob", "**/cliargs*.txn"
     )
     val cliCfg = new TacklerCliArgs(args)
 
     val settings = new Settings(Paths.get("/not/there/cfg.conf"), cliCfg.toConfig)
 
     assert(settings.basedir === absBasepath.path)
-    assert(settings.input_txn_dir ===  (absBasepath / "cli-args-txns").path)
-    assert(settings.input_txn_glob.toString === "**/cliargs*.txn")
+    assert(settings.input_fs_dir ===  (absBasepath / "cli-args-txns").path)
+    assert(settings.input_fs_glob.toString === "**/cliargs*.txn")
   }
 
   it should "respect *ALL* cli args (input.file)" in {
     val absBasepath = File(respath)
     val args = Array(
-      "--basedir", absBasepath.toString, // this must be real path so that --input.txn.dir works correctly with rel-path
+      "--basedir", absBasepath.toString, // this must be real path so that --input.fs.dir works correctly with rel-path
       "--input.file", (absBasepath / "filename.txn").toString,
       "--accounts.strict", "false"
     )
@@ -66,7 +66,7 @@ class TacklerCliSettingsTest extends FlatSpec  with Matchers with Inside {
 
   it should "merge configs (cli, ext-conf, embedded conf)" in {
     val args = Array(
-      "--input.txn.glob", "**/cli-args*.txn"
+      "--input.fs.glob", "**/cli-args*.txn"
     )
     val cliCfg = new TacklerCliArgs(args)
 
@@ -76,7 +76,7 @@ class TacklerCliSettingsTest extends FlatSpec  with Matchers with Inside {
     assert(settings.basedir.toString.endsWith(respath + "cfg/as/ext/file") === true, settings.basedir)
     
     // this is coming from cli-args
-    assert(settings.input_txn_glob.toString === "**/cli-args*.txn")
+    assert(settings.input_fs_glob.toString === "**/cli-args*.txn")
   }
 
   ignore should "handle relative --basedir from cmd line" in {

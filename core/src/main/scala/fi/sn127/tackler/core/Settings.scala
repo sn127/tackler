@@ -45,8 +45,8 @@ object CfgKeys {
   val input_git_dir: String = "input.git.dir"
   val input_git_suffix: String = "input.git.suffix"
 
-  val input_txn_dir: String = "input.txn.dir"
-  val input_txn_glob: String = "input.txn.glob"
+  val input_fs_dir: String = "input.fs.dir"
+  val input_fs_glob: String = "input.fs.glob"
 
   val accounts_strict: String = "accounts.strict"
   val accounts_coa: String = "accounts.coa"
@@ -145,10 +145,10 @@ class Settings(cfgPath: Path, cliCfgSettings: Config) {
   val input_git_suffix: String = cfg.getString(CfgKeys.input_git_suffix)
 
 
-  val input_txn_dir: Path =
-    getPathWithAnchor(cfg.getString(CfgKeys.input_txn_dir), basedir)
+  val input_fs_dir: Path =
+    getPathWithAnchor(cfg.getString(CfgKeys.input_fs_dir), basedir)
 
-  val input_txn_glob: String = cfg.getString(CfgKeys.input_txn_glob)
+  val input_fs_glob: String = cfg.getString(CfgKeys.input_fs_glob)
 
 
   /**

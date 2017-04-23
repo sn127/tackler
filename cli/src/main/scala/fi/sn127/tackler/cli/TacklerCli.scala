@@ -73,17 +73,17 @@ object TacklerCli {
 
     cliCfg.input_filename.toOption.fold({
       // cli: input file: NO
-      if (cliCfg.input_txn_glob.isDefined) {
-        log.debug("input glob: dir: [" + settings.input_txn_dir.toString + "] " +
-          "glob: [" + settings.input_txn_glob.toString() + "]")
+      if (cliCfg.input_fs_glob.isDefined) {
+        log.debug("input glob: dir: [" + settings.input_fs_dir.toString + "] " +
+          "glob: [" + settings.input_fs_glob.toString() + "]")
       } else {
-        log.debug("Using default settings for input, input glob: dir: [" + settings.input_txn_dir.toString + "] " +
-          " glob: [" + settings.input_txn_glob.toString() + "]")
+        log.debug("Using default settings for input, input glob: dir: [" + settings.input_fs_dir.toString + "] " +
+          " glob: [" + settings.input_fs_glob.toString() + "]")
       }
-      // cli: input.txn.glob is in any case morphed with settings
+      // cli: input.fs.glob is in any case morphed with settings
       //   -> no need for special handling for cli args
-      File(settings.input_txn_dir)
-        .glob(settings.input_txn_glob)
+      File(settings.input_fs_dir)
+        .glob(settings.input_fs_glob)
         .map(f => f.path)
         .toSeq
     }) { cliArgsInputFilename =>

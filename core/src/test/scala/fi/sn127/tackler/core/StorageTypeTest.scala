@@ -6,8 +6,8 @@ class StorageTypeTest extends FlatSpec {
 
   behavior of "StorageType"
 
-  it should "apply txn" in {
-    val t = StorageType("txn")
+  it should "apply fs" in {
+    val t = StorageType("fs")
     assert(t.isInstanceOf[FilesystemStorageType])
   }
 

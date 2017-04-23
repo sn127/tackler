@@ -48,7 +48,7 @@ features:
               id: 31a128f5-d1a2-4d93-beee-6599344ece57
               name: tests/parser/ok/shard-glob.exec
               descriptions:
-                - desc: --input.txn.dir, --input.txn.glob
+                - desc: --input.fs.dir, --input.fs.glob
                 - desc: sorting (file order and txn order are differnt)
               references:
                 - ref: registry
@@ -165,7 +165,7 @@ features:
 ### conf: input.txn
   - feature:
       id: b3f82d40-1e18-4457-8050-61759a0c0cac
-      subject: "conf: input.txn.dir"
+      subject: "conf: input.fs.dir"
       tests:
         errors:
           - error:
@@ -178,7 +178,7 @@ features:
 
   - feature:
       id: cf543686-e36f-4f5f-91ed-06498e37c4bb
-      subject: "conf: input.txn.glob"
+      subject: "conf: input.fs.glob"
       tests:
         operations:
           - test:
@@ -316,7 +316,7 @@ features:
               name: tests/parser/ok/no-cao.exec
               descriptions:
                 - desc: missing  / empty CoA
-                - desc: "conf: input.txn.dir + glob"
+                - desc: "conf: input.fs.dir + glob"
                 - desc: "accounts.strict = false"
               references:
                 - ref: identity
@@ -1064,7 +1064,7 @@ features:
 
   - feature:
       id: 7ae035a1-3ebc-43f4-87af-0439e2d3b2e5
-      subject: "cli: args: input.txn.dir"
+      subject: "cli: args: input.fs.dir"
       tests:
         errors:
           - error:
@@ -1077,7 +1077,7 @@ features:
 
   - feature:
       id: 78889e89-065a-4bd0-bcd6-9db2d2d6e8cf
-      subject: "cli: args: input.txn.glob"
+      subject: "cli: args: input.fs.glob"
       tests:
         operations:
           - test:

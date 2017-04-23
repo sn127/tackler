@@ -178,10 +178,10 @@ None at the moment (journal sidecar file?)
 ** [x] e: cli: --input.git.commit + --input.git.ref
 ** [x] e: cli: --input.file + --input.git.ref
 ** [x] e: cli: --input.file + --input.git.commit
-** [x] e: cli: --input.txn.dir + --input.git.ref
-** [x] e: cli: --input.txn.dir + --input.git.commit
-** [x] e: cli: --input.txn.glob + --input.git.ref
-** [x] e: cli: --input.txn.glob + --input.git.commit
+** [x] e: cli: --input.fs.dir + --input.git.ref
+** [x] e: cli: --input.fs.dir + --input.git.commit
+** [x] e: cli: --input.fs.glob + --input.git.ref
+** [x] e: cli: --input.fs.glob + --input.git.commit
 
 === Perf
 

@@ -51,8 +51,8 @@ path can be absolute or relative path to the basedir.
 
 ===== Multiple `txn` -files and sharding
 
-* `--input.txn.dir`: directory which holds `txn` -files (absolute or relative path to basedir).
-* `--input.txn.glob`: glob to find `txn` -files under txn.dir
+* `--input.fs.dir`: directory which holds `txn` -files (absolute or relative path to basedir).
+* `--input.fs.glob`: glob to find `txn` -files under txn.dir
 
  e.g. *.txn for flat directories or **.txn for deep directory structures
 
@@ -73,15 +73,15 @@ report_week=$2
 java \
    -jar tackler-cli.jar \
    --basedir="$exe_dir/.." \
-   --input.txn.dir="txns/$report_year/W$report_week" \
-   --input.txn.glob="**.txn" \
+   --input.fs.dir="txns/$report_year/W$report_week" \
+   --input.fs.glob="**.txn" \
    "$@"
 ....
 
 If this feature is used (e.g. with shell or
 link:https://github.com/typesafehub/config#optional-system-or-env-variable-overrides[environment arguments are used with conf])
-then it is good idea to use as specialized `input.txn.dir` as possible. In that case scanned file set is as small as possible.
-File scanning and glob matching starts from `input.txn.dir` and descents from there.
+then it is good idea to use as specialized `input.fs.dir` as possible. In that case scanned file set is as small as possible.
+File scanning and glob matching starts from `input.fs.dir` and descents from there.
 
 Tackler doesn't care how do you shard your data or if you don't shard it at all. 
 It can easily handle huge single file txn collections: 100 000 (1E5) txns easily 
@@ -105,7 +105,7 @@ Addition to configuration, Git reference or commit id can be given from command 
 * `--input.git.ref` is for git reference (e.g. branch name), HEAD of that branch will be used
 * `--input.git.commit` one single commit and tree defined by it will be used
 
-These options are mutually exclusive with each other and with filesystem storage arguments (`input.txn.*`).
+These options are mutually exclusive with each other and with filesystem storage arguments (`input.fs.*`).
 
 
 ==== Reporting
