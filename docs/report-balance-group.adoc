@@ -3,15 +3,38 @@
 Balance Group report is group of balance reports calculated of transactions which
 are grouped by selected criteria.
 
-Available group by criteria at the moment is:
+Available group by (`reports.balance-group.group-by`) criteria at the moment is:
 `year`, `month`, `day`, `iso-week` and `iso-week-date`.
-See link:./tackler.conf[reports.balance-group.group-by] configuration option.
+
 ISO-8601 rules are used for `iso-week` and `iso-week-date`.
 
 For example balance group report could be by weeks, when main report is done for month,
 or it could be monthly grouping when main balance report is year.
 
-Other than that, the output same as with balance report.
+Other than that, the output same as with balance report.  First (leftmost) is balance
+sum of current account for postings which are directly debiting or crediting that account.
+
+Second is total balance sum for that account tree (root account and its children).
+
+
+== Balance group report configuration
+
+Balance Groups are selected by `reports.balance-group.group-by` conf-setting.
+
+See link:tackler.conf[tackler.conf] and `reports.balance-group.*` for full
+information of balance group report configuration options.
+
+=== Account filtering
+
+Accounts for Balance Group report can be filtered with global
+`reporting.accounts` (conf+cli) or report specific `reports.balance-group.accounts`
+setting (conf-only).
+
+If there are no accounts matched with selected regexs with some balance group time period,
+then that balance group is not is not printed / outputted at all.
+
+
+== Example report
 
 Below is part of link:../perf/refs/perf-1E3.ref.balgrp.txt[performance test output].
 Main set of transactions is over one year, and each balance group is calculated

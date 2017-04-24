@@ -30,6 +30,22 @@ Changes to conf-settings
 * [ ] item1
 
 
+=== New dependencies
+
+* [ ] link / url of new dependency
+** [ ] Add and check licenses: link / url
+** [ ] Is there NOTICE file(s)?
+** [ ] Add license under link:../licenses[doc/licenses]
+*** [ ] Add NOTICES under link:../licenses[doc/licenses]
+** [ ] Add link of license to link:../index.adoc[index]
+** [ ] Add link to link:../../THANKS.adoc[THANKS]
+
+
+=== Future plans
+
+How and where to go from here?
+
+
 == Reporting
 
 Changes to general reporting
@@ -74,17 +90,39 @@ Changes to identity report
 
 == Documentation
 
-* [ ] CHANGELOG item
+== Documentation
+
+* [ ] link:../../README.adoc[]: is it a new noteworthy feature?
+* [ ] link:../../CHANGELOG[]: add new item
 * [ ] User docs
 ** [ ] user manual
+*** [ ] cli-arguments
+**** [ ] `--arg-1`
+**** [ ] `--arg-2`
 ** [ ] tackler.conf
+*** [ ] `setting-1`
+*** [ ] `setting-2`
 ** [ ] accounts.conf
 ** [ ] examples
 * [ ] Developer docs
 
 == Tests
 
+Normal, ok-case tests to validate functionality:
+
 * [ ] test1
+
+=== Errors
+
+Various error cases:
+
+* [ ] e: error test 1
+
+=== Perf
+
+Is there need to run or create new perf tests?
+
+* [ ] perf tests
 
 === Metadata for test coverage tracking
 
@@ -92,6 +130,10 @@ Changes to identity report
 features:
   - feature:
       id: uuid
-      parent: uuid
-      subject: "one-line description"
+      subject: "one-line description of main feature"
+
+  - feature:
+      id: uuid
+      parent: uuid-of-parent
+      subject: "one-line description of sub feature"
 ....

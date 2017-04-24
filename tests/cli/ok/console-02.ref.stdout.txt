@@ -1,1 +1,1 @@
-Txns size: 4
+Txns size: 2

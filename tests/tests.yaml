@@ -365,6 +365,8 @@ features:
                 - desc: spaces
                 - desc: latin
                 - desc: kanji
+                - desc: "chars: description"
+                - desc: "chars: comments"
               references:
                 - ref: registry
                 - ref: identity
@@ -1207,6 +1209,8 @@ features:
                 - desc: shard
                 - desc: cli ref arg
                 - desc: txn sorting
+                - desc: "input.git.dir: effective directory"
+                - desc: "input.git.suffix: effective suffix"
                 - desc: "git metadata: git ref"
               references:
                 - ref: identity

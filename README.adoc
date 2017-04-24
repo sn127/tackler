@@ -1,10 +1,11 @@
+image:https://badges.gitter.im/sn127/tackler.svg["Join the chat at https://gitter.im/sn127/tackler", link="https://gitter.im/sn127/tackler"]
 image:https://travis-ci.org/sn127/tackler.svg?branch=stable["Build Status", link="https://travis-ci.org/sn127/tackler"]
 image:https://coveralls.io/repos/github/sn127/tackler/badge.svg?branch=stable["Build Status", link="https://coveralls.io/github/sn127/tackler?branch=stable"]
 
 = Tackler
 
 Tackler Ain't Calculator and Kernel for link:http://ledger-cli.org/[Ledger] Equivalent Records.
-Why not?  - Because it uses simplified Ledger syntax!
+Why not?  - Because it uses simplified Ledger syntax.
 
 So in other words, Tackler is accounting engine and reporting tool for link:http://plaintextaccounting.org/[text
 based double-entry accounting].
@@ -16,7 +17,7 @@ based double-entry accounting].
 ** Can use plain filesystem or link:docs/git-storage.adoc[GIT repository] as data storage
 ** Natively supports splitting journal data to multiple files (shards)
 * Clean and simple link:docs/journal.adoc[journal format]
-* Supports  UTF-8 characters in transaction data (link:tests/parser/ok/par-02.ref.identity.txn[descriptions], comments, link:tests/parser/ok/id-chars-01.ref.identity.txn[account names])
+* Supports UTF-8 characters in transaction data (link:tests/parser/ok/par-02.ref.identity.txn[descriptions], link:tests/parser/ok/par-02.ref.reg.txt[comments], link:tests/parser/ok/id-chars-01.ref.identity.txn[account names])
 * Supports ISO 8601 timestamps with link:tests/core/ok/time-dst-01.ref.identity.txn[timezones]
   and link:tests/core/ok/time-nano-01.ref.identity.txn[nanosecond] resolution
 * Strict account name validation with link:./docs/accounts.conf[Chart of Accounts]
