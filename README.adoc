@@ -1,4 +1,5 @@
-image:https://badges.gitter.im/sn127/tackler.svg["Join the chat at https://gitter.im/sn127/tackler", link="https://gitter.im/sn127/tackler"]
+
+image:https://badges.gitter.im/sn127/tackler.svg["Gitter", link="https://gitter.im/sn127/tackler"]
 image:https://travis-ci.org/sn127/tackler.svg?branch=stable["Build Status", link="https://travis-ci.org/sn127/tackler"]
 image:https://coveralls.io/repos/github/sn127/tackler/badge.svg?branch=stable["Build Status", link="https://coveralls.io/github/sn127/tackler?branch=stable"]
 
