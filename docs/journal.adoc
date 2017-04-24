@@ -86,10 +86,18 @@ TOPACCT[:SUBACCT[:...]]
 e.g.
 
 ----
-Expenses:Jäätelö
+Expenses:ice_cream
+Expenses:jäätelö
+Expenses:jäätelö:mansikka-vadelma
+Expenses:crème·glacée
+Expenses:мороженое
+Expenses:アイスクリーム
+Expenses:風:空
 ----
-| Account names begin with a letter (`UTF-8`),
-Letters, digits, hyphen and underscore are allowed (no spaces).
+| Account names begin with a UTF-8 letter. Then
+letters, digits, middle dot '·', hyphen '-' and underscore '_' are allowed in account names,
+but no spaces. See link:accounts.conf[] for full details.
+
 Sub-accounts are separated by `:`
 
 All accounts must be declared in Chart of Accounts, if not, `accounts.strict=false` could be used.

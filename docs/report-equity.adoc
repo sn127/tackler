@@ -1,9 +1,15 @@
-= equity report
+= Equity report
 
 Equity report produces a transaction which records
 current state of accounts.
 
-== Account filtering
+== Equity report configuration
+
+
+See link:tackler.conf[tackler.conf] and `reports.equity.*` for full
+information of register report configuration options.
+
+=== Account filtering
 
 Accounts for Equity report can be filtered with global 
 `reporting.accounts` (conf+cli) or report specific `reports.equity.accounts` 
@@ -21,3 +27,5 @@ field.
 ....
 2017-01-03T16:00:00.123Z last equity txn:uuid: a92caa4b-7d94-4b29-a418-2715a7b1cfff
 ....
+
+== Example report

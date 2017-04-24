@@ -1,9 +1,27 @@
-= balance report
+= Balance report
 
 Balance report is sum of each accounts over selected transactions.
 
-In balance report, there are to sums. One is sum of that account as leaf
-and second is sum of all its children.
+There are two sums in balance report. First (the leftmost) is sum of postings
+which are directly debiting or crediting account.
+
+Second is total sum for account tree (e.g. account as root and all its children).
+
+
+== Balance report configuration
+
+See link:tackler.conf[tackler.conf] and `reports.balance.*` for full
+information of balance report configuration options.
+
+
+=== Account filtering
+
+Accounts for Balance report can be filtered with global
+`reporting.accounts` (conf+cli) or report specific `reports.balance.accounts`
+setting (conf-only).
+
+
+== Example report
 
 ----
 BALANCE

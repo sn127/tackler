@@ -1,13 +1,19 @@
-Txns size: 4
+Txns size: 2
 
 BALANCE
 -------
-                -2.00   -2.00 e
-                 0.00    1.00 äöåÄ
-                 1.00    1.00 äöåÄ:ÖÅéèÿ
-                 1.00    1.00 äöåÄÖÅéèÿ
-                -2.00   -2.00 è
-                 1.00    1.00 空
+                 0.00    7.00 Expenses
+                 1.00    1.00 Expenses:crème·glacée
+                 1.00    1.00 Expenses:ice_cream
+                 1.00    2.00 Expenses:jäätelö
+                 1.00    1.00 Expenses:jäätelö:mansikka-vadelma
+                 1.00    1.00 Expenses:мороженое
+                 1.00    1.00 Expenses:アイスクリーム
+                 0.00    1.00 Expenses:風
+                 1.00    1.00 Expenses:風:空
+                 0.00   -7.00 assets
+                -7.00   -7.00 assets:cash
+                -1.00   -1.00 空
                  0.00    1.00 風
                  1.00    1.00 風:空
 =====================
@@ -18,12 +24,18 @@ BALANCE GROUPS
 --------------
 2017-01Z
 --------
-                -2.00   -2.00 e
-                 0.00    1.00 äöåÄ
-                 1.00    1.00 äöåÄ:ÖÅéèÿ
-                 1.00    1.00 äöåÄÖÅéèÿ
-                -2.00   -2.00 è
-                 1.00    1.00 空
+                 0.00    7.00 Expenses
+                 1.00    1.00 Expenses:crème·glacée
+                 1.00    1.00 Expenses:ice_cream
+                 1.00    2.00 Expenses:jäätelö
+                 1.00    1.00 Expenses:jäätelö:mansikka-vadelma
+                 1.00    1.00 Expenses:мороженое
+                 1.00    1.00 Expenses:アイスクリーム
+                 0.00    1.00 Expenses:風
+                 1.00    1.00 Expenses:風:空
+                 0.00   -7.00 assets
+                -7.00   -7.00 assets:cash
+                -1.00   -1.00 空
                  0.00    1.00 風
                  1.00    1.00 風:空
 =====================
@@ -32,16 +44,16 @@ BALANCE GROUPS
 
 REGISTER
 --------
-2017-01-01Z 
-            äöåÄÖÅéèÿ                                      1.00               1.00
-            è                                             -1.00              -1.00
-2017-01-02Z 
-            äöåÄ:ÖÅéèÿ                                     1.00               1.00
-            è                                             -1.00              -2.00
 2017-01-03Z 
-            e                                             -1.00              -1.00
-            空                                              1.00               1.00
+            Expenses:crème·glacée                          1.00               1.00
+            Expenses:ice_cream                             1.00               1.00
+            Expenses:jäätelö                               1.00               1.00
+            Expenses:jäätelö:mansikka-vadelma              1.00               1.00
+            Expenses:мороженое                             1.00               1.00
+            Expenses:アイスクリーム                               1.00               1.00
+            Expenses:風:空                                   1.00               1.00
+            assets:cash                                   -7.00              -7.00
 2017-01-04Z 
-            e                                             -1.00              -2.00
+            空                                             -1.00              -1.00
             風:空                                            1.00               1.00
 

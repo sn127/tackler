@@ -134,11 +134,35 @@ link:./report-identity.adoc[`identity`]
 
 ===== Selecting accounts for reports
 
-Accounts included with reports are selected with option:
+Accounts can be selected for reports either by setting global `reporting.accounts`
+(conf-setting and command line) setting or with report specific selector.
 
- --reporting.accounts "^Assets:.*", "^Expenses:.*"`
+Default selection for reports is "all accounts" and it can be selected with empty setting.
 
-All accounts are selected with empty selection.
+Command line example:
+
+  --reporting.accounts "^Assets:.*" "^Expenses:.*"
+
+All accounts:
+
+  --reporting.accounts
+
+
+Configuration example:
+
+....
+reporting {
+  accounts = [ "^Assets:.*", "^Expenses:.*" ]
+}
+....
+
+All accounts
+
+....
+reporting {
+  accounts = [ ]
+}
+....
 
 If There are no accounts matched for report then report's sub-section
 is not printed / outputted at all (balance Group, register report).
