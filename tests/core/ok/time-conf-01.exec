@@ -1,4 +1,4 @@
 # format: exec
 # test:uuid: 51fad435-682f-42fc-bb66-7d7d5d710042
 # zoneid tests
-exec:--cfg;tests/core/zoneid.conf;--input.file;time-plain.txns;--output;out.time-conf-01;
+exec:--cfg;tests/core/zoneid.conf;--input.file;time-plain.txn;--output;out.time-conf-01;

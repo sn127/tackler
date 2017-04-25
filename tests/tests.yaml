@@ -30,6 +30,10 @@ features:
       tests:
         errors:
           - error:
+              id: 0e2a5c79-0594-4c4f-aa65-b31bff877b53
+              name: tests/parser/ex/perr-by-shard-01.exec
+              desc: parser error with shard data
+          - error:
               id: 90d57e1a-eda6-4856-b757-bfc678ac2a82
               name: tests/cli/ex/TxnException-empty-txns-01.exec
               desc: "cli: missing input txn.dir (empty txn set with glob)"
@@ -44,6 +48,17 @@ features:
           - test:
               refid: 66b32e8b-ce65-4dc1-9108-5ee5cd009cd3
               desc: 1E6 input files / txns
+          - test:
+              refid: 1d731709-1e85-4fe6-b209-aad46cca5551
+              desc: shard with non-matching files
+          - test:
+              id: tests/core/ok/shard-glob-01.exec
+              name: b6dee458-ac8a-461b-a3a3-e598f85d869c
+              descriptions:
+                - desc: "testing effective glob (it could be something else than *.txn)"
+              references:
+                - ref: registry
+                - ref: identity
           - test:
               id: 31a128f5-d1a2-4d93-beee-6599344ece57
               name: tests/parser/ok/shard-glob.exec
@@ -804,6 +819,7 @@ features:
               name: tests/core/ok/id2id-01.exec
               descriptions:
                 - desc: "txns -> identity -> identity"
+                - desc: shard with non-matching files
               references:
                 - ref: id2id
 

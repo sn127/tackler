@@ -17,7 +17,7 @@
    a   1 ; 1:a comment
    e  -1
 
-2017-01-01T00:00:00Z desc
+2017-01-01T00:00:00Z txn-comments-01
    ; 0101 comment
    a   1
    e  -1
@@ -26,7 +26,7 @@
    a   1
    e  -1 ; 2:e comment
 
-2017-01-02T00:00:00Z desc
+2017-01-02T00:00:00Z txn-comments-01
    ; 0102 comment #1
    ; 0102 comment #2
    a   1
@@ -46,7 +46,7 @@
    a   1 ; 3:a
    e  -1 ; 3:e
 
-2017-01-03T00:00:00Z desc
+2017-01-03T00:00:00Z txn-comments-01
    ;:uuid: f78376b8-7e4e-49d5-9d6b-39d5e4dd0bb8
    a   1
    e  -1
@@ -59,7 +59,7 @@
    a   1 ; 4:a
    e  -1 ; 4:e
 
-2017-01-04T00:00:00Z desc
+2017-01-04T00:00:00Z txn-comments-01
    ;:uuid: 7cea8674-d80c-4aaa-a129-0ee35dbea566
    ; 0104 comment #1
    ; 0104 comment #2

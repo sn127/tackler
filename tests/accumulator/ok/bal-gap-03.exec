@@ -1,3 +1,3 @@
 # format: exec
 # test:uuid: 9e00e09f-8ac4-4fd7-b3c1-e383d711d48c
-exec:--cfg;tests/accumulator/ok.conf;--input.file;bal-gap-03.txns;--output;out.bal-gap-03;
+exec:--cfg;tests/accumulator/ok.conf;--input.file;bal-gap-03.txn;--output;out.bal-gap-03;
