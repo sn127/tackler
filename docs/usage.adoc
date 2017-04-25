@@ -15,7 +15,7 @@ you put some transaction data under `txns`-directory.
 
 == CLI
 
-After you have installed Tackler, and you have some transaction data, 
+After you have link:installation.adoc[installed Tackler], and you have some transaction data,
 you can run tackler with command:
 
    java -jar tackler-cli-1.2.3.jar
@@ -27,6 +27,7 @@ to configuration file with `--cfg` argument.
 
    java tackler-cli-1.2.3.jar --cfg=/path/to/my/tackler.conf
 
+See link:installation.adoc[installation guide] for minimal and recommended setup.
 
 
 === Input and output

@@ -1,20 +1,23 @@
 = Balance Group report
 
-Balance Group report is group of balance reports calculated of transactions which
-are grouped by selected criteria.
+Balance Group report is series of balance reports which are calculated
+out of transactions grouped by selected criteria.
 
-Available group by (`reports.balance-group.group-by`) criteria at the moment is:
+Available group operators (`reports.balance-group.group-by`) at the moment are:
 `year`, `month`, `day`, `iso-week` and `iso-week-date`.
 
 ISO-8601 rules are used for `iso-week` and `iso-week-date`.
 
-For example balance group report could be by weeks, when main report is done for month,
-or it could be monthly grouping when main balance report is year.
+For example balance group report could be made by weeks, when main report is done for month,
+or it could be monthly when main balance report is year.
 
-Other than that, the output same as with balance report.  First (leftmost) is balance
-sum of current account for postings which are directly debiting or crediting that account.
+Other than that, the output is same as with balance report.
 
-Second is total balance sum for that account tree (root account and its children).
+First (the leftmost) sum is sum of postings
+which are directly debiting or crediting that account (account tree node).
+If there are none such transactions,  then this first sum is zero.
+
+Second sum is total balance sum for that account tree (root account and its children).
 
 
 == Balance group report configuration
@@ -31,14 +34,14 @@ Accounts for Balance Group report can be filtered with global
 setting (conf-only).
 
 If there are no accounts matched with selected regexs with some balance group time period,
-then that balance group is not is not printed / outputted at all.
+then that balance group is not is not printed / output at all.
 
 
 == Example report
 
 Below is part of link:../perf/refs/perf-1E3.ref.balgrp.txt[performance test output].
-Main set of transactions is over one year, and each balance group is calculated
-by weeks (iso-8601 weeks with UTC timezone).
+Transaction set is for one year, and each balance group is calculated
+by weeks (iso-8601 weeks with UTC timezone 'Z').
 
 ----
 BALANCE GROUPS

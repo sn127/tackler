@@ -27,10 +27,10 @@ class TacklerCliArgsTest extends FlatSpec {
 
   it should "use default config" in {
     /**
-     * This is implicit way to test the use of default config.
+     * This is an implicit way to test the use of default config.
      * Default config is:
-     *  - basedir=../
-     *  - input.fs.dir=txns/
+     *  - basedir=./
+     *  - input.fs.dir=txns
      *
      * Let's assert that these path components are used to build basedir,
      * which obviously won't be found under cli/target/scala-2.12
@@ -39,7 +39,7 @@ class TacklerCliArgsTest extends FlatSpec {
     val ex = intercept[NoSuchFileException] {
       TacklerCli.runExceptions(Array[String]())
     }
-    assert(ex.getMessage.endsWith("cli/target/scala-2.12/txns"), ex.getMessage)
+    assert(ex.getMessage.endsWith("cli/target/scala-2.12/classes/txns"), ex.getMessage)
   }
 
   it should "support --help" in {

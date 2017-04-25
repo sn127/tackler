@@ -1,6 +1,6 @@
 = Index of documentation
 
-=== User documentation
+== User documentation
 
 * link:./installation.adoc[Installation]
 * link:./configuration.adoc[Configuration]
@@ -9,7 +9,7 @@
 * link:./journal.adoc[Journal format]
 * link:./performance.adoc[Performance]
 
-=== Internal documentation
+== Developer documentation
 
 * link:./devel/build.adoc[How to build]
 * link:./devel/design.adoc[General Design]
@@ -20,18 +20,18 @@ Tackler Enhancement Proposals (TEP) can be found under link:tep[tep-directory].
 
 * link:./tep/tep-0001.adoc[TEP-0001: TEP template]
 
-=== Implemented TEPs
+==== Implemented TEPs
 
 * link:./tep/tep-1000.adoc[TEP-1000: Equity]
 * link:./tep/tep-1002.adoc[TEP-1002: Git Storage system]
 
 
-=== TEPs in planning phase
+==== TEPs in planning phase
 
 * link:./tep/tep-1001.adoc[TEP-1001: Units/Commodities]
 
 
-=== Licenses of other components
+== Licenses of other components
 
 * link:./licenses/ANTLR4-LICENSE.txt[ANTLR4]
 * link:./licenses/BETTER-FILES-LICENSE.txt[Better-files]

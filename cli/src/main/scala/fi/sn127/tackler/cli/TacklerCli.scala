@@ -83,7 +83,7 @@ object TacklerCli {
       // cli: input.fs.glob is in any case morphed with settings
       //   -> no need for special handling for cli args
       File(settings.input_fs_dir)
-        .glob(settings.input_fs_glob)
+        .glob(settings.input_fs_glob)(visitOptions = File.VisitOptions.follow)
         .map(f => f.path)
         .toSeq
     }) { cliArgsInputFilename =>

@@ -117,7 +117,7 @@ final case class Reports(settings: Settings) {
     exporter: ExportLike)
   : Unit = {
     outputBase.fold {
-      log.warn("Reporting: no output at has been defined (no console and no files)!")
+      log.warn("Report exporting: no output file is defined!")
     } { outputPath =>
       for {
         ostream <- managed(Files.newOutputStream(Paths.get(outputPath.toString + "." + name + ".txn")))
