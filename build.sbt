@@ -1,7 +1,7 @@
 import TacklerTests._
 
 lazy val commonSettings = Seq(
-  version := "0.5.0",
+  version := "0.5.1-next",
   scalaVersion := "2.12.2",
   compileOrder := CompileOrder.JavaThenScala,
   scalacOptions ++= Seq(
