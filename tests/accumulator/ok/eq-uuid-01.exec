@@ -1,5 +1,5 @@
 # format: exec
 # test:uuid: 76da1ba6-b17d-4260-bc2d-7d1dcca54d50
-exec:--cfg;tests/accumulator/ok.conf;--input.file;eq-uuid.txns;--output;out.eq-uuid-01-step-1;--reporting.accounts;^a.*;
+exec:--cfg;tests/accumulator/ok.conf;--input.file;eq-uuid.txn;--output;out.eq-uuid-01-step-1;--reporting.accounts;^a.*;
 # feed back previous equity report
 exec:--cfg;tests/accumulator/ok.conf;--input.file;out.eq-uuid-01-step-1.equity.txn;--output;out.eq-uuid-01;--reporting.reports;balance;balance-group;register;equity;identity;

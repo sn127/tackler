@@ -4,4 +4,4 @@
 # Follow / Sandwitch error txn with ok
 # txn. If code is too eager, it will resync
 # (using faulty txn as code)
-exec:--cfg;tests/parser/ex.conf;--input.file;perr-code.txns;
+exec:--cfg;tests/parser/ex.conf;--input.file;perr-code.txn;
