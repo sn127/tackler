@@ -3,21 +3,71 @@
 To use tackler you need
 
   * Java Runtime Environment (Java 8)
-  * Tackler binaries
+  * Tackler command line binary (jar-file)
 
 
-== Default layout
+== Mimimal setup
 
-Default layout for installation is:
+Default embedded configuration will try to find transaction data
+(files with `.txn` suffix) on `txns`-directory next to the jar-file.
+
+The absolute minimum to run tackler is following setup:
 
 ----
-bin/   - binaries (takler-cli.jar) and configuration
-txns/  - transaction data in one or multiple txn-files (txn-extension)
-logs/  - logs
+./tackler-cli-x.y.z.jar
+./txns/
+./txns/journal.txn
 ----
+
+With that setup you can run:
+
+ java -jar tackler-cli-x.y.z.jar --accounts.strict=false
+
+And it will produce balance and register reports without account name validation.
+
+
+== Recommend layout
 
 By default Tackler will try to find configuration file (`tackler.conf`) next to its jar-file.
 You can also provide path to configuration file with `--cfg` option.
+
+More sensible setup could be for example:
+
+....
+./bin/tackler-cli-x.y.z.jar
+./bin/tackler.conf
+./bin/accounts.conf
+./txns/
+./txns/YYYY/MM/journal-01.txn
+./txns/YYYY/MM/journal-02.txn
+...
+....
+
+Where `YYYY` and `MM` stand for time based data shard with year and month slides.
+
+Also with this setup, there is configuration file link:tackler.conf[tackler.conf]
+and link:accounts.conf[accounts.conf] for Chart of Accounts. Configuration is
+located next to the jar-file, so it is auto-discovered.
+
+If above `tackler.conf` is something like:
+
+....
+basedir=../
+input {
+  storage = fs
+  fs {
+    dir = "txns"
+    glob = "**.txn"
+  }
+}
+include "accounts.conf"
+....
+
+then it is possible to run tackler by:
+
+ java -jar bin/tackler-cli-x.y.z.jar
+
+and it will just work.
 
 
 == Configuration

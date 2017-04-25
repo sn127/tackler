@@ -19,10 +19,10 @@ features:
               descriptions:
                 - desc: basic txns file
               references:
-                - ref: bal
-                - ref: balgrp
-                - ref: reg
-                - ref: id
+                - ref: balance
+                - ref: balance-group
+                - ref: register
+                - ref: identity
 
   - feature:
       id: 7e842423-6535-4558-819a-23c06cc416df
@@ -57,7 +57,13 @@ features:
               descriptions:
                 - desc: "testing effective glob (it could be something else than *.txn)"
               references:
-                - ref: registry
+                - ref: identity
+          - test:
+              id: 4c62d3a6-da8e-441a-a459-6aca5edceb6a
+              name: tests/core/ok/shard-link-01.exec
+              descriptions:
+                - desc: test shard when target of input.fs.dir is link
+              references:
                 - ref: identity
           - test:
               id: 31a128f5-d1a2-4d93-beee-6599344ece57
@@ -66,7 +72,7 @@ features:
                 - desc: --input.fs.dir, --input.fs.glob
                 - desc: sorting (file order and txn order are differnt)
               references:
-                - ref: registry
+                - ref: register
 
   - feature:
       id: 70b1b529-f8f9-4fd7-bede-ea41cd00c02c
@@ -79,8 +85,8 @@ features:
               descriptions:
                 - desc: 1E3 tests / generator 0.1.4
               references:
-                - ref: bal
-                - ref: balgrp
+                - ref: balance
+                - ref: balance-group
 
   - feature:
       id: 846cc9e5-aad9-439d-adae-f56609beef5f
@@ -93,8 +99,8 @@ features:
               descriptions:
                 - desc: 1E6 tests / generator 0.1.4
               references:
-                - ref: bal
-                - ref: balgrp
+                - ref: balance
+                - ref: balance-group
 
 ### Time, timezones etc.
   - feature:
@@ -122,30 +128,30 @@ features:
                 - desc: "YYYY-mm-ddTMM:HH:SS.SSS+HH:MM"
                 - desc: "YYYY-mm-ddTMM:HH:SS.SSS-HH:MM"
               references:
-                - ref: reg
-                - ref: id
+                - ref: register
+                - ref: identity
           - test:
               id: de406118-eb73-4621-9b9b-6e26d512cf05
               name: tests/core/ok/time-nano-01.exec
               descriptions:
                 - desc: "Time with nano-second resolution (2007-10-02T13:45:30.123456789)"
               references:
-                - ref: reg
-                - ref: id
+                - ref: register
+                - ref: identity
           - test:
               id: 203c42c0-6660-4c0a-b991-e55c86e06da3
               name: tests/core/ok/time-dst-01.exec
               descriptions:
                 - desc: "timezone: offset, TS during DST switch (spring/autumn)"
               references:
-                - ref: id
+                - ref: identity
           - test:
               id: 23ee5075-ca27-4f08-876e-e29de77cfc59
               name: tests/core/ok/time-dst-02.exec
               descriptions:
                 - desc: "timezone: ZoneId (Europe/Helsinki), TS during DST switch (spring/autumn)"
               references:
-                - ref: id
+                - ref: identity
 
 ### conf: timezone
   - feature:
@@ -159,14 +165,14 @@ features:
               descriptions:
                 - desc: "conf: timezone: offset, txn with winter/summer TS"
               references:
-                - ref: id
+                - ref: identity
           - test:
               id: 2c4566b8-0424-4561-9265-087215c2d243
               name: tests/core/ok/time-conf-02.exec
               descriptions:
                 - desc: "conf: timezone: ZoneId (Europe/Helsinki), txn with winter/summer TS"
               references:
-                - ref: id
+                - ref: identity
 
 ### conf: basedir
   - feature:
@@ -356,7 +362,7 @@ features:
                 - desc: spaces
                 - desc: test by sorting that code is truly detected
               references:
-                - ref: registry
+                - ref: register
                 - ref: identity
 
   - feature:
@@ -383,7 +389,7 @@ features:
                 - desc: "chars: description"
                 - desc: "chars: comments"
               references:
-                - ref: registry
+                - ref: register
                 - ref: identity
 
   - feature:
@@ -439,7 +445,7 @@ features:
                 - desc: "name contains '_'"
               references:
                 - ref: identity
-                - ref: registry
+                - ref: register
           - test:
               id: bc8f6399-fd7a-420a-8deb-9cc0ae97c9f6
               name: tests/parser/ok/id-chars-01.exec
@@ -479,10 +485,10 @@ features:
                 - desc: multiple comments
                 - desc: "meta data + comments"
               references:
-                - ref: id
-                - ref: bal
-                - ref: balgrp
-                - ref: reg
+                - ref: identity
+                - ref: balance
+                - ref: balance-group
+                - ref: register
 
   - feature:
       id: 81149412-4c82-41fb-861c-ab0c224975ce
@@ -502,10 +508,10 @@ features:
                 - desc: last_posting with comment
                 - desc: normal + last_posting with comment
               references:
-                - ref: id
-                - ref: bal
-                - ref: balgrp
-                - ref: reg
+                - ref: identity
+                - ref: balance
+                - ref: balance-group
+                - ref: register
 
   - feature:
       id: a94d4a60-40dc-4ec0-97a3-eeb69399f01b
@@ -588,10 +594,10 @@ features:
               descriptions:
                 - desc: "reading and output BigDecimals 20 digit, 9 decimals"
               references:
-                - ref: bal
-                - ref: balgrp
-                - ref: reg
-                - ref: id
+                - ref: balance
+                - ref: balance-group
+                - ref: register
+                - ref: identity
 
   - feature:
       id: 9b2dd31d-2818-406b-a0e5-f44598432878
@@ -641,39 +647,39 @@ features:
               descriptions:
                 - desc: basic balance and balance group
               references:
-                - ref: bal
-                - ref: balgrp
-                - ref: reg
+                - ref: balance
+                - ref: balance-group
+                - ref: register
           - test:
               id: fb5c09d2-dfbf-41b7-9412-81bcf37f0c76
               name: tests/accumulator/ok/bal-02.exec
               descriptions:
                 - desc: todo
               references:
-                - ref: bal
-                - ref: balgrp
-                - ref: reg
+                - ref: balance
+                - ref: balance-group
+                - ref: register
           - test:
               id: 9220c02f-1b2a-4f7b-9ae5-8dc16bf1f071
               name: tests/accumulator/ok/bal-gap-01.exec
               descriptions:
                 - desc: top part of account tree is not part of txns
               references:
-                - ref: bal
+                - ref: balance
           - test:
               id: cb7e3f4c-a709-4f0e-9f22-336755dfe6b2
               name: tests/accumulator/ok/bal-gap-02.exec
               descriptions:
                 - desc: top and middle accounts of account tree are not part of txns
               references:
-                - ref: bal
+                - ref: balance
           - test:
               id: 9e00e09f-8ac4-4fd7-b3c1-e383d711d48c
               name: tests/accumulator/ok/bal-gap-03.exec
               descriptions:
                 - desc: two consecutive middle accounts of account tree are not part of txns
               references:
-                - ref: bal
+                - ref: balance
           - test:
               refid: c6da0aef-125f-4d33-9780-ffaa9e724499
               desc: Print balance delta
@@ -697,16 +703,16 @@ features:
               descriptions:
                 - desc: "(conf) group-by: year"
               references:
-                - ref: bal
-                - ref: balgrp
+                - ref: balance
+                - ref: balance-group
           - test:
               id: a52914e4-0887-4255-abea-c0b457802f56
               name: tests/reporting/group-by/month.exec
               descriptions:
                 - desc: group-by month, (conf)
               references:
-                - ref: bal
-                - ref: balgrp
+                - ref: balance
+                - ref: balance-group
           - test:
               id: 053ca6b0-6be6-4fc1-9dd8-6abc754d98d1
               name: tests/reporting/group-by/iso-week.exec
@@ -714,16 +720,16 @@ features:
                 - desc: (conf) group-by iso-week
                 - desc: over and around difficult years (2009/2010)
               references:
-                - ref: bal
-                - ref: balgrp
+                - ref: balance
+                - ref: balance-group
           - test:
               id: ed89d638-70fa-474c-b88f-be03df6231df
               name: tests/reporting/group-by/date.exec
               descriptions:
                 - desc: (conf) group-by date
               references:
-                - ref: bal
-                - ref: balgrp
+                - ref: balance
+                - ref: balance-group
           - test:
               id: 66692492-2b9f-46c2-8e09-a49573ba0cec
               name: tests/reporting/group-by/iso-week-date.exec
@@ -731,8 +737,8 @@ features:
                 - desc: (conf) group-by iso-week-date
                 - desc: over and around difficult years (2009/2010)
               references:
-                - ref: bal
-                - ref: balgrp
+                - ref: balance
+                - ref: balance-group
 
   - feature:
       id: 3872da6a-e772-41f5-a8f0-4eff24552c0d
@@ -762,9 +768,9 @@ features:
                 - desc: "feed equity report back to Tackler (txns => Eq => Identity)"
                 - desc: account filtering
               references:
-                - ref: bal
-                - ref: balgrp
-                - ref: reg
+                - ref: balance
+                - ref: balance-group
+                - ref: register
                 - ref: equity
                 - ref: identity
           - test:
@@ -773,9 +779,9 @@ features:
               descriptions:
                 - desc: All accounts zero out
               references:
-                - ref: bal
-                - ref: balgrp
-                - ref: reg
+                - ref: balance
+                - ref: balance-group
+                - ref: register
                 - ref: equity
           - test:
               id: f46b00a3-b4dc-44e0-a8ae-b8039e2a33a7
@@ -783,9 +789,9 @@ features:
               descriptions:
                 - desc: "direct check of txn:uuid in equity report"
               references:
-                - ref: bal
-                - ref: balgrp
-                - ref: reg
+                - ref: balance
+                - ref: balance-group
+                - ref: register
                 - ref: equity
 
   - feature:
@@ -821,7 +827,7 @@ features:
                 - desc: "txns -> identity -> identity"
                 - desc: shard with non-matching files
               references:
-                - ref: id2id
+                - ref: identity
 
 ### MISC
   - feature:
@@ -901,9 +907,9 @@ features:
               descriptions:
                 - desc: balance and global filters
               references:
-                - ref: bal
-                - ref: balgrp
-                - ref: reg
+                - ref: balance
+                - ref: balance-group
+                - ref: register
                 - ref: equity
                 - ref: identity
           - test:
@@ -912,9 +918,9 @@ features:
               descriptions:
                 - desc: balance group and global filters
               references:
-                - ref: bal
-                - ref: balgrp
-                - ref: reg
+                - ref: balance
+                - ref: balance-group
+                - ref: register
                 - ref: equity
                 - ref: identity
           - test:
@@ -923,9 +929,9 @@ features:
               descriptions:
                 - desc: register and global filters
               references:
-                - ref: bal
-                - ref: balgrp
-                - ref: reg
+                - ref: balance
+                - ref: balance-group
+                - ref: register
                 - ref: equity
                 - ref: identity
           - test:
@@ -934,9 +940,9 @@ features:
               descriptions:
                 - desc: equity and global filters
               references:
-                - ref: bal
-                - ref: balgrp
-                - ref: reg
+                - ref: balance
+                - ref: balance-group
+                - ref: register
                 - ref: equity
                 - ref: identity
           - test:
@@ -945,9 +951,9 @@ features:
               descriptions:
                 - desc: Filter out everything
               references:
-                - ref: bal
-                - ref: balgrp
-                - ref: reg
+                - ref: balance
+                - ref: balance-group
+                - ref: register
                 - ref: equity
                 - ref: identity
           - test:
@@ -956,9 +962,9 @@ features:
               descriptions:
                 - desc: Use global setting for reports
               references:
-                - ref: bal
-                - ref: balgrp
-                - ref: reg
+                - ref: balance
+                - ref: balance-group
+                - ref: register
                 - ref: equity
                 - ref: identity
 
@@ -1014,8 +1020,8 @@ features:
               descriptions:
                 - desc: --reporting.reports
               references:
-                - ref: bal
-                - ref: balgrp
+                - ref: balance
+                - ref: balance-group
 
   - feature:
       id: 6b8b9f4a-20e8-45e7-b0ea-1daf99d6589b
@@ -1028,8 +1034,8 @@ features:
               descriptions:
                 - desc: --reporting.accounts
               references:
-                - ref: bal
-                - ref: balgrp
+                - ref: balance
+                - ref: balance-group
 
   - feature:
       id: d78b7fec-502e-404e-b5d2-8551f96bcf8c
@@ -1048,10 +1054,10 @@ features:
               descriptions:
                 - desc: --reporting.console=true
               references:
-                - ref: bal
-                - ref: balgrp
-                - ref: reg
-                - ref: id
+                - ref: balance
+                - ref: balance-group
+                - ref: register
+                - ref: identity
 
   - feature:
       id: ed988446-3e8c-4dd5-a0f4-d02c1a145e2e
@@ -1064,8 +1070,8 @@ features:
               descriptions:
                 - desc: "CLI Args: --reporting.reports, --reporting.accounts"
               references:
-                - ref: bal
-                - ref: balgrp
+                - ref: balance
+                - ref: balance-group
 
   - feature:
       id: 4d07602f-c3f2-4a26-9166-3f371e6670d2

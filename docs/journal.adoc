@@ -158,7 +158,18 @@ approximately matches that of IEEE 128-bit floating point numbers
  Expenses:Ice_cream 2.12
  Assets:Cash
 ----
-|
+| At the moment only supported metadata is `uuid` which is reserved for optional transaction's
+unique identifier (link:https://en.wikipedia.org/wiki/Universally_unique_identifier[UUID]).
+
+By Tackler's design constraints input order of transactions is not important.
+
+Transactions are sorted by using txn-components in following order to find sort order
+(in case of previous components have produced "same" sort order):
+
+ timestamp, code, description, uuid
+
+Transactions must have UUIDs, if fully deterministic, stable
+and "distributed transaction producers"-safe sort order is needed.
 
 
 | Posting metadata
@@ -170,5 +181,6 @@ approximately matches that of IEEE 128-bit floating point numbers
 ----
 | *WAPORWARE*
 
+Currently metadata is not supported with postings.
 
 |===

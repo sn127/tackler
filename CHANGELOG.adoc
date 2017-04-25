@@ -1,11 +1,21 @@
 = Tackler releases
 
-=== next
+Current release is 0.5.0
 
+
+== Release history
+
+First public release of tackler was 0.5.0.
+
+
+=== 0.5.0
+
+ * First public release
  * Git storage support:
- ** link:docs/tep/tep-1002.adoc[TEP-1002]
  ** link:docs/git-storage.adoc[Git Storage Manual]
- * Rename configuration and CLI arg `input.txn` key to `input.fs`
+ ** link:docs/tep/tep-1002.adoc[TEP-1002: Git Storage System]
+ * Rename configuration and CLI arg key `input.txn` to `input.fs`
+ * Support link as target for top-level shard directory (`input.fs.dir`)
 
 ==== Fixes
 

@@ -4,9 +4,12 @@
 
 == Machinery
 
- * [ ] The big question about time with output
- ** [ ] Time-resolution
- *** [ ] conf: txn.mandatory-time = true | false
+ * [ ] The big question about time
+ ** [ ] conf: time cfg-group
+ ** [ ] conf: timezone -> time.timezone
+ ** [ ] conf: mandatory minimum time.resolution = date, timestamp, offset-timestamp
+ ** [ ] Time-resolution/accuracy with reports
+ *** [ ] conf: reporting.time.resolution = date, timestamp, offset-timestamp
  
 === Settings
 
@@ -23,21 +26,21 @@
 
 === GIT
 
- * [ ] link:../docs/tep/tep-1002.adoc[TEP-1002]
+Git Storage: link:../docs/tep/tep-1002.adoc[TEP-1002]
+
  * Far-Far-Away
  ** [ ] Ketch
 
-
 == Reporting
 
- * [ ] check reporting.console=true when there is only identity defined
  * [ ] different formats
  ** [ ] json
 
 === Equity report
 
+Equity report: link:../docs/tep/tep-1000.adoc[TEP-1000]
+
  * [x] basic equity report 
- ** [ ] check link:../docs/tep/tep-1000.adoc[TEP-1000]
  ** [ ] special input handling for equity (input-path by conf)
 
 === Reporting API

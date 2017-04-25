@@ -2,10 +2,11 @@
 
 Balance report is sum of each accounts over selected transactions.
 
-There are two sums in balance report. First (the leftmost) is sum of postings
-which are directly debiting or crediting account.
+There are two sums in balance report. First (the leftmost) sum is sum of postings
+which are directly debiting or crediting that account (account tree node).
+If there are none such transactions,  then this first sum is zero.
 
-Second is total sum for account tree (e.g. account as root and all its children).
+Second sum is total sum for account tree (e.g. account as root and all its children).
 
 
 == Balance report configuration
