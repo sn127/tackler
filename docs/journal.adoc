@@ -29,13 +29,13 @@ DATE [(code)] [DESCRIPTION]
   ACCOUNT  AMOUNT
   ACCOUNT  [AMOUNT]
 ----
-| There must be two or more accounts (postings) which
-must have zero sum if all accounts have amount.
+| Transaction's content (comments and account postings) must be intented at least by one space. 
+
+There must be two or more accounts (postings) which
+must have zero sum if all accounts have amount. Account's amount can not be zero.
 
 Amount of *last* account could be omitted, in that case it will be 
 calculated automatically.
-
-Account's amount can not be zero.
 
 There has to be at least one space between account and amount.
 If compatibility with other systems is needed, then two spaces should be used.
