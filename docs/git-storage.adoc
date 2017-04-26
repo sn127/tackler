@@ -65,7 +65,7 @@ git commit -m 'first transaction'
 
 cat > txns/txn-02.txn << EOF
 2017-04-23 second demo transaction
- Expenses:Ice_cream  2
+ Expenses:Lemonade  1
  Assets:Cash
 
 EOF
