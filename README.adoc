@@ -26,8 +26,8 @@ based double-entry accounting].
 ** link:docs/report-balance.adoc[Balance], link:docs/report-balance-group.adoc[Balance Groups] and link:docs/report-register.adoc[Register] Reports
 ** link:docs/report-equity.adoc[Equity] and link:docs/report-identity.adoc[Identity] Exports
 * Can handle link:docs/performance.adoc[large set of transactions]
-** Tackler is tested up to link:perf[one million (1E6) transactions], processing time is link:perf/results/hw01/perf-1E6.txt[about 30sec])
-** With large set of transactions Tackler is faster than ledger-cli or link:docs/perf-others.adoc[other similar tools], and it has one of the smallest memory foot prints
+** Tackler is tested up to link:perf[one million (1E6) transactions], processing time is link:perf/results/readme.adoc[about 30sec])
+** With large set of transactions Tackler is faster than ledger-cli or link:docs/perf-others.adoc[other similar tools]
 * Near 100% test coverage, link:tests/tests.yaml[all features are extensively tested]
 * Extensive documentation: link:docs/index.adoc[Index of Docs]
 
