@@ -99,8 +99,10 @@ Parser definition is located
  * link:../../core/src/main/antlr4/TxnLexer.g4[]
  * link:../../core/src/main/antlr4/TxnParser.g4[]
 
-Converting from ANTLR Parser Context to the Tackler Model is done
-by link:../../core/src/main/scala/fi/sn127/tackler/parser/TacklerTxns.scala[core / parser / TacklerTxns]
+Input is fed to the Parser by link:../../core/src/main/scala/fi/sn127/tackler/parser/TacklerTxns.scala[core / parser / TacklerTxns]. 
+Result of parsing (e.g. ANTLR  Parser Context) is converted to 
+the link:../../core/src/main/scala/fi/sn127/tackler/model[Tackler Model] 
+by link:../../core/src/main/scala/fi/sn127/tackler/parser/TacklerTxns.scala[core / parser / CtxHandler]
 helper class.
 
 == Input
