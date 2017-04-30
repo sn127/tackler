@@ -102,7 +102,7 @@ Parser definition is located
 Input is fed to the Parser by link:../../core/src/main/scala/fi/sn127/tackler/parser/TacklerTxns.scala[core / parser / TacklerTxns]. 
 Result of parsing (e.g. ANTLR  Parser Context) is converted to 
 the link:../../core/src/main/scala/fi/sn127/tackler/model[Tackler Model] 
-by link:../../core/src/main/scala/fi/sn127/tackler/parser/TacklerTxns.scala[core / parser / CtxHandler]
+by link:../../core/src/main/scala/fi/sn127/tackler/parser/CtxHandler.scala[core / parser / CtxHandler]
 helper class.
 
 == Input
