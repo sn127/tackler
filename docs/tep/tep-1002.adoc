@@ -32,7 +32,7 @@ Changes to machinery
 ** [x] Add and check licenses: link:http://git.eclipse.org/c/jgit/jgit.git/plain/LICENSE[EDL]
 ** [x] Is there NOTICE files? No
 ** [x] Add license under link:../licenses[doc/licenses]
-** [x] Add link of license to link:../index.adoc[index]
+** [x] Add link of license to link:../readme.adoc[index]
 ** [x] Add link:../../THANKS.adoc[THANKS]
 
 === Examples
@@ -41,7 +41,7 @@ Changes to machinery
 ** [x] Add and check licenses: link:https://github.com/centic9/jgit-cookbook/blob/master/LICENSE.md[Apache License 2.0]
 ** [x] Is there NOTICE files? No
 ** [x] Add license under link:../licenses[doc/licenses]
-** [x] Add link of license to link:../index.adoc[index]
+** [x] Add link of license to link:../readme.adoc[index]
 ** [x] Add link:../../THANKS.adoc[THANKS]
 
 

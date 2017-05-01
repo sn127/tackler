@@ -29,7 +29,7 @@ based double-entry accounting].
 ** Tackler is tested up to link:perf[one million (1E6) transactions], processing time is link:perf/results/readme.adoc[about 30sec])
 ** With large set of transactions Tackler is faster than ledger-cli or link:docs/perf-others.adoc[other similar tools]
 * Near 100% test coverage, link:tests/tests.yaml[all features are extensively tested]
-* Extensive documentation: link:docs/index.adoc[Index of Docs]
+* Extensive documentation: link:docs/readme.adoc[Index of Docs]
 
 
 == Why Tackler?
@@ -82,7 +82,7 @@ and journal parsing is done with link:http://www.antlr.org/[ANTLR4].
 
 User documentation is located under docs:
 
-* link:./docs/index.adoc[Index of all documentation]
+* link:./docs/readme.adoc[Index of all documentation]
 * link:./docs/journal.adoc[Tackler journal format]
 * link:./docs/usage.adoc[Usage of Tackler]
 * link:./docs/configuration.adoc[Overview of Tackler Configuration]
@@ -92,12 +92,20 @@ User documentation is located under docs:
 Documentation for developers is located under: link:./docs/devel[]
 
 
-== Todo and roadmap
+== Todo, TEPs and Roadmap
 
-At the moment, current set of todo items is kept under link:./todo[todo].
+At the moment, current set of active todo items is kept link:./todo[todo files].
 
-Tackler Enhancement Proposals are kept in tep-directory under docs: link:docs/tep/index.adoc[TEP index].
+There are Tackler Enhancement Proposals for planning and tracking implementation
+of major new features. These are listed on link:docs/tep/readme.adoc[TEP index]
+under link:docs/tep[].
 
+=== Roadmap
+
+Extremely loosely defined roadmap is following:
+
+* Units and Commodities
+* Server interface (reporting api)
 
 == Releases
 
