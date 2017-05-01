@@ -14,6 +14,6 @@ TEP Template: link:./tep-0001.adoc[TEP-0001]
 
 === TEPs in planning phase
 
-* link:./tep-1001.adoc[TEP-1001: Units/Commodities]
+* link:./tep-1001.adoc[TEP-1001: Units and Commodities]
 
 
