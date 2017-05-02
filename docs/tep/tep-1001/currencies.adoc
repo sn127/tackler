@@ -1,0 +1,35 @@
+= Currencies
+
+Handling currencies, especially with credit cards
+(no exchange rate at the time of transaction)
+
+....
+2017-04-01 stuff in Finland
+    expenses        20 EUR
+    l:credit·card
+
+2017-04-01 stuff in Sweden
+    expenses        200 SEK
+    l:credit·card
+
+2017-04-01 stuff in Norway
+    expenses        500 NOK
+    l:credit·card
+....
+
+....
+2017-04-01 equity
+    l:credit·card -200 SEK
+    l:credit·card -500 NOK
+    l:credit·card  -20 EUR
+....
+
+....
+2017-04-01 Actual exchange transaction by CC-company
+    l:credit·card    200 SEK @ 0.1039 EUR
+    l:credit·card -20.78 EUR
+
+2017-04-01 Actual exchange transaction by CC-company
+    l:credit·card    500 NOK @ 0.1065 EUR
+    l:credit·card -53.25 EUR
+....

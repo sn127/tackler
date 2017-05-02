@@ -1,27 +1,15 @@
 = Units and Commodities
 
+* link:tep-1001/units.adoc[Units]
+* link:tep-1001/commodities.adoc[Commodities]
+* link:tep-1001/currencies.adoc[Currencies (with Credit Cards)]
+* link:tep-1001/profit-and-loss.adoc[Profit and Loss]
 
- 
-....
-diff --git a/core/src/main/antlr4/TxnParser.g4 b/core/src/main/antlr4/TxnParser.g4
-index 896e519..b9b3f23 100644
---- a/core/src/main/antlr4/TxnParser.g4
-+++ b/core/src/main/antlr4/TxnParser.g4
-@@ -36,7 +36,7 @@ comment: ';' ' ' text;
- 
- postings: posting+ (posting|last_posting);
- 
--posting:  indent account (' '|'\t')+ amount (' '|'\t')* comment? NL;
-+posting:  indent account (' '|'\t')+ amount ((' '|'\t')+ unit)? (' '|'\t')* comment? NL;
- 
- last_posting: indent account (' '|'\t')* comment? NL;
- 
-@@ -44,4 +44,6 @@ account: ID (':' ID)*;
- 
- amount: NUMBER;
- 
-+unit: ID;
-+
- blankline: (' '|'\t')* NL;
-....
+== Use cases
+
+* Tracking non-monetary commodity (e.g. time)
+* Transactions with commodity without monetary opening position
+* Multiple different commodities on same account (stocks, currencies)
+* Converting commodity to another commodity or monetary value
+* Tracking Profit and Loss
 

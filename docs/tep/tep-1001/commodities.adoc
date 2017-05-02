@@ -1,0 +1,101 @@
+= Commodities
+
+Commodities are something, which have variable exchange rate.
+
+Examples of commodities are: USD, EUR, Helium, stocks, etc.
+
+If using price database with certain commodities, then price should be used
+from latest value from history (based on transaction date),
+and not in future or current value.
+
+For example, this could be case with Helium, as gas price fluctuates
+and used price should be as it was when gas was used.
+Initially that could be manual operation.
+
+
+== Reports
+
+=== Identity and Equity report
+
+* [ ] preserve unit
+
+=== Register report
+
+* [ ] preserve unit
+
+=== Balance & Co report
+
+* [ ] preserve unit
+
+
+== Example
+
+Filling station and mixing 18/45 gas for diving.
+How to record and bill used materials.
+
+....
+2017-01-01 (bill id / delivery id) new gas delivery
+   Gas:He:Tank·102  298 bar
+   Gas:He:Tank·103  298 bar
+   Gas:He:Tank·104  298 bar
+   Woikoski:He
+....
+
+....
+2017-05-01 (mix-id) tmx 18/45 D12L
+   ; Gas:He:Tank·102  is this - or +?
+   ; neg would be better with starting pressures?
+   ; e.g.: 247 -273 = -26 as tank delta
+   ; and (298 -25) -26 = 247 as end pressure
+   Gas:He:Tank·102  247 bar
+   Gas:He:Tank·102 -273 bar
+   Mixer:jaa127:He ; 26 bar @ 50L tank
+
+2017-05-01 (mix-id) tmx 18/45 D12L
+   Gas:O2:Tank·208  145 bar
+   Gas:O2:Tank·208 -150 bar
+   Mixer:jaa127:O2  ; 5 bar @ 50L tank
+....
+
+....
+balance (He by tanks)
+     2    2 bar Gas:He:Tank·102 ; empty tank
+     2    2 bar Gas:He:Tank·103 ; empty tank
+   142  142 bar Gas:He:Tank·103 ; about half-full
+======
+   146 bar ; total "available" gas
+....
+
+....
+balance (He by users)
+   26  26 bar Mixer:jaa127:He
+   12  12 bar Mixer:urmas:He
+=====
+   38 bar ; same as outstanding He billing
+....
+
+....
+balance (O2 by users)
+    5   5 bar Mixer:jaa127:O2
+   12  12 bar Mixer:urmas:O2
+=====
+   17 bar ; same as outstanding O2 billing
+....
+
+....
+2017-05-02  jaa127 outstanding payments
+   ; Move bars to EUR
+   ; He: 26 * (50 / 1000 * 25) EUR = 32.50 EUR == 1.25 EUR / bar
+   ; O2:  5 * (50 / 1000 *  5) EUR =  1.25 EUR == 0.25 EUR / bar
+   ;
+   Mixer:jaa127:He -26 bar @ 1.25 EUR ; -32.50 EUR
+   Mixer:jaa127:O2  -5 bar @ 0.25 EUR ;  -1.25 EUR
+   Mixer:jaa127:Receivable  33.75 EUR
+....
+
+....
+2017-05-02  jaa127 equity
+   Mixer:jaa127:He 0
+   Mixer:jaa127:O2 0
+   Mixer:jaa127:Receivable  33.75 EUR
+....
