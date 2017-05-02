@@ -110,7 +110,7 @@ abstract class CtxHandler {
   protected def handleRawPosting(postingCtx: PostingContext): Posting = {
     val acctn = handleAccount(postingCtx.account())
     val amount = BigDecimal(postingCtx.amount().NUMBER().getText)
-    val comment = Option(postingCtx.comment()).map(c => c.text().getText)
+    val comment = Option(postingCtx.opt_comment()).map(c => c.comment().text().getText)
 
     Posting(acctn, amount, comment)
   }
@@ -146,7 +146,8 @@ abstract class CtxHandler {
     val last_posting = Option(txnCtx.postings().last_posting()).map(lp => {
       val ate = handleAccount(lp.account())
       val amount = Posting.sum(posts)
-      val comment = Option(lp.comment()).map(c => c.text().getText)
+      val comment = Option(lp.opt_comment()).map(c => c.comment().text().getText)
+
       List(Posting(ate, -amount, comment))
     })
 

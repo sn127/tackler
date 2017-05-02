@@ -52,12 +52,32 @@ comment: ';' ' ' text;
 
 postings: posting+ (posting|last_posting);
 
-posting:  indent account (' '|'\t')+ amount (' '|'\t')* comment? NL;
+posting:  indent account sp amount opt_sp opt_unit? opt_comment? NL;
 
-last_posting: indent account (' '|'\t')* comment? NL;
+last_posting: indent account opt_sp opt_comment? NL;
+
+
+opt_unit: sp unit opt_position?;
+
+opt_comment: opt_sp comment;
+
+
+opt_position: opt_opening_pos
+    | opt_opening_pos  closing_pos
+    | closing_pos
+    ;
+
+opt_opening_pos: sp '{' opt_sp amount sp unit opt_sp '}';
+
+closing_pos: sp '@' sp amount sp unit;
 
 account: ID (':' ID)*;
 
 amount: NUMBER;
 
-blankline: (' '|'\t')* NL;
+unit: ID;
+
+sp: (' '|'\t')+;
+opt_sp: (' '|'\t')*;
+
+blankline: opt_sp NL;

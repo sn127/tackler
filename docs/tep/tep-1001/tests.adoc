@@ -1,0 +1,10 @@
+= Tests for TEP-1001
+
+== Commodities
+
+ * [ ] opening and closing commodities are not same
+....
+ e   1 USD {1.00 NOK} @ 1.20 EUR
+....
+
+* [ ] second
