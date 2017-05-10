@@ -20,13 +20,16 @@ import fi.sn127.tackler.core._
 import fi.sn127.tackler.model.{Transaction, TxnTS, TxnData}
 
 trait BalanceReportLike extends ReportLike {
+
+  @SuppressWarnings(Array("org.wartremover.warts.TraversableOps"))
   protected def txtBalanceBody(balance: Balance): (Seq[String], String) = {
 
     if (balance.isEmpty) {
       (Seq.empty[String], "")
     } else {
       val acclen = List(12,
-        ("%" + getScaleFormat(balance.delta)).format(balance.delta).length,
+        //todo: balance: delta handling
+        ("%" + getScaleFormat(balance.deltas.head._2)).format(balance.deltas.head._2).length,
         balance.bal.map(b => ("%" + getScaleFormat(b.accountSum)).format(b.accountSum).length).max).max
 
       val subAcclen = balance.bal.map(b => ("%" + getScaleFormat(b.subAccTreeSum)).format(b.subAccTreeSum).length).max
@@ -37,10 +40,15 @@ trait BalanceReportLike extends ReportLike {
             fillFormat(acclen, b.accountSum) +
             " " * 3 +
             fillFormat(subAcclen, b.subAccTreeSum) +
-            " " + b.acctn.account
+            " " + b.acctn.commodity.map(c => c.name + " ").getOrElse("") + b.acctn.account
         })
 
-      val footer = " " * 9 + fillFormat(acclen, balance.delta)
+      val footer = balance.deltas.toSeq.sortBy({case (cOpt, v) =>
+        cOpt.map(c => c.name).getOrElse("")
+      }).map({case (cOpt, v) =>
+        " " * 9 + fillFormat(acclen, v) + cOpt.map(c => " " + c.name).getOrElse("")
+      }).mkString("\n")
+
       (body, footer)
     }
   }
@@ -49,6 +57,7 @@ trait BalanceReportLike extends ReportLike {
 class BalanceReport(val name: String, val settings: Settings) extends  BalanceReportLike {
   private val mySettings = settings.Reports.Balance
 
+  @SuppressWarnings(Array("org.wartremover.warts.TraversableOps"))
   protected def txtBalance(bal: Balance): Seq[String] = {
 
     val (body, footer) = txtBalanceBody(bal)
@@ -61,7 +70,7 @@ class BalanceReport(val name: String, val settings: Settings) extends  BalanceRe
     if (body.isEmpty) {
       header
     } else {
-      header ++ body ++ List("=" * footer.length) ++ List(footer)
+      header ++ body ++ List("=" * footer.split("\n").head.length) ++ List(footer)
     }
   }
 
@@ -142,7 +151,8 @@ class BalanceGroupReport(val name: String, val settings: Settings) extends Balan
     if (body.isEmpty) {
       Nil
     } else {
-      header ++ body ++ List("=" * footer.length) ++ List(footer)
+      // todo: refactor with balance
+      header ++ body ++ List("=" * footer.split("\n").head.length) ++ List(footer)
     }
   }
 

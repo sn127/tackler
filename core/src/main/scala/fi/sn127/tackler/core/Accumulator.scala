@@ -37,8 +37,8 @@ object Accumulator {
 
     txns.foreach(txn => {
       val registerPostings = txn.posts.map({ p =>
-        val newTotal = registerEngine.getOrElse(p.account, BigDecimal(0)) + p.amount
-        registerEngine.update(p.account, newTotal)
+        val newTotal = registerEngine.getOrElse(p.atnKey, BigDecimal(0)) + p.amount
+        registerEngine.update(p.atnKey, newTotal)
 
         RegisterPosting(p, newTotal)
       })

@@ -125,6 +125,22 @@ class TacklerCliTest extends DirSuiteLike {
    */
 
   /**
+   * Commodity
+   */
+  runDirSuiteTestCases(basedir, Glob("commodity/ex/TxnException-*.exec")) { args: Array[String] =>
+    assertThrows[TxnException]{
+      TacklerCli.runExceptions(args)
+    }
+  }
+
+  runDirSuiteTestCases(basedir, Glob("commodity/ok/*.exec")) { args: Array[String] =>
+    assertResult(TacklerCli.SUCCESS) {
+      TacklerCli.runReturnValue(args)
+    }
+  }
+
+
+  /**
    * Core
    */
   runDirSuiteTestCases(basedir, Glob("core/ex/TxnException-*.exec")) { args: Array[String] =>

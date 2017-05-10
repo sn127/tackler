@@ -17,15 +17,18 @@ Initially that could be manual operation.
 
 === Identity and Equity report
 
-* [ ] preserve unit
+* [x] preserve unit
+** [ ] test: two-step verification of multi-currency identity
+* [ ] each commodity must have separate equity report
+** [ ] test: two-step verification of multi-currency equity
 
 === Register report
 
-* [ ] preserve unit
+* [x] preserve unit
 
 === Balance & Co report
 
-* [ ] preserve unit
+* [x] preserve unit
 
 
 == Example

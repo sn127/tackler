@@ -1298,3 +1298,22 @@ features:
                 - ref: balance-group
                 - ref: register
 ### GIT END
+
+###
+### Units and Commodities
+###
+  - feature:
+      id: b6013748-102c-4632-ada1-5b3c8dcc3b42
+      subject: "Units and Commodities"
+
+  - feature:
+      id: cc667fda-d5ee-4a64-91ed-443ba76ca96c
+      parent: b6013748-102c-4632-ada1-5b3c8dcc3b42
+      subject: "Basic commodities"
+
+  - feature:
+      id: f5f99904-8279-4537-87fb-533ca822ee8e
+      parent: b6013748-102c-4632-ada1-5b3c8dcc3b42
+      subject: "Value position"
+
+### Units and Commodities END

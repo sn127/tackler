@@ -170,7 +170,7 @@ class Settings(cfgPath: Path, cliCfgSettings: Config) {
   val accounts_strict: Boolean = cfg.getBoolean(CfgKeys.accounts_strict)
 
   val accounts_coa: Map[String, AccountTreeNode] = cfg.getStringList(CfgKeys.accounts_coa).asScala
-    .toSet[String].map(acc => (acc, AccountTreeNode(acc))).toMap
+    .toSet[String].map(acc => (acc, AccountTreeNode(acc, None))).toMap
 
   object Reports {
     object Balance {

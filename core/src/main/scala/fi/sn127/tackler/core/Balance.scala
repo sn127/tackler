@@ -21,8 +21,10 @@ import cats.implicits._
 import fi.sn127.tackler.model._
 
 
-class Balance(val title: String, val bal: Seq[BalanceTreeNode],
-  val delta: BigDecimal, val metadata: Option[Metadata]) {
+class Balance(val title: String,
+  val bal: Seq[BalanceTreeNode],
+  val deltas: Map[Option[Commodity], BigDecimal],
+  val metadata: Option[Metadata]) {
 
   def isEmpty: Boolean = bal.isEmpty
 }
@@ -44,9 +46,7 @@ object Balance {
     val (myAccTN, mySum) = me
 
     // find my childs
-    val childs = accSums.filter({ case (atc, _) =>
-      atc.parent === myAccTN.account
-    })
+    val childs = accSums.filter({ case (atn, _) => myAccTN.isParentOf(atn)})
 
     // calculate balance tree nodes of my childs
     val childsBalanceTrees = childs.flatMap(c =>
@@ -87,8 +87,8 @@ object Balance {
       // end of recursion
       List(myAccTNSum)
     } else {
-      // Not on top => find my parent(s)
-      val parent = accSums.filter({ case (atc, _) => myAccTN.parent === atc.account })
+      // Not on top => find my parent
+      val parent = accSums.filter({ case (atn, _) => atn.isParentOf(myAccTN) })
 
       assert(parent.isEmpty || parent.length === 1)
 
@@ -99,7 +99,7 @@ object Balance {
           val account = myAccTN.parent
           val name = myAccTN.parent.split(":").last
 
-          val newParent = AccountTreeNode(myAccTN.depth - 1, myAccTN.root, par, account, name)
+          val newParent = AccountTreeNode(myAccTN.depth - 1, myAccTN.root, par, account, name, myAccTN.commodity)
           bubbleUpAccTN((newParent, BigDecimal(0)), accSums) ++ List(myAccTNSum)
         } else {
           // I am depth 2 and I don't have parent, => let's create root account
@@ -109,7 +109,7 @@ object Balance {
           val account = myAccTN.parent
           val name = myAccTN.parent
 
-          val newParent = AccountTreeNode(myAccTN.depth - 1, myAccTN.root, par, account, name)
+          val newParent = AccountTreeNode(myAccTN.depth - 1, myAccTN.root, par, account, name, myAccTN.commodity)
           List((newParent, BigDecimal(0)), myAccTNSum)
         }
       } else {
@@ -128,7 +128,7 @@ object Balance {
     // TODO: AccountTreeNode: provide default groupBy machinery
     val accountSums: Seq[(AccountTreeNode, BigDecimal)] = txns
       .flatMap(txn => txn.posts)
-      .groupBy(_.acctn.account)
+      .groupBy(p => AccountTreeNode.groupBy(p.acctn))
       .map((kv: (String, Seq[Posting])) => {
         val post = kv._2.head
         val accSum = kv._2.map(_.amount).sum
@@ -164,10 +164,20 @@ object Balance {
     val fbal = bal.filter(accounts.predicate)
     if (fbal.nonEmpty) {
 
-      val delta = fbal.map(_.accountSum).sum
-      new Balance(title, fbal, delta, txnData.metadata)
+      val deltas: Map[Option[Commodity], BigDecimal] = fbal
+        .groupBy(_.acctn.commStr)
+        .map({ case (c, bs) =>
+          if (c === "") {
+            (None, bs.map(_.accountSum).sum)
+          } else {
+            (Some(new Commodity(c)), bs.map(_.accountSum).sum)
+          }
+        })
+
+      new Balance(title, fbal, deltas, txnData.metadata)
     } else {
-      new Balance(title, Seq.empty[BalanceTreeNode], 0.0, None)
+      new Balance(title, Seq.empty[BalanceTreeNode],
+        Map.empty[Option[Commodity], BigDecimal], None)
     }
   }
 }

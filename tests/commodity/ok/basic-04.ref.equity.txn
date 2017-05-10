@@ -1,0 +1,14 @@
+2017-05-06T00:00:00Z Equity
+ a  -11 EUR
+ e  10 EUR
+ e:b:c  1 EUR
+
+2017-05-06T00:00:00Z Equity
+ a  -3000 USD
+ e:b  1000 USD
+ e:b:c  2000 USD
+
+2017-05-06T00:00:00Z Equity
+ a  -300
+ e  300
+

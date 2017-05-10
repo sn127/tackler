@@ -22,7 +22,7 @@ import fi.sn127.tackler.core.TxnException
 
 class PostingTest extends FlatSpec {
 
-  val acctn = AccountTreeNode("a:b")
+  val acctn = AccountTreeNode("a:b", None)
 
   behavior of "Posting"
 

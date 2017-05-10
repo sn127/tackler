@@ -28,13 +28,15 @@ final case class Posting(
     throw new TxnException("Zero sum postings are not allowed (is it typo?): " + acctn.account)
   }
 
-  def account: String = acctn.account
+  def atnKey: String = acctn.getFull
+  // todo: ATN and commodity printing: fix this
+  def account: String = acctn.commodity.map(c => c.name + " " + acctn.account).getOrElse(acctn.account)
 
   override
   def toString: String = {
     val missingSign = if (amount < 0) "" else " "
     acctn.toString + "  " +
-      missingSign + amount.toString() +
+      missingSign + amount.toString() + acctn.commodity.map(c => " " + c.name).getOrElse("") +
       comment.map(c => " ; " + c).getOrElse("")
   }
 }

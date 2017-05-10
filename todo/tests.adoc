@@ -1,4 +1,9 @@
+
 = Tests TODO
+
+* [x] equity: test when all postins balance (no need for balance account)
+** [ ] equity -> input: above (not-null accounts are not allowed)
+
 
 * [x] git: tag test
 * [x] shard: check/new test: parse error with shard data

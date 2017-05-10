@@ -13,3 +13,6 @@
 * Converting commodity to another commodity or monetary value
 * Tracking Profit and Loss
 
+== Phase2
+
+* default commidity per account?
