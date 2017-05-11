@@ -36,9 +36,10 @@ class RegisterReport(val name: String, val settings: Settings) extends ReportLik
     val txtRegPostings = registerPostings
       .filter(accounts.predicate)
       .sorted(OrderByRegPosting)
-      .map(posting => {
-        indent + "%-33s".format(posting.account) +
-          fillFormat(18, posting.amount) + " " + fillFormat(18, posting.runningTotal)
+      .map(regPosting => {
+        indent + "%-33s".format(regPosting.account) +
+          fillFormat(18, regPosting.amount) + " " + fillFormat(18, regPosting.runningTotal) +
+          regPosting.commodity.map(c => " " + c.name).getOrElse("")
       })
 
     if (txtRegPostings.nonEmpty) {

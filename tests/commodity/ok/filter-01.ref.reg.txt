@@ -2,6 +2,6 @@
 REGISTER
 --------
 2017-05-01Z basic commodity (EUR)
-            EUR a                                         -1.00              -1.00
+            a                                             -1.00              -1.00 EUR
 2017-05-02Z default with commodity (EUR)
-            EUR a                                        -10.00             -11.00
+            a                                            -10.00             -11.00 EUR

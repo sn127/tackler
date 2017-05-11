@@ -32,8 +32,6 @@ final case class Posting(
   }
 
   def atnKey: String = acctn.getFull
-  // todo: ATN and commodity printing: fix this
-  def account: String = acctn.commodity.map(c => c.name + " " + acctn.account).getOrElse(acctn.account)
 
   override
   def toString: String = {

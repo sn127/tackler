@@ -2,11 +2,11 @@
 REGISTER
 --------
 2017-05-01Z basic commodity (EUR)
-            EUR a                                         -1.00              -1.00
-            EUR e:b:c                                      1.00               1.00
+            a                                             -1.00              -1.00 EUR
+            e:b:c                                          1.00               1.00 EUR
 2017-05-02Z default with commodity (EUR)
-            EUR a                                        -10.00             -11.00
-            EUR e                                         10.00              10.00
+            a                                            -10.00             -11.00 EUR
+            e                                             10.00              10.00 EUR
 2017-05-03Z no commodity
             a                                           -200.00            -200.00
             e                                            200.00             200.00
@@ -14,8 +14,8 @@ REGISTER
             a                                           -100.00            -300.00
             e                                            100.00             300.00
 2017-05-05Z basic commodity (USD)
-            USD a                                      -1000.00           -1000.00
-            USD e:b                                     1000.00            1000.00
+            a                                          -1000.00           -1000.00 USD
+            e:b                                         1000.00            1000.00 USD
 2017-05-06Z default with commodity (USD)
-            USD a                                      -2000.00           -3000.00
-            USD e:b:c                                   2000.00            2000.00
+            a                                          -2000.00           -3000.00 USD
+            e:b:c                                       2000.00            2000.00 USD
