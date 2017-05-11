@@ -24,7 +24,7 @@ import scala.collection.JavaConverters
 
 import fi.sn127.tackler.core.{AccountException, Settings, TxnException}
 import fi.sn127.tackler.model.{AccountTreeNode, Commodity, Posting, Posts, Transaction, Txns}
-import fi.sn127.tackler.parser.TxnParser.{AccountContext, DateContext, PostingContext, TxnContext, TxnsContext}
+import fi.sn127.tackler.parser.TxnParser._
 
 /**
  * Handler utilities for ANTLR Parser Contexts.
@@ -102,6 +102,46 @@ abstract class CtxHandler {
     }
   }
 
+  protected def handleAmount(amountCtx: AmountContext): BigDecimal = {
+    BigDecimal(amountCtx.NUMBER().getText)
+  }
+
+  protected def handleClosingPosition(postingCtx: PostingContext): (
+    BigDecimal,
+    BigDecimal,
+    Option[Commodity],
+    Option[Commodity]) = {
+
+    val postCommodity = Option(postingCtx.opt_unit()).map(u => {
+      new Commodity(u.unit().ID().getText)
+    })
+
+    val txnCommodity = Option(postingCtx.opt_unit()).flatMap(u => {
+
+      Option(u.opt_position()).fold(Option(new Commodity(u.unit().ID().getText))){pos =>
+        Option(pos.closing_pos()).map(cp => {
+          // Ok, we have closing position, use its commodity
+          new Commodity(cp.unit().ID().getText)
+        })
+      }
+    })
+
+    val postAmount = handleAmount(postingCtx.amount())
+
+    val txnAmount = Option(postingCtx.opt_unit())
+      .fold(postAmount) { u =>
+        Option(u.opt_position()).fold(postAmount) { pos =>
+          Option(pos.closing_pos()).fold(postAmount)(cp => {
+            // Ok, we have closing position, use its value
+            postAmount * handleAmount(cp.amount())
+          })
+        }
+      }
+
+    // todo: fix this silliness, see other todo on Posting
+    (postAmount, txnAmount, postCommodity, txnCommodity)
+  }
+
   /**
    * Handle on [[Posting]] (posting -rule).
    *
@@ -109,14 +149,12 @@ abstract class CtxHandler {
    * @return Post
    */
   protected def handleRawPosting(postingCtx: PostingContext): Posting = {
-    val commodity = Option(postingCtx.opt_unit())
-        .map(u => {new Commodity(u.unit().ID().getText)})
+    val foo = handleClosingPosition(postingCtx)
+    val acctn = handleAccount(postingCtx.account(), foo._3)
 
-    val acctn = handleAccount(postingCtx.account(), commodity)
-    val amount = BigDecimal(postingCtx.amount().NUMBER().getText)
     val comment = Option(postingCtx.opt_comment()).map(c => c.comment().text().getText)
-
-    Posting(acctn, amount, comment)
+    // todo: fix this silliness, see other todo on Posting
+    Posting(acctn, foo._1, foo._2, foo._4, comment)
   }
 
   /**
@@ -149,7 +187,7 @@ abstract class CtxHandler {
       }).toList
 
     // Check for mixed commodities
-    if (posts.map(p => p.acctn.commStr).distinct.size > 1) {
+    if (posts.map(p => p.txnCommodity.map(c => c.name).getOrElse("")).distinct.size > 1) {
       throw new TxnException("" +
         "Multiple different commodities are not allowed inside single transaction." +
         uuid.map(u => "\n   txn uuid: " + u.toString).getOrElse(""))
@@ -157,11 +195,11 @@ abstract class CtxHandler {
 
     val last_posting = Option(txnCtx.postings().last_posting()).map(lp => {
       // use same commodity as what other postings are using
-      val ate = handleAccount(lp.account(), posts.head.acctn.commodity)
-      val amount = Posting.sum(posts)
+      val ate = handleAccount(lp.account(), posts.head.txnCommodity)
+      val amount = Posting.txnSum(posts)
       val comment = Option(lp.opt_comment()).map(c => c.comment().text().getText)
 
-      List(Posting(ate, -amount, comment))
+      List(Posting(ate, -amount, -amount, posts.head.txnCommodity, comment))
     })
 
     Transaction(date, code, desc, uuid, comments, posts ++ last_posting.getOrElse(Nil))

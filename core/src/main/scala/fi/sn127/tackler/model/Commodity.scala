@@ -16,6 +16,12 @@
  */
 package fi.sn127.tackler.model
 
-class Commodity(val name: String) {
+/**
+ * This is part of Account Tree Node, so this must have
+ * sensible hashcode implementation.
+ *
+ * @param name of commodity
+ */
+final case class Commodity(name: String) {
 
 }

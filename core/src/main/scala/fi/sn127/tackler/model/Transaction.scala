@@ -36,8 +36,8 @@ final case class Transaction(
   comments: Option[List[String]],
   posts: Posts) {
 
-  if (BigDecimal(0).compareTo(Posting.sum(posts)) =!= 0) {
-    throw new TxnException("TXN postings do not zero: " + Posting.sum(posts).toString())
+  if (BigDecimal(0).compareTo(Posting.txnSum(posts)) =!= 0) {
+    throw new TxnException("TXN postings do not zero: " + Posting.txnSum(posts).toString())
   }
 
   /**

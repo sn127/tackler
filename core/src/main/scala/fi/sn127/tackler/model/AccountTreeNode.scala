@@ -21,7 +21,10 @@ import cats.implicits._
 import fi.sn127.tackler.core.AccountException
 
 /**
- * Account tree node
+ * Account Tree Node (ATN)
+ *
+ * This must behave correctly with Seq.distinct,
+ * so whole thing must have sensible hashcode.
  *
  * @param depth depth of this account
  * @param parent of this account (path)

@@ -1,12 +1,13 @@
 
 = Tests TODO
 
-* [x] equity: test when all postins balance (no need for balance account)
+* [ ] full combo of value pos txns
+** [ ] all same comm.
+** [ ] mixed comm.
+** [ ] missing comm.
+
+
+* [x] equity: test when all postings balance (no need for balance account)
 ** [ ] equity -> input: above (not-null accounts are not allowed)
-
-
-* [x] git: tag test
-* [x] shard: check/new test: parse error with shard data
-* [x] shard: check/new test: not-to-be-included case (txn01.txt vs. txn01.txn)
-* [x] shard: check/new test: effective dir (do not scan everything)
+** [ ] equity -> input: check and fix equity chen equity account is part of input (valpos -tests)
 
