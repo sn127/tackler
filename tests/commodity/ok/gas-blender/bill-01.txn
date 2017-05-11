@@ -1,0 +1,6 @@
+2017-05-02  jaa127 outstanding payments
+   ; Convert used gas to EUR
+   User:jaa127:He -26 bar·He @ 1.25 EUR ; -32.50 EUR
+   User:jaa127:O2  -5 bar·O2 @ 0.25 EUR ;  -1.25 EUR
+   Billing:jaa127:Receivable  33.75 EUR
+

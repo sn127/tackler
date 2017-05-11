@@ -36,69 +36,97 @@ Initially that could be manual operation.
 Filling station and mixing 18/45 gas for diving.
 How to record and bill used materials.
 
+
+Initial gas delivery
 ....
-2017-01-01 (bill id / delivery id) new gas delivery
-   Gas:He:Tank·102  298 bar
-   Gas:He:Tank·103  298 bar
-   Gas:He:Tank·104  298 bar
+2017-01-01 (#123456789) Helium delivery (3x tanks)
+   Gas:He:Tank·102  298 bar·He
+   Gas:He:Tank·103  298 bar·He
+   Gas:He:Tank·104  298 bar·He
    Woikoski:He
+
+2017-01-01 (#123456789) Oxygen delivery (3x tanks)
+   Gas:O2:Tank·208  198 bar·O2
+   Woikoski:O2
 ....
 
+
+One 18/45 trimix blend with Helium (He) and Oxygen (O2)
 ....
-2017-05-01 (mix-id) tmx 18/45 D12L
-   ; Gas:He:Tank·102  is this - or +?
-   ; neg would be better with starting pressures?
+2017-05-01 (mix-1234) tmx 18/45 D12L
+   ; Gas:He:Tank·102  Why is this '-' delta (neg)?
+   ; negative deltas would be better with starting pressures
    ; e.g.: 247 -273 = -26 as tank delta
    ; and (298 -25) -26 = 247 as end pressure
-   Gas:He:Tank·102  247 bar
-   Gas:He:Tank·102 -273 bar
-   Mixer:jaa127:He ; 26 bar @ 50L tank
+   ; Also then user will see positive pressures,
+   ; and rest of accunting will make more sense
+   Gas:He:Tank·102  247 bar·He
+   Gas:He:Tank·102 -273 bar·He
+   Mixer:jaa127:He
 
-2017-05-01 (mix-id) tmx 18/45 D12L
-   Gas:O2:Tank·208  145 bar
-   Gas:O2:Tank·208 -150 bar
-   Mixer:jaa127:O2  ; 5 bar @ 50L tank
-....
-
-....
-balance (He by tanks)
-     2    2 bar Gas:He:Tank·102 ; empty tank
-     2    2 bar Gas:He:Tank·103 ; empty tank
-   142  142 bar Gas:He:Tank·103 ; about half-full
-======
-   146 bar ; total "available" gas
+2017-05-01 (mix-1234) tmx 18/45 D12L
+   ; this mix used 5 bar @ 50L tank
+   Gas:O2:Tank·208  145 bar·O2
+   Gas:O2:Tank·208 -150 bar·O2
+   Mixer:jaa127:O2
 ....
 
-....
-balance (He by users)
-   26  26 bar Mixer:jaa127:He
-   12  12 bar Mixer:urmas:He
-=====
-   38 bar ; same as outstanding He billing
-....
+== Accounting
+
+Balance report by gas and by tanks
 
 ....
-balance (O2 by users)
-    5   5 bar Mixer:jaa127:O2
-   12  12 bar Mixer:urmas:O2
-=====
-   17 bar ; same as outstanding O2 billing
+cli/run --cfg ../tests/commodity/gb.conf --reporting.accounts ^Gas:.*:Tank.*
+
+Tank pressures
+--------------
+
+               272.00   272.00 bar·He Gas:He:Tank·102
+               298.00   298.00 bar·He Gas:He:Tank·103
+               298.00   298.00 bar·He Gas:He:Tank·104
+               193.00   193.00 bar·O2 Gas:O2:Tank·208
+============================
+               868.00 bar·He
+               193.00 bar·O2
 ....
 
+
+Gas Balance per users.
+....
+cli/run --cfg ../tests/commodity/gb.conf --reporting.accounts ^User:.*:.*
+
+Users Gas Balance
+-----------------
+
+                26.00   26.00 bar·He User:jaa127:He
+                 5.00    5.00 bar·O2 User:jaa127:O2
+============================
+                26.00 bar·He
+                 5.00 bar·O2
+....
+
+Generate billing transactions
 ....
 2017-05-02  jaa127 outstanding payments
-   ; Move bars to EUR
-   ; He: 26 * (50 / 1000 * 25) EUR = 32.50 EUR == 1.25 EUR / bar
-   ; O2:  5 * (50 / 1000 *  5) EUR =  1.25 EUR == 0.25 EUR / bar
-   ;
-   Mixer:jaa127:He -26 bar @ 1.25 EUR ; -32.50 EUR
-   Mixer:jaa127:O2  -5 bar @ 0.25 EUR ;  -1.25 EUR
-   Mixer:jaa127:Receivable  33.75 EUR
+   ; Convert used gas (bars) to EUR
+   User:jaa127:He -26 bar·He @ 1.25 EUR ; -32.50 EUR
+   User:jaa127:O2  -5 bar·O2 @ 0.25 EUR ;  -1.25 EUR
+   Billing:jaa127:Receivable  33.75 EUR
 ....
 
+
+Generate billing reports
 ....
-2017-05-02  jaa127 equity
-   Mixer:jaa127:He 0
-   Mixer:jaa127:O2 0
-   Mixer:jaa127:Receivable  33.75 EUR
+cli/run --cfg ../tests/commodity/gb-billing.conf
+
+Outstanding payments
+--------------------
+
+                33.75   33.75 EUR Billing:jaa127:Receivable
+                 0.00    0.00 bar·He User:jaa127:He
+                 0.00    0.00 bar·O2 User:jaa127:O2
+=========================
+                33.75 EUR
+                 0.00 bar·He
+                 0.00 bar·O2
 ....
