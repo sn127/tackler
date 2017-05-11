@@ -1,9 +1,17 @@
-= Units and Commodities
+= TEP-1001: Units and Commodities
 
-* link:tep-1001/units.adoc[Units]
-* link:tep-1001/commodities.adoc[Commodities]
-* link:tep-1001/currencies.adoc[Currencies (with Credit Cards)]
-* link:tep-1001/profit-and-loss.adoc[Profit and Loss]
+== User documentation
+
+* link:../commodities.adoc[Commodities]
+* link:../currencies.adoc[Currencies]
+
+
+== TEP docs
+
+* link:tep-1001/readme.adoc[Index]
+
+Profit and loss is tracked on own
+link:tep-1003.adoc[TEP-1003: Profit and Loss].
 
 == Use cases
 
@@ -11,8 +19,7 @@
 * Transactions with commodity without monetary opening position
 * Multiple different commodities on same account (stocks, currencies)
 * Converting commodity to another commodity or monetary value
-* Tracking Profit and Loss
 
 == Phase2
 
-* default commidity per account?
+* default commodity per account?

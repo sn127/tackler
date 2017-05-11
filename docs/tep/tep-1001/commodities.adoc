@@ -1,8 +1,9 @@
 = Commodities
 
-Commodities are something, which have variable exchange rate.
+For user documentation please see link:../../commodities.adoc[Commodities].
 
-Examples of commodities are: USD, EUR, Helium, stocks, etc.
+
+== Special notes
 
 If using price database with certain commodities, then price should be used
 from latest value from history (based on transaction date),
@@ -19,7 +20,7 @@ Initially that could be manual operation.
 
 * [x] preserve unit
 ** [ ] test: two-step verification of multi-currency identity
-* [ ] each commodity must have separate equity report
+* [x] each commodity must have separate equity report
 ** [ ] test: two-step verification of multi-currency equity
 
 === Register report
@@ -30,103 +31,3 @@ Initially that could be manual operation.
 
 * [x] preserve unit
 
-
-== Example
-
-Filling station and mixing 18/45 gas for diving.
-How to record and bill used materials.
-
-
-Initial gas delivery
-....
-2017-01-01 (#123456789) Helium delivery (3x tanks)
-   Gas:He:Tank·102  298 bar·He
-   Gas:He:Tank·103  298 bar·He
-   Gas:He:Tank·104  298 bar·He
-   Woikoski:He
-
-2017-01-01 (#123456789) Oxygen delivery (3x tanks)
-   Gas:O2:Tank·208  198 bar·O2
-   Woikoski:O2
-....
-
-
-One 18/45 trimix blend with Helium (He) and Oxygen (O2)
-....
-2017-05-01 (mix-1234) tmx 18/45 D12L
-   ; Gas:He:Tank·102  Why is this '-' delta (neg)?
-   ; negative deltas would be better with starting pressures
-   ; e.g.: 247 -273 = -26 as tank delta
-   ; and (298 -25) -26 = 247 as end pressure
-   ; Also then user will see positive pressures,
-   ; and rest of accunting will make more sense
-   Gas:He:Tank·102  247 bar·He
-   Gas:He:Tank·102 -273 bar·He
-   Mixer:jaa127:He
-
-2017-05-01 (mix-1234) tmx 18/45 D12L
-   ; this mix used 5 bar @ 50L tank
-   Gas:O2:Tank·208  145 bar·O2
-   Gas:O2:Tank·208 -150 bar·O2
-   Mixer:jaa127:O2
-....
-
-== Accounting
-
-Balance report by gas and by tanks
-
-....
-cli/run --cfg ../tests/commodity/gb.conf --reporting.accounts ^Gas:.*:Tank.*
-
-Tank pressures
---------------
-
-               272.00   272.00 bar·He Gas:He:Tank·102
-               298.00   298.00 bar·He Gas:He:Tank·103
-               298.00   298.00 bar·He Gas:He:Tank·104
-               193.00   193.00 bar·O2 Gas:O2:Tank·208
-============================
-               868.00 bar·He
-               193.00 bar·O2
-....
-
-
-Gas Balance per users.
-....
-cli/run --cfg ../tests/commodity/gb.conf --reporting.accounts ^User:.*:.*
-
-Users Gas Balance
------------------
-
-                26.00   26.00 bar·He User:jaa127:He
-                 5.00    5.00 bar·O2 User:jaa127:O2
-============================
-                26.00 bar·He
-                 5.00 bar·O2
-....
-
-Generate billing transactions
-....
-2017-05-02  jaa127 outstanding payments
-   ; Convert used gas (bars) to EUR
-   User:jaa127:He -26 bar·He @ 1.25 EUR ; -32.50 EUR
-   User:jaa127:O2  -5 bar·O2 @ 0.25 EUR ;  -1.25 EUR
-   Billing:jaa127:Receivable  33.75 EUR
-....
-
-
-Generate billing reports
-....
-cli/run --cfg ../tests/commodity/gb-billing.conf
-
-Outstanding payments
---------------------
-
-                33.75   33.75 EUR Billing:jaa127:Receivable
-                 0.00    0.00 bar·He User:jaa127:He
-                 0.00    0.00 bar·O2 User:jaa127:O2
-=========================
-                33.75 EUR
-                 0.00 bar·He
-                 0.00 bar·O2
-....

@@ -1,4 +1,4 @@
-= Profit and Loss (PnL)
+= TEP-1003: Profit and Loss (PnL)
 
 Profit and loss (PnL) tracking with Tackler.
 

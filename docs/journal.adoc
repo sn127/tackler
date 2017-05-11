@@ -117,6 +117,36 @@ approximately matches that of IEEE 128-bit floating point numbers
 (34 decimal digits, HALF_EVEN rounding mode).
 
 
+| Commodities
+|
+----
+2017-05-01 In Sweden
+ Expences:Ice·Cream  200 SEK
+ Assets:Cash
+----
+| See link:commodities.adoc[Commodities]
+
+
+| Value positions
+|
+----
+2017-05-01 In Sweden
+ Expences:Ice·Cream  200 SEK @ 0.1039 EUR
+ Assets:Cash  -20.78 EUR
+----
+| See link:currencies.adoc[Currencies]
+
+| PnL: Opening position
+|
+----
+2017-05-01 selling one Acme Inc.
+ Stock:Shares -1 ACME·INC {120 EUR} @ 123 EUR
+ Assets:Cash 123 EUR
+----
+| Currently opening position is valid input, but it is not used.
+This is planned feature. See link:currencies.adoc[Currencies]
+
+
 | Comments
 |
 ----
