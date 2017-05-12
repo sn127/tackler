@@ -7,6 +7,8 @@
 * link:./git-storage.adoc[Git Storage]
 * link:./usage.adoc[Usage]
 * link:./journal.adoc[Journal format]
+* link:./commodities.adoc[Commodities]
+* link:./currencies.adoc[Currencies]
 * link:./performance.adoc[Performance]
 
 == Developer documentation
