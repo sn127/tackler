@@ -1,10 +1,10 @@
 
 = Tests TODO
 
-* [ ] full combo of value pos txns
-** [ ] all same comm.
-** [ ] mixed comm.
-** [ ] missing comm.
+* [x] full combo of value pos txns
+** [x] all same comm.
+** [x] mixed comm.
+** [x] missing comm.
 
 
 * [x] equity: test when all postings balance (no need for balance account)
