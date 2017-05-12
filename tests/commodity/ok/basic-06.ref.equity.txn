@@ -1,0 +1,8 @@
+2017-05-02T00:00:00Z Equity
+ a  -1 EUR
+ e:b:c  1 EUR
+
+2017-05-02T00:00:00Z Equity
+ EUR:a  -2
+ EUR:e:b:c  2
+

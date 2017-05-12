@@ -12,8 +12,13 @@ TEP Template: link:./tep-0001.adoc[TEP-0001]
 * link:./tep-1002.adoc[TEP-1002: Git Storage system]
 
 
-=== TEPs in planning phase
+=== TEPs in implementation phase
 
 * link:./tep-1001.adoc[TEP-1001: Units and Commodities]
+
+
+=== TEPs in planning phase
+
+* link:./tep-1003.adoc[TEP-1003: Profit and Loss (PnL)]
 
 

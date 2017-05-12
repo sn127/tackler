@@ -1354,6 +1354,28 @@ features:
                 - ref: balance-group
                 - ref: register
           - test:
+              id: 7616a6e8-8492-4fe7-9921-ae00f86af2cd
+              name: tests/commodity/ok/basic-03-01.exec
+              descriptions:
+                -desc: test normal commodity identity as input for test
+              references:
+                - ref: identity
+                - ref: equity
+                - ref: balance
+                - ref: balance-group
+                - ref: register
+          - test:
+              id: c7d115a7-664c-479d-8bf4-c1a85a06d5ba
+              name: tests/commodity/ok/basic-03-02.exec
+              descriptions:
+                -desc: test equity report as input for test
+              references:
+                - ref: identity
+                - ref: equity
+                - ref: balance
+                - ref: balance-group
+                - ref: register
+          - test:
               id: c5493e99-d0f3-49b3-8450-3ae6ef970b10
               name: tests/commodity/ok/basic-04.exec
               desc:  Test correct behaviour with AccountTree and commodities
@@ -1367,6 +1389,16 @@ features:
               id: aeffbcc2-bcc4-40f3-9b37-03dbca3bff88
               name: tests/commodity/ok/basic-05.exec
               desc: Test correct behaviour with AccountTree and commodities, take 2
+              references:
+                - ref: identity
+                - ref: equity
+                - ref: balance
+                - ref: balance-group
+                - ref: register
+          - test:
+              id: 0dae7dfd-c816-4a77-afff-a372e1802026
+              name: tests/commodity/ok/basic-06.exec
+              desc: Root account match commodity
               references:
                 - ref: identity
                 - ref: equity
@@ -1435,6 +1467,17 @@ features:
               name: tests/commodity/ok/valpos-01.exec
               descriptions:
                 - desc: value position with and without inferred last posting
+              references:
+                - ref: identity
+                - ref: equity
+                - ref: balance
+                - ref: balance-group
+                - ref: register
+          - test:
+              id: 773106ca-d6e5-4514-b19b-3e4d34283152
+              name: tests/commodity/ok/valpos-01-01.exec
+              descriptions:
+                - desc: value position identity report as input for test
               references:
                 - ref: identity
                 - ref: equity

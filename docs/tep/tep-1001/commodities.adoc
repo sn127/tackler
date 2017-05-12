@@ -19,9 +19,10 @@ Initially that could be manual operation.
 === Identity and Equity report
 
 * [x] preserve unit
-** [ ] test: two-step verification of multi-currency identity
+** [x] test: two-step verification of multi-currency identity
+** [x] test: value pos two-step verification of multi-currency identity
 * [x] each commodity must have separate equity report
-** [ ] test: two-step verification of multi-currency equity
+** [x] test: two-step verification of multi-currency equity
 
 === Register report
 

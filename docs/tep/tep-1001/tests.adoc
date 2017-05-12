@@ -2,22 +2,14 @@
 
 == Commodities
 
- * [ ] opening and closing commodities are not same
-....
- e   1 USD {1.00 NOK} @ 1.20 EUR
-....
+* [x] e: mixed commodities in transaction (not allowed)
 
-* [ ] e: mixed commodities in transaction (not allowed)
-
-* [ ] commodity name match account tree root
-* [ ] commodity name match account tree leaf
+* [x] commodity name match account tree root
 
 * [x] Account filtering with commodities
 *** [x] tests/commodity/ok/filter-*.exec
-** [ ] documentation
+** [x] documentation
 
 * [x] balance delta with commodity
 ** [x] balance delta with multiple commodities
 *** [x] tests/commodity/ok/basic-*.exec
-
-* [ ] second

@@ -59,3 +59,11 @@ How to query / list positions based on time or value?
  a:cash      1.04 EUR
  PnL -0.34
 ....
+
+== Tests
+
+ * [ ] opening and closing commodities are not same
+....
+ e   1 USD {1.00 NOK} @ 1.20 EUR
+....
+
