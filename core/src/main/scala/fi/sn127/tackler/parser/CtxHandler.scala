@@ -22,7 +22,7 @@ import cats.implicits._
 
 import scala.collection.JavaConverters
 
-import fi.sn127.tackler.core.{AccountException, Settings, TxnException}
+import fi.sn127.tackler.core.{AccountException, CommodityException, Settings}
 import fi.sn127.tackler.model.{AccountTreeNode, Commodity, Posting, Posts, Transaction, Txns}
 import fi.sn127.tackler.parser.TxnParser._
 
@@ -188,7 +188,7 @@ abstract class CtxHandler {
 
     // Check for mixed commodities
     if (posts.map(p => p.txnCommodity.map(c => c.name).getOrElse("")).distinct.size > 1) {
-      throw new TxnException("" +
+      throw new CommodityException("" +
         "Multiple different commodities are not allowed inside single transaction." +
         uuid.map(u => "\n   txn uuid: " + u.toString).getOrElse(""))
     }

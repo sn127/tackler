@@ -35,8 +35,8 @@
               descriptions:
                 - desc:
               references:
-                - ref: bal
-                - ref: balgrp
-                - ref: reg
-                - ref: id
+                - ref: identity
                 - ref: equity
+                - ref: balance
+                - ref: balance-group
+                - ref: register

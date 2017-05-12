@@ -22,7 +22,7 @@ import better.files.File
 import org.rogach.scallop.exceptions.{ExcessArguments, RequiredOptionNotFound, UnknownOption, ValidationFailure}
 import resource._
 
-import fi.sn127.tackler.core.{AccountException, GroupByException, ReportException, TacklerException, TxnException}
+import fi.sn127.tackler.core.{AccountException, CommodityException, GroupByException, ReportException, TacklerException, TxnException}
 import fi.sn127.tackler.parser.TacklerParseException
 import fi.sn127.utils.fs.Glob
 import fi.sn127.utils.testing.DirSuiteLike
@@ -127,8 +127,8 @@ class TacklerCliTest extends DirSuiteLike {
   /**
    * Commodity
    */
-  runDirSuiteTestCases(basedir, Glob("commodity/ex/TxnException-*.exec")) { args: Array[String] =>
-    assertThrows[TxnException]{
+  runDirSuiteTestCases(basedir, Glob("commodity/ex/CommodityException-*.exec")) { args: Array[String] =>
+    assertThrows[CommodityException]{
       TacklerCli.runExceptions(args)
     }
   }

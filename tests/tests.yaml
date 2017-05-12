@@ -1310,10 +1310,175 @@ features:
       id: cc667fda-d5ee-4a64-91ed-443ba76ca96c
       parent: b6013748-102c-4632-ada1-5b3c8dcc3b42
       subject: "Basic commodities"
-
+      tests:
+        errors:
+          - error:
+              id: 0c1a7d18-90eb-4f2b-b8b6-9bc36cd5ff73
+              name: tests/commodity/ex/TxnException-mixed-comm.exec
+              desc: Check that mixed commodities are not accepted
+        operations:
+          - test:
+              id: a5318e06-309e-4c52-996b-b07aefac4c46
+              name: tests/commodity/ok/basic-01.exec
+              descriptions:
+                - desc: txn with commodity
+                - desc: txn with commodity and inferred last posting (value and commodity)
+              references:
+                - ref: identity
+                - ref: equity
+                - ref: balance
+                - ref: balance-group
+                - ref: register
+          - test:
+              id: 04af8049-355d-4c6c-ac63-c153b0141c48
+              name: tests/commodity/ok/basic-02.exec
+              descriptions:
+                - desc: txn with commodity and txn without commodity
+                - desc: txn with commodity and txn without commodity, both have inferred last posting (value and commodity)
+              references:
+                - ref: identity
+                - ref: equity
+                - ref: balance
+                - ref: balance-group
+                - ref: register
+          - test:
+              id: 8a7a8c60-aab9-4700-b081-9804c1ec537f
+              name: tests/commodity/ok/basic-03.exec
+              descriptions:
+                - desc: txns without commodities, with multiple different commodities
+                - desc: all with and without inferred last postings (values and commodities)
+              references:
+                - ref: identity
+                - ref: equity
+                - ref: balance
+                - ref: balance-group
+                - ref: register
+          - test:
+              id: c5493e99-d0f3-49b3-8450-3ae6ef970b10
+              name: tests/commodity/ok/basic-04.exec
+              desc:  Test correct behaviour with AccountTree and commodities
+              references:
+                - ref: identity
+                - ref: equity
+                - ref: balance
+                - ref: balance-group
+                - ref: register
+          - test:
+              id: aeffbcc2-bcc4-40f3-9b37-03dbca3bff88
+              name: tests/commodity/ok/basic-05.exec
+              desc: Test correct behaviour with AccountTree and commodities, take 2
+              references:
+                - ref: identity
+                - ref: equity
+                - ref: balance
+                - ref: balance-group
+                - ref: register
+          - test:
+              id: 1df0fb31-6604-4679-9ec4-7a1d65e49574
+              name: tests/commodity/ok/filter-01.exec
+              desc: filter accounts with single commidity
+              references:
+                - ref: identity
+                - ref: equity
+                - ref: balance
+                - ref: balance-group
+                - ref: register
+          - test:
+              id: 633da495-ef30-4484-8b14-fbd1fdcc9684
+              name: tests/commodity/ok/filter-02.exec
+              desc: filter accounts with and without commodity
+              references:
+                - ref: identity
+                - ref: equity
+                - ref: balance
+                - ref: balance-group
+                - ref: register
+          - test:
+              id: 09e9a673-4730-4a03-b73a-5959730450f6
+              name: tests/commodity/ok/filter-03.exec
+              desc: ilter accounts with and without multiple commodities
+              references:
+                - ref: identity
+                - ref: equity
+                - ref: balance
+                - ref: balance-group
+                - ref: register
   - feature:
       id: f5f99904-8279-4537-87fb-533ca822ee8e
       parent: b6013748-102c-4632-ada1-5b3c8dcc3b42
       subject: "Value position"
+      tests:
+        errors:
+          - error:
+              id: 3152ec2f-4d5f-4a0a-b88c-68f17bccf7c6
+              name: TacklerParserCommoditiesTest
+              desc: missing value
+          - error:
+              id: 0d1beaf2-c30c-4008-943f-46aaf44e4f76
+              name: TacklerParserCommoditiesTest
+              desc: missing commodity
+          - error:
+              id: 4babf379-9d88-49f3-8158-b9b7ff4e6eed
+              name: TacklerParserCommoditiesTest
+              desc: invalid commodity (duplicate commodity)
+          - error:
+              id: edf1c7b6-fac6-4b58-8b5b-6c37b59609f5
+              name: tests/commodity/ex/CommodityException-mixed-valpos-01.exec
+              desc: Mixed commodities with value position (third commodity)
+          - error:
+              id: 8994ca76-615f-4977-bb48-299f85b2b861
+              name: tests/commodity/ex/CommodityException-mixed-valpos-02.exec
+              desc: Mixed commodities with value position (original commodity)
+        operations:
+          - test:
+              id: 54cb6baa-6c3d-4196-94bc-b6fd37ed0b57
+              name: tests/commodity/ok/valpos-01.exec
+              descriptions:
+                - desc: value position with and without inferred last posting
+              references:
+                - ref: identity
+                - ref: equity
+                - ref: balance
+                - ref: balance-group
+                - ref: register
+  - feature:
+      id: cc22cc2d-83e5-428d-b413-6a688df9b3f3
+      parent: b6013748-102c-4632-ada1-5b3c8dcc3b42
+      subject: "Profit and Loss (PnL)"
+      tests:
+        errors:
+          - error:
+              id: bed02ea9-4191-4c98-b847-6b4e2a0fcb2d
+              name: TacklerParserCommoditiesTest
+              desc: "parse-only: missing commodity with opening position"
+          - error:
+              id: ac4a6183-fb21-4847-8b3e-912f21fe5a6b
+              name: TacklerParserCommoditiesTest
+              desc: "parse-only: missing value with opening position"
+          - error:
+              id: 436d9ed5-b7a0-4e37-a7b4-86b00eb60e83
+              name: TacklerParserCommoditiesTest
+              desc: "parse-only: missing @"
+        operations:
+          - test:
+              id: 9f711991-c9ae-4558-923c-95a69faff8bc
+              name: TacklerParserCommoditiesTest
+              descriptions:
+                - desc: "Parse-only: opening PnL"
+          - test:
+              id: 92f75975-061b-4867-87f5-e25cf5b13d40
+              name: TacklerParserCommoditiesTest
+              descriptions:
+                - desc: "Parse-only: opening PnL with comment"
+          - test:
+              id: 84d81380-8664-45d7-a9e1-523c38c7a963
+              name: TacklerParserCommoditiesTest
+              descriptions:
+                - desc: "Parse-only: closing position with PnL"
+          - test:
+              id: c1fbac7b-e924-4eee-aed3-b11b51116f1a
+              name: TacklerParserCommoditiesTest
+              descriptions:
+                - desc: "Parse-only: closing position with PnL ; comment"
 
 ### Units and Commodities END

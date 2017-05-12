@@ -14,7 +14,7 @@ class TacklerParserCommoditiesTest extends FlatSpec {
   behavior of "Units and Commodities"
 
   /**
-   * test:uuid: todo
+   * parse-only test
    */
   it should "uac" in {
     val txnStr =
@@ -29,7 +29,7 @@ class TacklerParserCommoditiesTest extends FlatSpec {
   }
 
   /**
-   * test:uuid: todo
+   * parse-only test
    */
   it should "uac ; comment" in {
     val txnStr =
@@ -48,7 +48,7 @@ class TacklerParserCommoditiesTest extends FlatSpec {
   }
 
   /**
-   * test:uuid: todo
+   * parse-only test
    */
   it should "uac closing position" in {
     val txnStr =
@@ -63,7 +63,7 @@ class TacklerParserCommoditiesTest extends FlatSpec {
   }
 
   /**
-   * test:uuid: todo
+   * parse-only test
    */
   it should "uac closing position ; comment" in {
     val txnStr =
@@ -81,10 +81,12 @@ class TacklerParserCommoditiesTest extends FlatSpec {
     tt.string2Txns(txnStr)
   }
 
+  behavior of "Profit and Loss parsing"
+
   /**
-   * test:uuid: todo
+   * test:uuid: 9f711991-c9ae-4558-923c-95a69faff8bc
    */
-  it should "uac opening with PnL" in {
+  it should "opening with PnL" in {
     val txnStr =
       """
         |2017-01-01
@@ -97,9 +99,9 @@ class TacklerParserCommoditiesTest extends FlatSpec {
   }
 
   /**
-   * test:uuid: todo
+   * test:uuid: 92f75975-061b-4867-87f5-e25cf5b13d40
    */
-  it should "uac opening with PnL ; comment" in {
+  it should "opening with PnL ; comment" in {
     val txnStr =
       """
         |2017-01-01
@@ -116,9 +118,9 @@ class TacklerParserCommoditiesTest extends FlatSpec {
   }
 
   /**
-   * test:uuid: todo
+   * test:uuid: 84d81380-8664-45d7-a9e1-523c38c7a963
    */
-  it should "uac closing position with PnL" in {
+  it should "closing position with PnL" in {
     val txnStr =
       """
         |2017-01-01
@@ -131,9 +133,9 @@ class TacklerParserCommoditiesTest extends FlatSpec {
   }
 
   /**
-   * test:uuid: todo
+   * test:uuid: c1fbac7b-e924-4eee-aed3-b11b51116f1a
    */
-  it should "uac closing position with PnL ; comment" in {
+  it should "closing position with PnL ; comment" in {
     val txnStr =
       """
         |2017-01-01
@@ -151,7 +153,7 @@ class TacklerParserCommoditiesTest extends FlatSpec {
 
   behavior of "with invalid input"
   /**
-   * test:uuid: todo
+   * test:uuid: 4babf379-9d88-49f3-8158-b9b7ff4e6eed
    */
   it should "perr: with commodity" in {
     val txnStr =
@@ -170,7 +172,7 @@ class TacklerParserCommoditiesTest extends FlatSpec {
   }
 
   /**
-   * test:uuid: todo
+   * test:uuid: 0d1beaf2-c30c-4008-943f-46aaf44e4f76
    */
   it should "perr: with closing (comm)" in {
     val txnStr =
@@ -189,7 +191,7 @@ class TacklerParserCommoditiesTest extends FlatSpec {
   }
 
   /**
-   * test:uuid: todo
+   * test:uuid: 3152ec2f-4d5f-4a0a-b88c-68f17bccf7c6
    */
   it should "perr: with closing (value)" in {
     val txnStr =
@@ -208,7 +210,7 @@ class TacklerParserCommoditiesTest extends FlatSpec {
   }
 
   /**
-   * test:uuid: todo
+   * test:uuid: bed02ea9-4191-4c98-b847-6b4e2a0fcb2d
    */
   it should "perr: with opening (comm)" in {
     val txnStr =
@@ -227,7 +229,7 @@ class TacklerParserCommoditiesTest extends FlatSpec {
   }
 
   /**
-   * test:uuid: todo
+   * test:uuid: ac4a6183-fb21-4847-8b3e-912f21fe5a6b
    */
   it should "perr: with opening (value)" in {
     val txnStr =
@@ -246,7 +248,7 @@ class TacklerParserCommoditiesTest extends FlatSpec {
   }
 
   /**
-   * test:uuid: todo
+   * test:uuid: 436d9ed5-b7a0-4e37-a7b4-86b00eb60e83
    */
   it should "perr: with missing @" in {
     val txnStr =
