@@ -1,0 +1,16 @@
+# format: exec
+# test:uuid: 7b8073e2-8264-4eba-b282-5bfb8e1718d2
+#
+# Example reports
+#
+# Tank pressures
+exec:--cfg;tests/commodity/gb.conf;--reporting.accounts;^Gas:.*:Tank.*;--reporting.reports;balance;--output;out.gas-blender-tanks;
+#
+# Used gas (saldo) by users
+exec:--cfg;tests/commodity/gb.conf;--reporting.accounts;^User:.*:.*;--reporting.reports;balance;--output;out.gas-blender-saldo;
+#
+# Mixing log
+exec:--cfg;tests/commodity/gb.conf;--reporting.accounts;^User:.*:.*;--reporting.reports;register;--output;out.gas-blender-mix-log;
+#
+# Billing
+exec:--cfg;tests/commodity/gb-billing.conf;--output;out.gas-blender-billing;

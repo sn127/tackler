@@ -1305,7 +1305,18 @@ features:
   - feature:
       id: b6013748-102c-4632-ada1-5b3c8dcc3b42
       subject: "Units and Commodities"
-
+      tests:
+        operations:
+          - test:
+              id: 7b8073e2-8264-4eba-b282-5bfb8e1718d2
+              name: tests/commodity/ok/gas-blender.exec
+              descriptions:
+                - desc: Example of accounting and billing system for Gas Mixing Station
+                - desc: Tracking comsumption of commodities (Helium and Oxygen)
+                - desc: Converting commodities to monetary values
+              references:
+                - ref: balance
+                - ref: register
   - feature:
       id: cc667fda-d5ee-4a64-91ed-443ba76ca96c
       parent: b6013748-102c-4632-ada1-5b3c8dcc3b42
@@ -1357,7 +1368,7 @@ features:
               id: 7616a6e8-8492-4fe7-9921-ae00f86af2cd
               name: tests/commodity/ok/basic-03-01.exec
               descriptions:
-                -desc: test normal commodity identity as input for test
+                - desc: test normal commodity identity as input for test
               references:
                 - ref: identity
                 - ref: equity
@@ -1368,7 +1379,7 @@ features:
               id: c7d115a7-664c-479d-8bf4-c1a85a06d5ba
               name: tests/commodity/ok/basic-03-02.exec
               descriptions:
-                -desc: test equity report as input for test
+                - desc: test equity report as input for test
               references:
                 - ref: identity
                 - ref: equity
