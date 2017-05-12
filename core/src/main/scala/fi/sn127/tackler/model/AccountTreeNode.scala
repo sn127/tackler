@@ -21,31 +21,63 @@ import cats.implicits._
 import fi.sn127.tackler.core.AccountException
 
 /**
- * Account tree node
+ * Account Tree Node (ATN)
+ *
+ * This must behave correctly with Seq.distinct,
+ * so whole thing must have sensible hashcode.
  *
  * @param depth depth of this account
  * @param parent of this account (path)
  * @param account of this posting (path)
  * @param name of this account (leaf)
+ * @param commodity commodity for this account tree node
  */
 final case class AccountTreeNode(
   depth: Int,
   root: String,
   parent: String,
   account: String,
-  name: String) {
+  name: String,
+  commodity: Option[Commodity]) {
+
+  val commStr: String = commodity.map(c => c.name).getOrElse("")
 
   override def toString: String = {
     account
+  }
+
+  def isParentOf(atn: AccountTreeNode): Boolean = {
+    this.account === atn.parent && this.commStr === atn.commStr
+  }
+
+  def getFull: String = {
+    // todo: revisit, in any case prefix must not be valid account name
+    commodity.map(c => c.name + "@" + account).getOrElse("@" + account)
+  }
+
+  def compareTo(otherTxn: AccountTreeNode): Int = {
+    // todo: ATN: more sensible ordering without getFull
+    this.getFull.compareTo(otherTxn.getFull)
+  }
+}
+
+
+object OrderByATN extends Ordering[AccountTreeNode] {
+  def compare(before: AccountTreeNode, after: AccountTreeNode): Int = {
+    before.compareTo(after)
   }
 }
 
 object AccountTreeNode{
 
+  def groupBy(acc: AccountTreeNode): String = {
+    acc.getFull
+  }
+
   @SuppressWarnings(Array(
     "org.wartremover.warts.Overloading",
     "org.wartremover.warts.ListOps"))
-  def apply(acc: String): AccountTreeNode = {
+  def apply(acc: String, commodity: Option[Commodity]): AccountTreeNode = {
 
     // todo use main parser to check Chart of Accounts entries
     if (acc.trim.isEmpty) {
@@ -65,6 +97,7 @@ object AccountTreeNode{
       root = parts.head,
       parent = parts.reverse.drop(1).reverse.mkString(":"),
       account = acc,
-      name = parts.last)
+      name = parts.last,
+      commodity)
   }
 }

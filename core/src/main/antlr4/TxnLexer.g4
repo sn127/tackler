@@ -65,6 +65,9 @@ fragment DIGIT: [0-9];
 
 L_BRACE: '(';
 R_BRACE: ')';
+L_CURLY: '{';
+R_CURLY: '}';
+AT: '@';
 SPACE: ' ';
 TAB: '\t';
 SEMICOLON: ';';

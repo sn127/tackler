@@ -8,6 +8,15 @@ Current release is 0.5.0
 First public release of tackler was 0.5.0.
 
 
+=== next
+
+ * link:docs/tep/tep-1001.adoc[TEP-1001: Units and Commodities]
+
+==== Fixes
+
+ * Fix equity report when postings balance (zero) out
+
+
 === 0.5.0
 
  * First public release

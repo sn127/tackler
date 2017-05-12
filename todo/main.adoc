@@ -21,6 +21,14 @@
  * [ ] Refactor meta:key (uuid) handling
  ** [ ] Parse/validate form of UUID on ANTLR level
 
+=== Units and Commodities 
+
+Units and commodities: link:../docs/tep/tep-1001.adoc[TEP-1001]
+
+ * [ ] chart of commodities + strict mode for commodities
+ * [ ] conversions between units
+
+
 
 == Storage
 

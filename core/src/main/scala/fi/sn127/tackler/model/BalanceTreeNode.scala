@@ -24,6 +24,6 @@ final case class BalanceTreeNode(
 
 object OrderByPost extends Ordering[BalanceTreeNode] {
   def compare(before: BalanceTreeNode, after: BalanceTreeNode): Int = {
-    before.acctn.account.compareTo(after.acctn.account)
+    OrderByATN.compare(before.acctn, after.acctn)
   }
 }

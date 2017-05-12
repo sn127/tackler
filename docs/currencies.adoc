@@ -1,0 +1,94 @@
+= Currencies, Shares, etc.
+
+Currencies and shares are special commodities which have variable exchange rate.
+
+Examples of currencies and shares are: EUR, USD, NOKIA, etc. Typically currencies
+and shares could be used as is (with commodities you need quantity unit).
+
+Unit could be anything, as long as it is a valid single `ID` element (e.g. `ACME·INC`, `EUR`).
+
+
+== Transactions with mixed currencies or shares
+
+Transactions with mixed currencies without value positions are not allowed.
+
+Example of mixed currency transaction without value positions:
+
+....
+2017-05-01 this is not valid
+ Expences:Ice·Cream  500 NOK
+ Assets:Cash        -200 SEK
+ Assets:Cash      -32.47 EUR
+....
+
+
+Mixed commodities must be converted to common commodity with value positions:
+
+....
+2017-05-01 this is valid txn
+ Expences:Ice·Cream  500 NOK @ 0.1065 EUR
+ Assets:Cash        -200 SEK @ 0.1039 EUR
+ Assets:Cash      -32.47 EUR
+....
+
+
+== Positions
+
+Positions are additional information with postings,
+which attach value information to otherwise plain currency,
+share, etc. posting.
+
+Position tells how valuable that posting was
+
+
+=== Value (Closing) position
+
+To exchange currency, close stock position or give value to commodity,
+you can provide value (closing) position to posting.
+
+....
+2017-04-01 stuff in Finland with Credit Card
+    expenses        20 EUR
+    l:credit·card
+
+2017-04-01 stuff in Sweden with Credit Card
+    expenses        200 SEK
+    l:credit·card
+
+2017-04-01 stuff in Norway with Credit Card
+    expenses        500 NOK
+    l:credit·card
+
+2017-04-01 SEK/EUR exchange transaction by CC-company
+    l:Credit·Card  200 SEK @ 0.1039 EUR
+    l:Credit·Card  -20.78 EUR
+
+2017-04-01 NOK/EUR exchange transaction by CC-company
+    l:credit·card    500 NOK @ 0.1065 EUR
+    l:credit·card -53.25 EUR
+....
+
+
+=== Opening position
+
+You can record opening positions, but those are not used at the moment.
+This is planned enhancement.
+
+....
+2017-01-01
+ Assets:Shares  1 ACME {120 EUR}
+ Assets:Cash
+....
+
+
+=== Profit and Loss (PnL)
+
+Profit and Loss (PnL) is not currently implemented,
+but you can record opening position with closing position
+for future profit and loss calculation.
+
+....
+2017-01-01
+ Assets:Shares  1 ACME {120 EUR} @ 123 EUR
+ Assets:Cash
+....

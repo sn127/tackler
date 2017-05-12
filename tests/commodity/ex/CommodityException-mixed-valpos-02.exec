@@ -1,0 +1,3 @@
+# format: exec
+# test:uuid: 8994ca76-615f-4977-bb48-299f85b2b861
+exec:--cfg;tests/commodity/ex.conf;--input.file;mixed-valpos-02.txn;

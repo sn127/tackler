@@ -15,9 +15,9 @@
  *
  */
 package fi.sn127.tackler.report
-
+import cats.implicits._
 import fi.sn127.tackler.core._
-import fi.sn127.tackler.model.{TxnTS, Txns, TxnData}
+import fi.sn127.tackler.model.{TxnData, TxnTS, Txns}
 
 class EquityReport(val settings: Settings) extends ExportLike {
   private val mySettings = settings.Reports.Equity
@@ -30,7 +30,7 @@ class EquityReport(val settings: Settings) extends ExportLike {
     } else {
       new BalanceFilterNonZeroByAccount(mySettings.accounts)
     }
-    val bal = Balance("", TxnData(None,txns), bf)
+    val bal = Balance("", TxnData(None, txns), bf)
 
     if (bal.isEmpty) {
       Nil
@@ -38,11 +38,19 @@ class EquityReport(val settings: Settings) extends ExportLike {
       val lastTxn = txns.last
       val eqTxnHeader = TxnTS.isoZonedTS(lastTxn.date) + " " + lastTxn.uuid.map(u => "Equity: last txn (uuid): " + u.toString).getOrElse("Equity")
 
-      List(eqTxnHeader) ++
-        bal.bal.map(acc => {
-          " " + acc.acctn.account + "  " + acc.accountSum.toString()
-        }) ++
-        List(" " + "Equity:Balance")
+      bal.bal.groupBy(b => b.acctn.commStr).flatMap({ case (c, bs) =>
+        val eqBalRow = if (bs.map(b => b.accountSum).sum === 0.0) {
+          Nil
+        } else {
+          List(" " + "Equity:Balance")
+        }
+
+        List(eqTxnHeader) ++
+          bs.map(acc => {
+            " " + acc.acctn.account + "  " + acc.accountSum.toString() + acc.acctn.commodity.map(c => " " + c.name).getOrElse("")
+          }) ++ eqBalRow ++ List("")
+
+      }).toSeq
     }
   }
 

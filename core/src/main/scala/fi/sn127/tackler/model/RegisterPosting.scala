@@ -26,6 +26,7 @@ final case class RegisterPosting(
   post: Posting,
   runningTotal: BigDecimal
 ) {
-  def account: String = post.account
+  def account: String = post.acctn.account
   def amount: BigDecimal = post.amount
+  def commodity: Option[Commodity] = post.acctn.commodity
 }

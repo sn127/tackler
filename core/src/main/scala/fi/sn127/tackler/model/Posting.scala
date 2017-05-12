@@ -22,26 +22,37 @@ import fi.sn127.tackler.core.TxnException
 final case class Posting(
   acctn: AccountTreeNode,
   amount: BigDecimal,
+  // todo: fix / rename these (position?, exchange? amount, commodity)
+  txnAmount: BigDecimal,
+  txnCommodity: Option[Commodity],
   comment: Option[String]) {
 
   if (amount.compareTo(BigDecimal(0)) === 0) {
     throw new TxnException("Zero sum postings are not allowed (is it typo?): " + acctn.account)
   }
 
-  def account: String = acctn.account
+  def atnKey: String = acctn.getFull
 
   override
   def toString: String = {
     val missingSign = if (amount < 0) "" else " "
     acctn.toString + "  " +
-      missingSign + amount.toString() +
+      missingSign + amount.toString() + acctn.commodity.map(c => " " + c.name).getOrElse("") +
+      txnCommodity.map(txnC => {
+        // todo: fix this
+        if (txnC.name === acctn.commStr) {
+          ""
+        } else {
+          " @ " + (txnAmount / amount).toString() + " " + txnC.name
+        }
+      }).getOrElse("") +
       comment.map(c => " ; " + c).getOrElse("")
   }
 }
 
 object Posting {
 
-  def sum(posts: Posts): BigDecimal = {
-    posts.foldLeft(BigDecimal(0))(_ + _.amount)
+  def txnSum(posts: Posts): BigDecimal = {
+    posts.foldLeft(BigDecimal(0))(_ + _.txnAmount)
   }
 }

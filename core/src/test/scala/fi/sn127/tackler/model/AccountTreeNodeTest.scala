@@ -25,7 +25,7 @@ class AccountTreeNodeTest extends FlatSpec {
   behavior of "AccountTreeNodeTest"
 
   it should "apply with deep leaf-account" in {
-    val atn: AccountTreeNode = AccountTreeNode("a:b:c")
+    val atn: AccountTreeNode = AccountTreeNode("a:b:c", None)
 
     assert(atn.depth === 3)
     assert(atn.root === "a")
@@ -35,7 +35,7 @@ class AccountTreeNodeTest extends FlatSpec {
   }
 
   it should "apply with root-account" in {
-    val atn: AccountTreeNode = AccountTreeNode("a")
+    val atn: AccountTreeNode = AccountTreeNode("a", None)
 
     assert(atn.depth === 1)
     assert(atn.root === "a")
@@ -47,21 +47,21 @@ class AccountTreeNodeTest extends FlatSpec {
   it should "not work with an empty account" in {
 
     assertThrows[AccountException]{
-      AccountTreeNode("")
+      AccountTreeNode("", None)
     }
   }
 
   it should "not work with empty sub-components account, 1" in {
 
     assertThrows[AccountException]{
-      AccountTreeNode(":")
+      AccountTreeNode(":", None)
     }
   }
 
   it should "not work with empty sub-components accounts, 2" in {
 
     assertThrows[AccountException]{
-      AccountTreeNode(": :")
+      AccountTreeNode(": :", None)
     }
   }
 }

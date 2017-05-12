@@ -13,7 +13,7 @@ based double-entry accounting].
 
 
 == Features
-
+* Support for link:docs/commodities.adoc[Commodities] and link:docs/currencies.adoc[Currencies]
 * Integrated support with GIT version control system
 ** Can use plain filesystem or link:docs/git-storage.adoc[GIT repository] as data storage
 ** Natively supports splitting journal data to multiple files (shards)
@@ -104,8 +104,12 @@ under link:docs/tep[].
 
 Extremely loosely defined roadmap is following:
 
-* Units and Commodities
+* Extending support for Units
+** automatic conversions between different base units
 * Server interface (reporting api)
+* Extending support for Currencies and Commodities
+** Price database
+** Profit and Loss (PnL) tracking
 
 == Releases
 

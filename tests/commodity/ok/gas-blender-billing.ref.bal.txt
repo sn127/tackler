@@ -1,0 +1,10 @@
+
+BALANCE
+-------
+                33.75   33.75 EUR Billing:jaa127:Receivable
+                 0.00    0.00 bar·He User:jaa127:He
+                 0.00    0.00 bar·O2 User:jaa127:O2
+=========================
+                33.75 EUR
+                 0.00 bar·He
+                 0.00 bar·O2

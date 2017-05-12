@@ -22,7 +22,7 @@ import fi.sn127.tackler.core.TxnException
 
 class PostingTest extends FlatSpec {
 
-  val acctn = AccountTreeNode("a:b")
+  val acctn = AccountTreeNode("a:b", None)
 
   behavior of "Posting"
 
@@ -31,12 +31,12 @@ class PostingTest extends FlatSpec {
    */
   it should "not accept zero postings" in {
     assertThrows[TxnException]{
-      Posting(acctn, BigDecimal(0), None)
+      Posting(acctn, BigDecimal(0), BigDecimal(0), None, None)
     }
     assertThrows[TxnException]{
       // check that difference precision doesn't mess up
       // bigdecimal comparisions
-      Posting(acctn, BigDecimal(0.00), None)
+      Posting(acctn, BigDecimal(0.00), BigDecimal(0.00), None, None)
     }
   }
 
@@ -47,7 +47,7 @@ class PostingTest extends FlatSpec {
    val v =
       //          3         2         1                   1         2         3         4
       BigDecimal("123456789012345678901234567890.123456789012345678901234567890123456789012")
-    val p = Posting(acctn, v, None)
+    val p = Posting(acctn, v, v, None, None)
 
     assert(p.toString === "a:b   123456789012345678901234567890.123456789012345678901234567890123456789012")
   }
@@ -57,7 +57,7 @@ class PostingTest extends FlatSpec {
    */
   it should "toString" in {
     val v = BigDecimal("123.01")
-    val p = Posting(acctn, v, Some("comment"))
+    val p = Posting(acctn, v, v, None, Some("comment"))
 
     assert(p.toString === "a:b   123.01 ; comment")
   }

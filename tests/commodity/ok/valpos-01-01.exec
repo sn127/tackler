@@ -1,0 +1,7 @@
+# format: exec
+# test:uuid: 773106ca-d6e5-4514-b19b-3e4d34283152
+#
+# value position to value position (identity test)
+exec:--cfg;tests/commodity/ok.conf;--input.file;valpos-01.txn;--output;out.valpos-01-01-step1;
+#
+exec:--cfg;tests/commodity/ok.conf;--input.file;out.valpos-01-01-step1.identity.txn;--output;out.valpos-01-01;

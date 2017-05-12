@@ -1,0 +1,14 @@
+
+REGISTER
+--------
+2017-05-01Z initial balance
+            Assets:Cash                                -1200.00           -1200.00 EUR
+            Assets:Stocks                                 10.00              10.00 ACME
+2017-05-03Z sell three ACME at 120.03 EUR
+            ; check inferred price with multiple entries
+            Assets:Cash                                  360.09            -839.91 EUR
+            Assets:Stocks                                 -3.00               7.00 ACME
+2017-05-04Z sell four ACME at 120.04 EUR
+            ; check fixed price with multiple entries
+            Assets:Cash                                  480.16            -359.75 EUR
+            Assets:Stocks                                 -4.00               3.00 ACME
