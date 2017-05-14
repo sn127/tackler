@@ -1,7 +1,7 @@
 import TacklerTests._
 
 lazy val commonSettings = Seq(
-  version := "0.5.1-next",
+  version := "0.6.0-next",
   scalaVersion := "2.12.2",
   compileOrder := CompileOrder.JavaThenScala,
   scalacOptions ++= Seq(
@@ -46,8 +46,8 @@ lazy val cli = (project in file("cli")).
   settings(commonSettings: _*).
   settings(
     fork in run := true,
-    // fork := true,
-    // baseDirectory in Test := file((baseDirectory in Test).value + "/.."),
+    fork := true,
+    baseDirectory in Test := file((baseDirectory in Test).value + "/.."),
     testOptions in Test += Tests.Setup( () => TacklerTests.setup("tests", streams.value.log) ),
     assemblyJarName in assembly := "tackler-cli" + "-" + version.value + ".jar",
     test in assembly := {},

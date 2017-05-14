@@ -8,7 +8,7 @@ Current release is 0.5.0
 First public release of tackler was 0.5.0.
 
 
-=== next
+=== 0.6.0-next
 
  * link:docs/tep/tep-1001.adoc[TEP-1001: Units and Commodities]
 

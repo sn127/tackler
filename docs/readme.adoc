@@ -11,6 +11,12 @@
 * link:./currencies.adoc[Currencies]
 * link:./performance.adoc[Performance]
 
+=== Examples
+
+* link:./docs/tackler.conf[Example of Tackler configuration]
+* link:./docs/accounts.conf[Example of Tackler Chart of Accounts]
+* link:./trimix-filling-station.adoc[Example of Trimix Filling Station (diving) Accounting system]
+
 == Developer documentation
 
 * link:./devel/build.adoc[How to build]
