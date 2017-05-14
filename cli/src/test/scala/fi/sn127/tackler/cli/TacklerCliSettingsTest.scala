@@ -73,7 +73,7 @@ class TacklerCliSettingsTest extends FlatSpec  with Matchers with Inside {
     val settings = new Settings(Paths.get(respath + "cfg-as-ext-file-rel.conf"), cliCfg.toConfig)
 
     // this is coming from cfg-as-ext-file.conf
-    assert(settings.basedir.toString.endsWith(respath + "cfg/as/ext/file") === true, settings.basedir)
+    assert(settings.basedir.toString.endsWith(File(respath + "cfg/as/ext/file").toString) === true, settings.basedir)
     
     // this is coming from cli-args
     assert(settings.input_fs_glob.toString === "**/cli-args*.txn")
