@@ -7,10 +7,16 @@ Current release is 0.6.0
 
 First public release of tackler was 0.5.0.
 
+=== next
+
+==== Fixes
+
 
 === 0.6.0
 
  * Support for Units and Commodities
+ ** link:docs/commodities.adoc[Commodities]
+ ** link:docs/currencies.adoc[Currencies]
  ** link:docs/tep/tep-1001.adoc[TEP-1001: Units and Commodities]
  ** link:docs/journal.adoc[Journal changes to support commodities]
  ** link:docs/trimix-filling-station.adoc[Example of accounting system for Trimix Gas Mixing Station]
