@@ -1,18 +1,17 @@
-= Trimix Filling Station
+= Trimix Filling Station Accounting system
 
-Trimix is diving gas which is mixture of Helium, Oxygen and air.
+Trimix is breathing gas for diving which is mixture of Helium, Oxygen and Nitrogen.
 
-Here is an example how you could use Tackler for
-accounting with Trimix Mixing and Filling station. This example is also part of
-Tacklers test setup and it is run with test target.
+This is an example how you could use Tackler for Trimix Filling station accounting purposes. 
+This example is also part of Tacklers test setup and it is run with test target.
 
-Trimix is made out of mix Helium, Oxygen and compressed air. Helium is expensive
-and oxygen substantially cheaper (depending where do you live 
+Trimix is made out of mix Helium and Nitrox or mix of Helium, Oxygen and compressed air. 
+Helium is expensive and oxygen substantially cheaper (depending where do you live 
 and how oxygen is available in your region).
 
-For filling station you have to track individual users (how much and which gas they have used),
-and how much do you have gas in your Helium and Oxygen tanks. Also there must be a way
-to generate bills to users, and reset Helium and Oxygen usage for each billed user.
+At filling station you have to track individual users (how much and which gas they have used),
+and how much do you have gas in your Helium and Oxygen tanks. Also you have to generate bills 
+to users and reset Helium and Oxygen usage for each billed user.
 
 Below are accounting entries for filling station, and an examples what kind of transactions
 are recorded of one mixing of 18/45 (O2/He) trimix gas.
@@ -36,15 +35,6 @@ There is also an example how you could run and record and bill used gases.
 
 ==== One 18/45 trimix blend with Helium (He) and Oxygen (O2)
 
-Why there are negative pressure deltas?
-
-With initial starting pressures negative deltas makes more sense.
-With negative deltas remaining pressure in storage tank match that
-which is reported by accounting system.
-
-Also with negative deltas, users accumulate posivite pressures, which again
-makes more sense while you are billing used gas.
-
 ....
 2017-05-01 (mix-1234) tmx 18/45 D12L
    Gas:He:Tank·102  247 bar·He ; End pressure
@@ -57,6 +47,19 @@ makes more sense while you are billing used gas.
    Gas:O2:Tank·208 -150 bar·O2 ; Start pressure, negative pressure delta
    Mixer:jaa127:O2
 ....
+
+Why are there negative pressure deltas?
+
+With initial starting pressures negative deltas makes more sense, 
+so tank pressure degreses as gas is used. That way with negative deltas 
+remaining pressure in storage tank (reported by gauge) match pressure
+reported by accounting system.
+
+Also with negative deltas, users accumulate posivite pressures, which in turn are 
+zeroed with negative pressures within payment transactions.  So in overall, 
+whole transaction flow makes more sense with real starting pressure 
+and negative tank pressure deltas when mixing gas.
+
 
 ==== Accounting
 
