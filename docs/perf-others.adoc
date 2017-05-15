@@ -32,10 +32,17 @@ sys     0m4.327s
 
 == Abandon
 
-Current version of Abandon (v0.5.0) can not reasonably handle test data set.
+With 1E6 txn arount 11min, and utilizing 14GB of memory.
 
-With single file (1E6) abandon processing times was arount 11 minutes and memory usage around 14GB.
+....
+abandon-cli-assembly-0.5.0.jar --version
+Version: 0.5.0 [2017-05-13 21:38:00.909]
 
-With small shard dataset (1E4) processing time was  around 44 seconds 
-and 10x bigger test set (1E5) did not finish in 17 minutes, at which point test was terminated.
+Processing: ldg-single/single/perf-1E6.txn
 
+Writing Balance Sheet to: abandon.bal.txt
+
+real     11m2.759s
+user     29m39.451s
+sys      0m8.684s
+....
