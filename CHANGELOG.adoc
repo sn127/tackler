@@ -11,6 +11,15 @@ First public release of tackler was 0.5.0.
 
 ==== Fixes
 
+==== Devel
+
+ * Updated dependencies
+ ** libs
+ *** jgit
+ *** scallop 
+ ** build
+ *** sbt
+ *** scala
 
 === 0.6.0
 

@@ -2,7 +2,7 @@ import TacklerTests._
 
 lazy val commonSettings = Seq(
   version := "0.6.1-next",
-  scalaVersion := "2.12.2",
+  scalaVersion := "2.12.3",
   compileOrder := CompileOrder.JavaThenScala,
   scalacOptions ++= Seq(
     "-Xlint",
