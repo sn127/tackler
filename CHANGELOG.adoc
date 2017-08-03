@@ -20,6 +20,7 @@ First public release of tackler was 0.5.0.
  ** build
  *** sbt
  *** scala
+ *** wartremover
 
 === 0.6.0
 

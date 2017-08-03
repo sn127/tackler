@@ -38,6 +38,8 @@ object Balance {
    * @param accSums list of all account sums
    * @return list of balance tree nodes
    */
+  @SuppressWarnings(Array(
+    "org.wartremover.warts.Recursion"))
    protected def getBalanceTreeNodes(
     me: (AccountTreeNode, BigDecimal),
     accSums: Seq[(AccountTreeNode, BigDecimal)])
@@ -73,7 +75,9 @@ object Balance {
    * @param accSums current incomplete (in sense of Chart of Account) account sums
    * @return for this branch (from leaf to root) new set of AccTNSums without gaps
    */
-  @SuppressWarnings(Array("org.wartremover.warts.TraversableOps", "TraversableHead"))
+  @SuppressWarnings(Array(
+    "org.wartremover.warts.Recursion",
+    "org.wartremover.warts.TraversableOps"))
   protected def bubbleUpAccTN(
     myAccTNSum: (AccountTreeNode, BigDecimal),
     accSums: Seq[(AccountTreeNode, BigDecimal)])

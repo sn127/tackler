@@ -80,8 +80,9 @@ class TacklerTxns(val settings: Settings) extends CtxHandler {
    * @return Txns
    */
   @SuppressWarnings(Array(
-    "org.wartremover.warts.TraversableOps",
-    "org.wartremover.warts.EitherProjectionPartial"))
+    "org.wartremover.warts.Equals",
+    "org.wartremover.warts.EitherProjectionPartial",
+    "org.wartremover.warts.TraversableOps"))
   def git2Txns(inputRef: Either[String, String]): TxnData = {
 
     /**
