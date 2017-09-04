@@ -20,6 +20,12 @@ import sbt._
 
 object TacklerTests {
 
+  /**
+   * Prepare Tackler's test (e.g. clean up old output files)
+   *
+   * @param tests is full path to test directory
+   * @param log for setup logging
+   */
   def setup(tests: String, log: Logger) = {
     val testsDir = File(tests)
     val autoCleanConfFile = testsDir / "dirsuite.conf"

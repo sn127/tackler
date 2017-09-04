@@ -38,8 +38,7 @@ object Balance {
    * @param accSums list of all account sums
    * @return list of balance tree nodes
    */
-  @SuppressWarnings(Array(
-    "org.wartremover.warts.Recursion"))
+  @SuppressWarnings(Array("org.wartremover.warts.Recursion"))
    protected def getBalanceTreeNodes(
     me: (AccountTreeNode, BigDecimal),
     accSums: Seq[(AccountTreeNode, BigDecimal)])
@@ -123,7 +122,7 @@ object Balance {
     }
   }
 
-  @SuppressWarnings(Array("org.wartremover.warts.TraversableOps", "TraversableHead"))
+  @SuppressWarnings(Array("org.wartremover.warts.TraversableOps"))
   protected def balance(txns: Txns): Seq[BalanceTreeNode] = {
 
     //    Calculate sum of postings for each account,
