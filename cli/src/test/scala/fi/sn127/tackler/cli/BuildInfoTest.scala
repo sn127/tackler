@@ -35,7 +35,7 @@ class BuildInfoTest extends FlatSpec {
   }
 
   it should "sbtVersion" in {
-    assert(BuildInfo.sbtVersion.startsWith("0.13.1"))
+    assert(BuildInfo.sbtVersion.startsWith("1.0.2"))
   }
 
   it should "builtAtMillis" in {

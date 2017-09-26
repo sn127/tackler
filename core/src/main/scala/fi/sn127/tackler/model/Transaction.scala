@@ -71,7 +71,9 @@ final case class Transaction(
         if (0 =!= descCmp) {
           descCmp
         } else {
-          val uuidCmp = uuid.getOrElse("").toString.compareTo(otherTxn.uuid.getOrElse("").toString)
+          val uuidThis = uuid.map(_.toString).getOrElse("")
+          val uuidOther = otherTxn.uuid.map(_.toString).getOrElse("")
+          val uuidCmp = uuidThis.compareTo(uuidOther)
           uuidCmp
         }
       }

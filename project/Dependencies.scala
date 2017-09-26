@@ -24,10 +24,10 @@ object Dependencies {
   val betterFilesVersion = "3.0.0"
   val catsVersion = "0.9.0"
   val scalatestVersion = "3.0.3"
-  val scallopVersion = "2.1.1"
+  val scallopVersion = "3.0.3"
   val configVersion = "1.3.1"
   val sn127UtilsTestingVersion = "0.6.0"
-  val jgitVersion = "4.7.0.201704051617-r"
+  val jgitVersion = "4.8.0.201706111038-r"
   val logbackVersion = "1.2.3"
   val scalaArmVersion = "2.0"
 

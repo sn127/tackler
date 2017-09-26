@@ -2,7 +2,7 @@ import TacklerTests._
 
 lazy val commonSettings = Seq(
   version := "0.6.1-next",
-  scalaVersion := "2.12.2",
+  scalaVersion := "2.12.3",
   compileOrder := CompileOrder.JavaThenScala,
   scalacOptions ++= Seq(
     "-Xlint",
@@ -29,11 +29,11 @@ lazy val tackler = (project in file(".")).
   )
 
 lazy val core = (project in file("core")).
+  enablePlugins(Antlr4Plugin).
   settings(commonSettings: _*).
   settings(
     fork in run := true,
     test in assembly := {},
-    antlr4Settings,
     antlr4Version in Antlr4 := "4.7",
     antlr4GenListener in Antlr4 := false,
     antlr4GenVisitor in Antlr4 := false,
@@ -48,7 +48,13 @@ lazy val cli = (project in file("cli")).
     fork in run := true,
     fork := true,
     baseDirectory in Test := file((baseDirectory in Test).value + "/.."),
-    testOptions in Test += Tests.Setup( () => TacklerTests.setup("tests", streams.value.log) ),
+    testOptions in Test += {
+      // The evaluation of `streams` inside an anonymous function is prohibited.
+      // https://github.com/sbt/sbt/issues/3266
+      // https://github.com/jeffwilde/sbt-dynamodb/commit/109ea03837b1c1b4f45723c200d7aa5c34bb6e8b
+      val log = sLog.value
+      Tests.Setup(() => TacklerTests.setup("tests", log))
+    },
     assemblyJarName in assembly := "tackler-cli" + "-" + version.value + ".jar",
     test in assembly := {},
     buildInfoKeys := Seq[BuildInfoKey](name, version, scalaVersion, sbtVersion),
