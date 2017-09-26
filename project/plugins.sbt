@@ -13,7 +13,4 @@ addSbtPlugin("org.scoverage" % "sbt-scoverage" % "1.5.1")
 //
 //addSbtPlugin("org.scoverage" % "sbt-coveralls" % "1.X.0")
 
-//
-// sbt-1.0: https://github.com/wartremover/wartremover/issues/398
-//
-//addSbtPlugin("org.wartremover" % "sbt-wartremover" % "2.2.0")
+addSbtPlugin("org.wartremover" % "sbt-wartremover" % "2.2.1")

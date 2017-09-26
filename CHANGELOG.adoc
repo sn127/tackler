@@ -13,14 +13,16 @@ First public release of tackler was 0.5.0.
 
 ==== Devel
 
+Build is updated to SBT 1.0.
+
  * Updated dependencies
  ** libs
- *** jgit
- *** scallop 
+ *** jgit: 4.8.0.201706111038-r
+ *** scallop: 3.0.3
  ** build
- *** sbt
- *** scala
- *** wartremover
+ *** sbt: 1.0.2
+ *** scala: 2.12.3
+ *** wartremover: 2.2.1
 
 === 0.6.0
 

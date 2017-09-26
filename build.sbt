@@ -8,15 +8,12 @@ lazy val commonSettings = Seq(
     "-Xlint",
     "-feature",
     "-Xfatal-warnings",
-    "-deprecation")
-/*
-,
+    "-deprecation"),
   wartremoverWarnings in (Compile, compile) ++= Warts.allBut(
     Wart.ToString,
     Wart.NonUnitStatements,
     Wart.Throw //https://github.com/puffnfresh/wartremover/commit/869763999fcc1fd685c1a8038c974854457b608f
   )
-*/
 )
 /**
   * if "name" is defined in commonSettings, it will cause
