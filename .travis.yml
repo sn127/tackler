@@ -7,6 +7,9 @@ language: scala
 
 jdk: oraclejdk8
 
+scala:
+   - 2.12.3
+
 addons:
   apt:
     packages:
@@ -32,8 +35,6 @@ script:
 after_success:
    # coverageAggregate must be on separate step by sbt-coveralls
    # because this is multiproject build
-   ### SBT 1.0 / sbt-coveralls
-   ### - sbt coverageAggregate coveralls
    - sbt coverageReport
-   - sbt coverageAggregate
+   - sbt coverageAggregate coveralls
 
