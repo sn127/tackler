@@ -26,7 +26,7 @@ object Dependencies {
   val scalatestVersion = "3.0.3"
   val scallopVersion = "3.0.3"
   val configVersion = "1.3.1"
-  val sn127UtilsTestingVersion = "0.6.0"
+  val dirsuiteVersion = "0.7.0"
   val jgitVersion = "4.8.0.201706111038-r"
   val logbackVersion = "1.2.3"
   val scalaArmVersion = "2.0"
@@ -40,7 +40,7 @@ object Dependencies {
   val cats_core = "org.typelevel" %% "cats-core" % catsVersion
   val scalatest = "org.scalatest" %% "scalatest" % scalatestVersion
   val scallop = "org.rogach" %% "scallop" % scallopVersion
-  val sn127UtilsTesting = "fi.sn127" %% "utils-testing" % sn127UtilsTestingVersion
+  val dirsuite = "fi.sn127" %% "dirsuite" % dirsuiteVersion
   val scalaArm = "com.jsuereth" %% "scala-arm" % scalaArmVersion
 
   /* lib: java */

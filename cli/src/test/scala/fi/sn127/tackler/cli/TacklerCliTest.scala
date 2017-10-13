@@ -24,7 +24,7 @@ import resource._
 
 import fi.sn127.tackler.core.{AccountException, CommodityException, GroupByException, ReportException, TacklerException, TxnException}
 import fi.sn127.tackler.parser.TacklerParseException
-import fi.sn127.utils.fs.Glob
+import fi.sn127.utils.testing.Glob
 import fi.sn127.utils.testing.DirSuiteLike
 
 class ConsoleTest extends DirSuiteLike {
