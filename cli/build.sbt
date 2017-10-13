@@ -6,4 +6,4 @@ libraryDependencies += scallop
 libraryDependencies += typesafeConfig
 
 libraryDependencies += scalatest % "test"
-libraryDependencies += sn127UtilsTesting % "test"
+libraryDependencies += dirsuite % "test"
