@@ -39,6 +39,7 @@ Changes to conf-settings
 *** [ ] Add NOTICES under link:../licenses[doc/licenses]
 ** [ ] Add link of license to link:../readme.adoc[index]
 ** [ ] Add link to link:../../THANKS.adoc[THANKS]
+** [ ] Add license material to binary distribution
 
 
 === Future plans

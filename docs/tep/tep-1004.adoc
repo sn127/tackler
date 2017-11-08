@@ -38,16 +38,17 @@ Changes to conf-settings
 
 === New dependencies
 
-* [ ] io.circe: https://github.com/circe/circe
-** [ ] Add and check licenses:
-*** [ ] Circe: APL-2.0: https://github.com/circe/circe/blob/master/LICENSE
-*** [ ] Argonaut: BSD-3: https://github.com/circe/circe/blob/master/LICENSE.argonaut
-*** [ ] Ephox: BSD-3: https://github.com/circe/circe/blob/master/LICENSE.ephox
-** [ ] Is there NOTICE file(s)?: https://github.com/circe/circe/blob/master/NOTICE
-** [ ] Add license under link:../licenses[doc/licenses]
-*** [ ] Add NOTICES under link:../licenses[doc/licenses]
-** [ ] Add link of license to link:../readme.adoc[index]
-** [ ] Add link to link:../../THANKS.adoc[THANKS]
+* [x] io.circe: https://github.com/circe/circe
+** [x] Add and check licenses:
+*** [x] Circe: APL-2.0: https://github.com/circe/circe/blob/master/LICENSE
+*** [x] Argonaut: BSD-3: https://github.com/circe/circe/blob/master/LICENSE.argonaut
+*** [x] Ephox: BSD-3: https://github.com/circe/circe/blob/master/LICENSE.ephox
+** [x] Is there NOTICE file(s)?: https://github.com/circe/circe/blob/master/NOTICE
+** [x] Add license under link:../licenses[doc/licenses]
+*** [x] Add NOTICES under link:../licenses[doc/licenses]
+** [x] Add link of license to link:../readme.adoc[index]
+** [x] Add link to link:../../THANKS.adoc[THANKS]
+** [x] Add license material to binary distribution
 
 
 === Future plans
