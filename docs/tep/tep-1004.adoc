@@ -1,0 +1,174 @@
+= TEP-1004: JSON output
+
+Provide internal API to have report output in JSON.
+
+JSON is treated as Human-Machine Interface, e.g. values etc.
+are truncated the same way as with text-output.
+
+This means JSON data should be ready to be displayed to user by UI as it is without
+further processing.
+
+
+== Journal file format
+
+No Journal file changes are needed.
+
+
+== Machinery
+
+Changes to machinery
+
+* [ ] Integrate JSON library (Circe)
+* [ ] JSON ReportType
+
+
+=== CLI changes
+
+Changes to command line interface
+
+* [ ] `reporting.formats` switch
+
+
+=== CONF changes
+
+Changes to conf-settings
+
+* [ ] `reporting { formats }` switch
+
+
+=== New dependencies
+
+* [ ] io.circe: https://github.com/circe/circe
+** [ ] Add and check licenses:
+*** [ ] Circe: APL-2.0: https://github.com/circe/circe/blob/master/LICENSE
+*** [ ] Argonaut: BSD-3: https://github.com/circe/circe/blob/master/LICENSE.argonaut
+*** [ ] Ephox: BSD-3: https://github.com/circe/circe/blob/master/LICENSE.ephox
+** [ ] Is there NOTICE file(s)?: https://github.com/circe/circe/blob/master/NOTICE
+** [ ] Add license under link:../licenses[doc/licenses]
+*** [ ] Add NOTICES under link:../licenses[doc/licenses]
+** [ ] Add link of license to link:../readme.adoc[index]
+** [ ] Add link to link:../../THANKS.adoc[THANKS]
+
+
+=== Future plans
+
+ * API to have json reports (as part of backend).
+ * Per report formatting switches (far-far-away)
+
+
+== Reporting
+
+Changes to general reporting
+
+* [ ] JSON
+** [ ] Metadata
+** [ ] Global `formats` -switch
+
+=== Balance report
+
+Changes to balance report
+
+* [ ] JSON output
+** [ ] balance rows with commodity?
+** [ ] footer
+*** [ ] commodity as own entity
+
+
+
+=== Balance Group report
+
+Changes to balance group report
+
+* [ ] JSON
+**  [ ] Time period
+**  [ ] See balance as applicable
+
+
+=== Register report
+
+Changes to register report
+
+* [ ] JSON
+
+
+=== Equity report
+
+No JSON support with Equity (because it is export).
+
+=== Identity report
+
+No JSON support with Identity (because it is export).
+
+
+== Documentation
+
+* [ ] link:../../README.adoc[]: is it a new noteworthy feature?
+* [ ] link:../../CHANGELOG[]: add new item
+* [ ] User docs
+** [ ] user manual
+*** [ ] cli-arguments
+**** [ ] `--reporting.formats`
+** [ ] tackler.conf
+*** [ ] `reporting { formats }`
+** [ ] examples
+* [ ] Developer docs
+
+== Tests
+
+Normal, ok-case tests to validate functionality:
+
+* [ ] "normal" and not-normal data
+** [ ] UTF-8 data
+** [ ] Non-valid JSON characters with description etc.
+* [ ] timestamps
+* [ ] code
+** [ ] code with (json) special chars
+* [ ] account names, with UTF-8
+* [ ] amounts
+* [ ] commodities
+* [ ] Value positions
+* [ ] PnL: Opening positions
+* [ ] Comments
+** [ ] Transaction Comments
+** [ ] Posting Comments
+* [ ] Transaction metadata
+** [ ] uuid
+* [ ] Report Metadata
+** [ ] data from git
+*** [ ] based on ref
+*** [ ] based on commitid
+*** [ ] check link:./TEP-1002.adoc[TEP-1002] for additional test cases
+* [x] check link:../journal.adoc[journal format] for additional test cases
+
+
+=== Errors
+
+Various error cases:
+
+* [ ] e: error test 1
+
+=== Perf
+
+Test performance with new output format, especially streaming case.
+
+* [ ] text vs. json output tests
+** [ ] balance
+** [ ] registry
+* [ ] text *and* json output tests
+** [ ] balance
+** [ ] registry
+
+
+=== Metadata for test coverage tracking
+
+....
+features:
+  - feature:
+      id: uuid
+      subject: "one-line description of main feature"
+
+  - feature:
+      id: uuid
+      parent: uuid-of-parent
+      subject: "one-line description of sub feature"
+....

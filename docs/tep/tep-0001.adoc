@@ -90,8 +90,6 @@ Changes to identity report
 
 == Documentation
 
-== Documentation
-
 * [ ] link:../../README.adoc[]: is it a new noteworthy feature?
 * [ ] link:../../CHANGELOG[]: add new item
 * [ ] User docs
