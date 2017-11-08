@@ -72,9 +72,11 @@ trait BalanceReportLike extends ReportLike {
     )
   }
 
-  implicit val encBalance: Encoder[Balance] = (a: Balance) => {
-    val (body, deltas) = jsonBalanceBody(a)
+  implicit val encBalance: Encoder[Balance] = (bal: Balance) => {
+    val (body, deltas) = jsonBalanceBody(bal)
+
     Json.obj(
+      ("title", bal.title.asJson),
       ("balanceRows", body.asJson),
       ("deltas", deltas.asJson)
     )
@@ -124,8 +126,15 @@ class BalanceReport(val name: String, val settings: Settings) extends  BalanceRe
     }
   }
 
-  protected def jsonBalance(bal: Balance): Seq[String] = {
-    Seq(bal.asJson(encBalance).spaces2)
+  protected def jsonBalanceReport(bal: Balance): Seq[String] = {
+    Seq(bal.metadata.fold(
+      Json.obj(("balance", bal.asJson(encBalance)))
+    )({ md =>
+      Json.obj(
+        ("metadata", md.asJson()),
+        ("balance", bal.asJson(encBalance))
+      )
+    }).spaces2)
   }
 
   protected def txtReporter(txns: TxnData)(reporter: (Balance) => Seq[String]): Seq[String] = {
@@ -147,8 +156,8 @@ class BalanceReport(val name: String, val settings: Settings) extends  BalanceRe
           doRowOutputs(writers, txtBalanceReport)
         }
         case JsonFormat() => {
-          val jsonBalanceReport = txtReporter(txnData)(jsonBalance)
-          doRowOutputs(writers, jsonBalanceReport)
+          val balanceReport = txtReporter(txnData)(jsonBalanceReport)
+          doRowOutputs(writers, balanceReport)
         }
       }
     })

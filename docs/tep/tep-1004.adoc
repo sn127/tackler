@@ -18,8 +18,8 @@ No Journal file changes are needed.
 
 Changes to machinery
 
-* [ ] Integrate JSON library (Circe)
-* [ ] JSON ReportType
+* [x] Integrate JSON library (Circe)
+* [x] JSON ReportType
 
 
 === CLI changes
@@ -62,17 +62,18 @@ Changes to conf-settings
 Changes to general reporting
 
 * [ ] JSON
-** [ ] Metadata
+** [x] Metadata
 ** [ ] Global `formats` -switch
 
 === Balance report
 
 Changes to balance report
 
-* [ ] JSON output
-** [ ] balance rows with commodity?
-** [ ] footer
-*** [ ] commodity as own entity
+* [x] JSON output
+** [x] Metadata
+** [x] balance rows with commodity?
+** [x] footer
+*** [x] commodity as own entity
 
 
 
@@ -81,8 +82,9 @@ Changes to balance report
 Changes to balance group report
 
 * [ ] JSON
-**  [ ] Time period
-**  [ ] See balance as applicable
+** [ ] Metadata
+** [ ] Time period
+** [ ] See balance as applicable
 
 
 === Register report
@@ -90,6 +92,7 @@ Changes to balance group report
 Changes to register report
 
 * [ ] JSON
+** [ ] Metadata
 
 
 === Equity report
@@ -125,8 +128,8 @@ Normal, ok-case tests to validate functionality:
 * [ ] code
 ** [ ] code with (json) special chars
 * [ ] account names, with UTF-8
-* [ ] amounts
-* [ ] commodities
+* [x] amounts
+* [x] commodities
 * [ ] Value positions
 * [ ] PnL: Opening positions
 * [ ] Comments
@@ -134,11 +137,11 @@ Normal, ok-case tests to validate functionality:
 ** [ ] Posting Comments
 * [ ] Transaction metadata
 ** [ ] uuid
-* [ ] Report Metadata
-** [ ] data from git
-*** [ ] based on ref
-*** [ ] based on commitid
-*** [ ] check link:./TEP-1002.adoc[TEP-1002] for additional test cases
+* [x] Report Metadata
+** [x] data from git
+*** [x] based on ref
+*** [x] based on commitid
+*** [x] check link:./TEP-1002.adoc[TEP-1002] for additional test cases
 * [x] check link:../journal.adoc[journal format] for additional test cases
 
 

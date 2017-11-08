@@ -1,26 +1,29 @@
 {
-  "balanceRows" : [
-    {
-      "accountSum" : "26.00",
-      "accountTreeSum" : "26.00",
-      "account" : "User:jaa127:He",
-      "commodity" : "bar·He"
-    },
-    {
-      "accountSum" : "5.00",
-      "accountTreeSum" : "5.00",
-      "account" : "User:jaa127:O2",
-      "commodity" : "bar·O2"
-    }
-  ],
-  "deltas" : [
-    {
-      "delta" : "26.00",
-      "commodity" : "bar·He"
-    },
-    {
-      "delta" : "5.00",
-      "commodity" : "bar·O2"
-    }
-  ]
+  "balance" : {
+    "title" : "BALANCE",
+    "balanceRows" : [
+      {
+        "accountSum" : "26.00",
+        "accountTreeSum" : "26.00",
+        "account" : "User:jaa127:He",
+        "commodity" : "bar·He"
+      },
+      {
+        "accountSum" : "5.00",
+        "accountTreeSum" : "5.00",
+        "account" : "User:jaa127:O2",
+        "commodity" : "bar·O2"
+      }
+    ],
+    "deltas" : [
+      {
+        "delta" : "26.00",
+        "commodity" : "bar·He"
+      },
+      {
+        "delta" : "5.00",
+        "commodity" : "bar·O2"
+      }
+    ]
+  }
 }
