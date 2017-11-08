@@ -48,6 +48,17 @@ trait ReportLike extends OutputLike {
   }
 
   /**
+   * Format value with automatic scale, NO fill.
+   * see [[getScaleFormat]]
+   *
+   * @param v value
+   * @return formatted value without filling
+   */
+  def scaleFormat(v: BigDecimal): String = {
+    ("%" + getScaleFormat(v)).format(v)
+  }
+
+  /**
    * get format string for value with automatic scale.
    * see [[getScaleFormat]]
    *

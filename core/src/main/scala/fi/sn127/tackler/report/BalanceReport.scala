@@ -56,17 +56,17 @@ trait BalanceReportLike extends ReportLike {
     }
   }
 
-  implicit val encBalanceTreeNode2: Encoder[BalanceTreeNode] = (as: BalanceTreeNode) => {
+  implicit val encBalanceTreeNode: Encoder[BalanceTreeNode] = (as: BalanceTreeNode) => {
     as.acctn.commodity.fold(
       // no commodity
       Json.obj(
-        ("accountSum", as.accountSum.toString().asJson),
-        ("accountTreeSum", as.subAccTreeSum.toString().asJson),
+        ("accountSum", scaleFormat(as.accountSum).asJson),
+        ("accountTreeSum", scaleFormat(as.subAccTreeSum).asJson),
         ("account", as.acctn.account.asJson))
     )(commodity =>
       Json.obj(
-        ("accountSum", as.accountSum.toString().asJson),
-        ("accountTreeSum", as.subAccTreeSum.toString().asJson),
+        ("accountSum", scaleFormat(as.accountSum).asJson),
+        ("accountTreeSum", scaleFormat(as.subAccTreeSum).asJson),
         ("account", as.acctn.account.asJson),
         ("commodity", commodity.name.asJson))
     )
@@ -84,17 +84,17 @@ trait BalanceReportLike extends ReportLike {
     if (balance.isEmpty) {
       (Seq.empty[Json], Seq.empty[Json])
     } else {
-      val body = balance.bal.map(_.asJson(encBalanceTreeNode2))
+      val body = balance.bal.map(_.asJson(encBalanceTreeNode))
 
       val deltas = balance.deltas.toSeq.sortBy({case (cOpt, v) =>
         cOpt.map(c => c.name).getOrElse("")
       }).map({case (cOpt, v) =>
         cOpt.fold(
           Json.obj(
-            ("delta", v.toString.asJson))
+            ("delta", scaleFormat(v).asJson))
         )(commodity =>
           Json.obj(
-            ("delta", v.toString.asJson),
+            ("delta", scaleFormat(v).asJson),
             ("commodity", cOpt.map(c => c.name.asJson).getOrElse(Json.Null))
         ))
       })
