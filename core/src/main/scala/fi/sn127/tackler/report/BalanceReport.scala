@@ -16,8 +16,11 @@
  */
 package fi.sn127.tackler.report
 
+import io.circe._
+import io.circe.syntax._
+
 import fi.sn127.tackler.core._
-import fi.sn127.tackler.model.{Transaction, TxnTS, TxnData}
+import fi.sn127.tackler.model.{BalanceTreeNode, Transaction, TxnData, TxnTS}
 
 trait BalanceReportLike extends ReportLike {
 
@@ -52,6 +55,53 @@ trait BalanceReportLike extends ReportLike {
       (body, footer)
     }
   }
+
+  implicit val encBalanceTreeNode2: Encoder[BalanceTreeNode] = (as: BalanceTreeNode) => {
+    as.acctn.commodity.fold(
+      // no commodity
+      Json.obj(
+        ("accountSum", as.accountSum.toString().asJson),
+        ("accountTreeSum", as.subAccTreeSum.toString().asJson),
+        ("account", as.acctn.account.asJson))
+    )(commodity =>
+      Json.obj(
+        ("accountSum", as.accountSum.toString().asJson),
+        ("accountTreeSum", as.subAccTreeSum.toString().asJson),
+        ("account", as.acctn.account.asJson),
+        ("commodity", commodity.name.asJson))
+    )
+  }
+
+  implicit val encBalance: Encoder[Balance] = (a: Balance) => {
+    val (body, deltas) = jsonBalanceBody(a)
+    Json.obj(
+      ("balanceRows", body.asJson),
+      ("deltas", deltas.asJson)
+    )
+  }
+
+  protected def jsonBalanceBody(balance: Balance): (Seq[Json], Seq[Json]) = {
+    if (balance.isEmpty) {
+      (Seq.empty[Json], Seq.empty[Json])
+    } else {
+      val body = balance.bal.map(_.asJson(encBalanceTreeNode2))
+
+      val deltas = balance.deltas.toSeq.sortBy({case (cOpt, v) =>
+        cOpt.map(c => c.name).getOrElse("")
+      }).map({case (cOpt, v) =>
+        cOpt.fold(
+          Json.obj(
+            ("delta", v.toString.asJson))
+        )(commodity =>
+          Json.obj(
+            ("delta", v.toString.asJson),
+            ("commodity", cOpt.map(c => c.name.asJson).getOrElse(Json.Null))
+        ))
+      })
+
+      (body, deltas)
+    }
+  }
 }
 
 class BalanceReport(val name: String, val settings: Settings) extends  BalanceReportLike {
@@ -74,6 +124,9 @@ class BalanceReport(val name: String, val settings: Settings) extends  BalanceRe
     }
   }
 
+  protected def jsonBalance(bal: Balance): Seq[String] = {
+    Seq(bal.asJson(encBalance).spaces2)
+  }
 
   protected def txtReporter(txns: TxnData)(reporter: (Balance) => Seq[String]): Seq[String] = {
     val bf = if (mySettings.accounts.isEmpty) {
@@ -86,14 +139,17 @@ class BalanceReport(val name: String, val settings: Settings) extends  BalanceRe
   }
 
   def doReport(formats: Formats, txnData: TxnData): Unit = {
-    val txtBalanceReport = txtReporter(txnData)(txtBalance)
 
     formats.foreach({case (format, writers) =>
       format match {
-        case TextFormat() =>
+        case TextFormat() => {
+          val txtBalanceReport = txtReporter(txnData)(txtBalance)
           doRowOutputs(writers, txtBalanceReport)
-
-        //case JsonFormat() => ???
+        }
+        case JsonFormat() => {
+          val jsonBalanceReport = txtReporter(txnData)(jsonBalance)
+          doRowOutputs(writers, jsonBalanceReport)
+        }
       }
     })
   }
@@ -166,7 +222,7 @@ class BalanceGroupReport(val name: String, val settings: Settings) extends Balan
         case TextFormat() =>
           doRowOutputs(writers, txtBalgrpReport)
 
-        //case JsonFormat() => ???
+        case JsonFormat() => ???
       }
     })
   }

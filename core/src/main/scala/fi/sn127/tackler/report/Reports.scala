@@ -135,7 +135,8 @@ final case class Reports(settings: Settings) {
     settings.reports.foreach {
       case BalanceReportType() =>
         val balReport = new BalanceReport("bal", settings)
-        doReport(outputBase, txnData, balReport, frmts)
+        val balFrmts = List(ReportFormat("txt"), ReportFormat("json"))
+        doReport(outputBase, txnData, balReport, balFrmts)
 
       case BalanceGroupReportType() =>
         val balgrpReport = new BalanceGroupReport("balgrp", settings)

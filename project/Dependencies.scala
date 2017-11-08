@@ -22,7 +22,8 @@ object Dependencies {
    * Versions
    */
   val betterFilesVersion = "3.2.0"
-  val catsVersion = "0.9.0"
+  val catsVersion = "1.0.0-RC1"
+  val circeVersion = "0.9.0-M2"
   val scalatestVersion = "3.0.4"
   val scallopVersion = "3.1.1"
   val configVersion = "1.3.2"
@@ -38,6 +39,12 @@ object Dependencies {
   /* lib: scala */
   val betterFiles = "com.github.pathikrit" %% "better-files" % betterFilesVersion
   val cats_core = "org.typelevel" %% "cats-core" % catsVersion
+  val circe_deps = Seq(
+    "io.circe" %% "circe-core",
+    "io.circe" %% "circe-generic",
+    "io.circe" %% "circe-parser"
+  ).map(_ % circeVersion)
+
   val scalatest = "org.scalatest" %% "scalatest" % scalatestVersion
   val scallop = "org.rogach" %% "scallop" % scallopVersion
   val dirsuite = "fi.sn127" %% "dirsuite" % dirsuiteVersion

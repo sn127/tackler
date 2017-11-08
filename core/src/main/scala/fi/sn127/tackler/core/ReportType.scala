@@ -36,16 +36,18 @@ sealed case class TextFormat() extends ReportFormat {
   val ext: String = "txt"
 }
 
-/*
 sealed case class JsonFormat() extends ReportFormat {
   val ext: String = "json"
+
+  override
+  def consoleOutput(writers: Writers, consoles: Writers): Writers = writers
 }
-*/
+
 object ReportFormat {
   def apply(format: String): ReportFormat = {
     format match {
       case "txt" => TextFormat()
-      //case "json" => JsonFormat()
+      case "json" => JsonFormat()
 
       /* Error*/
       case frmt => throw new ReportException(

@@ -59,7 +59,7 @@ class RegisterReport(val name: String, val settings: Settings) extends ReportLik
             "-" * mySettings.title.length)
           doRowOutputs(writers, reportHeader)
 
-        //case JsonFormat() => ???
+        case JsonFormat() => ???
       }
     })
   }
@@ -73,7 +73,7 @@ class RegisterReport(val name: String, val settings: Settings) extends ReportLik
             val txtRegEntry = txtRegisterEntry(regEntry, filter)
             doRowOutputs(writers, txtRegEntry)
 
-          //case JsonFormat() => ???
+          case JsonFormat() => ???
         }
       })
     })
