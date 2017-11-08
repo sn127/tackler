@@ -1536,3 +1536,51 @@ features:
                 - desc: "Parse-only: closing position with PnL ; comment"
 
 ### Units and Commodities END
+
+###
+### JSON output
+###
+  - feature:
+      id: 7ba138c0-942c-4942-bb5d-ed5c45c5a9ce
+      subject: "JSON output"
+      tests:
+        operations:
+          - test:
+              refid: 7b8073e2-8264-4eba-b282-5bfb8e1718d2
+              name: tests/commodity/ok/gas-blender.exec
+              descriptions:
+                - desc: "multiple commodities"
+                - desc: "deltas with different values"
+              references:
+                - ref: balance
+          - test:
+              refid: 8a7a8c60-aab9-4700-b081-9804c1ec537f
+              name: tests/commodity/ok/basic-03.exec
+              descriptions:
+                - desc: "multiple commodities"
+              references:
+                - ref: balance
+          - test:
+              refid: 53f67fea-6307-44ca-9834-7a2f9b71a15a
+              name: tests/reporting/ok/bal-acc-01.exec
+              descriptions:
+                - desc: "account and account tree sums"
+                - desc: "different amounts of decimal digits"
+              references:
+                - ref: balance
+          - test:
+              refid: 0f862997-95b1-4e06-bc5f-bc170c7594ff
+              name: tests/reporting/ok/big-01.exec
+              descriptions:
+                - desc: "big numeric values with significant and decimal part of number"
+              references:
+                - ref: balance
+          - test:
+              refid: 289df07b-a047-488f-bbe0-4d61cce21421
+              name: tests/reporting/ok/rep-02-nothing.exec
+              descriptions:
+                - desc: "Empty balance"
+              references:
+                - ref: balance
+
+### JSON output END
