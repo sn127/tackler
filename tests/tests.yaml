@@ -704,7 +704,9 @@ features:
                 - desc: "(conf) group-by: year"
               references:
                 - ref: balance
+                  formats: txt, json
                 - ref: balance-group
+                  formats: txt, json
           - test:
               id: a52914e4-0887-4255-abea-c0b457802f56
               name: tests/reporting/group-by/month.exec
@@ -712,7 +714,9 @@ features:
                 - desc: group-by month, (conf)
               references:
                 - ref: balance
+                  formats: txt, json
                 - ref: balance-group
+                  formats: txt, json
           - test:
               id: 053ca6b0-6be6-4fc1-9dd8-6abc754d98d1
               name: tests/reporting/group-by/iso-week.exec
@@ -721,7 +725,9 @@ features:
                 - desc: over and around difficult years (2009/2010)
               references:
                 - ref: balance
+                  formats: txt, json
                 - ref: balance-group
+                  formats: txt, json
           - test:
               id: ed89d638-70fa-474c-b88f-be03df6231df
               name: tests/reporting/group-by/date.exec
@@ -729,7 +735,9 @@ features:
                 - desc: (conf) group-by date
               references:
                 - ref: balance
+                  formats: txt, json
                 - ref: balance-group
+                  formats: txt, json
           - test:
               id: 66692492-2b9f-46c2-8e09-a49573ba0cec
               name: tests/reporting/group-by/iso-week-date.exec
@@ -738,7 +746,66 @@ features:
                 - desc: over and around difficult years (2009/2010)
               references:
                 - ref: balance
+                  formats: txt, json
                 - ref: balance-group
+                  formats: txt, json
+          - test:
+              id: 29f80e87-070a-4707-a5f7-770a7731c9ec
+              name: tests/reporting/group-by/zoned-year.exec
+              descriptions:
+                - desc: zoned timestamp
+                - desc: "(conf) group-by: year"
+              references:
+                - ref: balance
+                  formats: txt, json
+                - ref: balance-group
+                  formats: txt, json
+          - test:
+              id: 94e0bddc-4d1b-4133-992d-e314134d0fcc
+              name: tests/reporting/group-by/zoned-month.exec
+              descriptions:
+                - desc: zoned timestamp
+                - desc: group-by month, (conf)
+              references:
+                - ref: balance
+                  formats: txt, json
+                - ref: balance-group
+                  formats: txt, json
+          - test:
+              id: 8ffe3683-3934-4358-840d-fb00fe8fd788
+              name: tests/reporting/group-by/zoned-iso-week.exec
+              descriptions:
+                - desc: zoned timestamp
+                - desc: (conf) group-by iso-week
+                - desc: over and around difficult years (2009/2010)
+              references:
+                - ref: balance
+                  formats: txt, json
+                - ref: balance-group
+                  formats: txt, json
+          - test:
+              id: b5fd85fe-94b1-4ef8-8ab7-e8b22acb4d63
+              name: tests/reporting/group-by/zoned-date.exec
+              descriptions:
+                - desc: (conf) group-by date
+                - desc: zoned timestamp
+              references:
+                - ref: balance
+                  formats: txt, json
+                - ref: balance-group
+                  formats: txt, json
+          - test:
+              id: c0febfbd-218e-41dd-8c65-a1851b21434e
+              name: tests/reporting/group-by/zoned-iso-week-date.exec
+              descriptions:
+                - desc: zoned timestamp
+                - desc: (conf) group-by iso-week-date
+                - desc: over and around difficult years (2009/2010)
+              references:
+                - ref: balance
+                  formats: txt, json
+                - ref: balance-group
+                  formats: txt, json
 
   - feature:
       id: 3872da6a-e772-41f5-a8f0-4eff24552c0d
@@ -1543,6 +1610,10 @@ features:
   - feature:
       id: 7ba138c0-942c-4942-bb5d-ed5c45c5a9ce
       subject: "JSON output"
+  - feature:
+      id: de6058b6-c573-4d38-9258-a90c4c083e86
+      parent: 7ba138c0-942c-4942-bb5d-ed5c45c5a9ce
+      subject: "JSON output: balance & co"
       tests:
         operations:
           - test:
@@ -1560,6 +1631,7 @@ features:
                 - desc: "multiple commodities"
               references:
                 - ref: balance
+                - ref: balance-group
           - test:
               refid: 53f67fea-6307-44ca-9834-7a2f9b71a15a
               name: tests/reporting/ok/bal-acc-01.exec
@@ -1568,6 +1640,7 @@ features:
                 - desc: "different amounts of decimal digits"
               references:
                 - ref: balance
+                - ref: balance-group
           - test:
               refid: 0f862997-95b1-4e06-bc5f-bc170c7594ff
               name: tests/reporting/ok/big-01.exec
@@ -1575,6 +1648,7 @@ features:
                 - desc: "big numeric values with significant and decimal part of number"
               references:
                 - ref: balance
+                - ref: balance-group
           - test:
               refid: 289df07b-a047-488f-bbe0-4d61cce21421
               name: tests/reporting/ok/rep-02-nothing.exec
@@ -1582,6 +1656,7 @@ features:
                 - desc: "Empty balance"
               references:
                 - ref: balance
+                - ref: balance-group
           - test:
               refid: 1d2c22c1-e3fa-4cd4-a526-45318c15d13e
               name: tests/core/ok/git-shard-01.exec
@@ -1589,6 +1664,7 @@ features:
                 - desc: "git metadata; normal ref"
               references:
                 - ref: balance
+                - ref: balance-group
           - test:
               refid: 7752eee6-d3cf-4084-93c0-cb43a093fdd0
               name: tests/core/ok/git-commit-04.exec
@@ -1596,6 +1672,7 @@ features:
                 - desc: "git metadata; fixed by commit"
               references:
                 - ref: balance
+                - ref: balance-group
           - test:
               refid: 80d3c14d-64ee-46d3-b9fd-37f82384a562
               name: tests/core/ok/git-tag-01.exec
@@ -1603,5 +1680,6 @@ features:
                 - desc: "git metadata; by tag"
               references:
                 - ref: balance
+                - ref: balance-group
 
 ### JSON output END

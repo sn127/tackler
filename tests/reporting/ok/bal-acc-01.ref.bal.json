@@ -1,6 +1,6 @@
 {
+  "title" : "BALANCE",
   "balance" : {
-    "title" : "BALANCE",
     "balanceRows" : [
       {
         "accountSum" : "0.00",

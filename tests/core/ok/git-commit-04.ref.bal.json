@@ -1,4 +1,5 @@
 {
+  "title" : "BALANCE",
   "metadata" : {
     "gitStorage" : {
       "commit" : "a7938d9b61958d2cabea7503a7be89191d4fb31e",
@@ -7,7 +8,6 @@
     }
   },
   "balance" : {
-    "title" : "BALANCE",
     "balanceRows" : [
       {
         "accountSum" : "110.00",

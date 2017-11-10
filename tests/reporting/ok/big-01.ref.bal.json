@@ -1,6 +1,6 @@
 {
+  "title" : "BALANCE (TEST)",
   "balance" : {
-    "title" : "BALANCE (TEST)",
     "balanceRows" : [
       {
         "accountSum" : "12345678901234567890.1234568",

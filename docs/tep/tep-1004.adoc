@@ -74,6 +74,7 @@ Changes to balance report
 ** [x] balance rows with commodity?
 ** [x] footer
 *** [x] commodity as own entity
+* [x] tests/reporting/group-by
 
 
 
@@ -81,10 +82,12 @@ Changes to balance report
 
 Changes to balance group report
 
-* [ ] JSON
-** [ ] Metadata
-** [ ] Time period
-** [ ] See balance as applicable
+* [x] JSON
+** [x] Metadata
+** [x] Time period
+*** [x] tests/reporting/group-by
+**** [x] record to tests.yaml
+** [x] See balance as applicable
 
 
 === Register report
