@@ -20,7 +20,7 @@ import io.circe._
 import io.circe.syntax._
 
 import fi.sn127.tackler.core._
-import fi.sn127.tackler.model.{BalanceTreeNode, Metadata, Transaction, TxnData, TxnTS}
+import fi.sn127.tackler.model.{BalanceTreeNode, TxnData}
 
 trait BalanceReportLike extends ReportLike {
 
@@ -185,92 +185,3 @@ class BalanceReport(val name: String, val settings: Settings) extends  BalanceRe
 }
 
 
-class BalanceGroupReport(val name: String, val settings: Settings) extends BalanceReportLike {
-  private val mySettings = settings.Reports.BalanceGroup
-
-  protected def txtBalanceGroupReport(metadata: Option[Metadata], balGrps: Seq[Balance]): Seq[String] = {
-
-    val header = List(
-      metadata.fold(""){md => md.text()},
-      mySettings.title,
-      "-" * mySettings.title.length)
-
-    val body = balGrps.par.flatMap(bal => txtBalanceGroup(bal))
-
-    header ++ body
-  }
-
-  protected def txtBalanceGroup(bal: Balance): Seq[String] = {
-
-    val (body, footer) = txtBalanceBody(bal)
-    val title = bal.title.getOrElse("")
-    val  header = List(
-      title,
-      "-" * title.length)
-
-    header ++ body ++ List("=" * footer.split("\n").head.length) ++ List(footer)
-  }
-
-  protected def getBalanceGroups(txnData: TxnData): Seq[Balance] = {
-
-    val balanceFilter = if (mySettings.accounts.isEmpty) {
-      AllBalanceAccounts
-    } else {
-      new BalanceFilterByAccount(mySettings.accounts)
-    }
-
-    val groupOp = mySettings.groupBy match {
-      case GroupByYear() => { txn: Transaction =>
-        TxnTS.isoYear(txn.date)
-      }
-      case GroupByMonth() => { txn: Transaction =>
-        TxnTS.isoMonth(txn.date)
-      }
-      case GroupByDate() => { txn: Transaction =>
-        TxnTS.isoDate(txn.date)
-      }
-      case GroupByIsoWeek() => { txn: Transaction =>
-        TxnTS.isoWeek(txn.date)
-      }
-      case GroupByIsoWeekDate() => { txn: Transaction =>
-        TxnTS.isoWeekDate(txn.date)
-      }
-    }
-
-    Accumulator.balanceGroups(txnData, groupOp, balanceFilter)
-  }
-
-  protected def jsonBalanceGroups(balGrps: Seq[Balance]): (String, Json) = {
-    ("balanceGroups", balGrps.par.map(bal => bal.asJson(encBalance)).to[Seq].asJson)
-  }
-
-  protected def jsonBalanceGroupReport(metadata: Option[Metadata], balGrps: Seq[Balance]): Seq[String] = {
-    Seq(metadata.fold(
-      Json.obj(
-        jsonTitle(mySettings.title),
-        jsonBalanceGroups(balGrps))
-    )({ md =>
-      Json.obj(
-        jsonTitle(mySettings.title),
-        ("metadata", md.asJson()),
-        jsonBalanceGroups(balGrps)
-      )
-    }).spaces2)
-  }
-
-  override
-  def doReport(formats: Formats, txnData: TxnData): Unit = {
-
-    val balGrps = getBalanceGroups(txnData)
-
-    formats.foreach({case (format, writers) =>
-      format match {
-        case TextFormat() =>
-          doRowOutputs(writers, txtBalanceGroupReport(txnData.metadata, balGrps))
-
-        case JsonFormat() =>
-          doRowOutputs(writers, jsonBalanceGroupReport(txnData.metadata, balGrps))
-      }
-    })
-  }
-}
