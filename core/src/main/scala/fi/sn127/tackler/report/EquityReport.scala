@@ -30,7 +30,7 @@ class EquityReport(val settings: Settings) extends ExportLike {
     } else {
       new BalanceFilterNonZeroByAccount(mySettings.accounts)
     }
-    val bal = Balance("", TxnData(None, txns), bf)
+    val bal = Balance(None, TxnData(None, txns), bf)
 
     if (bal.isEmpty) {
       Nil

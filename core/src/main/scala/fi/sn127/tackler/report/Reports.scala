@@ -140,7 +140,8 @@ final case class Reports(settings: Settings) {
 
       case BalanceGroupReportType() =>
         val balgrpReport = new BalanceGroupReport("balgrp", settings)
-        doReport(outputBase, txnData, balgrpReport, frmts)
+        val balgrpFrmts = List(ReportFormat("txt"), ReportFormat("json"))
+        doReport(outputBase, txnData, balgrpReport, balgrpFrmts)
 
       case RegisterReportType() =>
         val regReport = new RegisterReport("reg", settings)

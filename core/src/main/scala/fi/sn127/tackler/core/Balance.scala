@@ -21,7 +21,7 @@ import cats.implicits._
 import fi.sn127.tackler.model._
 
 
-class Balance(val title: String,
+class Balance(val title: Option[String],
   val bal: Seq[BalanceTreeNode],
   val deltas: Map[Option[Commodity], BigDecimal],
   val metadata: Option[Metadata]) {
@@ -161,7 +161,7 @@ object Balance {
     bal.sorted(OrderByPost)
   }
 
-  def apply(title: String, txnData: TxnData, accounts: Filtering[BalanceTreeNode]): Balance = {
+  def apply(title: Option[String], txnData: TxnData, accounts: Filtering[BalanceTreeNode]): Balance = {
     val bal = balance(txnData.txns)
 
     val fbal = bal.filter(accounts.predicate)

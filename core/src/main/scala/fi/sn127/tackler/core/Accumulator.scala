@@ -18,7 +18,7 @@ package fi.sn127.tackler.core
 
 import scala.collection.mutable
 
-import fi.sn127.tackler.model.{BalanceTreeNode, RegisterEntry, RegisterPosting, Transaction, Txns, TxnData}
+import fi.sn127.tackler.model.{BalanceTreeNode, RegisterEntry, RegisterPosting, Transaction, TxnData, Txns}
 
 object Accumulator {
 
@@ -27,8 +27,10 @@ object Accumulator {
       .groupBy(groupOp).toSeq
       .sortBy(_._1)
       .par.map({case (groupBy, balGrpTxns) =>
-        Balance(groupBy, TxnData(None, balGrpTxns), balanceFilter)
-      }).toList
+        Balance(Some(groupBy), TxnData(None, balGrpTxns), balanceFilter)
+      })
+      .filter(bal => !bal.isEmpty)
+      .seq
   }
 
   def registerStream(txns: Txns)(reporter: (RegisterEntry => Unit)): Unit = {

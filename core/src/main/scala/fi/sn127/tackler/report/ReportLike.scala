@@ -16,6 +16,9 @@
  */
 package fi.sn127.tackler.report
 
+import io.circe.Json
+import io.circe.syntax._
+
 import fi.sn127.tackler.model.TxnData
 
 trait ReportLike extends OutputLike {
@@ -23,6 +26,15 @@ trait ReportLike extends OutputLike {
    * Report name part of output filename.
    */
   val name: String
+
+  /**
+   * Get report title as JSON-field
+   * @param title
+   * @return title as json field
+   */
+  def jsonTitle(title: String): (String, Json) = {
+    ("title", title.asJson)
+  }
 
   /**
    * Get decimal part of format string based on scale settings

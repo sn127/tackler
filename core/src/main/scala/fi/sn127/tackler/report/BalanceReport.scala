@@ -20,7 +20,7 @@ import io.circe._
 import io.circe.syntax._
 
 import fi.sn127.tackler.core._
-import fi.sn127.tackler.model.{BalanceTreeNode, Transaction, TxnData, TxnTS}
+import fi.sn127.tackler.model.{BalanceTreeNode, Metadata, Transaction, TxnData, TxnTS}
 
 trait BalanceReportLike extends ReportLike {
 
@@ -56,53 +56,66 @@ trait BalanceReportLike extends ReportLike {
     }
   }
 
-  implicit val encBalanceTreeNode: Encoder[BalanceTreeNode] = (as: BalanceTreeNode) => {
-    as.acctn.commodity.fold(
-      // no commodity
+  implicit val encBalanceTreeNode: Encoder[BalanceTreeNode] = (btn: BalanceTreeNode) => {
+
+    def jsonAccountSum = ("accountSum", scaleFormat(btn.accountSum).asJson)
+    def jsonAccountTreeSum = ("accountTreeSum", scaleFormat(btn.subAccTreeSum).asJson)
+    def jsonAccount = ("account", btn.acctn.account.asJson)
+
+    btn.acctn.commodity.fold(
       Json.obj(
-        ("accountSum", scaleFormat(as.accountSum).asJson),
-        ("accountTreeSum", scaleFormat(as.subAccTreeSum).asJson),
-        ("account", as.acctn.account.asJson))
+        jsonAccountSum,
+        jsonAccountTreeSum,
+        jsonAccount)
     )(commodity =>
       Json.obj(
-        ("accountSum", scaleFormat(as.accountSum).asJson),
-        ("accountTreeSum", scaleFormat(as.subAccTreeSum).asJson),
-        ("account", as.acctn.account.asJson),
+        jsonAccountSum,
+        jsonAccountTreeSum,
+        jsonAccount,
         ("commodity", commodity.name.asJson))
     )
   }
 
   implicit val encBalance: Encoder[Balance] = (bal: Balance) => {
+
     val (body, deltas) = jsonBalanceBody(bal)
 
-    Json.obj(
-      ("title", bal.title.asJson),
-      ("balanceRows", body.asJson),
-      ("deltas", deltas.asJson)
+    def jsonBalanceRows = ("balanceRows", body.asJson)
+    def jsonDeltas = ("deltas", deltas.asJson)
+
+    bal.title.fold(
+      Json.obj(
+        jsonBalanceRows,
+        jsonDeltas)
+    )(title =>
+      Json.obj(
+        jsonTitle(title),
+        jsonBalanceRows,
+        jsonDeltas)
     )
   }
 
   protected def jsonBalanceBody(balance: Balance): (Seq[Json], Seq[Json]) = {
-    if (balance.isEmpty) {
-      (Seq.empty[Json], Seq.empty[Json])
-    } else {
-      val body = balance.bal.map(_.asJson(encBalanceTreeNode))
+    val body = balance.bal.map(_.asJson(encBalanceTreeNode))
 
-      val deltas = balance.deltas.toSeq.sortBy({case (cOpt, v) =>
+    val deltas = balance.deltas.toSeq
+      .sortBy({ case (cOpt, v) =>
         cOpt.map(c => c.name).getOrElse("")
-      }).map({case (cOpt, v) =>
-        cOpt.fold(
-          Json.obj(
-            ("delta", scaleFormat(v).asJson))
+      })
+      .map({ case (commodityOpt, v) => {
+        def jsonDelta = ("delta", scaleFormat(v).asJson)
+
+        commodityOpt.fold(
+          Json.obj(jsonDelta)
         )(commodity =>
           Json.obj(
-            ("delta", scaleFormat(v).asJson),
-            ("commodity", cOpt.map(c => c.name.asJson).getOrElse(Json.Null))
-        ))
+            jsonDelta,
+            ("commodity", commodity.name.asJson))
+        )
+      }
       })
 
-      (body, deltas)
-    }
+    (body, deltas)
   }
 }
 
@@ -110,14 +123,14 @@ class BalanceReport(val name: String, val settings: Settings) extends  BalanceRe
   private val mySettings = settings.Reports.Balance
 
   @SuppressWarnings(Array("org.wartremover.warts.TraversableOps"))
-  protected def txtBalance(bal: Balance): Seq[String] = {
+  protected def txtBalanceReport(bal: Balance): Seq[String] = {
 
     val (body, footer) = txtBalanceBody(bal)
 
     val  header = List(
       bal.metadata.fold(""){md => md.text()},
-      bal.title,
-      "-" * bal.title.length)
+      mySettings.title,
+      "-" * mySettings.title.length)
 
     if (body.isEmpty) {
       header
@@ -126,38 +139,45 @@ class BalanceReport(val name: String, val settings: Settings) extends  BalanceRe
     }
   }
 
+  protected def jsonBalance(bal: Balance): (String, Json) = {
+    ("balance", bal.asJson(encBalance))
+  }
+
   protected def jsonBalanceReport(bal: Balance): Seq[String] = {
     Seq(bal.metadata.fold(
-      Json.obj(("balance", bal.asJson(encBalance)))
+      Json.obj(
+        jsonTitle(mySettings.title),
+        jsonBalance(bal))
     )({ md =>
       Json.obj(
+        jsonTitle(mySettings.title),
         ("metadata", md.asJson()),
-        ("balance", bal.asJson(encBalance))
+        jsonBalance(bal)
       )
     }).spaces2)
   }
 
-  protected def txtReporter(txns: TxnData)(reporter: (Balance) => Seq[String]): Seq[String] = {
+  protected def getBalance(txns: TxnData): Balance = {
     val bf = if (mySettings.accounts.isEmpty) {
       AllBalanceAccounts
     } else {
       new BalanceFilterByAccount(mySettings.accounts)
     }
-    val bal = Balance(mySettings.title, txns, bf)
-    reporter(bal)
+
+    Balance(None, txns, bf)
   }
 
   def doReport(formats: Formats, txnData: TxnData): Unit = {
 
+    val bal = getBalance(txnData)
+
     formats.foreach({case (format, writers) =>
       format match {
         case TextFormat() => {
-          val txtBalanceReport = txtReporter(txnData)(txtBalance)
-          doRowOutputs(writers, txtBalanceReport)
+          doRowOutputs(writers, txtBalanceReport(bal))
         }
         case JsonFormat() => {
-          val balanceReport = txtReporter(txnData)(jsonBalanceReport)
-          doRowOutputs(writers, balanceReport)
+          doRowOutputs(writers, jsonBalanceReport(bal))
         }
       }
     })
@@ -168,18 +188,36 @@ class BalanceReport(val name: String, val settings: Settings) extends  BalanceRe
 class BalanceGroupReport(val name: String, val settings: Settings) extends BalanceReportLike {
   private val mySettings = settings.Reports.BalanceGroup
 
-  protected def txtBalanceGroups(txnData: TxnData): Seq[String] = {
+  protected def txtBalanceGroupReport(metadata: Option[Metadata], balGrps: Seq[Balance]): Seq[String] = {
+
+    val header = List(
+      metadata.fold(""){md => md.text()},
+      mySettings.title,
+      "-" * mySettings.title.length)
+
+    val body = balGrps.par.flatMap(bal => txtBalanceGroup(bal))
+
+    header ++ body
+  }
+
+  protected def txtBalanceGroup(bal: Balance): Seq[String] = {
+
+    val (body, footer) = txtBalanceBody(bal)
+    val title = bal.title.getOrElse("")
+    val  header = List(
+      title,
+      "-" * title.length)
+
+    header ++ body ++ List("=" * footer.split("\n").head.length) ++ List(footer)
+  }
+
+  protected def getBalanceGroups(txnData: TxnData): Seq[Balance] = {
 
     val balanceFilter = if (mySettings.accounts.isEmpty) {
       AllBalanceAccounts
     } else {
       new BalanceFilterByAccount(mySettings.accounts)
     }
-
-    val header = List(
-      txnData.metadata.fold(""){md => md.text()},
-      mySettings.title,
-      "-" * mySettings.title.length)
 
     val groupOp = mySettings.groupBy match {
       case GroupByYear() => { txn: Transaction =>
@@ -199,39 +237,39 @@ class BalanceGroupReport(val name: String, val settings: Settings) extends Balan
       }
     }
 
-    val body = Accumulator.balanceGroups(txnData, groupOp, balanceFilter)
-      .par.flatMap(bal => txtBalanceGroup(bal))
-
-    header ++ body
+    Accumulator.balanceGroups(txnData, groupOp, balanceFilter)
   }
 
-  protected def txtBalanceGroup(bal: Balance): Seq[String] = {
+  protected def jsonBalanceGroups(balGrps: Seq[Balance]): (String, Json) = {
+    ("balanceGroups", balGrps.par.map(bal => bal.asJson(encBalance)).to[Seq].asJson)
+  }
 
-    val (body, footer) = txtBalanceBody(bal)
-
-    val  header = List(
-      bal.title,
-      "-" * bal.title.length)
-
-    if (body.isEmpty) {
-      Nil
-    } else {
-      // todo: refactor with balance
-      header ++ body ++ List("=" * footer.split("\n").head.length) ++ List(footer)
-    }
+  protected def jsonBalanceGroupReport(metadata: Option[Metadata], balGrps: Seq[Balance]): Seq[String] = {
+    Seq(metadata.fold(
+      Json.obj(
+        jsonTitle(mySettings.title),
+        jsonBalanceGroups(balGrps))
+    )({ md =>
+      Json.obj(
+        jsonTitle(mySettings.title),
+        ("metadata", md.asJson()),
+        jsonBalanceGroups(balGrps)
+      )
+    }).spaces2)
   }
 
   override
   def doReport(formats: Formats, txnData: TxnData): Unit = {
 
-    val txtBalgrpReport = txtBalanceGroups(txnData)
+    val balGrps = getBalanceGroups(txnData)
 
     formats.foreach({case (format, writers) =>
       format match {
         case TextFormat() =>
-          doRowOutputs(writers, txtBalgrpReport)
+          doRowOutputs(writers, txtBalanceGroupReport(txnData.metadata, balGrps))
 
-        case JsonFormat() => ???
+        case JsonFormat() =>
+          doRowOutputs(writers, jsonBalanceGroupReport(txnData.metadata, balGrps))
       }
     })
   }
