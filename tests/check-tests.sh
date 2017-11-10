@@ -21,6 +21,20 @@ $exe_dir/find-missing.sh
 echo "Duplicates:"
 find "$exe_dir" -name '*.exec' | xargs sed -n 's/.*test:uuid: \(.*\)/\1/p' | sort | uniq -d
 
+echo "Existing test, no test-db records:"
+lonelies=$(mktemp /tmp/exists-no-test-db.XXXXXX)
+trap "rm -f $mkf" 0
+
+find "$exe_dir" -name '*.exec' |\
+	xargs grep 'test:uuid:' |\
+	sed 's/.*test:uuid: //' |\
+	while read uuid; do
+		echo "$(grep -c $uuid $test_db): $uuid"
+	done |\
+	grep '^0:' |\
+	sed 's/^0: //' > $lonelies
+
+find . -name '*.exec' | xargs grep -f $lonelies -l
 
 
 echo 

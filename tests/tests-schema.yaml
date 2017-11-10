@@ -105,4 +105,4 @@ mapping:
                                   - type: map
                                     mapping:
                                       ref: { type: str }
-
+                                      formats: { type: str }
