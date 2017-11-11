@@ -21,6 +21,8 @@ import java.util.UUID
 import cats.implicits._
 
 import fi.sn127.tackler.core.TxnException
+import io.circe.Json
+import io.circe.syntax._
 
 object OrderByTxn extends Ordering[Transaction] {
   def compare(before: Transaction, after: Transaction): Int = {
@@ -98,6 +100,30 @@ final case class Transaction(
     tsFormatter(date) + codeStr.getOrElse(" ") + desc.getOrElse("") + "\n" +
       uuidStr.getOrElse("") +
       commentsStr.getOrElse("")
+  }
+
+  def txnHeaderToJson(tsFormatter: (ZonedDateTime => String)): Json = {
+    val js = List(
+      ("timestamp", tsFormatter(date).asJson)
+    ) ++ code.fold(
+      Nil: List[(String, Json)]
+    )(c =>
+      List(("code", c.asJson))
+    ) ++ desc.fold(
+      Nil: List[(String, Json)]
+    )(d =>
+      List(("description", d.asJson))
+    ) ++ uuid.fold(
+      Nil: List[(String, Json)]
+    )(u =>
+      List(("uuid", u.asJson))
+    ) ++ comments.fold(
+      Nil: List[(String, Json)]
+    )(c =>
+      List(("comments", c.asJson))
+    )
+
+    Json.obj(js: _*)
   }
 
   override def toString: String = {

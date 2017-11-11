@@ -130,18 +130,16 @@ final case class Reports(settings: Settings) {
 
   def doReports(outputBase: Option[Path], txnData: TxnData): Unit ={
     // todo: own set of formats for each report
-    val frmts =  List(ReportFormat("txt"))
+    val frmts =  List(ReportFormat("txt"),ReportFormat("json"))
 
     settings.reports.foreach {
       case BalanceReportType() =>
         val balReport = new BalanceReport("bal", settings)
-        val balFrmts = List(ReportFormat("txt"), ReportFormat("json"))
-        doReport(outputBase, txnData, balReport, balFrmts)
+        doReport(outputBase, txnData, balReport, frmts)
 
       case BalanceGroupReportType() =>
         val balgrpReport = new BalanceGroupReport("balgrp", settings)
-        val balgrpFrmts = List(ReportFormat("txt"), ReportFormat("json"))
-        doReport(outputBase, txnData, balgrpReport, balgrpFrmts)
+        doReport(outputBase, txnData, balgrpReport, frmts)
 
       case RegisterReportType() =>
         val regReport = new RegisterReport("reg", settings)
