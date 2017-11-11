@@ -1,0 +1,81 @@
+{
+  "title" : "REGISTER",
+  "metadata" : {
+    "gitStorage" : {
+      "commit" : "ebe0ca2f24a44069c179f9df3f72ff04ece965d5",
+      "ref" : "shard-01",
+      "message" : "txns data for shard test"
+    }
+  }
+,
+"registerRows" : [
+{
+  "txn" : {
+    "timestamp" : "2017-01-31Z",
+    "description" : "shard03",
+    "uuid" : "c87adf25-bd3c-4050-a441-ddd701f2c53e"
+  },
+  "postings" : [
+    {
+      "account" : "a",
+      "amount" : "1.00",
+      "runningTotal" : "1.00"
+    },
+    {
+      "account" : "e",
+      "amount" : "-1.00",
+      "runningTotal" : "-1.00"
+    }
+  ]
+}
+,
+{
+  "txn" : {
+    "timestamp" : "2017-02-01Z",
+    "description" : "shard01",
+    "uuid" : "4dba67d9-0f47-4c8e-a3bc-f31d2bae2de4"
+  },
+  "postings" : [
+    {
+      "account" : "a",
+      "amount" : "10.00",
+      "runningTotal" : "11.00"
+    },
+    {
+      "account" : "e",
+      "amount" : "-10.00",
+      "runningTotal" : "-11.00"
+    }
+  ]
+}
+,
+{
+  "txn" : {
+    "timestamp" : "2017-02-02Z",
+    "description" : "shard02",
+    "uuid" : "7594bf5f-15b5-46ef-ab7b-21d3c5f19bdc"
+  },
+  "postings" : [
+    {
+      "account" : "a",
+      "amount" : "100.00",
+      "runningTotal" : "111.00"
+    },
+    {
+      "account" : "e",
+      "amount" : "-100.00",
+      "runningTotal" : "-111.00"
+    }
+  ]
+}
+,
+{
+  "txn" : {
+    "timestamp" : null,
+    "description" : "end-sentry"
+  },
+  "postings" : [
+  ]
+}
+]
+}

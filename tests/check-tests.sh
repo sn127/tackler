@@ -15,13 +15,13 @@ do
 	egrep -q -L '.* id: +'$refid' *$' "$test_db" || echo $refid
 done
 
-echo "Missing uuid:"
+echo "Check missing uuid:"
 $exe_dir/find-missing.sh
 
-echo "Duplicates:"
+echo "Check for duplicates:"
 find "$exe_dir" -name '*.exec' | xargs sed -n 's/.*test:uuid: \(.*\)/\1/p' | sort | uniq -d
 
-echo "Existing test, no test-db records:"
+echo "Check tests with missing test-db records:"
 lonelies=$(mktemp /tmp/exists-no-test-db.XXXXXX)
 trap "rm -f $mkf" 0
 
@@ -36,6 +36,8 @@ find "$exe_dir" -name '*.exec' |\
 
 find . -name '*.exec' | xargs grep -f $lonelies -l
 
+echo "Check JSON validity:"
+find "$exe_dir" -name '*.json' -exec "$exe_dir/json_lint.py" {} \;
 
 echo 
 echo "Silence is gold"

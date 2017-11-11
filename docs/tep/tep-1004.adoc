@@ -61,7 +61,7 @@ Changes to conf-settings
 
 Changes to general reporting
 
-* [ ] JSON
+* [x] JSON
 ** [x] Metadata
 ** [ ] Global `formats` -switch
 
@@ -94,9 +94,17 @@ Changes to balance group report
 
 Changes to register report
 
-* [ ] JSON
-** [ ] Metadata
+* [x] JSON
+** [x] Metadata
 
+* [ ] tests
+** [x] tests/parser/ok/out.par-03.reg.txt
+** [x] multiple posts for reg entry
+** [ ] Comma-handling with streaming report
+*** [ ] case where register transactions are filtered out
+**** [ ] first transaction
+**** [ ] consecutive transactions
+**** [ ] last transaction
 
 === Equity report
 
@@ -124,22 +132,22 @@ No JSON support with Identity (because it is export).
 
 Normal, ok-case tests to validate functionality:
 
-* [ ] "normal" and not-normal data
-** [ ] UTF-8 data
-** [ ] Non-valid JSON characters with description etc.
-* [ ] timestamps
-* [ ] code
-** [ ] code with (json) special chars
-* [ ] account names, with UTF-8
+* [x] "normal" and not-normal data
+** [x] UTF-8 data
+** [x] Non-valid JSON characters with description etc.
+* [x] timestamps
+* [x] code
+** [x] code with (json) special chars
+* [x] account names, with UTF-8
 * [x] amounts
 * [x] commodities
-* [ ] Value positions
+* [x] Value positions
 * [ ] PnL: Opening positions
-* [ ] Comments
-** [ ] Transaction Comments
-** [ ] Posting Comments
-* [ ] Transaction metadata
-** [ ] uuid
+* [x] Comments
+** [x] Transaction Comments
+** [x] Posting Comments
+* [x] Transaction metadata
+** [x] uuid
 * [x] Report Metadata
 ** [x] data from git
 *** [x] based on ref
@@ -147,6 +155,8 @@ Normal, ok-case tests to validate functionality:
 *** [x] check link:./TEP-1002.adoc[TEP-1002] for additional test cases
 * [x] check link:../journal.adoc[journal format] for additional test cases
 
+* [x] tests/commodity/ok/basic-04.exec
+* [x] tests/commodity/ok/basic-06.exec
 
 === Errors
 

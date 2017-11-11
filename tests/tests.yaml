@@ -471,6 +471,24 @@ features:
               refid: bc8f6399-fd7a-420a-8deb-9cc0ae97c9f6
 
   - feature:
+      id: db4f2f57-aac8-41d6-997f-489cfaab8345
+      subject: "Comments, journal level (not supported)"
+      tests:
+        errors:
+          - error:
+              id: a9c742e8-9f9a-42dc-8e09-f1ffe5e6e728
+              name: tests/parser/ex/journal-comment-01.exec
+              desc: "comment on the last line"
+          - error:
+              id: 73a17e9d-3a91-4c29-bbc7-bf8c7b1b347e
+              name: tests/parser/ex/journal-comment-02.exec
+              desc: "comment between txn entries"
+          - error:
+              id: 132f11c4-facd-4fbc-9550-eafd751a2cd8
+              name: tests/parser/ex/journal-comment-03.exec
+              desc: "comment on the first line"
+
+  - feature:
       id: 1d7b6ba2-5a63-481f-9c74-527e203e5f4b
       subject: "Comments, txn -level"
       tests:
@@ -608,9 +626,13 @@ features:
               id: 42ad9d32-64aa-4fcd-a4ab-1e8521b921e3
               name: PostingTest
           - error:
-              id: 144bd8b1-aa94-4454-a490-b0e8fdaddc1e
+              id: 71d06779-dce9-4499-b54a-0af85b33ac44
               name: tests/core/ex/TxnException-zero-posting.exec
-              desc: posting with zero amount
+              desc: "posting with zero amount (by input file)"
+          - error:
+              id: 144bd8b1-aa94-4454-a490-b0e8fdaddc1e
+              name: tests/core/ex/TxnException-zero-posting-01.exec
+              desc: "posting with zero amount (by conf & empty dir)"
 
 ### Reports
   - feature:
@@ -1376,14 +1398,36 @@ features:
         operations:
           - test:
               id: 7b8073e2-8264-4eba-b282-5bfb8e1718d2
-              name: tests/commodity/ok/gas-blender.exec
+              name: tests/commodity/ok/gas-blender-billing.exec
               descriptions:
                 - desc: Example of accounting and billing system for Gas Mixing Station
-                - desc: Tracking comsumption of commodities (Helium and Oxygen)
                 - desc: Converting commodities to monetary values
               references:
                 - ref: balance
+          - test:
+              id: 6cc57a39-49ad-4563-b349-5fa28766b575
+              name: tests/commodity/ok/gas-blender-mix-log.exec
+              descriptions:
+                - desc: Example of accounting and billing system for Gas Mixing Station
+                - desc: Mix log and transaction entry
+              references:
                 - ref: register
+          - test:
+              id: 334203d1-a147-48ab-8ec2-50ce006cc9cc
+              name: tests/commodity/ok/gas-blender-saldo.exec
+              descriptions:
+                - desc: Example of accounting and billing system for Gas Mixing Station
+                - desc: Tracking comsumption of commodities (Helium and Oxygen)
+              references:
+                - ref: balance
+          - test:
+              id: 7f847843-d14d-4bea-8f8d-beb94ea675b4
+              name: tests/commodity/ok/gas-blender-tanks.exec
+              descriptions:
+                - desc: Example of accounting and billing system for Gas Mixing Station
+                - desc: Tracking comsumption of commodities (Helium and Oxygen)
+              references:
+                - ref: balance
   - feature:
       id: cc667fda-d5ee-4a64-91ed-443ba76ca96c
       parent: b6013748-102c-4632-ada1-5b3c8dcc3b42
@@ -1681,5 +1725,75 @@ features:
               references:
                 - ref: balance
                 - ref: balance-group
+  - feature:
+      id: 01bf115d-68df-4051-9c3f-3c3c0ca942b7
+      parent: 7ba138c0-942c-4942-bb5d-ed5c45c5a9ce
+      subject: "JSON output: register"
+      tests:
+        operations:
+          - test:
+              refid: fd250432-9b13-4cdd-83a1-1aedff1593ed
+              name: tests/cli/ok/console-03.exec
+              descriptions:
+                - desc: "UTF-8 data"
+                - desc: "missing description"
+              references:
+                - ref: balance
+                - ref: balance-group
+                - ref: register
+          - test:
+              refid: c5493e99-d0f3-49b3-8450-3ae6ef970b10
+              name: tests/commodity/ok/basic-04.exec
+              descriptions:
+                - desc: "commodities"
+              references:
+                - ref: balance
+                - ref: balance-group
+                - ref: register
+          - test:
+              refid: 0dae7dfd-c816-4a77-afff-a372e1802026
+              name: tests/commodity/ok/basic-06.exec
+              descriptions:
+                - desc: "commodities with trick (account name as commodity name)"
+              references:
+                - ref: balance
+                - ref: balance-group
+                - ref: register
+          - test:
+              refid: 0f06fe78-83ca-46a9-a5cd-b873ab6be807
+              name: tests/parser/ok/post-comments-01.exec
+              descriptions:
+                - desc: "comments: postings"
+              references:
+                - ref: balance
+                - ref: balance-group
+                - ref: register
+          - test:
+              refid: 5f80093d-6e90-4108-a18c-d76c91cacb55
+              name: tests/parser/ok/txn-comments-01.exec
+              descriptions:
+                - desc: "comments: transaction"
+              references:
+                - ref: balance
+                - ref: balance-group
+                - ref: register
+          - test:
+              refid: 2564946b-3afb-4edc-9ee5-3c0f37baa1a1
+              name: tests/parser/ok/par-02.exec
+              descriptions:
+                - desc: "difficult chars: code"
+                - desc: "difficult chars: description"
+                - desc: "difficult chars: comments"
+                - desc: "uuid"
+              references:
+                - ref: register
+          - test:
+              refid: 8ab8a08b-2348-4c20-8971-b357b2a8b6e1
+              name: tests/parser/ok/code-01.exec
+              descriptions:
+                - desc: "difficult chars: code"
+                - desc: "code mechanics (non-present etc)"
+              references:
+                - ref: register
 
 ### JSON output END

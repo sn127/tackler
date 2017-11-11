@@ -1,0 +1,136 @@
+{
+  "title" : "REGISTER"
+,
+"registerRows" : [
+{
+  "txn" : {
+    "timestamp" : "2017-05-01Z",
+    "description" : "basic commodity (EUR)"
+  },
+  "postings" : [
+    {
+      "account" : "a",
+      "amount" : "-1.00",
+      "runningTotal" : "-1.00",
+      "commodity" : "EUR"
+    },
+    {
+      "account" : "e:b:c",
+      "amount" : "1.00",
+      "runningTotal" : "1.00",
+      "commodity" : "EUR"
+    }
+  ]
+}
+,
+{
+  "txn" : {
+    "timestamp" : "2017-05-02Z",
+    "description" : "default with commodity (EUR)"
+  },
+  "postings" : [
+    {
+      "account" : "a",
+      "amount" : "-10.00",
+      "runningTotal" : "-11.00",
+      "commodity" : "EUR"
+    },
+    {
+      "account" : "e",
+      "amount" : "10.00",
+      "runningTotal" : "10.00",
+      "commodity" : "EUR"
+    }
+  ]
+}
+,
+{
+  "txn" : {
+    "timestamp" : "2017-05-03Z",
+    "description" : "no commodity"
+  },
+  "postings" : [
+    {
+      "account" : "a",
+      "amount" : "-200.00",
+      "runningTotal" : "-200.00"
+    },
+    {
+      "account" : "e",
+      "amount" : "200.00",
+      "runningTotal" : "200.00"
+    }
+  ]
+}
+,
+{
+  "txn" : {
+    "timestamp" : "2017-05-04Z",
+    "description" : "no commodity with default"
+  },
+  "postings" : [
+    {
+      "account" : "a",
+      "amount" : "-100.00",
+      "runningTotal" : "-300.00"
+    },
+    {
+      "account" : "e",
+      "amount" : "100.00",
+      "runningTotal" : "300.00"
+    }
+  ]
+}
+,
+{
+  "txn" : {
+    "timestamp" : "2017-05-05Z",
+    "description" : "basic commodity (USD)"
+  },
+  "postings" : [
+    {
+      "account" : "a",
+      "amount" : "-1000.00",
+      "runningTotal" : "-1000.00",
+      "commodity" : "USD"
+    },
+    {
+      "account" : "e:b",
+      "amount" : "1000.00",
+      "runningTotal" : "1000.00",
+      "commodity" : "USD"
+    }
+  ]
+}
+,
+{
+  "txn" : {
+    "timestamp" : "2017-05-06Z",
+    "description" : "default with commodity (USD)"
+  },
+  "postings" : [
+    {
+      "account" : "a",
+      "amount" : "-2000.00",
+      "runningTotal" : "-3000.00",
+      "commodity" : "USD"
+    },
+    {
+      "account" : "e:b:c",
+      "amount" : "2000.00",
+      "runningTotal" : "2000.00",
+      "commodity" : "USD"
+    }
+  ]
+}
+,
+{
+  "txn" : {
+    "timestamp" : null,
+    "description" : "end-sentry"
+  },
+  "postings" : [
+  ]
+}
+]
+}

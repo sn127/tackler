@@ -1,0 +1,22 @@
+{
+  "title" : "BALANCE",
+  "balance" : {
+    "balanceRows" : [
+      {
+        "accountSum" : "4.00",
+        "accountTreeSum" : "4.00",
+        "account" : "a"
+      },
+      {
+        "accountSum" : "-4.00",
+        "accountTreeSum" : "-4.00",
+        "account" : "e"
+      }
+    ],
+    "deltas" : [
+      {
+        "delta" : "0.00"
+      }
+    ]
+  }
+}
