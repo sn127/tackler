@@ -168,12 +168,12 @@ Various error cases:
 
 Test performance with new output format, especially streaming case.
 
-* [ ] text vs. json output tests
+* [x] text vs. json output tests
 ** [ ] balance
-** [ ] registry
-* [ ] text *and* json output tests
+** [x] registry
+* [x] text *and* json output tests
 ** [ ] balance
-** [ ] registry
+** [x] registry
 
 
 === Metadata for test coverage tracking
