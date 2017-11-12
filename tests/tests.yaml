@@ -217,6 +217,22 @@ features:
               refid: ba71f292-cc3e-406f-991e-8dd82a7cf87c
 
   - feature:
+      id: 57cd42b2-7319-42dd-a0be-809927f66bdd
+      subject: "conf: reporting.formats"
+      tests:
+        operations:
+          - test:
+              refid: ed89d638-70fa-474c-b88f-be03df6231df
+          - test:
+              refid: a52914e4-0887-4255-abea-c0b457802f56
+          - test:
+              refid: 053ca6b0-6be6-4fc1-9dd8-6abc754d98d1
+          - test:
+              refid: 66692492-2b9f-46c2-8e09-a49573ba0cec
+          - test:
+              refid: 9fff9c03-c94b-4d67-9180-ac7d22edf0c7
+
+  - feature:
       id: 4f83e4ad-4bc9-46a1-9f1e-b4863e8a2839
       subject: "conf: reporting.accounts"
       tests:
@@ -1111,6 +1127,18 @@ features:
               references:
                 - ref: balance
                 - ref: balance-group
+
+  - feature:
+      id: 780ed0b3-cbb6-4bfb-82a5-c70ae94e2d15
+      subject: "cli: args: reporting.formats"
+      tests:
+        operations:
+          - test:
+              refid: 8a7a8c60-aab9-4700-b081-9804c1ec537f
+          - test:
+              refid: c5493e99-d0f3-49b3-8450-3ae6ef970b10
+          - test:
+              refid: 0dae7dfd-c816-4a77-afff-a372e1802026
 
   - feature:
       id: 6b8b9f4a-20e8-45e7-b0ea-1daf99d6589b

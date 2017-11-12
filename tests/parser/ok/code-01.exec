@@ -1,4 +1,4 @@
 # format: exec
 # test:uuid: 8ab8a08b-2348-4c20-8971-b357b2a8b6e1
 #
-exec:--cfg;tests/parser/ok.conf;--input.file;code.txn;--output;out.code-01;
+exec:--cfg;tests/parser/ok.conf;--reporting.formats;txt;json;--input.file;code.txn;--output;out.code-01;

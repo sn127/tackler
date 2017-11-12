@@ -26,14 +26,14 @@ Changes to machinery
 
 Changes to command line interface
 
-* [ ] `reporting.formats` switch
+* [x] `reporting.formats` switch
 
 
 === CONF changes
 
 Changes to conf-settings
 
-* [ ] `reporting { formats }` switch
+* [x] `reporting { formats }` switch
 
 
 === New dependencies
@@ -63,7 +63,7 @@ Changes to general reporting
 
 * [x] JSON
 ** [x] Metadata
-** [ ] Global `formats` -switch
+** [x] Global `formats` -switch
 
 === Balance report
 

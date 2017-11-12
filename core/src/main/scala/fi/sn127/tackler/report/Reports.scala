@@ -130,7 +130,7 @@ final case class Reports(settings: Settings) {
 
   def doReports(outputBase: Option[Path], txnData: TxnData): Unit ={
     // todo: own set of formats for each report
-    val frmts =  List(ReportFormat("txt"),ReportFormat("json"))
+    val frmts: Seq[ReportFormat] = settings.formats
 
     settings.reports.foreach {
       case BalanceReportType() =>
