@@ -1,5 +1,16 @@
 #!/bin/bash
-
+#
+# This tool checks meta information of tests
+#
+# Included checks are:
+# - check syntax of test-db (tests.yaml)
+# - check duplicate test-ids (test-db)
+# - check refid's targets 
+# - check test with missing id
+# - check duplicate id's in test-vectors (exec-files)
+# - check that all tests are recorded in test-db
+# - check that all JSON is valid (references and output)
+#
 exe_dir=$(dirname $0)
 
 test_db="$exe_dir/tests.yaml"

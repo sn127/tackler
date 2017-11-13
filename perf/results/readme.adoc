@@ -10,7 +10,7 @@ Results with versions correspond to different ANTLR versions, and
 most current version is without version string.
 
 
-Results for Filesystem based storage:
+Results for Filesystem based storage (Dual Core CPU):
 
  * link:./hw01/perf-1E3.txt[FS 1e3]
  * link:./hw01/perf-1E6.txt[FS 1e6]

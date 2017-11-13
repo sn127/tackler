@@ -1,4 +1,4 @@
-= TEP-1004: JSON output
+= TEP-1004: JSON report output
 
 Provide internal API to have report output in JSON.
 
@@ -76,6 +76,10 @@ Changes to balance report
 *** [x] commodity as own entity
 * [x] tests/reporting/group-by
 
+==== Examples
+
+* link:../../tests/commodity/ok/basic-03.ref.bal.json[Balance with commodities]
+* link:../../tests/core/ok/git-tag-01.ref.bal.json[Balance with Metadata]
 
 
 === Balance Group report
@@ -89,6 +93,10 @@ Changes to balance group report
 **** [x] record to tests.yaml
 ** [x] See balance as applicable
 
+==== Examples
+
+* link:../../tests/commodity/ok/basic-03.ref.balgrp.json[Balance-group with Commodities]
+* link:../../tests/core/ok/git-tag-01.ref.balgrp.json[Balange-group with Metata]
 
 === Register report
 
@@ -97,14 +105,14 @@ Changes to register report
 * [x] JSON
 ** [x] Metadata
 
-* [ ] tests
+* [x] tests
 ** [x] tests/parser/ok/out.par-03.reg.txt
 ** [x] multiple posts for reg entry
-** [ ] Comma-handling with streaming report
-*** [ ] case where register transactions are filtered out
-**** [ ] first transaction
-**** [ ] consecutive transactions
-**** [ ] last transaction
+
+==== Examples
+
+* link:../../tests/commodity/ok/basic-03.ref.reg.json[Register report with Commodities]
+* link:../../tests/core/ok/git-tag-01.ref.reg.json[Register report with Commodities]
 
 === Equity report
 
@@ -117,16 +125,15 @@ No JSON support with Identity (because it is export).
 
 == Documentation
 
-* [ ] link:../../README.adoc[]: is it a new noteworthy feature?
-* [ ] link:../../CHANGELOG[]: add new item
-* [ ] User docs
-** [ ] user manual
-*** [ ] cli-arguments
-**** [ ] `--reporting.formats`
-** [ ] tackler.conf
-*** [ ] `reporting { formats }`
-** [ ] examples
-* [ ] Developer docs
+* [x] link:../../README.adoc[]: is it a new noteworthy feature?
+* [x] link:../../CHANGELOG[]: add new item
+* [x] User docs
+** [x] user manual
+*** [x] cli-arguments
+**** [x] `--reporting.formats`
+** [x] tackler.conf
+*** [x] `reporting { formats }`
+** [x] examples
 
 == Tests
 
@@ -142,7 +149,7 @@ Normal, ok-case tests to validate functionality:
 * [x] amounts
 * [x] commodities
 * [x] Value positions
-* [ ] PnL: Opening positions
+* [x] PnL: Opening positions (this is not visible in reports at the moment)
 * [x] Comments
 ** [x] Transaction Comments
 ** [x] Posting Comments
@@ -160,9 +167,7 @@ Normal, ok-case tests to validate functionality:
 
 === Errors
 
-Various error cases:
-
-* [ ] e: error test 1
+No special error cases with this new format.
 
 === Perf
 

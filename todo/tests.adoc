@@ -1,13 +1,17 @@
 
 = Tests TODO
 
-* [x] full combo of value pos txns
-** [x] all same comm.
-** [x] mixed comm.
-** [x] missing comm.
-
-
 * [x] equity: test when all postings balance (no need for balance account)
 ** [ ] equity -> input: above (not-null accounts are not allowed)
 ** [ ] equity -> input: check and fix equity chen equity account is part of input (valpos -tests)
+
+
+JSON reports: especially if last sentry node is removed/refactored, 
+then followin tests are needed:
+* [ ] Comma-handling with balance-group report
+* [ ] Comma-handling with register (streaming) report
+** [ ] case where register transactions are filtered out
+*** [ ] first transaction
+*** [ ] consecutive transactions
+*** [ ] last transaction
 
