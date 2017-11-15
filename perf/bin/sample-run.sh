@@ -2,22 +2,37 @@
 
 exe_path=$1
 trg=$2
+report=$3
+formats="$4"
 
 storage=fs
-# --input.git.ref $trg \
+
+
+version=$(java -jar $exe_path --version | sed 's/Version: \([^ ]\+\) \[.*/\1/')
+
+if [ "$version" = "0.4.1" ]; then
+   fs=txn
+else
+   fs=fs
+fi
+
 
 (
 for i in 1 2 3 4 5; do 
-	time java -jar "$exe_path" \
+	/usr/bin/time -f "\nreal\t%es\nuser\t%Us\nsys\t%Ss\nmem\t%Mk (max)\ncpu\t%P" \
+	java -Xmx4G -Xms4G -jar "$exe_path" \
 	--cfg perf-$storage.conf \
-	--input.fs.glob "**.txn" \
-	--input.fs.dir data/perf-$trg/ \
+	--input.$fs.glob "**.txn" \
+	--input.$fs.dir data/perf-$trg/ \
 	--output out/perf-$storage-$trg \
-	--reporting.formats json txt \
 	--reporting.console false \
-	--reporting.reports register
+	--reporting.reports $report
 
 	echo
 done
-) > results/hw01/0.7.0-next-perf-$storage-$trg-register_json_txt.txt  2>&1 
+) > results/hw04/$version-perf-$storage-$trg-$report.txt  2>&1
+
+#) > results/hw02/$version-perf-$storage-$trg-$report-"$(echo $formats | tr ' ' '_')".txt  2>&1
+# --reporting.formats $formats \
+# --input.git.ref $trg \
 
