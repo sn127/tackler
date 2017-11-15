@@ -14,7 +14,7 @@ for r in $reports; do
 for f in txt json "txt json"; do
 
 echo "run: $v $s $r $f"
-$exe_dir/sample-run.sh dist/tackler-cli-$v.jar $s $r "$f"
+$exe_dir/perf-run.sh dist/tackler-cli-$v.jar $s $r "$f"
 
 done
 done
