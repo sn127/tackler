@@ -174,10 +174,10 @@ No special error cases with this new format.
 Test performance with new output format, especially streaming case.
 
 * [x] text vs. json output tests
-** [ ] balance
+** [x] balance
 ** [x] registry
 * [x] text *and* json output tests
-** [ ] balance
+** [x] balance
 ** [x] registry
 
 

@@ -18,6 +18,15 @@ fi
 
 
 (
+echo "exe: $exe_path"
+echo "set: $trg"
+echo "version: $version"
+echo "storage: $storage"
+echo "report: $report"
+echo "formats: $formats"
+echo ""
+echo ""
+ 
 for i in 1 2 3 4 5; do 
 	/usr/bin/time -f "\nreal\t%es\nuser\t%Us\nsys\t%Ss\nmem\t%Mk (max)\ncpu\t%P" \
 	java -Xmx4G -Xms4G -jar "$exe_path" \
@@ -26,13 +35,13 @@ for i in 1 2 3 4 5; do
 	--input.$fs.dir data/perf-$trg/ \
 	--output out/perf-$storage-$trg \
 	--reporting.console false \
+	--reporting.formats $formats \
 	--reporting.reports $report
 
 	echo
 done
-) > results/hw00/$version-perf-$storage-$trg-$report.txt  2>&1
+) > results/hw00/$version-perf-$storage-$trg-$report-"$(echo $formats | tr ' ' '_')".txt  2>&1
 
-#) > results/hw02/$version-perf-$storage-$trg-$report-"$(echo $formats | tr ' ' '_')".txt  2>&1
-# --reporting.formats $formats \
+#) > results/hw00/$version-perf-$storage-$trg-$report.txt  2>&1
 # --input.git.ref $trg \
 
