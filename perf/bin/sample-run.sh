@@ -30,7 +30,7 @@ for i in 1 2 3 4 5; do
 
 	echo
 done
-) > results/hw04/$version-perf-$storage-$trg-$report.txt  2>&1
+) > results/hw00/$version-perf-$storage-$trg-$report.txt  2>&1
 
 #) > results/hw02/$version-perf-$storage-$trg-$report-"$(echo $formats | tr ' ' '_')".txt  2>&1
 # --reporting.formats $formats \

@@ -1,0 +1,50 @@
+Txns size: 10000
+
+Total processing time: 3446, input: 38, parse: 850, reporting: 872
+
+real	3.71s
+user	11.89s
+sys	0.49s
+mem	736824k (max)
+cpu	333%
+
+Txns size: 10000
+
+Total processing time: 3481, input: 37, parse: 984, reporting: 755
+
+real	3.70s
+user	12.51s
+sys	0.44s
+mem	731600k (max)
+cpu	349%
+
+Txns size: 10000
+
+Total processing time: 3465, input: 38, parse: 994, reporting: 743
+
+real	3.69s
+user	12.53s
+sys	0.50s
+mem	742724k (max)
+cpu	352%
+
+Txns size: 10000
+
+Total processing time: 3490, input: 38, parse: 951, reporting: 813
+
+real	3.90s
+user	12.55s
+sys	0.49s
+mem	709648k (max)
+cpu	334%
+
+Txns size: 10000
+
+Total processing time: 3464, input: 37, parse: 979, reporting: 756
+
+real	3.88s
+user	12.22s
+sys	0.49s
+mem	723664k (max)
+cpu	327%
+
