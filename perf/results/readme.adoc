@@ -1,41 +1,54 @@
-= Performance results
+= Performance test results
 
-These are ballpark results. They are mostly used to validate sanity of used 
-algorithms and overall performance.
+Tackler is performance tested to validate sanity of used algorithms and overall performance of system.
 
-Typical performance of balance report on hyper-threaded Quad Core system is:
+These are ballpark figures and  should be treated as such. Test method contains serious inaccuracies
+especially with smaller tests set (load time of JVM, JIT, etc.), however it should be good enough to validate
+selected algorithms and overall memory usage with increasing work load.
+
+Performance test tools and scripts are located under link:../bin[bin] directory.
+
+== Quad core system
+
+This is low-end server system with quad core cpu. CPU has four cores and eight threads. All txn data can be cached
+in memory. Full hardware info is link:./hw00/hw-info.txt[located here] and full test logs are link:./hw00/[here].
 
  * 1E3 txns:  2 sec, 250MB
  * 1E4 txns:  3 sec, 500MB
  * 1E5 txns:  5 sec, 1.4GB
- * 1E6 txns: 20 sec, 2.8GB 
+ * 1E6 txns: 18 sec, 2.8GB, 56000 txn/s
 
-CPU utilization is around 500%
+CPU utilization is around 540%
 
-== Actual test results
 
-Used test data is 1E3, 1E4, 1E5 or 1E6 set of transactions. Tests are run for all 
+== Dual core system
+
+This system is normal-ish laptop system with dual core cpu. CPU has two cores and four threads. All txn data be cached
+in memory. Full hardware info is link:./hw01/hw-info.txt[located here] and full test logs are link:./hw01/[here].
+
+ * 1E3 txns:  3 sec, 200MB
+ * 1E4 txns:  4 sec, 450MB
+ * 1E5 txns:  8 sec, 1.4GB
+ * 1E6 txns: 32 sec, 2.8GB, 31000 txn/s
+
+CPU utilization is around 322%
+
+
+== Test results
+
+Used test data is 1E3, 1E4, 1E5 or 1E6 set of transactions. Tests are run for all
 report types and for all formats.
- 
-Typically there are five runs, and slowest and fastest are dropped off from results.
-Then Average is calculated based on remaining three.
 
-=== Results for Filesystem based storage 
+There are five runs for each report and format types.
 
-These are based on multithread implementation and are run on Quad Core CPU.
 
- * 1E3
- ** link:./hw00/0.7.0-next-perf-fs-1E3-balance-txt.txt[1E3, Balance report, FS]
- ** link:./hw00/0.7.0-next-perf-fs-1E3-balance-group-txt.txt[1E3, Balance Group report, FS]
- ** link:./hw00/0.7.0-next-perf-fs-1E3-register-txt.txt[1E3, Register report, FS]
- * 1E6 
- ** link:./hw00/0.7.0-next-perf-fs-1E6-balance-txt.txt[1E6, Balance report, FS]
- ** link:./hw00/0.7.0-next-perf-fs-1E6-balance-group-txt.txt[1E6, Balance Group report, FS]
- ** link:./hw00/0.7.0-next-perf-fs-1E6-register-txt.txt[1E6, Register report, FS]
+=== Results for Filesystem backend
 
-All results are here: link:./hw00/[hw00]
+ * link:./hw00/[HW00 (server) results]
+ * link:./hw01/[HW01 (laptop) results]
 
-=== Results for Git based storage
+
+=== Results for Git storage
 
 These are based on currently single thread implementation:
 
