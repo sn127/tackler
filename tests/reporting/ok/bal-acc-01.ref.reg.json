@@ -1,0 +1,80 @@
+{
+  "title" : "REGISTER"
+,
+"registerRows" : [
+{
+  "txn" : {
+    "timestamp" : "2017-01-01Z",
+    "description" : "01"
+  },
+  "postings" : [
+    {
+      "account" : "a:b",
+      "amount" : "1.00",
+      "runningTotal" : "1.00"
+    },
+    {
+      "account" : "e:e0101",
+      "amount" : "-1.00",
+      "runningTotal" : "-1.00"
+    }
+  ]
+}
+,
+{
+  "txn" : {
+    "timestamp" : "2017-01-01Z",
+    "description" : "01"
+  },
+  "postings" : [
+    {
+      "account" : "a:b",
+      "amount" : "20.00",
+      "runningTotal" : "21.00"
+    }
+  ]
+}
+,
+{
+  "txn" : {
+    "timestamp" : "2017-01-01Z",
+    "description" : "01"
+  },
+  "postings" : [
+    {
+      "account" : "a:b:c",
+      "amount" : "300.00",
+      "runningTotal" : "300.00"
+    },
+    {
+      "account" : "e:e0101",
+      "amount" : "-300.00",
+      "runningTotal" : "-301.00"
+    }
+  ]
+}
+,
+{
+  "txn" : {
+    "timestamp" : "2017-01-02Z",
+    "description" : "check that report filtering doesn't affect accumulator"
+  },
+  "postings" : [
+    {
+      "account" : "a:by:not",
+      "amount" : "0.01",
+      "runningTotal" : "0.01"
+    }
+  ]
+}
+,
+{
+  "txn" : {
+    "timestamp" : null,
+    "description" : "end-sentry"
+  },
+  "postings" : [
+  ]
+}
+]
+}

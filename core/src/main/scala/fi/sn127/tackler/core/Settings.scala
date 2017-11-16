@@ -52,6 +52,7 @@ object CfgKeys {
   val accounts_coa: String = "accounts.coa"
 
   val reporting_reports: String  = "reporting.reports"
+  val reporting_formats: String  = "reporting.formats"
   val reporting_accounts: String = "reporting.accounts"
   val reporting_console: String = "reporting.console"
 
@@ -162,6 +163,9 @@ class Settings(cfgPath: Path, cliCfgSettings: Config) {
 
   val reports: List[ReportType] = cfg.getStringList(CfgKeys.reporting_reports).asScala
     .map(ReportType(_)).toList
+
+  val formats: List[ReportFormat] = cfg.getStringList(CfgKeys.reporting_formats).asScala
+    .map(ReportFormat(_)).toList
 
   val accounts: List[String] = cfg.getStringList(CfgKeys.reporting_accounts).asScala.toList
 

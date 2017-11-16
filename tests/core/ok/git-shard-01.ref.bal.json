@@ -1,0 +1,29 @@
+{
+  "title" : "BALANCE",
+  "metadata" : {
+    "gitStorage" : {
+      "commit" : "ebe0ca2f24a44069c179f9df3f72ff04ece965d5",
+      "ref" : "shard-01",
+      "message" : "txns data for shard test"
+    }
+  },
+  "balance" : {
+    "balanceRows" : [
+      {
+        "accountSum" : "111.00",
+        "accountTreeSum" : "111.00",
+        "account" : "a"
+      },
+      {
+        "accountSum" : "-111.00",
+        "accountTreeSum" : "-111.00",
+        "account" : "e"
+      }
+    ],
+    "deltas" : [
+      {
+        "delta" : "0.00"
+      }
+    ]
+  }
+}

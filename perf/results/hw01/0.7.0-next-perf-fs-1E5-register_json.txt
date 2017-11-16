@@ -1,0 +1,40 @@
+Txns size: 100000
+
+Total processing time: 12388, parse: 6245, reporting: 5183
+
+real	0m12,692s
+user	0m32,486s
+sys	0m2,404s
+
+Txns size: 100000
+
+Total processing time: 12552, parse: 5891, reporting: 5712
+
+real	0m12,856s
+user	0m32,645s
+sys	0m2,485s
+
+Txns size: 100000
+
+Total processing time: 11566, parse: 5672, reporting: 4930
+
+real	0m11,873s
+user	0m29,850s
+sys	0m2,489s
+
+Txns size: 100000
+
+Total processing time: 12779, parse: 6253, reporting: 5566
+
+real	0m13,293s
+user	0m33,968s
+sys	0m2,438s
+
+Txns size: 100000
+
+Total processing time: 12554, parse: 6660, reporting: 4918
+
+real	0m12,876s
+user	0m33,968s
+sys	0m2,547s
+

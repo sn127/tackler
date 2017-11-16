@@ -16,8 +16,12 @@
  */
 package fi.sn127.tackler.model
 
+import io.circe._
+import io.circe.syntax._
+
 abstract trait Metadata {
   def text(): String
+  def asJson(): Json
 }
 
 /**
@@ -36,5 +40,13 @@ class GitMetadata(val ref: String, val commit: String, val shortMessage: String)
       "   commit:  " + commit + "\n" +
       "   ref:     " + ref + "\n" +
       "   message: " + shortMessage + "\n"
+  }
+
+  override def asJson(): Json = {
+    Json.obj(("gitStorage",
+      Json.obj(
+        ("commit", commit.asJson),
+        ("ref", ref.asJson),
+        ("message", shortMessage.asJson))))
   }
 }

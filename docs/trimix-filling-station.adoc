@@ -132,7 +132,11 @@ Test data and setup is described below.
 
 ===== Test data
 
-* link:../tests/commodity/ok/gas-blender.exec[Test steps]
+* Test steps
+** link:../tests/commodity/ok/gas-blender-billing.exec[Billing]
+** link:../tests/commodity/ok/gas-blender-mix-log.exec[Mixer log]
+** link:../tests/commodity/ok/gas-blender-saldo.exec[Mixer Saldo]
+** link:../tests/commodity/ok/gas-blender-tanks.exec[Storage tank pressures]
 * link:../tests/commodity/ok/gas-blender[Accounting data]
 
 ===== Configuration

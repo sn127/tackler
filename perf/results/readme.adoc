@@ -1,40 +1,57 @@
-= Performance results
+= Performance test results
 
-These are ballpark results.
-They are mostly used to validate sanity of used algorithms and overall performance.
+Tackler is performance tested to validate sanity of used algorithms and overall performance of system.
 
-Typically there are five runs, and slowest and fastest are dropped off from results.
-Then Average is calculated based on remaining three.
+These are ballpark figures and  should be treated as such. Test method contains serious inaccuracies
+especially with smaller tests set (load time of JVM, JIT, etc.), however it should be good enough to validate
+selected algorithms and overall memory usage with increasing work load.
 
-Results with versions correspond to different ANTLR versions, and
-most current version is without version string.
+Performance test tools and scripts are located under link:../bin[bin] directory.
+
+== Quad core system
+
+This is low-end server system with quad core cpu. CPU has four cores and eight threads. All txn data can be cached
+in memory. Full hardware info is link:./hw00/hw-info.txt[located here] and full test logs are link:./hw00/[here].
+
+ * 1E3 txns:  2 sec, 250MB
+ * 1E4 txns:  3 sec, 500MB
+ * 1E5 txns:  5 sec, 1.4GB
+ * 1E6 txns: 18 sec, 2.8GB, 56000 txn/s
+
+CPU utilization is around 540%
 
 
-Results for Filesystem based storage:
+== Dual core system
 
- * link:./hw01/perf-1E3.txt[FS 1e3]
- * link:./hw01/perf-1E6.txt[FS 1e6]
+This system is normal-ish laptop system with dual core cpu. CPU has two cores and four threads. All txn data be cached
+in memory. Full hardware info is link:./hw01/hw-info.txt[located here] and full test logs are link:./hw01/[here].
 
-Results for Git based storage (currently single thread based implementation):
+ * 1E3 txns:  3 sec, 200MB
+ * 1E4 txns:  4 sec, 450MB
+ * 1E5 txns:  8 sec, 1.4GB
+ * 1E6 txns: 32 sec, 2.8GB, 31000 txn/s
 
- * link:./hw01/perf-git-1e3.txt[Git 1e3]
- * link:./hw01/perf-git-1e6.txt[Git 1e6]
+CPU utilization is around 322%
 
 
-== ANTRL versions
+== Test results
 
-=== ANTLR 4.7
+Used test data is 1E3, 1E4, 1E5 or 1E6 set of transactions. Tests are run for all
+report types and for all formats.
 
-link:https://github.com/antlr/antlr4/releases/tag/4.7[Major changes of ANTLR 4.7]
-include full 21-bit unicode support and deprecated `ANTLRFileStream et.al.`
-These changes had no visible impact on Tackler's performance:
+There are five runs for each report and format types.
 
- * link:./hw01/perf-1E3-antlr-4.7.txt[]
- * link:./hw01/perf-1E6-antlr-4.7.txt[]
 
-=== ANTLR 4.6
+=== Results for Filesystem backend
 
-Initially used version
+ * link:./hw00/[HW00 (server) results]
+ * link:./hw01/[HW01 (laptop) results]
 
- * link:./hw01/perf-1E3-antlr-4.6.txt[]
- * link:./hw01/perf-1E6-antlr-4.6.txt[]
+
+=== Results for Git storage
+
+These are based on currently single thread implementation:
+
+ * link:./hw01/perf-git-1e3.txt[Git 1E3]
+ * link:./hw01/perf-git-1e6.txt[Git 1E6]
+

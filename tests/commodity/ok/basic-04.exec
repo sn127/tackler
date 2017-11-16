@@ -2,4 +2,4 @@
 # test:uuid: c5493e99-d0f3-49b3-8450-3ae6ef970b10
 #
 # Test correct behaviour with AccountTree and commodities
-exec:--cfg;tests/commodity/ok.conf;--input.file;basic-04.txn;--output;out.basic-04;
+exec:--cfg;tests/commodity/ok.conf;--reporting.formats;txt;json;--input.file;basic-04.txn;--output;out.basic-04;

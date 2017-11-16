@@ -1,4 +1,4 @@
 # format: exec
 # test:uuid: fd250432-9b13-4cdd-83a1-1aedff1593ed
 # Console off, over-ride cli
-exec:--cfg;tests/cli/ok-console-off.conf;--input.fs.dir;console-txns;--input.fs.glob;**.txn;--output;out.console-03;--accounts.strict;false;--reporting.console;true;
+exec:--cfg;tests/cli/ok-console-off.conf;--input.fs.dir;console-txns;--input.fs.glob;**.txn;--reporting.formats;txt;json;--output;out.console-03;--accounts.strict;false;--reporting.console;true;

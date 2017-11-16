@@ -9,12 +9,13 @@ TEP Template: link:./tep-0001.adoc[TEP-0001]
 === Implemented TEPs
 
 * link:./tep-1000.adoc[TEP-1000: Equity]
+* link:./tep-1001.adoc[TEP-1001: Units and Commodities]
 * link:./tep-1002.adoc[TEP-1002: Git Storage system]
 
 
 === TEPs in implementation phase
 
-* link:./tep-1001.adoc[TEP-1001: Units and Commodities]
+* link:./tep-1004.adoc[TEP-1004: JSON report output]
 
 
 === TEPs in planning phase

@@ -1,0 +1,58 @@
+exe: dist/tackler-cli-0.7.0-next.jar
+set: 1E5
+version: 0.7.0-next
+storage: fs
+report: balance
+formats: json
+
+
+Txns size: 100000
+
+Total processing time: 7550, parse: 6034, reporting: 554
+
+real	7.89s
+user	22.64s
+sys	2.31s
+mem	1322984k (max)
+cpu	316%
+
+Txns size: 100000
+
+Total processing time: 7856, parse: 6350, reporting: 537
+
+real	8.19s
+user	23.79s
+sys	2.27s
+mem	1320036k (max)
+cpu	318%
+
+Txns size: 100000
+
+Total processing time: 7255, parse: 5751, reporting: 538
+
+real	7.59s
+user	21.62s
+sys	2.32s
+mem	1326552k (max)
+cpu	315%
+
+Txns size: 100000
+
+Total processing time: 7696, parse: 6235, reporting: 499
+
+real	8.03s
+user	23.88s
+sys	2.33s
+mem	1334224k (max)
+cpu	326%
+
+Txns size: 100000
+
+Total processing time: 7916, parse: 6334, reporting: 615
+
+real	8.27s
+user	23.74s
+sys	2.33s
+mem	1331504k (max)
+cpu	315%
+

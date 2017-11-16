@@ -7,6 +7,7 @@ Components (used with Tackler):
  * link:http://www.antlr.org/[ANTLR (ANother Tool for Language Recognition)]
  * link:https://github.com/pathikrit/better-files[Better-files]
  * link:http://typelevel.org/cats/[Cats]
+ * link:https://circe.github.io/circe/[circe]
  * link:http://www.eclipse.org/jgit/[jgit]
  * link:https://logback.qos.ch/[Logback Project]
  * link:https://github.com/jsuereth/scala-arm[Scala-ARM (automatic resource mgmt)]

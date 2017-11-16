@@ -78,6 +78,10 @@ class ReportLikeTest extends FlatSpec {
   behavior of "fillFormat"
 
   it should "format normal values" in {
+    assert(frmt.scaleFormat(sc0) === "1.00")
+    assert(frmt.scaleFormat(sc6) === "1.123456")
+    assert(frmt.scaleFormat(sc10_2) === "1234567890.12")
+
     assert(frmt.fillFormat(1, sc0) === "1.00")
     assert(frmt.fillFormat(4, sc0) === "1.00")
     assert(frmt.fillFormat(5, sc0) === " 1.00")
@@ -88,6 +92,10 @@ class ReportLikeTest extends FlatSpec {
   }
 
   it should "truncate values correctly" in {
+    assert(frmt.scaleFormat(sc8_tr7) === "1.1234568")
+    assert(frmt.scaleFormat(sc8_tr5) === "1.1234568")
+    assert(frmt.scaleFormat(sc8_tr4) === "1.1234567")
+
     assert(frmt.fillFormat(10, sc8_tr7) === " 1.1234568")
     assert(frmt.fillFormat(10, sc8_tr5) === " 1.1234568")
     assert(frmt.fillFormat(10, sc8_tr4) === " 1.1234567")
@@ -95,6 +103,9 @@ class ReportLikeTest extends FlatSpec {
 
 
   it should "format large value" in {
+    assert(frmt.scaleFormat(sc18_2) === "123456789123456789.12")
+    assert(frmt.scaleFormat(sc18_9) === "123456789123456789.1234568")
+
     assert(frmt.fillFormat(22, sc18_2) === " 123456789123456789.12")
     assert(frmt.fillFormat(27, sc18_9) === " 123456789123456789.1234568")
   }

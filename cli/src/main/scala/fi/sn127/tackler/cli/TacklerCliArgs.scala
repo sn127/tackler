@@ -118,9 +118,19 @@ class TacklerCliArgs(args: Seq[String]) extends ScallopConf(args) {
       case None =>
         reportsConfig
     }
+
+    val formatsConfig = formats.toOption match {
+      case Some(formats) =>
+        reportingAccountsConfig.withValue(
+          CfgKeys.reporting_formats,
+          ConfigValueFactory.fromIterable(JavaConverters.asJavaIterable(formats)))
+      case None =>
+        reportingAccountsConfig
+    }
+
     // End of Handle List[String] style cli-arguments.
     // this is super-set of all above configs merged together
-    reportingAccountsConfig
+    formatsConfig
   }
 
   //
@@ -149,6 +159,9 @@ class TacklerCliArgs(args: Seq[String]) extends ScallopConf(args) {
 
   val afilt: ScallopOption[List[String]] = opt[List[String]](
     name=CfgKeys.reporting_accounts, required = false, noshort = true)
+
+  val formats: ScallopOption[List[String]] = opt[List[String]](
+    name=CfgKeys.reporting_formats, required = false, noshort = true)
 
   //
   // Verify and sanity check cli args

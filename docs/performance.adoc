@@ -1,16 +1,24 @@
-= Performance tests
+= Performance
 
-Tackler's performance test is done to validate sanity of used algorithms
-and check overall performance of system.
+Tackler is quite fast, it can process one million (1E6) transactions under 20 seconds
+and can reach processing speed of over 56 000 transactions per second.  Full Tackler performance tests
+results and information of used hardware is link:../perf/results/readme.adoc[located here].
+
+Tackler is also it's 3-20 times faster and it's more memory efficient than
+link:./perf-others.adoc[other similar systems].
+
+== Test data
 
 Performance testing is done with artificial transaction data
-which mimics real journal.
+which mimics real journal. Test data is generated with
+link:../tools/generator[generator], which can also generate ledger-like compatible journal formats.
 
-Test data is generated with link:../tools/generator[generator].
+Tests are done with all  report and format types. Account validation is turned on, (e.g. `accounts.strict=true`).
+This means that for each transaction it is checked that all txn's accounts are listed in
+Chart of Accounts.
 
-Tests are done with balance report and with setting `accounts.strict=true` 
-(e.g. for each transaction it is checked that all accounts are listed in
-Chart of Accounts).
+The Balance report is used with comparision of other system, because it's semantic is same between
+ledger-cli, hledger and abandon.
 
 Each transaction is located on own file, and shard of files is based on txn dates
 (e.g. `perf-1E6/YYYY/MM/DD/YYYYMMDDTHHMMSS-idx.txn`, where `idx` is index of txn).
@@ -22,21 +30,27 @@ Typical test sets (small and big) are:
 
 Other sets are 1E4 and 1E5.
 
+If tested system doesn't support sharded data, then single file journal file is used.
 
-== Chart of Accounts for perf tests
 
-Chart of Accounts is 380 entries and it is based on txn's dates:
+=== Chart of Accounts for perf tests
 
-For "assets" (`a:ay<year>:am<month>`):
+Chart of Accounts has 378 entries and it is generated based on txn's dates:
+
+For "assets" following structure is used `a:ay<year>:am<month>`.
+
+This yields to 12 different accounts:
 
  ...
- "a:ay2016:am10",
- "a:ay2016:am11",
- "a:ay2016:am12",
+ "a:ay2016:am01",
+ "a:ay2016:am02",
+ "a:ay2016:am03",
  ...
 
 
-For "expenses" (`e:ey<year>:em<month>:ed<day>`):
+For "expenses" following structure is used `e:ey<year>:em<month>:ed<day>`.
+
+This yields to 366 different accounts:
 
  ...
  "e:ey2016:em01:ed01",
@@ -45,57 +59,7 @@ For "expenses" (`e:ey<year>:em<month>:ed<day>`):
  ...
 
 
-== Performance test hardware
-
-Reference performance tests are done with normal laptop:
- 
- * CPU: Intel(R) Core(TM) i5-2540M CPU @ 2.60GHz
- * Harddrive: Intel(R) SSD 535
- * Memory: 16GB
-
-CPU has two cores and four threads. All txns data and program data
-can be cached in memory by OS with this test setup.
-
-
-== Performance
-
-Tackler has good performance, and it is actually faster than native application
-ledger-cli with similar memory footprint. Main reason is that ledger-cli
-utilizes only one core, when in other hand Tackler utilizes all available cores
-and threads.
-
-
-== With filesystem storage and shard txn data
-
-Tacklers processing time with shard txn data is following:
-
- * 1E3: 3.1 sec
- * 1E6: 31 sec
-
-With 1E6 data set memory usage peaks around 2.2GB.
-
-Full results are here link:../perf/results[perf results].
-
-== With git storage
-
-Currently Git data processing is done on single thread, so time is about 2-3 times compared
-to multi-threaded filesystem based times on dual core systems.
-
-Tacklers processing time with git storage system is following:
-
- * 1E3: 4.3 sec
- * 1E6: 1min 15 sec
-
-With 1E6 data set memory usage peaks around 2.0GB.
-
-Full results are here:
-
- * link:../perf/results/readme.adoc[Readme]
- * link:../perf/results/hw01/perf-git-1e3.txt[git 1e3 result]
- * link:../perf/results/hw01/perf-git-1e6.txt[git 1e6 result]
-
-
-=== Single file or single input String
+== Single file or single input String
 
 With single file Tackler has basically same processing time than with
 shard txn data.
@@ -113,5 +77,5 @@ time than putting them in one big file (with fast SSD and good disk cache).
 
 ==== Single file performance
 
-Tacklers processing time with single file (1e6) is around ~30sec, and memory usage peaks around 6-7G.
+Tacklers processing time with single file (1E6) is around ~30sec, and memory usage peaks around 6-7G.
 Single file performance testing is not part of routine performance testing.

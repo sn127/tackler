@@ -217,6 +217,22 @@ features:
               refid: ba71f292-cc3e-406f-991e-8dd82a7cf87c
 
   - feature:
+      id: 57cd42b2-7319-42dd-a0be-809927f66bdd
+      subject: "conf: reporting.formats"
+      tests:
+        operations:
+          - test:
+              refid: ed89d638-70fa-474c-b88f-be03df6231df
+          - test:
+              refid: a52914e4-0887-4255-abea-c0b457802f56
+          - test:
+              refid: 053ca6b0-6be6-4fc1-9dd8-6abc754d98d1
+          - test:
+              refid: 66692492-2b9f-46c2-8e09-a49573ba0cec
+          - test:
+              refid: 9fff9c03-c94b-4d67-9180-ac7d22edf0c7
+
+  - feature:
       id: 4f83e4ad-4bc9-46a1-9f1e-b4863e8a2839
       subject: "conf: reporting.accounts"
       tests:
@@ -471,6 +487,24 @@ features:
               refid: bc8f6399-fd7a-420a-8deb-9cc0ae97c9f6
 
   - feature:
+      id: db4f2f57-aac8-41d6-997f-489cfaab8345
+      subject: "Comments, journal level (not supported)"
+      tests:
+        errors:
+          - error:
+              id: a9c742e8-9f9a-42dc-8e09-f1ffe5e6e728
+              name: tests/parser/ex/journal-comment-01.exec
+              desc: "comment on the last line"
+          - error:
+              id: 73a17e9d-3a91-4c29-bbc7-bf8c7b1b347e
+              name: tests/parser/ex/journal-comment-02.exec
+              desc: "comment between txn entries"
+          - error:
+              id: 132f11c4-facd-4fbc-9550-eafd751a2cd8
+              name: tests/parser/ex/journal-comment-03.exec
+              desc: "comment on the first line"
+
+  - feature:
       id: 1d7b6ba2-5a63-481f-9c74-527e203e5f4b
       subject: "Comments, txn -level"
       tests:
@@ -608,9 +642,13 @@ features:
               id: 42ad9d32-64aa-4fcd-a4ab-1e8521b921e3
               name: PostingTest
           - error:
-              id: 144bd8b1-aa94-4454-a490-b0e8fdaddc1e
+              id: 71d06779-dce9-4499-b54a-0af85b33ac44
               name: tests/core/ex/TxnException-zero-posting.exec
-              desc: posting with zero amount
+              desc: "posting with zero amount (by input file)"
+          - error:
+              id: 144bd8b1-aa94-4454-a490-b0e8fdaddc1e
+              name: tests/core/ex/TxnException-zero-posting-01.exec
+              desc: "posting with zero amount (by conf & empty dir)"
 
 ### Reports
   - feature:
@@ -704,7 +742,9 @@ features:
                 - desc: "(conf) group-by: year"
               references:
                 - ref: balance
+                  formats: txt, json
                 - ref: balance-group
+                  formats: txt, json
           - test:
               id: a52914e4-0887-4255-abea-c0b457802f56
               name: tests/reporting/group-by/month.exec
@@ -712,7 +752,9 @@ features:
                 - desc: group-by month, (conf)
               references:
                 - ref: balance
+                  formats: txt, json
                 - ref: balance-group
+                  formats: txt, json
           - test:
               id: 053ca6b0-6be6-4fc1-9dd8-6abc754d98d1
               name: tests/reporting/group-by/iso-week.exec
@@ -721,7 +763,9 @@ features:
                 - desc: over and around difficult years (2009/2010)
               references:
                 - ref: balance
+                  formats: txt, json
                 - ref: balance-group
+                  formats: txt, json
           - test:
               id: ed89d638-70fa-474c-b88f-be03df6231df
               name: tests/reporting/group-by/date.exec
@@ -729,7 +773,9 @@ features:
                 - desc: (conf) group-by date
               references:
                 - ref: balance
+                  formats: txt, json
                 - ref: balance-group
+                  formats: txt, json
           - test:
               id: 66692492-2b9f-46c2-8e09-a49573ba0cec
               name: tests/reporting/group-by/iso-week-date.exec
@@ -738,7 +784,66 @@ features:
                 - desc: over and around difficult years (2009/2010)
               references:
                 - ref: balance
+                  formats: txt, json
                 - ref: balance-group
+                  formats: txt, json
+          - test:
+              id: 29f80e87-070a-4707-a5f7-770a7731c9ec
+              name: tests/reporting/group-by/zoned-year.exec
+              descriptions:
+                - desc: zoned timestamp
+                - desc: "(conf) group-by: year"
+              references:
+                - ref: balance
+                  formats: txt, json
+                - ref: balance-group
+                  formats: txt, json
+          - test:
+              id: 94e0bddc-4d1b-4133-992d-e314134d0fcc
+              name: tests/reporting/group-by/zoned-month.exec
+              descriptions:
+                - desc: zoned timestamp
+                - desc: group-by month, (conf)
+              references:
+                - ref: balance
+                  formats: txt, json
+                - ref: balance-group
+                  formats: txt, json
+          - test:
+              id: 8ffe3683-3934-4358-840d-fb00fe8fd788
+              name: tests/reporting/group-by/zoned-iso-week.exec
+              descriptions:
+                - desc: zoned timestamp
+                - desc: (conf) group-by iso-week
+                - desc: over and around difficult years (2009/2010)
+              references:
+                - ref: balance
+                  formats: txt, json
+                - ref: balance-group
+                  formats: txt, json
+          - test:
+              id: b5fd85fe-94b1-4ef8-8ab7-e8b22acb4d63
+              name: tests/reporting/group-by/zoned-date.exec
+              descriptions:
+                - desc: (conf) group-by date
+                - desc: zoned timestamp
+              references:
+                - ref: balance
+                  formats: txt, json
+                - ref: balance-group
+                  formats: txt, json
+          - test:
+              id: c0febfbd-218e-41dd-8c65-a1851b21434e
+              name: tests/reporting/group-by/zoned-iso-week-date.exec
+              descriptions:
+                - desc: zoned timestamp
+                - desc: (conf) group-by iso-week-date
+                - desc: over and around difficult years (2009/2010)
+              references:
+                - ref: balance
+                  formats: txt, json
+                - ref: balance-group
+                  formats: txt, json
 
   - feature:
       id: 3872da6a-e772-41f5-a8f0-4eff24552c0d
@@ -1022,6 +1127,18 @@ features:
               references:
                 - ref: balance
                 - ref: balance-group
+
+  - feature:
+      id: 780ed0b3-cbb6-4bfb-82a5-c70ae94e2d15
+      subject: "cli: args: reporting.formats"
+      tests:
+        operations:
+          - test:
+              refid: 8a7a8c60-aab9-4700-b081-9804c1ec537f
+          - test:
+              refid: c5493e99-d0f3-49b3-8450-3ae6ef970b10
+          - test:
+              refid: 0dae7dfd-c816-4a77-afff-a372e1802026
 
   - feature:
       id: 6b8b9f4a-20e8-45e7-b0ea-1daf99d6589b
@@ -1309,14 +1426,36 @@ features:
         operations:
           - test:
               id: 7b8073e2-8264-4eba-b282-5bfb8e1718d2
-              name: tests/commodity/ok/gas-blender.exec
+              name: tests/commodity/ok/gas-blender-billing.exec
               descriptions:
                 - desc: Example of accounting and billing system for Gas Mixing Station
-                - desc: Tracking comsumption of commodities (Helium and Oxygen)
                 - desc: Converting commodities to monetary values
               references:
                 - ref: balance
+          - test:
+              id: 6cc57a39-49ad-4563-b349-5fa28766b575
+              name: tests/commodity/ok/gas-blender-mix-log.exec
+              descriptions:
+                - desc: Example of accounting and billing system for Gas Mixing Station
+                - desc: Mix log and transaction entry
+              references:
                 - ref: register
+          - test:
+              id: 334203d1-a147-48ab-8ec2-50ce006cc9cc
+              name: tests/commodity/ok/gas-blender-saldo.exec
+              descriptions:
+                - desc: Example of accounting and billing system for Gas Mixing Station
+                - desc: Tracking comsumption of commodities (Helium and Oxygen)
+              references:
+                - ref: balance
+          - test:
+              id: 7f847843-d14d-4bea-8f8d-beb94ea675b4
+              name: tests/commodity/ok/gas-blender-tanks.exec
+              descriptions:
+                - desc: Example of accounting and billing system for Gas Mixing Station
+                - desc: Tracking comsumption of commodities (Helium and Oxygen)
+              references:
+                - ref: balance
   - feature:
       id: cc667fda-d5ee-4a64-91ed-443ba76ca96c
       parent: b6013748-102c-4632-ada1-5b3c8dcc3b42
@@ -1536,3 +1675,153 @@ features:
                 - desc: "Parse-only: closing position with PnL ; comment"
 
 ### Units and Commodities END
+
+###
+### JSON output
+###
+  - feature:
+      id: 7ba138c0-942c-4942-bb5d-ed5c45c5a9ce
+      subject: "JSON output"
+  - feature:
+      id: de6058b6-c573-4d38-9258-a90c4c083e86
+      parent: 7ba138c0-942c-4942-bb5d-ed5c45c5a9ce
+      subject: "JSON output: balance & co"
+      tests:
+        operations:
+          - test:
+              refid: 7b8073e2-8264-4eba-b282-5bfb8e1718d2
+              name: tests/commodity/ok/gas-blender.exec
+              descriptions:
+                - desc: "multiple commodities"
+                - desc: "deltas with different values"
+              references:
+                - ref: balance
+          - test:
+              refid: 8a7a8c60-aab9-4700-b081-9804c1ec537f
+              name: tests/commodity/ok/basic-03.exec
+              descriptions:
+                - desc: "multiple commodities"
+              references:
+                - ref: balance
+                - ref: balance-group
+          - test:
+              refid: 53f67fea-6307-44ca-9834-7a2f9b71a15a
+              name: tests/reporting/ok/bal-acc-01.exec
+              descriptions:
+                - desc: "account and account tree sums"
+                - desc: "different amounts of decimal digits"
+              references:
+                - ref: balance
+                - ref: balance-group
+          - test:
+              refid: 0f862997-95b1-4e06-bc5f-bc170c7594ff
+              name: tests/reporting/ok/big-01.exec
+              descriptions:
+                - desc: "big numeric values with significant and decimal part of number"
+              references:
+                - ref: balance
+                - ref: balance-group
+          - test:
+              refid: 289df07b-a047-488f-bbe0-4d61cce21421
+              name: tests/reporting/ok/rep-02-nothing.exec
+              descriptions:
+                - desc: "Empty balance"
+              references:
+                - ref: balance
+                - ref: balance-group
+          - test:
+              refid: 1d2c22c1-e3fa-4cd4-a526-45318c15d13e
+              name: tests/core/ok/git-shard-01.exec
+              descriptions:
+                - desc: "git metadata; normal ref"
+              references:
+                - ref: balance
+                - ref: balance-group
+          - test:
+              refid: 7752eee6-d3cf-4084-93c0-cb43a093fdd0
+              name: tests/core/ok/git-commit-04.exec
+              descriptions:
+                - desc: "git metadata; fixed by commit"
+              references:
+                - ref: balance
+                - ref: balance-group
+          - test:
+              refid: 80d3c14d-64ee-46d3-b9fd-37f82384a562
+              name: tests/core/ok/git-tag-01.exec
+              descriptions:
+                - desc: "git metadata; by tag"
+              references:
+                - ref: balance
+                - ref: balance-group
+  - feature:
+      id: 01bf115d-68df-4051-9c3f-3c3c0ca942b7
+      parent: 7ba138c0-942c-4942-bb5d-ed5c45c5a9ce
+      subject: "JSON output: register"
+      tests:
+        operations:
+          - test:
+              refid: fd250432-9b13-4cdd-83a1-1aedff1593ed
+              name: tests/cli/ok/console-03.exec
+              descriptions:
+                - desc: "UTF-8 data"
+                - desc: "missing description"
+              references:
+                - ref: balance
+                - ref: balance-group
+                - ref: register
+          - test:
+              refid: c5493e99-d0f3-49b3-8450-3ae6ef970b10
+              name: tests/commodity/ok/basic-04.exec
+              descriptions:
+                - desc: "commodities"
+              references:
+                - ref: balance
+                - ref: balance-group
+                - ref: register
+          - test:
+              refid: 0dae7dfd-c816-4a77-afff-a372e1802026
+              name: tests/commodity/ok/basic-06.exec
+              descriptions:
+                - desc: "commodities with trick (account name as commodity name)"
+              references:
+                - ref: balance
+                - ref: balance-group
+                - ref: register
+          - test:
+              refid: 0f06fe78-83ca-46a9-a5cd-b873ab6be807
+              name: tests/parser/ok/post-comments-01.exec
+              descriptions:
+                - desc: "comments: postings"
+              references:
+                - ref: balance
+                - ref: balance-group
+                - ref: register
+          - test:
+              refid: 5f80093d-6e90-4108-a18c-d76c91cacb55
+              name: tests/parser/ok/txn-comments-01.exec
+              descriptions:
+                - desc: "comments: transaction"
+              references:
+                - ref: balance
+                - ref: balance-group
+                - ref: register
+          - test:
+              refid: 2564946b-3afb-4edc-9ee5-3c0f37baa1a1
+              name: tests/parser/ok/par-02.exec
+              descriptions:
+                - desc: "difficult chars: code"
+                - desc: "difficult chars: description"
+                - desc: "difficult chars: comments"
+                - desc: "uuid"
+              references:
+                - ref: register
+          - test:
+              refid: 8ab8a08b-2348-4c20-8971-b357b2a8b6e1
+              name: tests/parser/ok/code-01.exec
+              descriptions:
+                - desc: "difficult chars: code"
+                - desc: "code mechanics (non-present etc)"
+              references:
+                - ref: register
+
+### JSON output END

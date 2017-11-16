@@ -167,7 +167,18 @@ abstract class CtxHandler {
   protected def handleTxn(txnCtx: TxnContext): Transaction = {
     val date = handleDate(txnCtx.date())
     val code = Option(txnCtx.code()).map(c => c.code_value().getText.trim)
-    val desc = Option(txnCtx.description()).map(d => d.text().getText.trim)
+
+    val desc = Option(txnCtx.description()).fold[Option[String]](
+      None
+    )(d => {
+      val s = d.text().getText.trim
+      if (s.isEmpty) {
+        None
+      } else {
+        Some(s)
+      }
+    })
+
 
     val uuid = Option(txnCtx.txn_meta()).map( meta => {
       val key = meta.txn_meta_key().UUID().getText
@@ -176,10 +187,19 @@ abstract class CtxHandler {
       java.util.UUID.fromString(meta.text().getText.trim)
     })
 
-    val comments = Option(txnCtx.txn_comment()).map(cs =>
-      JavaConverters.asScalaIterator(cs.iterator())
+    // it seems that txnCtx.txn_comment is never null, even when there aren't any comments
+    // TODO: tests this?
+    val comments = Option(txnCtx.txn_comment()).fold[Option[List[String]]](
+      None
+    )(cs => {
+      val l = JavaConverters.asScalaIterator(cs.iterator())
         .map(c => c.comment().text().getText).toList
-    )
+      if (l.isEmpty) {
+        None
+      } else {
+        Some(l)
+      }
+    })
 
     val posts: Posts =
       JavaConverters.asScalaIterator(txnCtx.postings().posting().iterator()).map(p => {

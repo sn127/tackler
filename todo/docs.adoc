@@ -1,7 +1,7 @@
 = Docs TODO
 
  * [ ] Examples
- * [x] Sync tep-0001 with tep-1002 (license section)
- * [x] all reports: account filtering 
- * [x] set reporting.console true on default conf
+
+* [ ] JSON: Developer docs
+** [ ] Collect data and examples from link:../tep/tep-1004.adoc[TEP-1004: JSON report output]
 

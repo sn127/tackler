@@ -1,0 +1,21 @@
+= ANTLR Performance tests
+
+Performance tests for different ANTLR versions.
+
+== ANTLR versions
+
+=== ANTLR 4.7
+
+link:https://github.com/antlr/antlr4/releases/tag/4.7[Major changes of ANTLR 4.7]
+include full 21-bit unicode support and deprecated `ANTLRFileStream et.al.`
+These changes had no visible impact on Tackler's performance:
+
+ * link:./hw01/perf-1E3-antlr-4.7.txt[]
+ * link:./hw01/perf-1E6-antlr-4.7.txt[]
+
+=== ANTLR 4.6
+
+Initially used version
+
+ * link:./hw01/perf-1E3-antlr-4.6.txt[]
+ * link:./hw01/perf-1E6-antlr-4.6.txt[]

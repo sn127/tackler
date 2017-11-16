@@ -13,6 +13,7 @@ based double-entry accounting].
 
 
 == Features
+* Tackler is link:docs/performance.adoc[fast]
 * Support for link:docs/commodities.adoc[Commodities] and link:docs/currencies.adoc[Currencies]
 * Integrated support with GIT version control system
 ** Can use plain filesystem or link:docs/git-storage.adoc[GIT repository] as data storage
@@ -25,9 +26,11 @@ based double-entry accounting].
 * Multiple report and export types:
 ** link:docs/report-balance.adoc[Balance], link:docs/report-balance-group.adoc[Balance Groups] and link:docs/report-register.adoc[Register] Reports
 ** link:docs/report-equity.adoc[Equity] and link:docs/report-identity.adoc[Identity] Exports
-* Can handle link:docs/performance.adoc[large set of transactions]
-** Tackler is tested up to link:perf[one million (1E6) transactions], processing time is link:perf/results/readme.adoc[about 30sec])
-** With large set of transactions Tackler is faster than ledger-cli or link:docs/perf-others.adoc[other similar tools]
+* Text and link:docs/tep/tep-1004.adoc[JSON] output formats for reports
+* Has good performance with link:docs/performance.adoc[very large set of transactions]
+** Tackler is link:perf/results/hw00/[routinely tested] up to one million (1E6) transactions
+** Tackler can process link:perf/results/readme.adoc[56000 txn/s] on Quad Core system
+** With large set of transactions Tackler is faster than link:docs/perf-others.adoc[ledger-cli or other similar tools]
 * Near 100% test coverage, link:tests/tests.yaml[all features are extensively tested]
 * Extensive documentation: link:docs/readme.adoc[Index of Docs]
 
@@ -99,8 +102,7 @@ Documentation for developers is located under: link:./docs/devel[]
 At the moment, current set of active todo items is kept link:./todo[todo files].
 
 There are Tackler Enhancement Proposals for planning and tracking implementation
-of major new features. These are listed on link:docs/tep/readme.adoc[TEP index]
-under link:docs/tep[].
+of major new features. These are listed on link:docs/tep/readme.adoc[TEP index].
 
 === Roadmap
 

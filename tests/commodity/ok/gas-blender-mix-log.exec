@@ -1,0 +1,7 @@
+# format: exec
+# test:uuid: 6cc57a39-49ad-4563-b349-5fa28766b575
+#
+# Example reports
+#
+# Mixing log
+exec:--cfg;tests/commodity/gb.conf;--reporting.accounts;^User:.*:.*;--reporting.reports;register;--output;out.gas-blender-mix-log;

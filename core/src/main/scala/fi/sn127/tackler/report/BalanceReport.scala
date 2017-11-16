@@ -16,8 +16,11 @@
  */
 package fi.sn127.tackler.report
 
+import io.circe._
+import io.circe.syntax._
+
 import fi.sn127.tackler.core._
-import fi.sn127.tackler.model.{Transaction, TxnTS, TxnData}
+import fi.sn127.tackler.model.{BalanceTreeNode, TxnData}
 
 trait BalanceReportLike extends ReportLike {
 
@@ -52,20 +55,82 @@ trait BalanceReportLike extends ReportLike {
       (body, footer)
     }
   }
+
+  implicit val encBalanceTreeNode: Encoder[BalanceTreeNode] = (btn: BalanceTreeNode) => {
+
+    def jsonAccountSum = ("accountSum", scaleFormat(btn.accountSum).asJson)
+    def jsonAccountTreeSum = ("accountTreeSum", scaleFormat(btn.subAccTreeSum).asJson)
+    def jsonAccount = ("account", btn.acctn.account.asJson)
+
+    btn.acctn.commodity.fold(
+      Json.obj(
+        jsonAccountSum,
+        jsonAccountTreeSum,
+        jsonAccount)
+    )(commodity =>
+      Json.obj(
+        jsonAccountSum,
+        jsonAccountTreeSum,
+        jsonAccount,
+        ("commodity", commodity.name.asJson))
+    )
+  }
+
+  implicit val encBalance: Encoder[Balance] = (bal: Balance) => {
+
+    val (body, deltas) = jsonBalanceBody(bal)
+
+    def jsonBalanceRows = ("balanceRows", body.asJson)
+    def jsonDeltas = ("deltas", deltas.asJson)
+
+    bal.title.fold(
+      Json.obj(
+        jsonBalanceRows,
+        jsonDeltas)
+    )(title =>
+      Json.obj(
+        jsonTitle(title),
+        jsonBalanceRows,
+        jsonDeltas)
+    )
+  }
+
+  protected def jsonBalanceBody(balance: Balance): (Seq[Json], Seq[Json]) = {
+    val body = balance.bal.map(_.asJson(encBalanceTreeNode))
+
+    val deltas = balance.deltas.toSeq
+      .sortBy({ case (cOpt, v) =>
+        cOpt.map(c => c.name).getOrElse("")
+      })
+      .map({ case (commodityOpt, v) => {
+        def jsonDelta = ("delta", scaleFormat(v).asJson)
+
+        commodityOpt.fold(
+          Json.obj(jsonDelta)
+        )(commodity =>
+          Json.obj(
+            jsonDelta,
+            ("commodity", commodity.name.asJson))
+        )
+      }
+      })
+
+    (body, deltas)
+  }
 }
 
 class BalanceReport(val name: String, val settings: Settings) extends  BalanceReportLike {
   private val mySettings = settings.Reports.Balance
 
   @SuppressWarnings(Array("org.wartremover.warts.TraversableOps"))
-  protected def txtBalance(bal: Balance): Seq[String] = {
+  protected def txtBalanceReport(bal: Balance): Seq[String] = {
 
     val (body, footer) = txtBalanceBody(bal)
 
     val  header = List(
       bal.metadata.fold(""){md => md.text()},
-      bal.title,
-      "-" * bal.title.length)
+      mySettings.title,
+      "-" * mySettings.title.length)
 
     if (body.isEmpty) {
       header
@@ -74,100 +139,49 @@ class BalanceReport(val name: String, val settings: Settings) extends  BalanceRe
     }
   }
 
+  protected def jsonBalance(bal: Balance): (String, Json) = {
+    ("balance", bal.asJson(encBalance))
+  }
 
-  protected def txtReporter(txns: TxnData)(reporter: (Balance) => Seq[String]): Seq[String] = {
+  protected def jsonBalanceReport(bal: Balance): Seq[String] = {
+    Seq(bal.metadata.fold(
+      Json.obj(
+        jsonTitle(mySettings.title),
+        jsonBalance(bal))
+    )({ md =>
+      Json.obj(
+        jsonTitle(mySettings.title),
+        ("metadata", md.asJson()),
+        jsonBalance(bal)
+      )
+    }).spaces2)
+  }
+
+  protected def getBalance(txns: TxnData): Balance = {
     val bf = if (mySettings.accounts.isEmpty) {
       AllBalanceAccounts
     } else {
       new BalanceFilterByAccount(mySettings.accounts)
     }
-    val bal = Balance(mySettings.title, txns, bf)
-    reporter(bal)
+
+    Balance(None, txns, bf)
   }
 
   def doReport(formats: Formats, txnData: TxnData): Unit = {
-    val txtBalanceReport = txtReporter(txnData)(txtBalance)
+
+    val bal = getBalance(txnData)
 
     formats.foreach({case (format, writers) =>
       format match {
-        case TextFormat() =>
-          doRowOutputs(writers, txtBalanceReport)
-
-        //case JsonFormat() => ???
+        case TextFormat() => {
+          doRowOutputs(writers, txtBalanceReport(bal))
+        }
+        case JsonFormat() => {
+          doRowOutputs(writers, jsonBalanceReport(bal))
+        }
       }
     })
   }
 }
 
 
-class BalanceGroupReport(val name: String, val settings: Settings) extends BalanceReportLike {
-  private val mySettings = settings.Reports.BalanceGroup
-
-  protected def txtBalanceGroups(txnData: TxnData): Seq[String] = {
-
-    val balanceFilter = if (mySettings.accounts.isEmpty) {
-      AllBalanceAccounts
-    } else {
-      new BalanceFilterByAccount(mySettings.accounts)
-    }
-
-    val header = List(
-      txnData.metadata.fold(""){md => md.text()},
-      mySettings.title,
-      "-" * mySettings.title.length)
-
-    val groupOp = mySettings.groupBy match {
-      case GroupByYear() => { txn: Transaction =>
-        TxnTS.isoYear(txn.date)
-      }
-      case GroupByMonth() => { txn: Transaction =>
-        TxnTS.isoMonth(txn.date)
-      }
-      case GroupByDate() => { txn: Transaction =>
-        TxnTS.isoDate(txn.date)
-      }
-      case GroupByIsoWeek() => { txn: Transaction =>
-        TxnTS.isoWeek(txn.date)
-      }
-      case GroupByIsoWeekDate() => { txn: Transaction =>
-        TxnTS.isoWeekDate(txn.date)
-      }
-    }
-
-    val body = Accumulator.balanceGroups(txnData, groupOp, balanceFilter)
-      .par.flatMap(bal => txtBalanceGroup(bal))
-
-    header ++ body
-  }
-
-  protected def txtBalanceGroup(bal: Balance): Seq[String] = {
-
-    val (body, footer) = txtBalanceBody(bal)
-
-    val  header = List(
-      bal.title,
-      "-" * bal.title.length)
-
-    if (body.isEmpty) {
-      Nil
-    } else {
-      // todo: refactor with balance
-      header ++ body ++ List("=" * footer.split("\n").head.length) ++ List(footer)
-    }
-  }
-
-  override
-  def doReport(formats: Formats, txnData: TxnData): Unit = {
-
-    val txtBalgrpReport = txtBalanceGroups(txnData)
-
-    formats.foreach({case (format, writers) =>
-      format match {
-        case TextFormat() =>
-          doRowOutputs(writers, txtBalgrpReport)
-
-        //case JsonFormat() => ???
-      }
-    })
-  }
-}
