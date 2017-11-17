@@ -7,6 +7,13 @@ Current release is 0.7.0
 
 First public release of tackler was 0.5.0.
 
+=== 0.7.1-devel
+
+==== Fixes
+
+==== Development
+
+
 === 0.7.0
 
  * JSON report format
@@ -17,7 +24,7 @@ First public release of tackler was 0.5.0.
 
 None.
 
-==== Devel
+==== Development
 
 Build is updated to SBT 1.0.
 
