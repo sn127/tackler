@@ -15,8 +15,8 @@
 
 === Examples
 
-* link:./docs/tackler.conf[Example of Tackler configuration]
-* link:./docs/accounts.conf[Example of Tackler Chart of Accounts]
+* link:./tackler.conf[Example of Tackler configuration]
+* link:./accounts.conf[Example of Tackler Chart of Accounts]
 * link:./trimix-filling-station.adoc[Example of Trimix Filling Station Accounting system (for scuba diving)]
 
 

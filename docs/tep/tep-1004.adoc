@@ -159,7 +159,7 @@ Normal, ok-case tests to validate functionality:
 ** [x] data from git
 *** [x] based on ref
 *** [x] based on commitid
-*** [x] check link:./TEP-1002.adoc[TEP-1002] for additional test cases
+*** [x] check link:./tep-1002.adoc[TEP-1002] for additional test cases
 * [x] check link:../journal.adoc[journal format] for additional test cases
 
 * [x] tests/commodity/ok/basic-04.exec
