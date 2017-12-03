@@ -20,7 +20,7 @@ import fi.sn127.tackler.core._
 import fi.sn127.tackler.model.{TxnData, TxnTS, Txns}
 
 class EquityReport(val settings: Settings) extends ExportLike {
-  private val mySettings = settings.Reports.Equity
+  private val mySettings = settings.Exports.Equity
 
   @SuppressWarnings(Array("org.wartremover.warts.TraversableOps"))
   def txnEquity(txns: Txns): Seq[String] = {

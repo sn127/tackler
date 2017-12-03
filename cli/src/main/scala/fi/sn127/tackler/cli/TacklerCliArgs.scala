@@ -101,7 +101,7 @@ class TacklerCliArgs(args: Seq[String]) extends ScallopConf(args) {
     // with existing config ("withValue").
     // End result is one config which have these cli-args
     // as key[String], valueList[String]
-    val reportsConfig = rpts.toOption match {
+    val reportsConfig = reports.toOption match {
       case Some(reports) =>
         stringArgsConf.withValue(
           CfgKeys.reporting_reports,
@@ -110,13 +110,22 @@ class TacklerCliArgs(args: Seq[String]) extends ScallopConf(args) {
         stringArgsConf
     }
 
+    val exportsConfig = exports.toOption match {
+      case Some(exports) =>
+        reportsConfig.withValue(
+          CfgKeys.reporting_exports,
+          ConfigValueFactory.fromIterable(JavaConverters.asJavaIterable(exports)))
+      case None =>
+        reportsConfig
+    }
+
     val reportingAccountsConfig = afilt.toOption match {
       case Some(accounts) =>
-        reportsConfig.withValue(
+        exportsConfig.withValue(
           CfgKeys.reporting_accounts,
           ConfigValueFactory.fromIterable(JavaConverters.asJavaIterable(accounts)))
       case None =>
-        reportsConfig
+        exportsConfig
     }
 
     val formatsConfig = formats.toOption match {
@@ -154,8 +163,11 @@ class TacklerCliArgs(args: Seq[String]) extends ScallopConf(args) {
   val console: ScallopOption[String] = opt[String](
     name=CfgKeys.reporting_console, required = false, noshort = true)
 
-  val rpts: ScallopOption[List[String]] = opt[List[String]](
+  val reports: ScallopOption[List[String]] = opt[List[String]](
     name=CfgKeys.reporting_reports, required = false, noshort = true)
+
+  val exports: ScallopOption[List[String]] = opt[List[String]](
+    name=CfgKeys.reporting_exports, required = false, noshort = true)
 
   val afilt: ScallopOption[List[String]] = opt[List[String]](
     name=CfgKeys.reporting_accounts, required = false, noshort = true)

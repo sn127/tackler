@@ -57,24 +57,38 @@ object ReportFormat {
 }
 
 
-sealed trait ReportType
+sealed trait OutputType
+sealed trait ReportType extends OutputType
+sealed trait ExportType extends OutputType
+
 sealed case class BalanceReportType() extends ReportType
-sealed case class EquityReportType() extends ReportType
 sealed case class BalanceGroupReportType() extends ReportType
 sealed case class RegisterReportType() extends ReportType
-sealed case class IdentityReportType() extends ReportType
+
+sealed case class EquityExportType() extends ExportType
+sealed case class IdentityExportType() extends ExportType
 
 object ReportType {
   def apply(groupBy: String): ReportType = {
     groupBy match {
       case "balance" => BalanceReportType()
-      case "equity" => EquityReportType()
       case "balance-group" => BalanceGroupReportType()
       case "register" => RegisterReportType()
-      case "identity" => IdentityReportType()
       /* Error*/
       case rpt => throw new ReportException(
-        "Unknown report type [" + rpt + "]. Valid types are: balance, balance-group, register, identity")
+        "Unknown report type [" + rpt + "]. Valid types are: balance, balance-group, register")
+    }
+  }
+}
+
+object ExportType {
+  def apply(groupBy: String): ExportType = {
+    groupBy match {
+      case "equity" => EquityExportType()
+      case "identity" => IdentityExportType()
+      /* Error*/
+      case rpt => throw new ReportException(
+        "Unknown report type [" + rpt + "]. Valid types are: equity, identity")
     }
   }
 }

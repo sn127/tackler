@@ -144,14 +144,17 @@ final case class Reports(settings: Settings) {
       case RegisterReportType() =>
         val regReport = new RegisterReport("reg", settings)
         doReport(outputBase, txnData, regReport, frmts)
+    }
 
-      case EquityReportType() =>
+    settings.exports.foreach {
+      case EquityExportType() =>
         val eqReport = new EquityReport(settings)
         doExport("equity", outputBase, txnData, eqReport)
 
-      case IdentityReportType() =>
+      case IdentityExportType() =>
         val idReport = new IdentityReport(settings)
         doExport("identity", outputBase, txnData, idReport)
     }
+
   }
 }

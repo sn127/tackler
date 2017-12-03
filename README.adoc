@@ -25,7 +25,7 @@ based double-entry accounting].
 * Strict account name validation with link:./docs/accounts.conf[Chart of Accounts]
 * Multiple report and export types:
 ** link:docs/report-balance.adoc[Balance], link:docs/report-balance-group.adoc[Balance Groups] and link:docs/report-register.adoc[Register] Reports
-** link:docs/report-equity.adoc[Equity] and link:docs/report-identity.adoc[Identity] Exports
+** link:docs/export-equity.adoc[Equity] and link:docs/export-identity.adoc[Identity] Exports
 * Text and link:docs/tep/tep-1004.adoc[JSON] output formats for reports
 * Has good performance with link:docs/performance.adoc[very large set of transactions]
 ** Tackler is link:perf/results/hw00/[routinely tested] up to one million (1E6) transactions

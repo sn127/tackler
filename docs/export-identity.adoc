@@ -1,12 +1,12 @@
-= Identity report
+= Identity export
 
-Identity report produces an export of transactions as they are interpreted by Tackler.
+Identity export produces output of input transactions as they are interpreted by Tackler.
 
-This report is valid input for Tackler, so it can be used for example archiving purposes.
+This export is valid input for Tackler, so it can be used for example archiving purposes.
 
 By Tackler's design constraints input order of transactions is not important.
 So there should be a stable way to sort transactions if
-internal order of identity report (e.g. order of txns during one day and without time information)
+internal order of identity export (e.g. order of txns during one day and without time information)
 is important.  In that case it is mandatory to provide  unique sorting information for each transaction.
 
 Transactions are sorted by using txn-components in following order to find sort order

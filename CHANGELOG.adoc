@@ -7,12 +7,20 @@ Current release is 0.7.0
 
 First public release of tackler was 0.5.0.
 
-=== 0.7.1-devel
+=== 0.8.0-devel
+
+ * Change `equity` and `identity` to actual exports (code and configuration)
+ ** new conf+cli option `reporting.exports`
+ ** Conf+cli key `reporting.reports` doesn't accept `equity` nor `identity` anymore
+ ** move conf-key `reports.equity` to `exports.equity`
 
 ==== Fixes
 
+ * Don't include logger implementation with `tackler-core.jar`
+
 ==== Development
 
+ * Change: change `ReportType` to `OutputType`, and split it to `ReportType` and `ExportType` traits.
 
 === 0.7.0
 

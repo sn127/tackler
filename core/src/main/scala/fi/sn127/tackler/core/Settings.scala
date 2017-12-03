@@ -52,6 +52,8 @@ object CfgKeys {
   val accounts_coa: String = "accounts.coa"
 
   val reporting_reports: String  = "reporting.reports"
+  val reporting_exports: String  = "reporting.exports"
+
   val reporting_formats: String  = "reporting.formats"
   val reporting_accounts: String = "reporting.accounts"
   val reporting_console: String = "reporting.console"
@@ -80,14 +82,17 @@ object CfgKeys {
       val title: String = keybase + "." + "title"
       val accounts: String = keybase + "." + "accounts"
     }
+  }
+
+  object Exports {
+    protected val keybase: String = "exports"
 
     object Equity {
-      protected val keybase: String = Reports.keybase + "." + "equity"
+      protected val keybase: String = Exports.keybase + "." + "equity"
 
       // Export: => no title
       val accounts: String = keybase + "." + "accounts"
     }
-
   }
 }
 
@@ -164,6 +169,9 @@ class Settings(cfgPath: Path, cliCfgSettings: Config) {
   val reports: List[ReportType] = cfg.getStringList(CfgKeys.reporting_reports).asScala
     .map(ReportType(_)).toList
 
+  val exports: List[ExportType] = cfg.getStringList(CfgKeys.reporting_exports).asScala
+    .map(ExportType(_)).toList
+
   val formats: List[ReportFormat] = cfg.getStringList(CfgKeys.reporting_formats).asScala
     .map(ReportFormat(_)).toList
 
@@ -202,9 +210,11 @@ class Settings(cfgPath: Path, cliCfgSettings: Config) {
       val title: String = cfg.getString(keys.title)
       val accounts: List[String] = getReportAccounts(keys.accounts)
     }
+  }
 
+  object Exports {
     object Equity {
-      protected val keys = CfgKeys.Reports.Equity
+      protected val keys = CfgKeys.Exports.Equity
 
       val accounts: List[String] = getReportAccounts(keys.accounts)
     }

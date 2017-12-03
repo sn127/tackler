@@ -6,7 +6,6 @@ libraryDependencies += cats_core
 libraryDependencies ++= circe_deps
 
 libraryDependencies += typesafeConfig
-libraryDependencies += logback
 libraryDependencies += jgit
 libraryDependencies += scalaArm
 

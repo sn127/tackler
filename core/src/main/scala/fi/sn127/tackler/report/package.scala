@@ -16,12 +16,10 @@
  */
 package fi.sn127.tackler
 
-import java.io.BufferedWriter
-
 import fi.sn127.tackler.core.ReportFormat
 
 package object report {
-  type Writer = BufferedWriter
+  type Writer = java.io.Writer
   type Writers = Seq[Writer]
   type Formats = Seq[(ReportFormat, Writers)]
 }
