@@ -1,14 +1,11 @@
 package fi.sn127.tackler.report
 
-import java.nio.file.Paths
-
-import com.typesafe.config.ConfigFactory
 import org.scalatest.{FlatSpec, MustMatchers}
 
 import fi.sn127.tackler.core.{GroupByMonth, GroupByYear, Settings}
 
 class BalanceGroupSettingsTest extends FlatSpec with MustMatchers {
-  val settings = new Settings(Paths.get("not-found-use-defaults"), ConfigFactory.empty())
+  val settings = Settings()
 
   behavior of "BalanceGroupSettings"
 

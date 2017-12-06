@@ -16,7 +16,6 @@
  */
 package fi.sn127.tackler.core
 
-import java.io.IOException
 import java.nio.file.Path
 import java.time.{LocalTime, ZoneId}
 
@@ -25,7 +24,6 @@ import com.typesafe.config.{Config, ConfigFactory}
 import org.slf4j.{Logger, LoggerFactory}
 
 import scala.collection.JavaConverters._
-import scala.util.{Failure, Success, Try}
 
 import fi.sn127.tackler.model.AccountTreeNode
 
@@ -100,6 +98,7 @@ object CfgKeys {
  * Different selections which are possible to be made by CLI or CONF-file
  */
 object Settings {
+  private val log: Logger = LoggerFactory.getLogger(this.getClass)
 
   val balance = "balance"
   val balanceGroup = "balance-group"
@@ -116,9 +115,32 @@ object Settings {
   val date = "date"
   val isoWeek = "iso-week"
   val isoWeekDate = "iso-week-date"
+
+  @SuppressWarnings(Array("org.wartremover.warts.Overloading"))
+  def apply(cfgPath: Path, initialConfig: Config): Settings = {
+
+    File(cfgPath).verifiedExists(File.LinkOptions.follow) match {
+      case Some(true) => new Settings(Some(cfgPath), initialConfig)
+      case _ => {
+        log.error("Configuration file is not found or it is not readable: [" + cfgPath.toString + "]")
+        log.warn("Settings will NOT use configuration file, only provided and embedded configuration will be used")
+        new Settings(None, initialConfig)
+      }
+    }
+  }
+
+  @SuppressWarnings(Array("org.wartremover.warts.Overloading"))
+  def apply(config: Config): Settings = {
+    new Settings(None, config)
+  }
+
+  @SuppressWarnings(Array("org.wartremover.warts.Overloading"))
+  def apply(): Settings = {
+    new Settings(None, ConfigFactory.empty())
+  }
 }
 
-class Settings(cfgPath: Path, cliCfgSettings: Config) {
+class Settings(optPath: Option[Path], providedConfig: Config) {
   /**
    * This is a basename of default Config resource.
    */
@@ -126,29 +148,22 @@ class Settings(cfgPath: Path, cliCfgSettings: Config) {
 
   private val log: Logger = LoggerFactory.getLogger(this.getClass)
 
-  def ensurePath(path: Path): Try[Path] = {
-    try {
-      Success[Path](path.toRealPath())
-    } catch {
-      case ex: IOException => Failure[Path](ex)
+  val cfg: Config = optPath match {
+    case Some(path) => {
+      log.info("loading configuration with cfg-file: " + path.toString)
+
+      providedConfig
+        .withFallback(ConfigFactory.parseFile(path.toFile))
+        .withFallback(ConfigFactory.load(basename))
+        .resolve()
     }
-  }
+    case None => {
+      log.debug("Loading plain configuration")
 
-  val cfg: Config = ensurePath(cfgPath) match {
-    case Success(_) =>
-      log.debug("loading provided cfg-file: " + cfgPath.toString)
-
-      cliCfgSettings
-        .withFallback(ConfigFactory.parseFile(cfgPath.toFile))
+      providedConfig
         .withFallback(ConfigFactory.load(basename))
         .resolve()
-
-    case Failure(_) =>
-      log.info("loading embedded configuration, because cfg-file was not found: " + cfgPath.toString)
-
-      cliCfgSettings
-        .withFallback(ConfigFactory.load(basename))
-        .resolve()
+    }
   }
 
   /**
@@ -162,7 +177,9 @@ class Settings(cfgPath: Path, cliCfgSettings: Config) {
    */
   val defaultTime: LocalTime = LocalTime.MIN
 
-  val basedir: Path = getPathWithAnchor(cfg.getString(CfgKeys.basedir), cfgPath)
+  val basedir: Path = optPath.fold(
+    File(cfg.getString(CfgKeys.basedir)).path
+  )(path => getPathWithAnchor(cfg.getString(CfgKeys.basedir), path))
 
   val input_storage: StorageType = StorageType(cfg.getString(CfgKeys.input_storage))
 

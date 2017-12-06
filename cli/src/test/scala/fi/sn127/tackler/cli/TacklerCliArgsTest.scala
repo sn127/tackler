@@ -39,7 +39,7 @@ class TacklerCliArgsTest extends FlatSpec {
     val ex = intercept[NoSuchFileException] {
       TacklerCli.runExceptions(Array[String]())
     }
-    assert(ex.getMessage.endsWith("cli/target/scala-2.12/classes/txns"), ex.getMessage)
+    assert(ex.getMessage.endsWith("/txns"), ex.getMessage)
   }
 
   it should "support --help" in {

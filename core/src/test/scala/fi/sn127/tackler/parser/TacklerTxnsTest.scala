@@ -16,9 +16,6 @@
  */
 package fi.sn127.tackler.parser
 
-import java.nio.file.Paths
-
-import com.typesafe.config.ConfigFactory
 import org.scalatest.FlatSpec
 
 import fi.sn127.tackler.core.{Settings, TxnException}
@@ -38,7 +35,7 @@ class TacklerTxnsTest extends FlatSpec {
         |""".stripMargin
 
     val ex = intercept[TxnException]{
-      val tt = new TacklerTxns(new Settings(Paths.get(""), ConfigFactory.empty()))
+      val tt = new TacklerTxns(Settings())
 
       tt.string2Txns(txnStr)
     }
@@ -64,7 +61,7 @@ class TacklerTxnsTest extends FlatSpec {
         |
         |""".stripMargin
 
-    val tt = new TacklerTxns(new Settings(Paths.get(""), ConfigFactory.empty()))
+    val tt = new TacklerTxns(Settings())
 
     val txns = tt.string2Txns(txnStr)
     assert(txns.length === 3)

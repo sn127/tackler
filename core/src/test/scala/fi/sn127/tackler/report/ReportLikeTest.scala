@@ -16,8 +16,6 @@
  */
 package fi.sn127.tackler.report
 
-import java.nio.file.Paths
-
 import com.typesafe.config.ConfigFactory
 import io.circe.Json
 import org.scalatest.FlatSpec
@@ -32,7 +30,7 @@ class ReportLikeTest extends FlatSpec {
     override def jsonReport(txnData: TxnData): Json = ???
   }
 
-  val settings = new Settings(Paths.get(""), ConfigFactory.empty())
+  val settings = Settings(ConfigFactory.empty())
 
   val frmt = new Frmt("", settings)
 

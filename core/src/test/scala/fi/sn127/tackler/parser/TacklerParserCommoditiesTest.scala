@@ -1,15 +1,12 @@
 package fi.sn127.tackler.parser
 
-import java.nio.file.Paths
-
-import com.typesafe.config.ConfigFactory
 import org.scalatest.FlatSpec
 
 import fi.sn127.tackler.core.Settings
 
 class TacklerParserCommoditiesTest extends FlatSpec {
 
-  val tt = new TacklerTxns(new Settings(Paths.get(""), ConfigFactory.empty()))
+  val tt = new TacklerTxns(Settings())
 
   behavior of "Units and Commodities"
 
