@@ -24,8 +24,17 @@ First public release of tackler was 0.5.0.
 ==== Development
 
  * Change: change `ReportType` to `OutputType`, and split it to `ReportType` and `ExportType` traits.
- * New: ReportSettings baseclass for report configuration
+ * New: ReportSettings base class for report configuration
  * Change: All reports takes specialized <ReportType>Settings as settings argument 
+
+Updated deps and tools:
+ * Updated dependencies
+ ** better-files: 3.4.0
+ ** jgit: 4.9.1.201712030800-r
+ * build
+ ** sbt: 1.0.4
+ ** assembly: 0.14.6
+ ** sonatype: 2.0
 
 === 0.7.0
 
