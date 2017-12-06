@@ -23,10 +23,6 @@ import fi.sn127.tackler.core._
 import fi.sn127.tackler.model.{Metadata, Transaction, TxnData, TxnTS}
 
 
-
-
-
-
 class BalanceGroupReport(val name: String, val mySettings: BalanceGroupSettings) extends BalanceReportLike(mySettings) {
 
   protected def txtBalanceGroupReport(metadata: Option[Metadata], balGrps: Seq[Balance]): Seq[String] = {

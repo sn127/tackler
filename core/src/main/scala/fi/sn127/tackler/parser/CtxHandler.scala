@@ -113,15 +113,15 @@ abstract class CtxHandler {
     Option[Commodity]) = {
 
     val postCommodity = Option(postingCtx.opt_unit()).map(u => {
-      new Commodity(u.unit().ID().getText)
+      Commodity(u.unit().ID().getText)
     })
 
     val txnCommodity = Option(postingCtx.opt_unit()).flatMap(u => {
 
-      Option(u.opt_position()).fold(Option(new Commodity(u.unit().ID().getText))){pos =>
+      Option(u.opt_position()).fold(Option(Commodity(u.unit().ID().getText))){pos =>
         Option(pos.closing_pos()).map(cp => {
           // Ok, we have closing position, use its commodity
-          new Commodity(cp.unit().ID().getText)
+          Commodity(cp.unit().ID().getText)
         })
       }
     })
