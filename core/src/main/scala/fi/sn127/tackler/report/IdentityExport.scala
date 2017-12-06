@@ -19,9 +19,9 @@ package fi.sn127.tackler.report
 import fi.sn127.tackler.core.Settings
 import fi.sn127.tackler.model.Txns
 
-class IdentityReport(val settings: Settings) extends ExportLike {
+class IdentityExport(val settings: Settings) extends ExportLike {
 
-  def doExport(writer: Writer, txns: Txns): Unit = {
+  def writeExport(writer: Writer, txns: Txns): Unit = {
     txns.foreach(txn => {
       doRowOutput(writer, List(txn.toString))
     })

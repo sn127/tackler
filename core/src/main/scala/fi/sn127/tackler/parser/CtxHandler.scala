@@ -143,7 +143,7 @@ abstract class CtxHandler {
   }
 
   /**
-   * Handle on [[Posting]] (posting -rule).
+   * Handle one Posting (posting -rule).
    *
    * @param postingCtx posting productions
    * @return Post
@@ -158,7 +158,7 @@ abstract class CtxHandler {
   }
 
   /**
-   * Handle one [[Transaction]] (txn -rule).
+   * Handle one Transaction (txn -rule).
    *
    * @param txnCtx txn -productions
    * @return transaction

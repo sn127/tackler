@@ -46,12 +46,12 @@ sealed case class JsonFormat() extends ReportFormat {
 object ReportFormat {
   def apply(format: String): ReportFormat = {
     format match {
-      case "txt" => TextFormat()
-      case "json" => JsonFormat()
+      case Settings.txt => TextFormat()
+      case Settings.json => JsonFormat()
 
       /* Error*/
       case frmt => throw new ReportException(
-        "Unknown report format [" + frmt + "]. Valid formats are: txt, json")
+        "Unknown report format [" + frmt + "]. Valid formats are: " + Settings.txt + ", " + Settings.json)
     }
   }
 }
@@ -71,12 +71,15 @@ sealed case class IdentityExportType() extends ExportType
 object ReportType {
   def apply(groupBy: String): ReportType = {
     groupBy match {
-      case "balance" => BalanceReportType()
-      case "balance-group" => BalanceGroupReportType()
-      case "register" => RegisterReportType()
+      case Settings.balance => BalanceReportType()
+      case Settings.balanceGroup => BalanceGroupReportType()
+      case Settings.register => RegisterReportType()
       /* Error*/
       case rpt => throw new ReportException(
-        "Unknown report type [" + rpt + "]. Valid types are: balance, balance-group, register")
+        "Unknown report type [" + rpt + "]. Valid types are: " +
+          Settings.balance + ", " +
+          Settings.balanceGroup + ", " +
+          Settings.register)
     }
   }
 }
@@ -84,11 +87,11 @@ object ReportType {
 object ExportType {
   def apply(groupBy: String): ExportType = {
     groupBy match {
-      case "equity" => EquityExportType()
-      case "identity" => IdentityExportType()
+      case Settings.equity => EquityExportType()
+      case Settings.identity => IdentityExportType()
       /* Error*/
-      case rpt => throw new ReportException(
-        "Unknown report type [" + rpt + "]. Valid types are: equity, identity")
+      case xpt => throw new ExportException(
+        "Unknown export type [" + xpt + "]. Valid types are: " + Settings.equity + ", " + Settings.identity)
     }
   }
 }

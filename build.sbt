@@ -1,7 +1,8 @@
 import TacklerTests._
 
 lazy val commonSettings = Seq(
-  version := "0.8.0-devel",
+  organization := "fi.sn127",
+  version := "0.8.0-SNAPSHOT",
   scalaVersion := "2.12.4",
   compileOrder := CompileOrder.JavaThenScala,
   scalacOptions ++= Seq(
@@ -24,7 +25,9 @@ lazy val tackler = (project in file(".")).
   dependsOn(core, cli).
   settings(commonSettings: _*).
   settings(
-    name := "tackler",
+    publishArtifact := false,
+    publishLocal := {},
+    publish := {},
     fork in run := true
   )
 
@@ -32,6 +35,7 @@ lazy val core = (project in file("core")).
   enablePlugins(Antlr4Plugin).
   settings(commonSettings: _*).
   settings(
+    name := "tackler-core",
     fork in run := true,
     test in assembly := {},
     antlr4Version in Antlr4 := "4.7",
@@ -45,6 +49,9 @@ lazy val cli = (project in file("cli")).
   dependsOn(core).
   settings(commonSettings: _*).
   settings(
+    publishArtifact := false,
+    publishLocal := {},
+    publish := {},
     fork in run := true,
     fork := true,
     baseDirectory in Test := file((baseDirectory in Test).value + "/.."),

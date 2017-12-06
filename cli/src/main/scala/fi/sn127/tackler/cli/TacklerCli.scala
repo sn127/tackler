@@ -167,7 +167,7 @@ object TacklerCli {
 
     val reporter = Reports(settings)
 
-    reporter.doReports(output, txnData)
+    reporter.writeReports(output, txnData)
 
     val tsReportsEnd = System.currentTimeMillis()
 

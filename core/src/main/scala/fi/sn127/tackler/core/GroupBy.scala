@@ -26,14 +26,19 @@ sealed case class GroupByIsoWeekDate() extends GroupBy
 object GroupBy {
   def apply(groupBy: String): GroupBy = {
     groupBy match {
-      case "year" => GroupByYear()
-      case "month" => GroupByMonth()
-      case "date" => GroupByDate()
-      case "iso-week" => GroupByIsoWeek()
-      case "iso-week-date" => GroupByIsoWeekDate()
+      case Settings.year => GroupByYear()
+      case Settings.month => GroupByMonth()
+      case Settings.date => GroupByDate()
+      case Settings.isoWeek => GroupByIsoWeek()
+      case Settings.isoWeekDate => GroupByIsoWeekDate()
       /* Error*/
       case _ => throw new GroupByException(
-        "Unknown group-by operator. Valid operators are: year, month, date, iso-week, iso-week-date")
+        "Unknown group-by operator. Valid operators are: " +
+          Settings.year + ", " +
+          Settings.month + ", " +
+          Settings.date + ", " +
+          Settings.isoWeek + ", " +
+          Settings.isoWeekDate)
     }
   }
 }

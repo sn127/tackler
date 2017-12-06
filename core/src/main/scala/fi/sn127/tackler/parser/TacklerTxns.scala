@@ -85,7 +85,7 @@ class TacklerTxns(val settings: Settings) extends CtxHandler {
     "org.wartremover.warts.TraversableOps"))
   def git2Txns(inputRef: Either[String, String]): TxnData = {
 
-    /**
+    /*
      * Get Git repository as managed resource.
      * Repository must be bare.
      *

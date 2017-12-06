@@ -28,3 +28,4 @@ class GroupByException(message: String) extends TacklerException(message)
 
 class ReportException(message: String) extends TacklerException(message)
 
+class ExportException(message: String) extends TacklerException(message)

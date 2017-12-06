@@ -96,6 +96,28 @@ object CfgKeys {
   }
 }
 
+/**
+ * Different selections which are possible to be made by CLI or CONF-file
+ */
+object Settings {
+
+  val balance = "balance"
+  val balanceGroup = "balance-group"
+  val register = "register"
+
+  val equity = "equity"
+  val identity = "identity"
+
+  val json = "json"
+  val txt = "txt"
+
+  val year = "year"
+  val month = "month"
+  val date = "date"
+  val isoWeek = "iso-week"
+  val isoWeekDate = "iso-week-date"
+}
+
 class Settings(cfgPath: Path, cliCfgSettings: Config) {
   /**
    * This is a basename of default Config resource.
@@ -157,32 +179,33 @@ class Settings(cfgPath: Path, cliCfgSettings: Config) {
   val input_fs_glob: String = cfg.getString(CfgKeys.input_fs_glob)
 
 
-  /**
-   * Reporting
-   */
-  // todo: rename, reporting -> reports? similar dot notation?
-  // Far-Far-Away: scales could be set by conf
-  // Far-Far-Away: scales could be per report settings
-  val minScale: Int = 2
-  val maxScale: Int = 7
-
-  val reports: List[ReportType] = cfg.getStringList(CfgKeys.reporting_reports).asScala
-    .map(ReportType(_)).toList
-
-  val exports: List[ExportType] = cfg.getStringList(CfgKeys.reporting_exports).asScala
-    .map(ExportType(_)).toList
-
-  val formats: List[ReportFormat] = cfg.getStringList(CfgKeys.reporting_formats).asScala
-    .map(ReportFormat(_)).toList
-
-  val accounts: List[String] = cfg.getStringList(CfgKeys.reporting_accounts).asScala.toList
-
-  val console: Boolean = cfg.getBoolean(CfgKeys.reporting_console)
-
   val accounts_strict: Boolean = cfg.getBoolean(CfgKeys.accounts_strict)
 
   val accounts_coa: Map[String, AccountTreeNode] = cfg.getStringList(CfgKeys.accounts_coa).asScala
     .toSet[String].map(acc => (acc, AccountTreeNode(acc, None))).toMap
+
+  /**
+   * Reporting
+   */
+  object Reporting {
+    // Far-Far-Away: scales could be set by conf
+    // Far-Far-Away: scales could be per report settings
+    val minScale: Int = 2
+    val maxScale: Int = 7
+
+    val reports: List[ReportType] = cfg.getStringList(CfgKeys.reporting_reports).asScala
+      .map(ReportType(_)).toList
+
+    val exports: List[ExportType] = cfg.getStringList(CfgKeys.reporting_exports).asScala
+      .map(ExportType(_)).toList
+
+    val formats: List[ReportFormat] = cfg.getStringList(CfgKeys.reporting_formats).asScala
+      .map(ReportFormat(_)).toList
+
+    val accounts: List[String] = cfg.getStringList(CfgKeys.reporting_accounts).asScala.toList
+
+    val console: Boolean = cfg.getBoolean(CfgKeys.reporting_console)
+  }
 
   object Reports {
     object Balance {
@@ -224,7 +247,7 @@ class Settings(cfgPath: Path, cliCfgSettings: Config) {
     if (cfg.hasPath(key)) {
       cfg.getStringList(key).asScala.toList
     } else {
-      this.accounts
+      this.Reporting.accounts
     }
   }
 

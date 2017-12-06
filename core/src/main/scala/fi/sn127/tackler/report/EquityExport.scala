@@ -19,7 +19,7 @@ import cats.implicits._
 import fi.sn127.tackler.core._
 import fi.sn127.tackler.model.{TxnData, TxnTS, Txns}
 
-class EquityReport(val settings: Settings) extends ExportLike {
+class EquityExport(val settings: Settings) extends ExportLike {
   private val mySettings = settings.Exports.Equity
 
   @SuppressWarnings(Array("org.wartremover.warts.TraversableOps"))
@@ -54,7 +54,7 @@ class EquityReport(val settings: Settings) extends ExportLike {
     }
   }
 
-  def doExport(writer: Writer, txns: Txns): Unit = {
+  def writeExport(writer: Writer, txns: Txns): Unit = {
 
     val txtEqReport = txnEquity(txns)
     doRowOutput(writer, txtEqReport)

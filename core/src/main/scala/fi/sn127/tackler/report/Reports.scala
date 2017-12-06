@@ -26,53 +26,55 @@ import fi.sn127.tackler.model.TxnData
 
 final case class Reports(settings: Settings) {
 
+  val myCfg: settings.Reporting.type = settings.Reporting
+
   private val log: Logger = LoggerFactory.getLogger(this.getClass)
 
   /**
-   * Do report in selected formats.
+   * Write report in selected formats.
    *
-   * Selected reporter and its doReport method is called only once
+   * Selected reporter and its writeReport method is called only once
    * with all outputs and formats as parameters.
    * So for reporter it is possible to go through all Txns only once,
-   * and it is possible to implement Reporter.doReport in stream/iterator
+   * and it is possible to implement Reporter.writeReport in stream/iterator
    * like fashion. This is especially important with RegisterReport which
    * can produce big amount of report rows (as many as there are txns).
    *
    * @param outputBase basepath and basename of output
    * @param txnData to be used for reporting
-   * @param reporter actual report producer, reporter.doReport is called only once.
+   * @param reporter actual report producer, reporter.writeReport is called only once.
    * @param formats formats to be produced (e.g. text, json, etc)
    */
-  def doReport(outputBase: Option[Path], txnData: TxnData,
+  def writeReport(outputBase: Option[Path], txnData: TxnData,
     reporter: ReportLike, formats: Seq[ReportFormat])
   : Unit = {
 
-    /**
+    /*
      * Do we have console output?
      */
-    val consoles = if (settings.console) {
+    val consoles = if (settings.Reporting.console) {
       List(new BufferedWriter(new OutputStreamWriter(Console.out)))
     } else {
       Nil
     }
 
     outputBase.fold {
-      /**
+      /*
        * No outputBase-path!
        */
       if (consoles.nonEmpty) {
         val frmts: Formats = List((ReportFormat("txt"), consoles))
-        reporter.doReport(frmts, txnData)
+        reporter.writeReport(frmts, txnData)
       } else {
         log.warn("Reporting: no output at has been defined (no console and no files)!")
       }
     } {
-      /**
+      /*
        * we have outputBase-path!
        */
       outputPath =>
 
-        /**
+        /*
          * collect (format, output) pairs, and at the same time all streams which must be closed
          * result is ((format, output), closables)
          */
@@ -84,7 +86,7 @@ final case class Reports(settings: Settings) {
 
         try {
           val frmts = outputs.map({ case (frmt, closables) => frmt })
-          reporter.doReport(frmts, txnData)
+          reporter.writeReport(frmts, txnData)
         } finally {
           outputs.foreach({ case (frmt, closables: Writers) => closables.foreach(c => c.close()) })
         }
@@ -101,19 +103,19 @@ final case class Reports(settings: Settings) {
    * Export Txns data, result is something which can be fed back
    * to Tackler (e.g. it is valid txn-data).
    *
-   * Selected exporter and its doExport method is called only once
+   * Selected exporter and its writeExport method is called only once
    * with all outputs and formats as parameters.
    * So for exporter it is possible to go through all Txns only once,
-   * and it is possible to implement exporter.doExport in stream/iterator
+   * and it is possible to implement exporter.writeExport in stream/iterator
    * like fashion. This is especially important with IdentityReport which
    * can produce big amount of txn rows (as many as there are txns).
    *
    * @param name of export
    * @param outputBase basepath and basename of output
    * @param txnData to be used for exporting
-   * @param exporter actual export producer, exporter.doExport is called only once.
+   * @param exporter actual export producer, exporter.writeExport is called only once.
    */
-  def doExport(name: String, outputBase: Option[Path], txnData: TxnData,
+  def writeExport(name: String, outputBase: Option[Path], txnData: TxnData,
     exporter: ExportLike)
   : Unit = {
     outputBase.fold {
@@ -123,37 +125,37 @@ final case class Reports(settings: Settings) {
         ostream <- managed(Files.newOutputStream(Paths.get(outputPath.toString + "." + name + ".txn")))
       } {
         val strm: Writer = new BufferedWriter(new OutputStreamWriter(ostream, "UTF-8"))
-        exporter.doExport(strm, txnData.txns)
+        exporter.writeExport(strm, txnData.txns)
       }
     }
   }
 
-  def doReports(outputBase: Option[Path], txnData: TxnData): Unit ={
+  def writeReports(outputBase: Option[Path], txnData: TxnData): Unit ={
     // todo: own set of formats for each report
-    val frmts: Seq[ReportFormat] = settings.formats
+    val frmts: Seq[ReportFormat] = settings.Reporting.formats
 
-    settings.reports.foreach {
+    settings.Reporting.reports.foreach {
       case BalanceReportType() =>
-        val balReport = new BalanceReport("bal", settings)
-        doReport(outputBase, txnData, balReport, frmts)
+        val balReport = new BalanceReport("bal", BalanceSettings(settings))
+        writeReport(outputBase, txnData, balReport, frmts)
 
       case BalanceGroupReportType() =>
-        val balgrpReport = new BalanceGroupReport("balgrp", settings)
-        doReport(outputBase, txnData, balgrpReport, frmts)
+        val balgrpReport = new BalanceGroupReport("balgrp", BalanceGroupSettings(settings))
+        writeReport(outputBase, txnData, balgrpReport, frmts)
 
       case RegisterReportType() =>
-        val regReport = new RegisterReport("reg", settings)
-        doReport(outputBase, txnData, regReport, frmts)
+        val regReport = new RegisterReport("reg", RegisterSettings(settings))
+        writeReport(outputBase, txnData, regReport, frmts)
     }
 
-    settings.exports.foreach {
+    settings.Reporting.exports.foreach {
       case EquityExportType() =>
-        val eqReport = new EquityReport(settings)
-        doExport("equity", outputBase, txnData, eqReport)
+        val eqReport = new EquityExport(settings)
+        writeExport("equity", outputBase, txnData, eqReport)
 
       case IdentityExportType() =>
-        val idReport = new IdentityReport(settings)
-        doExport("identity", outputBase, txnData, idReport)
+        val idReport = new IdentityExport(settings)
+        writeExport("identity", outputBase, txnData, idReport)
     }
 
   }

@@ -19,6 +19,7 @@ package fi.sn127.tackler.report
 import java.nio.file.Paths
 
 import com.typesafe.config.ConfigFactory
+import io.circe.Json
 import org.scalatest.FlatSpec
 
 import fi.sn127.tackler.core.Settings
@@ -26,8 +27,9 @@ import fi.sn127.tackler.model.TxnData
 
 class ReportLikeTest extends FlatSpec {
 
-  class Frmt(val name: String, val settings: Settings) extends ReportLike {
-    override def doReport(formats: Formats, txns: TxnData): Unit = ???
+  class Frmt(val name: String, val settings: Settings) extends ReportLike(new ReportSettings(settings)) {
+    override def writeReport(formats: Formats, txns: TxnData): Unit = ???
+    override def jsonReport(txnData: TxnData): Json = ???
   }
 
   val settings = new Settings(Paths.get(""), ConfigFactory.empty())

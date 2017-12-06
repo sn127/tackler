@@ -16,10 +16,7 @@
  */
 package fi.sn127.tackler.report
 
-import fi.sn127.tackler.core.Settings
-
 trait OutputLike {
-  val settings: Settings
 
   /**
    * Output of multiple rows to single output.

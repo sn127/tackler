@@ -16,14 +16,15 @@
  */
 package fi.sn127.tackler.report
 
+import java.io.StringWriter
+
 import io.circe.Json
 import io.circe.syntax._
 
 import fi.sn127.tackler.core._
 import fi.sn127.tackler.model._
 
-class RegisterReport(val name: String, val settings: Settings) extends ReportLike {
-  private val mySettings = settings.Reports.Register
+class RegisterReport(val name: String, val mySettings: RegisterSettings) extends ReportLike(mySettings) {
 
   def txtRegisterEntry(regEntry: RegisterEntry, regEntryPostings: Seq[RegisterPosting]): Seq[String] = {
 
@@ -187,7 +188,17 @@ class RegisterReport(val name: String, val settings: Settings) extends ReportLik
     })
   }
 
-  def doReport(formats: Formats, txns: TxnData): Unit ={
+  @SuppressWarnings(Array("org.wartremover.warts.TraversableOps"))
+  def jsonReport(txnData: TxnData): Json = {
+    // this is super-silly, but let's use this with current stream-like implementation
+    val frmts: Formats = List((JsonFormat(), Seq(new StringWriter())))
+
+    this.writeReport(frmts, txnData)
+
+    Json.fromString(frmts.head._2.head.toString)
+  }
+
+  def writeReport(formats: Formats, txns: TxnData): Unit ={
     val rrf = if (mySettings.accounts.isEmpty) {
       AllRegisterPostings
     } else {

@@ -9,6 +9,9 @@ First public release of tackler was 0.5.0.
 
 === 0.8.0-devel
 
+ * Publish to Maven Central Repository
+ * Provide specialized configuration for all reports
+ * Add reporting method which returns report as json-object
  * Change `equity` and `identity` to actual exports (code and configuration)
  ** new conf+cli option `reporting.exports`
  ** Conf+cli key `reporting.reports` doesn't accept `equity` nor `identity` anymore
@@ -21,6 +24,8 @@ First public release of tackler was 0.5.0.
 ==== Development
 
  * Change: change `ReportType` to `OutputType`, and split it to `ReportType` and `ExportType` traits.
+ * New: ReportSettings baseclass for report configuration
+ * Change: All reports takes specialized <ReportType>Settings as settings argument 
 
 === 0.7.0
 
