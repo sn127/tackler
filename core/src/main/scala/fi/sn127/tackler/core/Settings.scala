@@ -142,6 +142,8 @@ object Settings {
 
 class Settings(optPath: Option[Path], providedConfig: Config) {
 
+  private val cfgBasename = "tackler.core"
+
   private val log: Logger = LoggerFactory.getLogger(this.getClass)
 
   val cfg: Config = optPath match {
@@ -149,15 +151,15 @@ class Settings(optPath: Option[Path], providedConfig: Config) {
       log.info("loading configuration with cfg-file: " + path.toString)
 
       providedConfig
-        .withFallback(ConfigFactory.parseFile(path.toFile))
-        .withFallback(ConfigFactory.load())
+        .withFallback(ConfigFactory.parseFile(path.toFile).getConfig(cfgBasename))
+        .withFallback(ConfigFactory.load().getConfig(cfgBasename))
         .resolve()
     }
     case None => {
       log.debug("Loading plain configuration")
 
       providedConfig
-        .withFallback(ConfigFactory.load())
+        .withFallback(ConfigFactory.load().getConfig(cfgBasename))
         .resolve()
     }
   }
