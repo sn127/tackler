@@ -3,7 +3,7 @@ image:https://badges.gitter.im/sn127/tackler.svg["Gitter", link="https://gitter.
 image:https://travis-ci.org/sn127/tackler.svg?branch=stable["Build Status", link="https://travis-ci.org/sn127/tackler"]
 image:https://coveralls.io/repos/github/sn127/tackler/badge.svg?branch=stable["Build Status", link="https://coveralls.io/github/sn127/tackler?branch=stable"]
 image:https://maven-badges.herokuapp.com/maven-central/fi.sn127/tackler-core_2.12/badge.svg["Maven Central", link="https://maven-badges.herokuapp.com/maven-central/fi.sn127/tackler-core_2.12"]
-image:http://javadoc.io/badge/fi.sn127/tackler-core_2.12.svg?color=blue["javadoc", link="http://javadoc.io/doc/fi.sn127/tackler-core_2.12"]
+image:http://javadoc.io/badge/fi.sn127/tackler-core_2.12.svg?color=blue["javadoc", link="http://javadoc.io/page/fi.sn127/tackler-core_2.12/latest/fi/sn127/tackler/index.html"]
 
 
 = Tackler

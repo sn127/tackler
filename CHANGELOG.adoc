@@ -6,6 +6,15 @@ Current release is:
 
 == Release history
 
+=== 0.8.1-SNAPSHOT
+
+
+==== Fixes
+
+
+==== Development
+
+
 === 0.8.0
 
  * Publish `tackler-core.jar` on  Maven Central Repository

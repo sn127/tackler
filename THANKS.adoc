@@ -31,6 +31,7 @@ Build-tools (used to build Tackler):
  * link:https://github.com/sbt/sbt-buildinfo[sbt-buildinfo]
  * link:https://github.com/scoverage/sbt-coveralls[sbt-coveralls]
  * link:https://github.com/scoverage/sbt-scoverage[sbt-scoverage]
+ * link:https://github.com/xerial/sbt-sonatype[sbt-sonatype]
  * link:https://github.com/wartremover/wartremover[WartRemover]
 
 
