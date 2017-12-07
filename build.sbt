@@ -16,9 +16,10 @@
  */
 import TacklerTests._
 
+
 lazy val commonSettings = Seq(
   organization := "fi.sn127",
-  version := "0.8.0-SNAPSHOT",
+  version := "0.8.0",
   scalaVersion := "2.12.4",
   compileOrder := CompileOrder.JavaThenScala,
   scalacOptions ++= Seq(
@@ -30,8 +31,14 @@ lazy val commonSettings = Seq(
     Wart.ToString,
     Wart.NonUnitStatements,
     Wart.Throw //https://github.com/puffnfresh/wartremover/commit/869763999fcc1fd685c1a8038c974854457b608f
-  )
+  ),
+  publishTo := Some(
+     if (isSnapshot.value)
+        Opts.resolver.sonatypeSnapshots
+     else
+        Opts.resolver.sonatypeStaging)
 )
+
 /**
   * if "name" is defined in commonSettings, it will cause
   * circular dependencies with sub-projects
@@ -41,9 +48,7 @@ lazy val tackler = (project in file(".")).
   dependsOn(core, cli).
   settings(commonSettings: _*).
   settings(
-    publishArtifact := false,
-    publishLocal := {},
-    publish := {},
+    skip in publish := true,
     fork in run := true
   )
 
@@ -58,16 +63,14 @@ lazy val core = (project in file("core")).
     antlr4GenListener in Antlr4 := false,
     antlr4GenVisitor in Antlr4 := false,
     antlr4PackageName in Antlr4 := Some("fi.sn127.tackler.parser")
-    )
+  )
 
 lazy val cli = (project in file("cli")).
   enablePlugins(BuildInfoPlugin).
   dependsOn(core).
   settings(commonSettings: _*).
   settings(
-    publishArtifact := false,
-    publishLocal := {},
-    publish := {},
+    skip in publish := true,
     fork in run := true,
     fork := true,
     baseDirectory in Test := file((baseDirectory in Test).value + "/.."),
