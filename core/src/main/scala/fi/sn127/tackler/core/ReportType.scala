@@ -46,35 +46,52 @@ sealed case class JsonFormat() extends ReportFormat {
 object ReportFormat {
   def apply(format: String): ReportFormat = {
     format match {
-      case "txt" => TextFormat()
-      case "json" => JsonFormat()
+      case Settings.txt => TextFormat()
+      case Settings.json => JsonFormat()
 
       /* Error*/
       case frmt => throw new ReportException(
-        "Unknown report format [" + frmt + "]. Valid formats are: txt, json")
+        "Unknown report format [" + frmt + "]. Valid formats are: " + Settings.txt + ", " + Settings.json)
     }
   }
 }
 
 
-sealed trait ReportType
+sealed trait OutputType
+sealed trait ReportType extends OutputType
+sealed trait ExportType extends OutputType
+
 sealed case class BalanceReportType() extends ReportType
-sealed case class EquityReportType() extends ReportType
 sealed case class BalanceGroupReportType() extends ReportType
 sealed case class RegisterReportType() extends ReportType
-sealed case class IdentityReportType() extends ReportType
+
+sealed case class EquityExportType() extends ExportType
+sealed case class IdentityExportType() extends ExportType
 
 object ReportType {
   def apply(groupBy: String): ReportType = {
     groupBy match {
-      case "balance" => BalanceReportType()
-      case "equity" => EquityReportType()
-      case "balance-group" => BalanceGroupReportType()
-      case "register" => RegisterReportType()
-      case "identity" => IdentityReportType()
+      case Settings.balance => BalanceReportType()
+      case Settings.balanceGroup => BalanceGroupReportType()
+      case Settings.register => RegisterReportType()
       /* Error*/
       case rpt => throw new ReportException(
-        "Unknown report type [" + rpt + "]. Valid types are: balance, balance-group, register, identity")
+        "Unknown report type [" + rpt + "]. Valid types are: " +
+          Settings.balance + ", " +
+          Settings.balanceGroup + ", " +
+          Settings.register)
+    }
+  }
+}
+
+object ExportType {
+  def apply(groupBy: String): ExportType = {
+    groupBy match {
+      case Settings.equity => EquityExportType()
+      case Settings.identity => IdentityExportType()
+      /* Error*/
+      case xpt => throw new ExportException(
+        "Unknown export type [" + xpt + "]. Valid types are: " + Settings.equity + ", " + Settings.identity)
     }
   }
 }

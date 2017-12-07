@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2017 Jani Averbach
+ * Copyright 2017 Jani Averbach
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,13 +17,15 @@
 package fi.sn127.tackler.report
 
 import fi.sn127.tackler.core.Settings
-import fi.sn127.tackler.model.Txns
 
-class IdentityReport(val settings: Settings) extends ExportLike {
+trait ReportConfiguration {
+  val minScale: Int
+  val maxScale: Int
+}
 
-  def doExport(writer: Writer, txns: Txns): Unit = {
-    txns.foreach(txn => {
-      doRowOutput(writer, List(txn.toString))
-    })
-  }
+class ReportSettings(setttings: Settings)
+  extends ReportConfiguration {
+
+  override val minScale: Int = setttings.Reporting.minScale
+  override val maxScale: Int = setttings.Reporting.maxScale
 }

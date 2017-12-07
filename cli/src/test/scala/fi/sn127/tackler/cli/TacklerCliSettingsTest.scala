@@ -39,7 +39,7 @@ class TacklerCliSettingsTest extends FlatSpec  with Matchers with Inside {
     )
     val cliCfg = new TacklerCliArgs(args)
 
-    val settings = new Settings(Paths.get("/not/there/cfg.conf"), cliCfg.toConfig)
+    val settings = Settings(Paths.get("/not/there/cfg.conf"), cliCfg.toConfig)
 
     assert(settings.basedir === absBasepath.path)
     assert(settings.input_fs_dir ===  (absBasepath / "cli-args-txns").path)
@@ -55,7 +55,7 @@ class TacklerCliSettingsTest extends FlatSpec  with Matchers with Inside {
     )
     val cliCfg = new TacklerCliArgs(args)
 
-    val settings = new Settings(Paths.get("/not/there/cfg.conf"), cliCfg.toConfig)
+    val settings = Settings(Paths.get("/not/there/cfg.conf"), cliCfg.toConfig)
 
     assert(settings.basedir === absBasepath.path)
     assert(settings.getPathWithSettings(cliCfg.input_filename.getOrElse("")) ===
@@ -70,7 +70,7 @@ class TacklerCliSettingsTest extends FlatSpec  with Matchers with Inside {
     )
     val cliCfg = new TacklerCliArgs(args)
 
-    val settings = new Settings(Paths.get(respath + "cfg-as-ext-file-rel.conf"), cliCfg.toConfig)
+    val settings = Settings(Paths.get(respath + "cfg-as-ext-file-rel.conf"), cliCfg.toConfig)
 
     // this is coming from cfg-as-ext-file.conf
     assert(settings.basedir.toString.endsWith(File(respath + "cfg/as/ext/file").toString) === true, settings.basedir)

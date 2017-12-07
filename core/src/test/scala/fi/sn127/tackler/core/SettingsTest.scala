@@ -28,18 +28,22 @@ class SettingsTest extends FlatSpec  with Matchers with Inside {
   val respath = "core/target/scala-2.12/test-classes/"
 
   it should "combine cfg-path with relative basedir" in {
-    val cfg = new Settings(Paths.get(respath + "cfg-as-ext-file-rel.conf"), ConfigFactory.empty())
+    val cfg = Settings(Paths.get(respath + "cfg-as-ext-file-rel.conf"), ConfigFactory.empty())
     assert(cfg.basedir.endsWith(respath + "cfg/as/ext/file") === true, cfg.basedir)
   }
 
   it should "not change abs basedir " in {
-    val cfg = new Settings(Paths.get(respath + "cfg-as-ext-file-abs.conf"), ConfigFactory.empty())
+    val cfg = Settings(Paths.get(respath + "cfg-as-ext-file-abs.conf"), ConfigFactory.empty())
     assert(cfg.basedir === Paths.get("/basedir/as/abs/path/by/ext/conf"))
   }
 
   it should "find embedded config" in {
-    val cfg = new Settings(Paths.get("./not/found/config/dir/cfg-is-not-there.conf"), ConfigFactory.empty())
-    //  basedir will be merged with exe path because test path in conf file is relative
-    assert(cfg.basedir.endsWith("not/found/config/dir/this/is/tackler_conf") === true, cfg.basedir)
+    val cfg = Settings()
+    assert(cfg.basedir.endsWith("this/is/tackler_conf") === true, cfg.basedir)
+  }
+
+  it should "find embedded config with non-exists path" in {
+    val cfg = Settings(Paths.get("./not/found/config/dir/cfg-is-not-there.conf"), ConfigFactory.empty())
+    assert(cfg.basedir.endsWith("this/is/tackler_conf") === true, cfg.basedir)
   }
 }

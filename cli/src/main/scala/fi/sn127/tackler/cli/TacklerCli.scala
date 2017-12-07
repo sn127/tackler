@@ -136,7 +136,7 @@ object TacklerCli {
     val tsStart = System.currentTimeMillis()
 
     val cliCfg = new TacklerCliArgs(args)
-    val settings = new Settings(getCfgPath(cliCfg.cfg.toOption), cliCfg.toConfig)
+    val settings = Settings(getCfgPath(cliCfg.cfg.toOption), cliCfg.toConfig)
 
     val output: Option[Path] = cliCfg.output.toOption.map(o => settings.getPathWithSettings(o))
 
@@ -167,7 +167,7 @@ object TacklerCli {
 
     val reporter = Reports(settings)
 
-    reporter.doReports(output, txnData)
+    reporter.writeReports(output, txnData)
 
     val tsReportsEnd = System.currentTimeMillis()
 

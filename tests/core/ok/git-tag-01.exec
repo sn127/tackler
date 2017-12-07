@@ -1,4 +1,4 @@
 # format: exec
 # test:uuid: 80d3c14d-64ee-46d3-b9fd-37f82384a562
 # tag
-exec:--cfg;tests/core/git-ok.conf;--input.git.ref;tag-test-01;--output;out.git-tag-01;--reporting.reports;identity;equity;balance;balance-group;register;--reporting.formats;txt;json;
+exec:--cfg;tests/core/git-ok.conf;--input.git.ref;tag-test-01;--output;out.git-tag-01;--reporting.exports;identity;equity;--reporting.reports;balance;balance-group;register;--reporting.formats;txt;json;

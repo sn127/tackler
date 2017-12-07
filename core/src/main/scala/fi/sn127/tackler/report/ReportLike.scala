@@ -21,7 +21,11 @@ import io.circe.syntax._
 
 import fi.sn127.tackler.model.TxnData
 
-trait ReportLike extends OutputLike {
+abstract class ReportLike(cfg: ReportConfiguration) extends OutputLike {
+
+  private val minScale = cfg.minScale
+  private val maxScale = cfg.maxScale
+
   /**
    * Report name part of output filename.
    */
@@ -49,12 +53,12 @@ trait ReportLike extends OutputLike {
    */
   def getScaleFormat(v: BigDecimal): String = {
     ".%df".format(
-      if (v.scale <= settings.minScale) {
-        settings.minScale
-      } else if (settings.minScale < v.scale && v.scale <= settings.maxScale) {
+      if (v.scale <= minScale) {
+        minScale
+      } else if (minScale < v.scale && v.scale <= maxScale) {
         v.scale
       } else {
-        settings.maxScale
+        maxScale
       }
     )
   }
@@ -106,5 +110,17 @@ trait ReportLike extends OutputLike {
     })
   }
 
-  def doReport(formats: Formats, txnData: TxnData): Unit
+  /**
+   * Get report as JSON, this is whole report, with all metadata etc.
+   * @param txnData input data for this report
+   * @return report as JSON (whole report)
+   */
+  def jsonReport(txnData: TxnData): Json
+
+  /**
+   * Write report in selected formats with corresponding writers.
+   * @param formats do reports in these [[Formats]], with corresponding writers
+   * @param txnData input data for this report
+   */
+  def writeReport(formats: Formats, txnData: TxnData): Unit
 }

@@ -129,8 +129,11 @@ Valid options are:
 link:./report-balance.adoc[`balance`],
 link:./report-balance-group.adoc[`balance-group`],
 link:./report-register.adoc[`register`],
-link:./report-equity.adoc[`equity`],
-link:./report-identity.adoc[`identity`]
+
+ * `--reporting.exports "export1" "export2"`
+
+link:./export-equity.adoc[`equity`],
+link:./export-identity.adoc[`identity`]
 
 
 ===== Selecting reports

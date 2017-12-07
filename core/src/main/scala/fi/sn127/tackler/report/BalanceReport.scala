@@ -22,7 +22,7 @@ import io.circe.syntax._
 import fi.sn127.tackler.core._
 import fi.sn127.tackler.model.{BalanceTreeNode, TxnData}
 
-trait BalanceReportLike extends ReportLike {
+abstract class BalanceReportLike(cfg: ReportSettings) extends ReportLike(cfg) {
 
   @SuppressWarnings(Array("org.wartremover.warts.TraversableOps"))
   protected def txtBalanceBody(balance: Balance): (Seq[String], String) = {
@@ -119,8 +119,7 @@ trait BalanceReportLike extends ReportLike {
   }
 }
 
-class BalanceReport(val name: String, val settings: Settings) extends  BalanceReportLike {
-  private val mySettings = settings.Reports.Balance
+class BalanceReport(val name: String, val mySettings: BalanceSettings) extends  BalanceReportLike(mySettings) {
 
   @SuppressWarnings(Array("org.wartremover.warts.TraversableOps"))
   protected def txtBalanceReport(bal: Balance): Seq[String] = {
@@ -143,8 +142,8 @@ class BalanceReport(val name: String, val settings: Settings) extends  BalanceRe
     ("balance", bal.asJson(encBalance))
   }
 
-  protected def jsonBalanceReport(bal: Balance): Seq[String] = {
-    Seq(bal.metadata.fold(
+  protected def jsonBalanceReport(bal: Balance): Json = {
+    bal.metadata.fold(
       Json.obj(
         jsonTitle(mySettings.title),
         jsonBalance(bal))
@@ -154,7 +153,7 @@ class BalanceReport(val name: String, val settings: Settings) extends  BalanceRe
         ("metadata", md.asJson()),
         jsonBalance(bal)
       )
-    }).spaces2)
+    })
   }
 
   protected def getBalance(txns: TxnData): Balance = {
@@ -167,7 +166,12 @@ class BalanceReport(val name: String, val settings: Settings) extends  BalanceRe
     Balance(None, txns, bf)
   }
 
-  def doReport(formats: Formats, txnData: TxnData): Unit = {
+  def jsonReport(txnData: TxnData): Json = {
+    val bal = getBalance(txnData)
+    jsonBalanceReport(bal)
+  }
+
+  def writeReport(formats: Formats, txnData: TxnData): Unit = {
 
     val bal = getBalance(txnData)
 
@@ -177,7 +181,7 @@ class BalanceReport(val name: String, val settings: Settings) extends  BalanceRe
           doRowOutputs(writers, txtBalanceReport(bal))
         }
         case JsonFormat() => {
-          doRowOutputs(writers, jsonBalanceReport(bal))
+          doRowOutputs(writers, Seq(jsonBalanceReport(bal).spaces2))
         }
       }
     })

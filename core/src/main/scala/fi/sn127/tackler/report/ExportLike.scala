@@ -20,5 +20,5 @@ import fi.sn127.tackler.model.Txns
 
 trait ExportLike extends OutputLike {
 
-  def doExport(writer: Writer, txns: Txns): Unit
+  def writeExport(writer: Writer, txns: Txns): Unit
 }

@@ -14,18 +14,16 @@
  * limitations under the License.
  *
  */
-package fi.sn127.tackler.core
+package fi.sn127.tackler.report
 
-class TacklerException(val message: String) extends Exception(message)
+import fi.sn127.tackler.core.Settings
+import fi.sn127.tackler.model.Txns
 
-class AccountException(message: String) extends TacklerException(message)
+class IdentityExport(val settings: Settings) extends ExportLike {
 
-class CommodityException(message: String) extends TacklerException(message)
-
-class TxnException(message: String) extends TacklerException(message)
-
-class GroupByException(message: String) extends TacklerException(message)
-
-class ReportException(message: String) extends TacklerException(message)
-
-class ExportException(message: String) extends TacklerException(message)
+  def writeExport(writer: Writer, txns: Txns): Unit = {
+    txns.foreach(txn => {
+      doRowOutput(writer, List(txn.toString))
+    })
+  }
+}

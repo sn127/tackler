@@ -2,6 +2,9 @@
 image:https://badges.gitter.im/sn127/tackler.svg["Gitter", link="https://gitter.im/sn127/tackler"]
 image:https://travis-ci.org/sn127/tackler.svg?branch=stable["Build Status", link="https://travis-ci.org/sn127/tackler"]
 image:https://coveralls.io/repos/github/sn127/tackler/badge.svg?branch=stable["Build Status", link="https://coveralls.io/github/sn127/tackler?branch=stable"]
+image:https://maven-badges.herokuapp.com/maven-central/fi.sn127/tackler-core_2.12/badge.svg["Maven Central", link="https://maven-badges.herokuapp.com/maven-central/fi.sn127/tackler-core_2.12"]
+image:http://javadoc.io/badge/fi.sn127/tackler-core_2.12.svg?color=blue["javadoc", link="http://javadoc.io/doc/fi.sn127/tackler-core_2.12"]
+
 
 = Tackler
 
@@ -25,7 +28,7 @@ based double-entry accounting].
 * Strict account name validation with link:./docs/accounts.conf[Chart of Accounts]
 * Multiple report and export types:
 ** link:docs/report-balance.adoc[Balance], link:docs/report-balance-group.adoc[Balance Groups] and link:docs/report-register.adoc[Register] Reports
-** link:docs/report-equity.adoc[Equity] and link:docs/report-identity.adoc[Identity] Exports
+** link:docs/export-equity.adoc[Equity] and link:docs/export-identity.adoc[Identity] Exports
 * Text and link:docs/tep/tep-1004.adoc[JSON] output formats for reports
 * Has good performance with link:docs/performance.adoc[very large set of transactions]
 ** Tackler is link:perf/results/hw00/[routinely tested] up to one million (1E6) transactions
@@ -119,6 +122,13 @@ Extremely loosely defined roadmap is following:
 
 For release information and version history details,
 see link:./CHANGELOG.adoc[CHANGELOG].
+
+Tackler-core, which is supposed to be usable to use as separate component,
+is released on Maven Central Repository.
+
+Dependency setting for SBT is:
+
+    libraryDependencies += "fi.sn127" %% "tackler-core" % "version-number"
 
 Tackler is under development, so if you enjoy calm seas
 then it might be better to look

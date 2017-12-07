@@ -16,7 +16,6 @@
  */
 package fi.sn127.tackler.core
 
-import java.io.IOException
 import java.nio.file.Path
 import java.time.{LocalTime, ZoneId}
 
@@ -25,7 +24,6 @@ import com.typesafe.config.{Config, ConfigFactory}
 import org.slf4j.{Logger, LoggerFactory}
 
 import scala.collection.JavaConverters._
-import scala.util.{Failure, Success, Try}
 
 import fi.sn127.tackler.model.AccountTreeNode
 
@@ -52,6 +50,8 @@ object CfgKeys {
   val accounts_coa: String = "accounts.coa"
 
   val reporting_reports: String  = "reporting.reports"
+  val reporting_exports: String  = "reporting.exports"
+
   val reporting_formats: String  = "reporting.formats"
   val reporting_accounts: String = "reporting.accounts"
   val reporting_console: String = "reporting.console"
@@ -80,48 +80,88 @@ object CfgKeys {
       val title: String = keybase + "." + "title"
       val accounts: String = keybase + "." + "accounts"
     }
+  }
+
+  object Exports {
+    protected val keybase: String = "exports"
 
     object Equity {
-      protected val keybase: String = Reports.keybase + "." + "equity"
+      protected val keybase: String = Exports.keybase + "." + "equity"
 
       // Export: => no title
       val accounts: String = keybase + "." + "accounts"
     }
-
   }
 }
 
-class Settings(cfgPath: Path, cliCfgSettings: Config) {
-  /**
-   * This is a basename of default Config resource.
-   */
-  private val basename = "tackler"
-
+/**
+ * Different selections which are possible to be made by CLI or CONF-file
+ */
+object Settings {
   private val log: Logger = LoggerFactory.getLogger(this.getClass)
 
-  def ensurePath(path: Path): Try[Path] = {
-    try {
-      Success[Path](path.toRealPath())
-    } catch {
-      case ex: IOException => Failure[Path](ex)
+  val balance = "balance"
+  val balanceGroup = "balance-group"
+  val register = "register"
+
+  val equity = "equity"
+  val identity = "identity"
+
+  val json = "json"
+  val txt = "txt"
+
+  val year = "year"
+  val month = "month"
+  val date = "date"
+  val isoWeek = "iso-week"
+  val isoWeekDate = "iso-week-date"
+
+  @SuppressWarnings(Array("org.wartremover.warts.Overloading"))
+  def apply(cfgPath: Path, initialConfig: Config): Settings = {
+
+    File(cfgPath).verifiedExists(File.LinkOptions.follow) match {
+      case Some(true) => new Settings(Some(cfgPath), initialConfig)
+      case _ => {
+        log.error("Configuration file is not found or it is not readable: [" + cfgPath.toString + "]")
+        log.warn("Settings will NOT use configuration file, only provided and embedded configuration will be used")
+        new Settings(None, initialConfig)
+      }
     }
   }
 
-  val cfg: Config = ensurePath(cfgPath) match {
-    case Success(_) =>
-      log.debug("loading provided cfg-file: " + cfgPath.toString)
+  @SuppressWarnings(Array("org.wartremover.warts.Overloading"))
+  def apply(config: Config): Settings = {
+    new Settings(None, config)
+  }
 
-      cliCfgSettings
-        .withFallback(ConfigFactory.parseFile(cfgPath.toFile))
-        .withFallback(ConfigFactory.load(basename))
+  @SuppressWarnings(Array("org.wartremover.warts.Overloading"))
+  def apply(): Settings = {
+    new Settings(None, ConfigFactory.empty())
+  }
+}
+
+class Settings(optPath: Option[Path], providedConfig: Config) {
+
+  private val cfgBasename = "tackler.core"
+
+  private val log: Logger = LoggerFactory.getLogger(this.getClass)
+
+  val cfg: Config = optPath match {
+    case Some(path) => {
+      log.info("loading configuration with cfg-file: " + path.toString)
+
+      providedConfig
+        .withFallback(ConfigFactory.parseFile(path.toFile).getConfig(cfgBasename))
+        .withFallback(ConfigFactory.load().getConfig(cfgBasename))
         .resolve()
+    }
+    case None => {
+      log.debug("Loading plain configuration")
 
-    case Failure(_) =>
-      log.info("loading embedded configuration, because cfg-file was not found: " + cfgPath.toString)
-
-      cliCfgSettings
-        .withFallback(ConfigFactory.load(basename))
+      providedConfig
+        .withFallback(ConfigFactory.load().getConfig(cfgBasename))
         .resolve()
+    }
   }
 
   /**
@@ -135,7 +175,9 @@ class Settings(cfgPath: Path, cliCfgSettings: Config) {
    */
   val defaultTime: LocalTime = LocalTime.MIN
 
-  val basedir: Path = getPathWithAnchor(cfg.getString(CfgKeys.basedir), cfgPath)
+  val basedir: Path = optPath.fold(
+    File(cfg.getString(CfgKeys.basedir)).path
+  )(path => getPathWithAnchor(cfg.getString(CfgKeys.basedir), path))
 
   val input_storage: StorageType = StorageType(cfg.getString(CfgKeys.input_storage))
 
@@ -152,29 +194,33 @@ class Settings(cfgPath: Path, cliCfgSettings: Config) {
   val input_fs_glob: String = cfg.getString(CfgKeys.input_fs_glob)
 
 
-  /**
-   * Reporting
-   */
-  // todo: rename, reporting -> reports? similar dot notation?
-  // Far-Far-Away: scales could be set by conf
-  // Far-Far-Away: scales could be per report settings
-  val minScale: Int = 2
-  val maxScale: Int = 7
-
-  val reports: List[ReportType] = cfg.getStringList(CfgKeys.reporting_reports).asScala
-    .map(ReportType(_)).toList
-
-  val formats: List[ReportFormat] = cfg.getStringList(CfgKeys.reporting_formats).asScala
-    .map(ReportFormat(_)).toList
-
-  val accounts: List[String] = cfg.getStringList(CfgKeys.reporting_accounts).asScala.toList
-
-  val console: Boolean = cfg.getBoolean(CfgKeys.reporting_console)
-
   val accounts_strict: Boolean = cfg.getBoolean(CfgKeys.accounts_strict)
 
   val accounts_coa: Map[String, AccountTreeNode] = cfg.getStringList(CfgKeys.accounts_coa).asScala
     .toSet[String].map(acc => (acc, AccountTreeNode(acc, None))).toMap
+
+  /**
+   * Reporting
+   */
+  object Reporting {
+    // Far-Far-Away: scales could be set by conf
+    // Far-Far-Away: scales could be per report settings
+    val minScale: Int = 2
+    val maxScale: Int = 7
+
+    val reports: List[ReportType] = cfg.getStringList(CfgKeys.reporting_reports).asScala
+      .map(ReportType(_)).toList
+
+    val exports: List[ExportType] = cfg.getStringList(CfgKeys.reporting_exports).asScala
+      .map(ExportType(_)).toList
+
+    val formats: List[ReportFormat] = cfg.getStringList(CfgKeys.reporting_formats).asScala
+      .map(ReportFormat(_)).toList
+
+    val accounts: List[String] = cfg.getStringList(CfgKeys.reporting_accounts).asScala.toList
+
+    val console: Boolean = cfg.getBoolean(CfgKeys.reporting_console)
+  }
 
   object Reports {
     object Balance {
@@ -202,9 +248,11 @@ class Settings(cfgPath: Path, cliCfgSettings: Config) {
       val title: String = cfg.getString(keys.title)
       val accounts: List[String] = getReportAccounts(keys.accounts)
     }
+  }
 
+  object Exports {
     object Equity {
-      protected val keys = CfgKeys.Reports.Equity
+      protected val keys = CfgKeys.Exports.Equity
 
       val accounts: List[String] = getReportAccounts(keys.accounts)
     }
@@ -214,7 +262,7 @@ class Settings(cfgPath: Path, cliCfgSettings: Config) {
     if (cfg.hasPath(key)) {
       cfg.getStringList(key).asScala.toList
     } else {
-      this.accounts
+      this.Reporting.accounts
     }
   }
 

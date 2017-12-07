@@ -23,8 +23,7 @@ import fi.sn127.tackler.core._
 import fi.sn127.tackler.model.{Metadata, Transaction, TxnData, TxnTS}
 
 
-class BalanceGroupReport(val name: String, val settings: Settings) extends BalanceReportLike {
-  private val mySettings = settings.Reports.BalanceGroup
+class BalanceGroupReport(val name: String, val mySettings: BalanceGroupSettings) extends BalanceReportLike(mySettings) {
 
   protected def txtBalanceGroupReport(metadata: Option[Metadata], balGrps: Seq[Balance]): Seq[String] = {
 
@@ -82,8 +81,8 @@ class BalanceGroupReport(val name: String, val settings: Settings) extends Balan
     ("balanceGroups", balGrps.par.map(bal => bal.asJson(encBalance)).seq.asJson)
   }
 
-  protected def jsonBalanceGroupReport(metadata: Option[Metadata], balGrps: Seq[Balance]): Seq[String] = {
-    Seq(metadata.fold(
+  protected def jsonBalanceGroupReport(metadata: Option[Metadata], balGrps: Seq[Balance]): Json = {
+    metadata.fold(
       Json.obj(
         jsonTitle(mySettings.title),
         jsonBalanceGroups(balGrps))
@@ -93,11 +92,16 @@ class BalanceGroupReport(val name: String, val settings: Settings) extends Balan
         ("metadata", md.asJson()),
         jsonBalanceGroups(balGrps)
       )
-    }).spaces2)
+    })
+  }
+
+  def jsonReport(txnData: TxnData): Json = {
+    val balGrps = getBalanceGroups(txnData)
+    jsonBalanceGroupReport(txnData.metadata, balGrps)
   }
 
   override
-  def doReport(formats: Formats, txnData: TxnData): Unit = {
+  def writeReport(formats: Formats, txnData: TxnData): Unit = {
 
     val balGrps = getBalanceGroups(txnData)
 
@@ -107,7 +111,7 @@ class BalanceGroupReport(val name: String, val settings: Settings) extends Balan
           doRowOutputs(writers, txtBalanceGroupReport(txnData.metadata, balGrps))
 
         case JsonFormat() =>
-          doRowOutputs(writers, jsonBalanceGroupReport(txnData.metadata, balGrps))
+          doRowOutputs(writers, Seq(jsonBalanceGroupReport(txnData.metadata, balGrps).spaces2))
       }
     })
   }

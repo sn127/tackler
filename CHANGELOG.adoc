@@ -1,18 +1,43 @@
 = Tackler releases
 
-Current release is 0.7.0
+Current release is:
 
+ libraryDependencies += "fi.sn127" %% "tackler-core" % "0.8.0"
 
 == Release history
 
-First public release of tackler was 0.5.0.
+=== 0.8.0
 
-=== 0.7.1-devel
+ * Publish `tackler-core.jar` on  Maven Central Repository
+ * Provide specialized configuration for all reports
+ * Add reporting method which returns report as json-object
+ * Provide Settings constructors without conf-file path and with only embedded configuration
+ ** Renamed embedded configuration `tackler.conf` to `reference.conf`
+ ** Move Tackler's conf-file configuration under `tackler.core` namespace
+ * Change `equity` and `identity` to actual exports (code and configuration)
+ ** new conf+cli option `reporting.exports`
+ ** Conf+cli key `reporting.reports` doesn't accept `equity` nor `identity` anymore
+ ** move conf-key `reports.equity` to `exports.equity`
 
 ==== Fixes
 
+ * Don't include logger implementation with `tackler-core.jar`
+
 ==== Development
 
+ * Change: change `ReportType` to `OutputType`, and split it to `ReportType` and `ExportType` traits.
+ * New: ReportSettings base class for report configuration
+ * Change: All reports takes specialized <ReportType>Settings as settings argument 
+
+Updated deps and tools:
+
+ * Updated dependencies
+ ** better-files: 3.4.0
+ ** jgit: 4.9.1.201712030800-r
+ * build
+ ** sbt: 1.0.4
+ ** assembly: 0.14.6
+ ** sonatype: 2.0
 
 === 0.7.0
 
