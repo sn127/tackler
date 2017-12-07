@@ -141,10 +141,6 @@ object Settings {
 }
 
 class Settings(optPath: Option[Path], providedConfig: Config) {
-  /**
-   * This is a basename of default Config resource.
-   */
-  private val basename = "tackler"
 
   private val log: Logger = LoggerFactory.getLogger(this.getClass)
 
@@ -154,14 +150,14 @@ class Settings(optPath: Option[Path], providedConfig: Config) {
 
       providedConfig
         .withFallback(ConfigFactory.parseFile(path.toFile))
-        .withFallback(ConfigFactory.load(basename))
+        .withFallback(ConfigFactory.load())
         .resolve()
     }
     case None => {
       log.debug("Loading plain configuration")
 
       providedConfig
-        .withFallback(ConfigFactory.load(basename))
+        .withFallback(ConfigFactory.load())
         .resolve()
     }
   }

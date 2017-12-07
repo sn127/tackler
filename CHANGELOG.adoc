@@ -13,6 +13,7 @@ First public release of tackler was 0.5.0.
  * Provide specialized configuration for all reports
  * Add reporting method which returns report as json-object
  * Provide Settings constructors without conf-file path and with only embedded configuration
+ ** Renamed embedded configuration `tackler.conf` to `reference.conf`
  * Change `equity` and `identity` to actual exports (code and configuration)
  ** new conf+cli option `reporting.exports`
  ** Conf+cli key `reporting.reports` doesn't accept `equity` nor `identity` anymore
