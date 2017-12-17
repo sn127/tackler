@@ -187,19 +187,17 @@ abstract class CtxHandler {
       java.util.UUID.fromString(meta.text().getText.trim)
     })
 
-    // it seems that txnCtx.txn_comment is never null, even when there aren't any comments
-    // TODO: tests this?
-    val comments = Option(txnCtx.txn_comment()).fold[Option[List[String]]](
-      None
-    )(cs => {
-      val l = JavaConverters.asScalaIterator(cs.iterator())
+    // txnCtx.txn_comment is never null, even when there aren't any comments
+    // (in that case it will be an empty list)
+    val comments = {
+      val l = JavaConverters.asScalaIterator(txnCtx.txn_comment().iterator())
         .map(c => c.comment().text().getText).toList
       if (l.isEmpty) {
         None
       } else {
         Some(l)
       }
-    })
+    }
 
     val posts: Posts =
       JavaConverters.asScalaIterator(txnCtx.postings().posting().iterator()).map(p => {

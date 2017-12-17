@@ -23,7 +23,9 @@ import fi.sn127.tackler.core._
 import fi.sn127.tackler.model.{Metadata, Transaction, TxnData, TxnTS}
 
 
-class BalanceGroupReport(val name: String, val mySettings: BalanceGroupSettings) extends BalanceReportLike(mySettings) {
+class BalanceGroupReport(val mySettings: BalanceGroupSettings) extends BalanceReportLike(mySettings) {
+
+  override val name: String = mySettings.outputname
 
   protected def txtBalanceGroupReport(metadata: Option[Metadata], balGrps: Seq[Balance]): Seq[String] = {
 
@@ -95,6 +97,7 @@ class BalanceGroupReport(val name: String, val mySettings: BalanceGroupSettings)
     })
   }
 
+  override
   def jsonReport(txnData: TxnData): Json = {
     val balGrps = getBalanceGroups(txnData)
     jsonBalanceGroupReport(txnData.metadata, balGrps)

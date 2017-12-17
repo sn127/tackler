@@ -18,7 +18,7 @@ package fi.sn127.tackler.core
 
 import scala.collection.mutable
 
-import fi.sn127.tackler.model.{BalanceTreeNode, RegisterEntry, RegisterPosting, Transaction, TxnData, Txns}
+import fi.sn127.tackler.model._
 
 object Accumulator {
 
@@ -33,11 +33,11 @@ object Accumulator {
       .seq
   }
 
-  def registerStream(txns: Txns)(reporter: (RegisterEntry => Unit)): Unit = {
+  def registerStream[T](txns: Txns, accounts: Filtering[RegisterPosting])(reporter: (RegisterEntry => Seq[T])): Seq[T] = {
 
     val registerEngine = new mutable.HashMap[String, BigDecimal]()
 
-    txns.foreach(txn => {
+    txns.flatMap(txn => {
       val registerPostings = txn.posts.map({ p =>
         val newTotal = registerEngine.getOrElse(p.atnKey, BigDecimal(0)) + p.amount
         registerEngine.update(p.atnKey, newTotal)
@@ -45,7 +45,11 @@ object Accumulator {
         RegisterPosting(p, newTotal)
       })
 
-      reporter((txn, registerPostings))
+      reporter((
+        txn,
+        registerPostings
+          .filter(accounts.predicate)
+          .sorted(OrderByRegPosting)))
     })
   }
 }

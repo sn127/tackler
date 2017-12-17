@@ -38,7 +38,7 @@ class EquityExport(val settings: Settings) extends ExportLike {
       val lastTxn = txns.last
       val eqTxnHeader = TxnTS.isoZonedTS(lastTxn.date) + " " + lastTxn.uuid.map(u => "Equity: last txn (uuid): " + u.toString).getOrElse("Equity")
 
-      bal.bal.groupBy(b => b.acctn.commStr).flatMap({ case (c, bs) =>
+      bal.bal.groupBy(b => b.acctn.commStr).flatMap({ case (_, bs) =>
         val eqBalRow = if (bs.map(b => b.accountSum).sum === 0.0) {
           Nil
         } else {

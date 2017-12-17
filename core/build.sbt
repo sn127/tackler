@@ -10,3 +10,4 @@ libraryDependencies += jgit
 libraryDependencies += scalaArm
 
 libraryDependencies += scalatest % "test"
+libraryDependencies ++= circe_deps_test

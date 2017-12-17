@@ -2,6 +2,6 @@
 
  * [ ] Examples
 
-* [ ] JSON: Developer docs
-** [ ] Collect data and examples from link:../tep/tep-1004.adoc[TEP-1004: JSON report output]
+* [x] JSON: Developer docs
+** [x] Collect data and examples from link:../tep/tep-1004.adoc[TEP-1004: JSON report output]
 

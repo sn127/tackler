@@ -19,28 +19,51 @@ import TacklerTests._
 
 lazy val commonSettings = Seq(
   organization := "fi.sn127",
-  version := "0.8.1-SNAPSHOT",
+  version := "0.9.0-SNAPSHOT",
   scalaVersion := "2.12.4",
   compileOrder := CompileOrder.JavaThenScala,
   scalacOptions ++= Seq(
-    "-Xlint",
+    "-deprecation",
+    "-encoding", "utf-8",
+    "-explaintypes",
     "-feature",
+    "-unchecked",
+    "-Xcheckinit",
     "-Xfatal-warnings",
-    "-deprecation"),
+    "-Xlint",
+    "-Yno-adapted-args",
+    "-Ypartial-unification",
+    "-Ywarn-dead-code",
+    "-Ywarn-extra-implicit",
+    "-Ywarn-inaccessible",
+    "-Ywarn-infer-any",
+    "-Ywarn-nullary-override",
+    "-Ywarn-nullary-unit",
+    "-Ywarn-numeric-widen",
+    "-Ywarn-unused:implicits",
+    "-Ywarn-unused:imports",
+    "-Ywarn-unused:locals",
+    "-Ywarn-unused:params",
+    "-Ywarn-unused:patvars",
+    "-Ywarn-unused:privates",
+    "-Ywarn-value-discard"
+  ),
+  scalacOptions in (Compile, console) --= Seq("-Ywarn-unused:imports", "-Xfatal-warnings"),
   wartremoverWarnings in (Compile, compile) ++= Warts.allBut(
     Wart.ToString,
     Wart.NonUnitStatements,
     Wart.Throw //https://github.com/puffnfresh/wartremover/commit/869763999fcc1fd685c1a8038c974854457b608f
   ),
   publishTo := Some(
-     if (isSnapshot.value)
-        Opts.resolver.sonatypeSnapshots
-     else
-        Opts.resolver.sonatypeStaging)
+    if (isSnapshot.value)
+      Opts.resolver.sonatypeSnapshots
+    else
+      Opts.resolver.sonatypeStaging
+  ),
 )
 
 /**
-  * if "name" is defined in commonSettings, it will cause
+ * if "name" is defined in commonSettings, it will cause
   * circular dependencies with sub-projects
   */
 lazy val tackler = (project in file(".")).
@@ -58,8 +81,7 @@ lazy val core = (project in file("core")).
   settings(
     name := "tackler-core",
     fork in run := true,
-    test in assembly := {},
-    antlr4Version in Antlr4 := "4.7",
+    antlr4Version in Antlr4 := "4.7.1",
     antlr4GenListener in Antlr4 := false,
     antlr4GenVisitor in Antlr4 := false,
     antlr4PackageName in Antlr4 := Some("fi.sn127.tackler.parser")
@@ -82,7 +104,6 @@ lazy val cli = (project in file("cli")).
       Tests.Setup(() => TacklerTests.setup("tests", log))
     },
     assemblyJarName in assembly := "tackler-cli" + "-" + version.value + ".jar",
-    test in assembly := {},
     buildInfoKeys := Seq[BuildInfoKey](name, version, scalaVersion, sbtVersion),
     buildInfoOptions += BuildInfoOption.BuildTime,
     buildInfoPackage := "fi.sn127.tackler.cli",

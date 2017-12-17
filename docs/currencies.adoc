@@ -1,11 +1,12 @@
 = Currencies, Shares, etc.
 
-Currencies and shares are special commodities which have variable exchange rate.
+Currencies and shares are special link:./commodities.adoc[commodities] which have value without unit of measurement.
 
-Examples of currencies and shares are: EUR, USD, NOKIA, etc. Typically currencies
-and shares could be used as is (with commodities you need quantity unit).
+Examples of currencies and shares are: EUR, USD, NOKIA, etc. Currencies
+and shares could be used as plain values without quantity unit.
 
-Unit could be anything, as long as it is a valid single `ID` element (e.g. `ACME·INC`, `EUR`).
+Currency and share name has to be  a valid `ID` element (same rules applies as with account names).
+Examples of valid names  are `ACME·INC`, `EUR`, etc.
 
 
 == Transactions with mixed currencies or shares
@@ -22,10 +23,10 @@ Example of mixed currency transaction without value positions:
 ....
 
 
-Mixed commodities must be converted to common commodity with value positions:
+Mixed currencies and shares must be converted to common base with value positions:
 
 ....
-2017-05-01 this is valid txn
+2017-05-01 this is valid txn with NOK, SEK and EUR
  Expences:Ice·Cream  500 NOK @ 0.1065 EUR
  Assets:Cash        -200 SEK @ 0.1039 EUR
  Assets:Cash      -32.47 EUR
@@ -34,17 +35,19 @@ Mixed commodities must be converted to common commodity with value positions:
 
 == Positions
 
-Positions are additional information with postings,
-which attach value information to otherwise plain currency,
+Positions are additional information for postings.
+Positions attach value information to otherwise plain currency,
 share, etc. posting.
 
-Position tells how valuable that posting was
+Position tells valuation of that posting at the time of transaction.
 
 
 === Value (Closing) position
 
-To exchange currency, close stock position or give value to commodity,
-you can provide value (closing) position to posting.
+When you exchange currency, close stock position or define value to commodity,
+you can provide value (closing) position to the posting.
+
+For example following purchases made in foreign currencies, which are later converted to EUR.
 
 ....
 2017-04-01 stuff in Finland with Credit Card
@@ -71,8 +74,8 @@ you can provide value (closing) position to posting.
 
 === Opening position
 
-You can record opening positions, but those are not used at the moment.
-This is planned enhancement.
+You can record opening positions with transaction data, but those are not processed at the moment.
+This is planned enhancement, see Profit and Loss (PnL) tracking below.
 
 ....
 2017-01-01
@@ -83,8 +86,8 @@ This is planned enhancement.
 
 === Profit and Loss (PnL)
 
-Profit and Loss (PnL) is not currently implemented,
-but you can record opening position with closing position
+Profit and Loss (PnL) tracking is not currently implemented.
+You can record opening position with closing position
 for future profit and loss calculation.
 
 ....

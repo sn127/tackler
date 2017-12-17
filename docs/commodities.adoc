@@ -1,22 +1,28 @@
 = Commodities
 
-Commodities are something which have variable exchange rate.
+Commodity is something which doesn't have value without unit of measurement.
 
-Examples of commodities are: Helium, Oxygen, Gold, etc. Normally commodities need
-an unit of measurement. This could be plain unit (e.g. `bar` for gases),
-or you can specify that it is bars of Helium (`bar·He`).
+Examples of commodities are Helium, Gold, Silver, etc. All of these need
+an unit of measurement to make transaction record sensible
+(for example `bar` for Helium or `oz` for Gold).
 
-Unit could be anything, as long as it is a valid single `ID` element. But for balance
-and other reports will make more sense if you use specific unit for your commodity.
+Typically it is possible to transform commodity transactions between same commodity,
+but with different unit of measurement as long as there is well defined,
+constant conversion between those units.
+
+For example: `42 oz Au` -> `1306.3460256 g Au` -> `1.3063460256 kg Au`.
+
+However, at the moment automatic commodity unit conversions are not supported with Tackler,
+but this is something which will be implemented in the future.
+
+Commodity name (and combined unit) has to be  a valid `ID` element (same rules applies as with account names).
+
+For example, tracking Helium and Oxygen, you could use units `bar·He` and `bar·O2`:
 
 ....
    Gas:Tank·102  298 bar·He
    Gas:Tank·208  195 bar·O2
 ....
-
-It might be possible to do automatic unit conversions between commodities in future
-(e.g. `42 oz:Au` -> `1306.3460256 g:Au` -> `1.3063460256 kg:Au`),
-but at the moment that syntax is not valid commodity format.
 
 == Transactions with mixed commodities
 
@@ -44,7 +50,6 @@ Mixed commodities must be converted to common commodity with value positions:
 
 == Example
 
-Please see an accounting example for diving gas link:trimix-filling-station.adoc[Trimix Filling and Mixing Station].
-
-It shows how to use different commodities and how to convert those commodities to momenetary values.
-
+For example see an accounting example for scuba diving
+link:trimix-filling-station.adoc[Trimix Filling and Mixing Station]. It demonstrates how to track different
+commodities and how to convert those commodities to monetary values,

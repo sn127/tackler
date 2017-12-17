@@ -1,0 +1,45 @@
+= Server API
+
+This document explains how to embedded Tackler core and use it as a library in other systems.
+
+Tackler operates on stream of immutable transactions and over this
+transaction stream (or sub-selection of it) it generates different reports.
+
+Transaction stream is immutable and thread safe, and it is possible to make multiple reports
+over same set of txn data. Currently all transactions are held in memory.
+
+
+== Reading transactions
+
+Transactions can be read from three different sources
+
+ * From filesystem `fs`-storage link:./tackler.conf[(conf: tackler.core.input.fs)]
+ * From link:./git-storage.adoc[Git] `git`-storage link:./tackler.conf[(conf: tackler.core.input.git)]
+ * Internally directly from string
+
+All of these inputs produce transaction stream and metadata of that stream. This transaction set (`txnData`)
+can then be fed to different reports.  See
+link:../core/src/main/scala/fi/sn127/tackler/parser/TacklerTxns.scala[core -> main -> parser -> TacklerTxns]
+and it's companion object's helpers.
+
+
+== Generating reports
+
+Reports are done in three steps:
+
+1. Make settings for report (`BalanceSettings`)
+1. Instantiate report maker (`BalanceReport`)
+1. Generate actual report (`balRpt.jsonReport(txnData)`)
+
+
+== Example of usage of Server API
+
+There is test for server reporting api, which could be used as an example.
+With this test transactions are read internally from string, and then that txns stream is used to produce various
+reports.
+
+Tackler's CLI contains examples (`git2Txns` and `paths2Txns`) how to use FS or Git storage:
+link:../cli/src/main/scala/fi/sn127/tackler/cli/TacklerCli.scala[cli -> main -> TacklerCli]
+
+Complete test case is located here:
+link:../core/src/test/scala/fi/sn127/tackler/report/ReportApiTest.scala[core -> test -> report -> ReportApiTest]

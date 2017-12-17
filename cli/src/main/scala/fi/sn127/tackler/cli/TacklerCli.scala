@@ -73,24 +73,14 @@ object TacklerCli {
 
     cliCfg.input_filename.toOption.fold({
       // cli: input file: NO
-      if (cliCfg.input_fs_glob.isDefined) {
-        log.debug("input glob: dir: [" + settings.input_fs_dir.toString + "] " +
-          "glob: [" + settings.input_fs_glob.toString() + "]")
-      } else {
-        log.debug("Using default settings for input, input glob: dir: [" + settings.input_fs_dir.toString + "] " +
-          " glob: [" + settings.input_fs_glob.toString() + "]")
-      }
-      // cli: input.fs.glob is in any case morphed with settings
-      //   -> no need for special handling for cli args
-      File(settings.input_fs_dir)
-        .glob(settings.input_fs_glob)(visitOptions = File.VisitOptions.follow)
-        .map(f => f.path)
-        .toSeq
+
+      // cli: input.fs.glob is merged with settings -> no need for special handling for cli args
+      TacklerTxns.inputPaths(settings)
     }) { cliArgsInputFilename =>
       // cli: input file: YES
-      val inputPath = settings.getPathWithSettings(cliArgsInputFilename)
 
-      log.debug("input file: [" + inputPath.toString + "]")
+      val inputPath = settings.getPathWithSettings(cliArgsInputFilename)
+      log.debug("CLI: input file: [{}]", inputPath.toString)
       List(inputPath)
     }
   }
@@ -114,15 +104,12 @@ object TacklerCli {
   def getInputRef(cliCfg: TacklerCliArgs, settings: Settings): Either[String, String] = {
 
     cliCfg.input_git_commit.toOption.fold[Either[String, String]]({
-      // cli: git commit: NO => This is LEFT
-
-      // cli: input.git.ref is in any case morphed with settings
-      //   -> no need for special handling for cli args
-      Left[String, String](settings.input_git_ref)
+      // cli: git commit: NO
+      // cli: input.git.ref is merged with settings -> no need for special handling for cli args
+      TacklerTxns.gitReference(settings)
     }){ cliArgCommit =>
-      // cli: git commit: YES => This is RIGHT
-
-      Right[String, String](cliArgCommit)
+      // cli: git commit: YES
+      TacklerTxns.gitCommitId(cliArgCommit)
     }
   }
 
@@ -197,7 +184,7 @@ object TacklerCli {
         // do not report success
         Console.out.println("Version: " + BuildInfo.version + " [" + BuildInfo.builtAtString + "]")
         FAILURE
-      case ex: org.rogach.scallop.exceptions.ScallopException =>
+      case _: org.rogach.scallop.exceptions.ScallopException =>
         // Error message is already printed by CliArgs
         FAILURE
       case ex: NoSuchFileException =>

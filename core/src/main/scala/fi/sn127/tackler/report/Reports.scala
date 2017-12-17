@@ -85,10 +85,10 @@ final case class Reports(settings: Settings) {
         })
 
         try {
-          val frmts = outputs.map({ case (frmt, closables) => frmt })
+          val frmts = outputs.map({ case (frmt, _) => frmt })
           reporter.writeReport(frmts, txnData)
         } finally {
-          outputs.foreach({ case (frmt, closables: Writers) => closables.foreach(c => c.close()) })
+          outputs.foreach({ case (_, closables: Writers) => closables.foreach(c => c.close()) })
         }
     }
 
@@ -136,15 +136,15 @@ final case class Reports(settings: Settings) {
 
     settings.Reporting.reports.foreach {
       case BalanceReportType() =>
-        val balReport = new BalanceReport("bal", BalanceSettings(settings))
+        val balReport = new BalanceReport(BalanceSettings(settings))
         writeReport(outputBase, txnData, balReport, frmts)
 
       case BalanceGroupReportType() =>
-        val balgrpReport = new BalanceGroupReport("balgrp", BalanceGroupSettings(settings))
+        val balgrpReport = new BalanceGroupReport(BalanceGroupSettings(settings))
         writeReport(outputBase, txnData, balgrpReport, frmts)
 
       case RegisterReportType() =>
-        val regReport = new RegisterReport("reg", RegisterSettings(settings))
+        val regReport = new RegisterReport(RegisterSettings(settings))
         writeReport(outputBase, txnData, regReport, frmts)
     }
 

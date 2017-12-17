@@ -29,7 +29,8 @@ based double-entry accounting].
 * Multiple report and export types:
 ** link:docs/report-balance.adoc[Balance], link:docs/report-balance-group.adoc[Balance Groups] and link:docs/report-register.adoc[Register] Reports
 ** link:docs/export-equity.adoc[Equity] and link:docs/export-identity.adoc[Identity] Exports
-* Text and link:docs/tep/tep-1004.adoc[JSON] output formats for reports
+* Text and link:docs/json.adoc[JSON] output formats for reports
+** link:docs/server-api.adoc[Server API] for embedding Tackler core
 * Has good performance with link:docs/performance.adoc[very large set of transactions]
 ** Tackler is link:perf/results/hw00/[routinely tested] up to one million (1E6) transactions
 ** Tackler can process link:perf/results/readme.adoc[56000 txn/s] on Quad Core system
@@ -95,9 +96,8 @@ User documentation is located under docs:
 * link:./docs/tackler.conf[Example of Tackler configuration]
 * link:./docs/accounts.conf[Example of Tackler Chart of Accounts]
 * link:./docs/trimix-filling-station.adoc[Example of Trimix Filling Station Accounting system (for scuba diving)]
-
-
-Documentation for developers is located under: link:./docs/devel[]
+* link:./docs/server-api.adoc[Server API]
+* link:./docs/devel/readme.adoc[Developer's documentation]
 
 
 == Todo, TEPs and Roadmap
@@ -111,19 +111,20 @@ of major new features. These are listed on link:docs/tep/readme.adoc[TEP index].
 
 Extremely loosely defined roadmap is following:
 
+* Transaction filtering 
+* Profit and Loss (PnL) tracking
 * Extending support for Units
-** automatic conversions between different base units
-* Server interface (reporting api)
+** Automatic conversions between different base units
+** Support for unit handling with commodities  
 * Extending support for Currencies and Commodities
 ** Price database
-** Profit and Loss (PnL) tracking
 
 == Releases
 
 For release information and version history details,
 see link:./CHANGELOG.adoc[CHANGELOG].
 
-Tackler-core, which is supposed to be usable to use as separate component,
+Tackler-core, which is supposed to be usable as separate component,
 is released on Maven Central Repository.
 
 Dependency setting for SBT is:

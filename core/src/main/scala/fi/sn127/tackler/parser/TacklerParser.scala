@@ -87,7 +87,7 @@ object TacklerParser {
       // there is no need to try full LL(*)
     } catch {
       // thrown by BailErrorStrategy
-      case ex: ParseCancellationException =>
+      case _: ParseCancellationException =>
         log.debug("SLOW PATH")
         tokens.seek(0) // rewind input stream
         parser.reset()

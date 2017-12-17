@@ -1,14 +1,5 @@
 {
-  "title" : "REGISTER"
-,
-"registerRows" : [
-{
-  "txn" : {
-    "timestamp" : null,
-    "description" : "end-sentry"
-  },
-  "postings" : [
+  "title" : "REGISTER",
+  "registerRows" : [
   ]
-}
-]
 }

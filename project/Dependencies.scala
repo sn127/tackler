@@ -45,6 +45,10 @@ object Dependencies {
     "io.circe" %% "circe-parser"
   ).map(_ % circeVersion)
 
+  val circe_deps_test = Seq(
+    "io.circe" %% "circe-optics"
+  ).map(_ % circeVersion % "test") 
+
   val scalatest = "org.scalatest" %% "scalatest" % scalatestVersion
   val scallop = "org.rogach" %% "scallop" % scallopVersion
   val dirsuite = "fi.sn127" %% "dirsuite" % dirsuiteVersion

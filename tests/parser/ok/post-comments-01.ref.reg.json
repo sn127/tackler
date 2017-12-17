@@ -1,90 +1,77 @@
 {
-  "title" : "REGISTER"
-,
-"registerRows" : [
-{
-  "txn" : {
-    "timestamp" : "2017-01-01Z",
-    "description" : "desc"
-  },
-  "postings" : [
+  "title" : "REGISTER",
+  "registerRows" : [
     {
-      "account" : "a",
-      "amount" : "1.00",
-      "runningTotal" : "1.00"
+      "txn" : {
+        "timestamp" : "2017-01-01Z",
+        "description" : "desc"
+      },
+      "postings" : [
+        {
+          "account" : "a",
+          "amount" : "1.00",
+          "runningTotal" : "1.00"
+        },
+        {
+          "account" : "e",
+          "amount" : "-1.00",
+          "runningTotal" : "-1.00"
+        }
+      ]
     },
     {
-      "account" : "e",
-      "amount" : "-1.00",
-      "runningTotal" : "-1.00"
-    }
-  ]
-}
-,
-{
-  "txn" : {
-    "timestamp" : "2017-01-02Z",
-    "description" : "desc"
-  },
-  "postings" : [
-    {
-      "account" : "a",
-      "amount" : "1.00",
-      "runningTotal" : "2.00"
+      "txn" : {
+        "timestamp" : "2017-01-02Z",
+        "description" : "desc"
+      },
+      "postings" : [
+        {
+          "account" : "a",
+          "amount" : "1.00",
+          "runningTotal" : "2.00"
+        },
+        {
+          "account" : "e",
+          "amount" : "-1.00",
+          "runningTotal" : "-2.00"
+        }
+      ]
     },
     {
-      "account" : "e",
-      "amount" : "-1.00",
-      "runningTotal" : "-2.00"
-    }
-  ]
-}
-,
-{
-  "txn" : {
-    "timestamp" : "2017-01-03Z",
-    "description" : "desc"
-  },
-  "postings" : [
-    {
-      "account" : "a",
-      "amount" : "1.00",
-      "runningTotal" : "3.00"
+      "txn" : {
+        "timestamp" : "2017-01-03Z",
+        "description" : "desc"
+      },
+      "postings" : [
+        {
+          "account" : "a",
+          "amount" : "1.00",
+          "runningTotal" : "3.00"
+        },
+        {
+          "account" : "e",
+          "amount" : "-1.00",
+          "runningTotal" : "-3.00"
+        }
+      ]
     },
     {
-      "account" : "e",
-      "amount" : "-1.00",
-      "runningTotal" : "-3.00"
+      "txn" : {
+        "timestamp" : "2017-01-04Z",
+        "description" : "desc"
+      },
+      "postings" : [
+        {
+          "account" : "a",
+          "amount" : "1.00",
+          "runningTotal" : "4.00"
+        },
+        {
+          "account" : "e",
+          "amount" : "-1.00",
+          "runningTotal" : "-4.00"
+        }
+      ]
     }
   ]
-}
-,
-{
-  "txn" : {
-    "timestamp" : "2017-01-04Z",
-    "description" : "desc"
-  },
-  "postings" : [
-    {
-      "account" : "a",
-      "amount" : "1.00",
-      "runningTotal" : "4.00"
-    },
-    {
-      "account" : "e",
-      "amount" : "-1.00",
-      "runningTotal" : "-4.00"
-    }
-  ]
-}
-,
-{
-  "txn" : {
-    "timestamp" : null,
-    "description" : "end-sentry"
-  },
-  "postings" : [
-  ]
-}
-]
 }

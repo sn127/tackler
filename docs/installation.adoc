@@ -3,13 +3,10 @@
 To use tackler you need
 
   * Java Runtime Environment (Java 8)
-  * Tackler command line binary (jar-file)
+  * Tackler command line binary (`tackler-cli.jar`-file)
 
 
 == Mimimal setup
-
-Default embedded configuration will try to find transaction data
-(files with `.txn` suffix) on `txns`-directory next to the jar-file.
 
 The absolute minimum to run tackler is following setup:
 
@@ -19,11 +16,14 @@ The absolute minimum to run tackler is following setup:
 ./txns/journal.txn
 ----
 
-With that setup you can run:
+With that setup run following command line:
 
  java -jar tackler-cli-x.y.z.jar --accounts.strict=false
 
-And it will produce balance and register reports without account name validation.
+This will produce balance and register reports without account name validation.
+
+Default embedded configuration will try to find transaction data (files with `.txn` suffix)
+on `txns`-directory next to the jar-file.
 
 
 == Recommend layout
@@ -31,7 +31,7 @@ And it will produce balance and register reports without account name validation
 By default Tackler will try to find configuration file (`tackler.conf`) next to its jar-file.
 You can also provide path to configuration file with `--cfg` option.
 
-More sensible setup could be for example:
+More sensible setup would be:
 
 ....
 ./bin/tackler-cli-x.y.z.jar
@@ -45,25 +45,29 @@ More sensible setup could be for example:
 
 Where `YYYY` and `MM` stand for time based data shard with year and month slides.
 
-Also with this setup, there is configuration file link:tackler.conf[tackler.conf]
-and link:accounts.conf[accounts.conf] for Chart of Accounts. Configuration is
-located next to the jar-file, so it is auto-discovered.
+With this setup, configuration file link:./tackler.conf[tackler.conf] is located nex to the jar-file,
+so configuration is auto-discovered.  Chart of Accounts (link:./accounts.conf[accounts.conf]) contains
+accounts names and it is possible to do strict account name validation.
 
-If above `tackler.conf` is something like:
+Minimal `tackler.conf` for above setup could be:
 
 ....
-basedir=../
-input {
-  storage = fs
-  fs {
-    dir = "txns"
-    glob = "**.txn"
+tackler {
+  core {
+    basedir = ../
+    input {
+      storage = fs
+      fs {
+        dir = "txns"
+        glob = "**.txn"
+      }
+    }
+    include "accounts.conf"
   }
 }
-include "accounts.conf"
 ....
 
-then it is possible to run tackler by:
+With this setup, it is possible to run Tackler by:
 
  java -jar bin/tackler-cli-x.y.z.jar
 
@@ -72,7 +76,7 @@ and it will just work.
 
 == Configuration
 
-Please see link:./configuration.adoc[configuration] for information about how to configure system.
+Please see link:./configuration.adoc[configuration] for information about how to tailor and configure system.
 
 You can override some of the configuration varibles with CLI arguments.
 These configuration variables, and command line switches are documented
@@ -84,7 +88,7 @@ in link:./tackler.conf[tackler.conf].
 By default it is fatal error if there is an unknown account within
 transactions.  This can be turned off with:
 
-`--accounts.strict=false`,
+`--accounts.strict=false`
 
 but then there is no safety net against typos with account names.
 

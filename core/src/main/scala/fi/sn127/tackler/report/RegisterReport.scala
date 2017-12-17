@@ -16,17 +16,17 @@
  */
 package fi.sn127.tackler.report
 
-import java.io.StringWriter
-
 import io.circe.Json
 import io.circe.syntax._
 
 import fi.sn127.tackler.core._
-import fi.sn127.tackler.model._
+import fi.sn127.tackler.model.{RegisterEntry, _}
 
-class RegisterReport(val name: String, val mySettings: RegisterSettings) extends ReportLike(mySettings) {
+class RegisterReport(val mySettings: RegisterSettings) extends ReportLike(mySettings) {
 
-  def txtRegisterEntry(regEntry: RegisterEntry, regEntryPostings: Seq[RegisterPosting]): Seq[String] = {
+  override val name = mySettings.outputname
+
+  protected def txtRegisterEntry(regEntry: RegisterEntry, regEntryPostings: Seq[RegisterPosting]): Seq[String] = {
 
     val txn = regEntry._1
 
@@ -48,13 +48,13 @@ class RegisterReport(val name: String, val mySettings: RegisterSettings) extends
     }
   }
 
-  def jsonRegisterEntry(registerEntry: RegisterEntry, regEntryPostings: Seq[RegisterPosting]): Option[Json] = {
+  protected def jsonRegisterEntry(registerEntry: RegisterEntry, regEntryPostings: Seq[RegisterPosting]): Option[Json] = {
 
     if (regEntryPostings.isEmpty) {
       None
     }
     else {
-      def foo(c: Option[Commodity]):List[(String, Json)] = {
+      def foo(c: Option[Commodity]): List[(String, Json)] = {
         c.fold(
           Nil: List[(String, Json)]
         )(commodity =>
@@ -81,132 +81,82 @@ class RegisterReport(val name: String, val mySettings: RegisterSettings) extends
     }
   }
 
+  protected def txtRegisterReport(accounts: Filtering[RegisterPosting], txns: TxnData): Seq[String] = {
+    val header = List(
+      txns.metadata.fold("") { md => md.text() },
+      mySettings.title,
+      "-" * mySettings.title.length)
 
-  private def doHeaders(formats: Formats, metadata: Option[Metadata]): Unit = {
-    formats.foreach({case (format, writers) =>
-      format match {
-        case TextFormat() =>
-          val reportHeader = List(
-            metadata.fold(""){md => md.text()},
-            mySettings.title,
-            "-" * mySettings.title.length)
-          doRowOutputs(writers, reportHeader)
 
-        case JsonFormat() =>
-          val header = Seq(metadata.fold(
-            Json.obj(
-              jsonTitle(mySettings.title))
-          )({ md =>
-            Json.obj(
-              jsonTitle(mySettings.title),
-              ("metadata", md.asJson()),
-            )
-          }).spaces2.dropRight(1) + ",") // stupid hack to remove closing '}' and add ','
+    val body = Accumulator.registerStream[String](txns.txns, accounts)({ (regEntry: RegisterEntry) =>
+      val regEntryPostings = regEntry._2
+      val txtRegEntry = txtRegisterEntry(regEntry, regEntryPostings)
 
-          doRowOutputs(writers, header)
-      }
+      txtRegEntry
+
     })
+    if (body.isEmpty) {
+      header
+    } else {
+      header ++ body
+    }
   }
 
-  private def doBody(formats: Formats, accounts: Filtering[RegisterPosting], txns: Txns): Unit = {
-    def bodyStart(): Unit = {
-      formats.foreach({case (format, writers) =>
-        format match {
-          case TextFormat() =>
+  protected def doBody(accounts: Filtering[RegisterPosting], txns: Txns): Json = {
 
-          case JsonFormat() =>
-            doRowOutputs(writers, List("\"registerRows\" : ["))
-        }
-      })
-    }
-
-    def bodyEnd(): Unit = {
-      formats.foreach({case (format, writers) =>
-        format match {
-          case TextFormat() =>
-
-          case JsonFormat() => {
-            // This is silly, json doesn't support trailing comma
-            // Other option would be to add full logic
-            // to deal with comma between objects and with Txn&Account filtering logic
-            // (e.g. ",,{}", "{},,{}", "{},," cases etc.)
-            doRowOutputs(writers, List(
-              Json.obj(
-                ("txn", Json.obj(
-                  ("timestamp", Json.Null),
-                  ("description", "end-sentry".asJson))),
-                ("postings", Seq.empty[String].asJson)).spaces2))
-
-            doRowOutputs(writers, List("]"))
-          }
-        }
-      })
-    }
-
-
-    bodyStart()
-
-    Accumulator.registerStream(txns)({ (regEntry: RegisterEntry) =>
+    val a = Accumulator.registerStream[Json](txns, accounts)({ (regEntry: RegisterEntry) =>
 
       val regEntryPostings = regEntry._2
-        .filter(accounts.predicate)
-        .sorted(OrderByRegPosting)
 
+      jsonRegisterEntry(regEntry, regEntryPostings) match {
+        case Some(json) => { List(json) }
 
-      formats.foreach({ case (format, writers) =>
-        format match {
-          case TextFormat() => {
-            val txtRegEntry = txtRegisterEntry(regEntry, regEntryPostings)
-            doRowOutputs(writers, txtRegEntry)
-          }
-
-          case JsonFormat() =>
-            jsonRegisterEntry(regEntry, regEntryPostings) match {
-              case Some(json) => {
-                doRowOutputs(writers, List(json.spaces2))
-                // See bodyEnd
-                doRowOutputs(writers, List(","))
-              }
-              case None =>
-            }
-        }
-      })
-    })
-
-    bodyEnd()
-  }
-
-  private def doFooters(formats: Formats): Unit = {
-    formats.foreach({case (format, writers) =>
-      format match {
-        case TextFormat() =>
-
-        case JsonFormat() =>
-          val reportFooter = List("}")
-          doRowOutputs(writers, reportFooter)
+        case None => Seq.empty[Json]
       }
     })
+
+    a.asJson
   }
 
-  @SuppressWarnings(Array("org.wartremover.warts.TraversableOps"))
-  def jsonReport(txnData: TxnData): Json = {
-    // this is super-silly, but let's use this with current stream-like implementation
-    val frmts: Formats = List((JsonFormat(), Seq(new StringWriter())))
-
-    this.writeReport(frmts, txnData)
-
-    Json.fromString(frmts.head._2.head.toString)
+  protected def jsonRegisterReport(accounts: Filtering[RegisterPosting], txns: TxnData): Json = {
+    txns.metadata.fold(
+      Json.obj(
+        jsonTitle(mySettings.title),
+        ("registerRows", doBody(accounts, txns.txns)))
+    )({ md =>
+      Json.obj(
+        jsonTitle(mySettings.title),
+        ("metadata", md.asJson()),
+        ("registerRows", doBody(accounts, txns.txns)))
+    })
   }
 
-  def writeReport(formats: Formats, txns: TxnData): Unit ={
-    val rrf = if (mySettings.accounts.isEmpty) {
+  protected def getFilters() = {
+    if (mySettings.accounts.isEmpty) {
       AllRegisterPostings
     } else {
       RegisterFilterByAccount(mySettings.accounts)
     }
+  }
 
-    doHeaders(formats, txns.metadata)
-    doBody(formats, rrf, txns.txns)
-    doFooters(formats)
+  override
+  def jsonReport(txnData: TxnData): Json = {
+    jsonRegisterReport(getFilters(), txnData)
+  }
+
+  override
+  def writeReport(formats: Formats, txns: TxnData): Unit = {
+    val rrf = getFilters()
+
+    formats.foreach({ case (format, writers) =>
+      format match {
+        case TextFormat() => {
+          doRowOutputs(writers, txtRegisterReport(rrf, txns))
+        }
+        case JsonFormat() => {
+          doRowOutputs(writers, Seq(jsonRegisterReport(rrf, txns).spaces2))
+        }
+      }
+    })
   }
 }

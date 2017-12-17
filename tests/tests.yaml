@@ -1823,5 +1823,53 @@ features:
                 - desc: "code mechanics (non-present etc)"
               references:
                 - ref: register
+  - feature:
+      id: 969d82b0-9029-42fb-b8aa-8156938836a7
+      parent: 7ba138c0-942c-4942-bb5d-ed5c45c5a9ce
+      subject: "JSON output: Server API"
+      tests:
+        operations:
+          - test:
+              id: f003a816-3107-4398-902f-656479cf1ee5
+              name: ReportApiTest
+              descriptions:
+                - desc: Balance with settings
+              references:
+                - ref: balance
+          - test:
+              id: a50327c0-bd16-42a8-82e4-0846be4b5c6f
+              name: ReportApiTest
+              descriptions:
+                - desc: Balance with custom arguments
+              references:
+                - ref: balance
+          - test:
+              id: d6fe5451-2d5d-4ced-848a-934fbc5e43ab
+              name: ReportApiTest
+              descriptions:
+                - desc: Balance Group with settings
+              references:
+                - ref: balance-group
+          - test:
+              id: f1f8a1ac-452b-47df-b15b-9e9bf176028a
+              name: ReportApiTest
+              descriptions:
+                - desc: Balance Group with custom arguments
+              references:
+                - ref: balance-group
+          - test:
+              id: 12f73e1a-b96c-43da-8031-30765943bc4f
+              name: ReportApiTest
+              descriptions:
+                - desc: Register with settings
+              references:
+                - ref: register
+          - test:
+              id: 71b2e53b-57bc-4f6a-8ad8-4864fd370884
+              name: ReportApiTest
+              descriptions:
+                - desc: Register with custom arguments
+              references:
+                - ref: register
 
 ### JSON output END

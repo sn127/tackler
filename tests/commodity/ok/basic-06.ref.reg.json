@@ -1,52 +1,41 @@
 {
-  "title" : "REGISTER"
-,
-"registerRows" : [
-{
-  "txn" : {
-    "timestamp" : "2017-05-01Z"
-  },
-  "postings" : [
+  "title" : "REGISTER",
+  "registerRows" : [
     {
-      "account" : "a",
-      "amount" : "-1.00",
-      "runningTotal" : "-1.00",
-      "commodity" : "EUR"
+      "txn" : {
+        "timestamp" : "2017-05-01Z"
+      },
+      "postings" : [
+        {
+          "account" : "a",
+          "amount" : "-1.00",
+          "runningTotal" : "-1.00",
+          "commodity" : "EUR"
+        },
+        {
+          "account" : "e:b:c",
+          "amount" : "1.00",
+          "runningTotal" : "1.00",
+          "commodity" : "EUR"
+        }
+      ]
     },
     {
-      "account" : "e:b:c",
-      "amount" : "1.00",
-      "runningTotal" : "1.00",
-      "commodity" : "EUR"
+      "txn" : {
+        "timestamp" : "2017-05-02Z"
+      },
+      "postings" : [
+        {
+          "account" : "EUR:a",
+          "amount" : "-2.00",
+          "runningTotal" : "-2.00"
+        },
+        {
+          "account" : "EUR:e:b:c",
+          "amount" : "2.00",
+          "runningTotal" : "2.00"
+        }
+      ]
     }
   ]
-}
-,
-{
-  "txn" : {
-    "timestamp" : "2017-05-02Z"
-  },
-  "postings" : [
-    {
-      "account" : "EUR:a",
-      "amount" : "-2.00",
-      "runningTotal" : "-2.00"
-    },
-    {
-      "account" : "EUR:e:b:c",
-      "amount" : "2.00",
-      "runningTotal" : "2.00"
-    }
-  ]
-}
-,
-{
-  "txn" : {
-    "timestamp" : null,
-    "description" : "end-sentry"
-  },
-  "postings" : [
-  ]
-}
-]
 }

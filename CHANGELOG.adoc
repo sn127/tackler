@@ -6,14 +6,19 @@ Current release is:
 
 == Release history
 
-=== 0.8.1-SNAPSHOT
+=== 0.9.0-SNAPSHOT
 
+Server API clean ups and enhancements (helper methods).
 
 ==== Fixes
 
 
 ==== Development
 
+Updated deps and tools:
+
+ * Updatede dependencies
+ ** ANTLR: 4.7.1 
 
 === 0.8.0
 

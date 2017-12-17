@@ -46,7 +46,7 @@ abstract class BalanceReportLike(cfg: ReportSettings) extends ReportLike(cfg) {
             " " + b.acctn.commodity.map(c => c.name + " ").getOrElse("") + b.acctn.account
         })
 
-      val footer = balance.deltas.toSeq.sortBy({case (cOpt, v) =>
+      val footer = balance.deltas.toSeq.sortBy({case (cOpt, _) =>
         cOpt.map(c => c.name).getOrElse("")
       }).map({case (cOpt, v) =>
         " " * 9 + fillFormat(acclen, v) + cOpt.map(c => " " + c.name).getOrElse("")
@@ -56,7 +56,7 @@ abstract class BalanceReportLike(cfg: ReportSettings) extends ReportLike(cfg) {
     }
   }
 
-  implicit val encBalanceTreeNode: Encoder[BalanceTreeNode] = (btn: BalanceTreeNode) => {
+  protected implicit val encBalanceTreeNode: Encoder[BalanceTreeNode] = (btn: BalanceTreeNode) => {
 
     def jsonAccountSum = ("accountSum", scaleFormat(btn.accountSum).asJson)
     def jsonAccountTreeSum = ("accountTreeSum", scaleFormat(btn.subAccTreeSum).asJson)
@@ -76,7 +76,7 @@ abstract class BalanceReportLike(cfg: ReportSettings) extends ReportLike(cfg) {
     )
   }
 
-  implicit val encBalance: Encoder[Balance] = (bal: Balance) => {
+  protected implicit val encBalance: Encoder[Balance] = (bal: Balance) => {
 
     val (body, deltas) = jsonBalanceBody(bal)
 
@@ -99,7 +99,7 @@ abstract class BalanceReportLike(cfg: ReportSettings) extends ReportLike(cfg) {
     val body = balance.bal.map(_.asJson(encBalanceTreeNode))
 
     val deltas = balance.deltas.toSeq
-      .sortBy({ case (cOpt, v) =>
+      .sortBy({ case (cOpt, _) =>
         cOpt.map(c => c.name).getOrElse("")
       })
       .map({ case (commodityOpt, v) => {
@@ -119,7 +119,9 @@ abstract class BalanceReportLike(cfg: ReportSettings) extends ReportLike(cfg) {
   }
 }
 
-class BalanceReport(val name: String, val mySettings: BalanceSettings) extends  BalanceReportLike(mySettings) {
+class BalanceReport(val mySettings: BalanceSettings) extends  BalanceReportLike(mySettings) {
+
+  override val name = mySettings.outputname
 
   @SuppressWarnings(Array("org.wartremover.warts.TraversableOps"))
   protected def txtBalanceReport(bal: Balance): Seq[String] = {
@@ -166,11 +168,13 @@ class BalanceReport(val name: String, val mySettings: BalanceSettings) extends  
     Balance(None, txns, bf)
   }
 
+  override
   def jsonReport(txnData: TxnData): Json = {
     val bal = getBalance(txnData)
     jsonBalanceReport(bal)
   }
 
+  override
   def writeReport(formats: Formats, txnData: TxnData): Unit = {
 
     val bal = getBalance(txnData)
@@ -187,5 +191,3 @@ class BalanceReport(val name: String, val mySettings: BalanceSettings) extends  
     })
   }
 }
-
-
