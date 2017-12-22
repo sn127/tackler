@@ -22,8 +22,8 @@ object Dependencies {
    * Versions
    */
   val betterFilesVersion = "3.4.0"
-  val catsVersion = "1.0.0-RC1"
-  val circeVersion = "0.9.0-M2"
+  val catsVersion = "1.0.0-RC2"
+  val circeVersion = "0.9.0-M3"
   val scalatestVersion = "3.0.4"
   val scallopVersion = "3.1.1"
   val configVersion = "1.3.2"

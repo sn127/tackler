@@ -19,6 +19,8 @@ Updated deps and tools:
 
  * Updatede dependencies
  ** ANTLR: 4.7.1 
+ ** cats: 1.0.0-RC2
+ ** circe: 0.9.0-M3
 
 === 0.8.0
 
