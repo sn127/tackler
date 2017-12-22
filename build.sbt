@@ -103,6 +103,7 @@ lazy val cli = (project in file("cli")).
       val log = sLog.value
       Tests.Setup(() => TacklerTests.setup("tests", log))
     },
+    test in assembly := {},
     assemblyJarName in assembly := "tackler-cli" + "-" + version.value + ".jar",
     buildInfoKeys := Seq[BuildInfoKey](name, version, scalaVersion, sbtVersion),
     buildInfoOptions += BuildInfoOption.BuildTime,

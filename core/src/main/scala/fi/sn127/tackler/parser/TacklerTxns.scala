@@ -52,7 +52,7 @@ object TacklerTxns {
    * @return sequence of input txn pahts
    */
   def inputPaths(settings: Settings): Seq[Path] = {
-    log.info("Tackler Txns: FS: dir = [{}]", settings.input_fs_dir.toString)
+    log.info("Tackler Txns: FS: dir = {}", settings.input_fs_dir.toString)
     log.info("Tackler Txns: FS: glob = {}", settings.input_fs_glob)
 
     File(settings.input_fs_dir)
@@ -153,7 +153,7 @@ class TacklerTxns(val settings: Settings) extends CtxHandler {
      * @return repository as managed resource
      */
     def getRepo(gitdir: File): ManagedResource[Repository] = {
-      log.info("GIT: repo = [{}]", gitdir.toString())
+      log.info("GIT: repo = {}", gitdir.toString())
       try {
         val repo = (new FileRepositoryBuilder)
           .setGitDir(gitdir.toJava)
@@ -176,7 +176,7 @@ class TacklerTxns(val settings: Settings) extends CtxHandler {
 
       val commitId = if (inputRef.isLeft) {
         val refStr = inputRef.left.get
-        log.info("GIT: reference = [{}]", refStr)
+        log.info("GIT: reference = {}", refStr)
 
         val refOpt = Option(repository.findRef(refStr))
         val ref = refOpt.getOrElse({
@@ -185,7 +185,7 @@ class TacklerTxns(val settings: Settings) extends CtxHandler {
         ref.getObjectId
       } else {
         val commitIdStr = inputRef.right.get
-        log.info("GIT: commitId = [{}]", commitIdStr)
+        log.info("GIT: commitId = {}", commitIdStr)
         try {
           // resolve fails either with null or exceptions
           Option(repository.resolve(commitIdStr))

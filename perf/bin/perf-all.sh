@@ -3,10 +3,13 @@
 exe_dir=$(dirname $0)
 
 reports="balance balance-group register"
-sets="1E3 1E4 1E5 1E6"
+#reports="balance"
 
-#versions="0.4.1 0.5.0 0.6.0 0.7.0-next"
-versions="0.7.0-next"
+sets="1E3 1E4 1E5 1E6"
+#sets="1E6"
+
+#versions="0.4.1 0.5.0 0.6.0 0.7.0 0.8.0 0.9.0"
+versions="0.9.0"
 
 for v in $versions; do
 for s in $sets; do
