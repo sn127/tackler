@@ -48,8 +48,8 @@ lazy val commonSettings = Seq(
     "-Ywarn-unused:privates",
     "-Ywarn-value-discard"
   ),
-  scalacOptions in (Compile, console) --= Seq("-Ywarn-unused:imports", "-Xfatal-warnings"),
-  wartremoverWarnings in (Compile, compile) ++= Warts.allBut(
+  Compile / console / scalacOptions --= Seq("-Ywarn-unused:imports", "-Xfatal-warnings"),
+  Compile / compile / wartremoverWarnings ++= Warts.allBut(
     Wart.ToString,
     Wart.NonUnitStatements,
     Wart.Throw //https://github.com/puffnfresh/wartremover/commit/869763999fcc1fd685c1a8038c974854457b608f
@@ -71,8 +71,8 @@ lazy val tackler = (project in file(".")).
   dependsOn(core, cli).
   settings(commonSettings: _*).
   settings(
-    skip in publish := true,
-    fork in run := true
+    publish / skip := true,
+    run / fork := true
   )
 
 lazy val core = (project in file("core")).
@@ -80,7 +80,7 @@ lazy val core = (project in file("core")).
   settings(commonSettings: _*).
   settings(
     name := "tackler-core",
-    fork in run := true,
+    run / fork := true,
     antlr4Version in Antlr4 := "4.7.1",
     antlr4GenListener in Antlr4 := false,
     antlr4GenVisitor in Antlr4 := false,
@@ -92,18 +92,18 @@ lazy val cli = (project in file("cli")).
   dependsOn(core).
   settings(commonSettings: _*).
   settings(
-    skip in publish := true,
-    fork in run := true,
+    publish / skip := true,
+    run / fork := true,
     fork := true,
-    baseDirectory in Test := file((baseDirectory in Test).value + "/.."),
-    testOptions in Test += {
+    Test / baseDirectory := file((Test / baseDirectory).value + "/.."),
+    Test / testOptions += {
       // The evaluation of `streams` inside an anonymous function is prohibited.
       // https://github.com/sbt/sbt/issues/3266
       // https://github.com/jeffwilde/sbt-dynamodb/commit/109ea03837b1c1b4f45723c200d7aa5c34bb6e8b
       val log = sLog.value
       Tests.Setup(() => TacklerTests.setup("tests", log))
     },
-    test in assembly := {},
+    assembly / test := {},
     assemblyJarName in assembly := "tackler-cli" + "-" + version.value + ".jar",
     buildInfoKeys := Seq[BuildInfoKey](name, version, scalaVersion, sbtVersion),
     buildInfoOptions += BuildInfoOption.BuildTime,

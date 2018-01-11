@@ -19,9 +19,13 @@ Updated deps and tools:
 
  * Updatede dependencies
  ** ANTLR: 4.7.1 
- ** cats: 1.0.0
+ ** cats: 1.0.1
  ** circe: 0.9.0
- ** jgit: 4.9.2.201712150930-r
+ ** jgit: 4.10.0.201712302008-r
+ * build
+ ** sbt: 1.1.0
+ ** sbt-antlr4: 0.8.1
+
 
 === 0.8.0
 
@@ -60,7 +64,7 @@ Updated deps and tools:
 
  * JSON report format
  ** link:docs/tep/tep-1004.adoc[TEP-1004: JSON report output]
- * Update build chain to SBT 1.0
+ * Update build chain to sbt 1.0
 
 ==== Fixes
 
@@ -68,7 +72,7 @@ None.
 
 ==== Development
 
-Build is updated to SBT 1.0.
+Build is updated to sbt 1.0.
 
  * Updated dependencies
  ** libs

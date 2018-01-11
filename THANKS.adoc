@@ -27,7 +27,7 @@ Tests:
 
 Build-tools (used to build Tackler):
 
- * link:http://www.scala-sbt.org/[SBT]
+ * link:http://www.scala-sbt.org/[sbt]
  * link:https://github.com/ihji/sbt-antlr4[sbt-antlr4]
  * link:https://github.com/sbt/sbt-assembly[sbt-assembly]
  * link:https://github.com/sbt/sbt-buildinfo[sbt-buildinfo]
