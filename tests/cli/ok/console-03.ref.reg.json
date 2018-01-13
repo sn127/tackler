@@ -1,6 +1,6 @@
 {
   "title" : "REGISTER",
-  "registerRows" : [
+  "transactions" : [
     {
       "txn" : {
         "timestamp" : "2017-01-03Z"

@@ -48,8 +48,8 @@ class ReportApiTest extends FlatSpec {
 
 
   behavior of "Balance report"
-  val _accountTreeSum = JsonPath.root.balance.balanceRows.index(0).accountTreeSum.string
-  val _delta = JsonPath.root.balance.deltas.index(0).delta.string
+  val _accountTreeSum = JsonPath.root.balances.index(0).accountTreeSum.string
+  val _delta = JsonPath.root.deltas.index(0).delta.string
 
   /**
    *  test: f003a816-3107-4398-902f-656479cf1ee5
@@ -81,9 +81,9 @@ class ReportApiTest extends FlatSpec {
 
 
   behavior of "BalanceGroup report"
-  val _balgrp_title = JsonPath.root.balanceGroups.index(0).title.string
-  val _balgrp_accountTreeSum = JsonPath.root.balanceGroups.index(0).balanceRows.index(0).accountTreeSum.string
-  val _balgrp_delta = JsonPath.root.balanceGroups.index(0).deltas.index(0).delta.string
+  val _balgrp_title = JsonPath.root.groups.index(0).title.string
+  val _balgrp_accountTreeSum = JsonPath.root.groups.index(0).balances.index(0).accountTreeSum.string
+  val _balgrp_delta = JsonPath.root.groups.index(0).deltas.index(0).delta.string
 
   /**
    * test: d6fe5451-2d5d-4ced-848a-934fbc5e43ab
@@ -117,7 +117,7 @@ class ReportApiTest extends FlatSpec {
 
 
   behavior of "Register report"
-  val _reg_txn_idx1_desc = JsonPath.root.registerRows.index(1).txn.description.string
+  val _reg_txn_idx1_desc = JsonPath.root.transactions.index(1).txn.description.string
 
   /**
    * test: 12f73e1a-b96c-43da-8031-30765943bc4f

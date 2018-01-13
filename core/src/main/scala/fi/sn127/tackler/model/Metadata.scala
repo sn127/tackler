@@ -24,6 +24,25 @@ abstract trait Metadata {
   def asJson(): Json
 }
 
+object Metadata {
+
+  /**
+   * Combine optional metadata with original JSON (report)
+   * @param json original (report) data as json
+   * @param metadata optional metadata to be combined
+   * @return json with combined metadata (as json)
+   */
+  def combine(json: Json, metadata: Option[Metadata]): Json = {
+    metadata
+      .fold(
+        json
+      )({ md =>
+        json.deepMerge(
+          Json.obj(("metadata", md.asJson()))
+        )
+      })
+  }
+}
 /**
  * Metadata from Git storage.
  *
@@ -43,7 +62,7 @@ class GitMetadata(val ref: String, val commit: String, val shortMessage: String)
   }
 
   override def asJson(): Json = {
-    Json.obj(("gitStorage",
+    Json.obj(("git",
       Json.obj(
         ("commit", commit.asJson),
         ("ref", ref.asJson),

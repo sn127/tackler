@@ -29,7 +29,7 @@ import fi.sn127.tackler.parser.TxnParser._
 /**
  * Handler utilities for ANTLR Parser Contexts.
  *
- * This handlers convert Parser Contexts to
+ * These handlers convert Parser Contexts to
  * Tackler Model (to Transactions, Postings, etc).
  */
 abstract class CtxHandler {

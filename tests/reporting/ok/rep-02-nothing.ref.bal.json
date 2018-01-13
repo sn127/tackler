@@ -1,9 +1,7 @@
 {
   "title" : "BALANCE",
-  "balance" : {
-    "balanceRows" : [
-    ],
-    "deltas" : [
-    ]
-  }
+  "balances" : [
+  ],
+  "deltas" : [
+  ]
 }

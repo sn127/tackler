@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2017 Jani Averbach
+ * Copyright 2016-2018 Jani Averbach
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@ package fi.sn127.tackler.report
 import io.circe.Json
 import io.circe.syntax._
 
+import fi.sn127.tackler.api.BalanceGroupM
 import fi.sn127.tackler.core._
 import fi.sn127.tackler.model.{Metadata, Transaction, TxnData, TxnTS}
 
@@ -42,7 +43,7 @@ class BalanceGroupReport(val mySettings: BalanceGroupSettings) extends BalanceRe
   protected def txtBalanceGroup(bal: Balance): Seq[String] = {
 
     val (body, footer) = txtBalanceBody(bal)
-    val title = bal.title.getOrElse("")
+    val title = bal.title
     val  header = List(
       title,
       "-" * title.length)
@@ -79,22 +80,15 @@ class BalanceGroupReport(val mySettings: BalanceGroupSettings) extends BalanceRe
     Accumulator.balanceGroups(txnData, groupOp, balanceFilter)
   }
 
-  protected def jsonBalanceGroups(balGrps: Seq[Balance]): (String, Json) = {
-    ("balanceGroups", balGrps.par.map(bal => bal.asJson(encBalance)).seq.asJson)
-  }
-
   protected def jsonBalanceGroupReport(metadata: Option[Metadata], balGrps: Seq[Balance]): Json = {
-    metadata.fold(
-      Json.obj(
-        jsonTitle(mySettings.title),
-        jsonBalanceGroups(balGrps))
-    )({ md =>
-      Json.obj(
-        jsonTitle(mySettings.title),
-        ("metadata", md.asJson()),
-        jsonBalanceGroups(balGrps)
-      )
-    })
+
+    val bgs = balGrps.par.map(balanceToApi).seq
+
+    Metadata.combine(
+      BalanceGroupM(
+        mySettings.title,
+        bgs).asJson,
+      metadata)
   }
 
   override
@@ -113,8 +107,9 @@ class BalanceGroupReport(val mySettings: BalanceGroupSettings) extends BalanceRe
         case TextFormat() =>
           doRowOutputs(writers, txtBalanceGroupReport(txnData.metadata, balGrps))
 
-        case JsonFormat() =>
-          doRowOutputs(writers, Seq(jsonBalanceGroupReport(txnData.metadata, balGrps).spaces2))
+        case JsonFormat() => {
+          doRowOutputs(writers, Seq(jsonBalanceGroupReport(txnData.metadata, balGrps).pretty(printer)))
+        }
       }
     })
   }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2017 Jani Averbach
+ * Copyright 2016-2018 Jani Averbach
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
  */
 package fi.sn127.tackler.report
 
-import io.circe.Json
+import io.circe.{Json, Printer}
 import io.circe.syntax._
 
 import fi.sn127.tackler.model.TxnData
@@ -25,6 +25,11 @@ abstract class ReportLike(cfg: ReportConfiguration) extends OutputLike {
 
   private val minScale = cfg.minScale
   private val maxScale = cfg.maxScale
+
+  /**
+   * Json printer, spaces 2, drop nulls
+   */
+  val printer: Printer = Printer.spaces2.copy(dropNullValues = true)
 
   /**
    * Report name part of output filename.

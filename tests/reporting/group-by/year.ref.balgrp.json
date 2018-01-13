@@ -1,9 +1,9 @@
 {
   "title" : "BALANCE GROUPS",
-  "balanceGroups" : [
+  "groups" : [
     {
       "title" : "2009Z",
-      "balanceRows" : [
+      "balances" : [
         {
           "accountSum" : "-80361647.11",
           "accountTreeSum" : "-80361647.11",
@@ -23,7 +23,7 @@
     },
     {
       "title" : "2010Z",
-      "balanceRows" : [
+      "balances" : [
         {
           "accountSum" : "-60300308.00",
           "accountTreeSum" : "-60300308.00",

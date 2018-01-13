@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2017 Jani Averbach
+ * Copyright 2016-2018 Jani Averbach
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,8 +19,9 @@ package fi.sn127.tackler.report
 import io.circe._
 import io.circe.syntax._
 
+import fi.sn127.tackler.api.{BalanceItem, BalanceM, Delta, OrderDelta}
 import fi.sn127.tackler.core._
-import fi.sn127.tackler.model.{BalanceTreeNode, TxnData}
+import fi.sn127.tackler.model.{BalanceTreeNode, Metadata, TxnData}
 
 abstract class BalanceReportLike(cfg: ReportSettings) extends ReportLike(cfg) {
 
@@ -56,66 +57,28 @@ abstract class BalanceReportLike(cfg: ReportSettings) extends ReportLike(cfg) {
     }
   }
 
-  protected implicit val encBalanceTreeNode: Encoder[BalanceTreeNode] = (btn: BalanceTreeNode) => {
-
-    def jsonAccountSum = ("accountSum", scaleFormat(btn.accountSum).asJson)
-    def jsonAccountTreeSum = ("accountTreeSum", scaleFormat(btn.subAccTreeSum).asJson)
-    def jsonAccount = ("account", btn.acctn.account.asJson)
-
-    btn.acctn.commodity.fold(
-      Json.obj(
-        jsonAccountSum,
-        jsonAccountTreeSum,
-        jsonAccount)
-    )(commodity =>
-      Json.obj(
-        jsonAccountSum,
-        jsonAccountTreeSum,
-        jsonAccount,
-        ("commodity", commodity.name.asJson))
+  protected def btnToApi(btn: BalanceTreeNode): BalanceItem = {
+    BalanceItem(
+      accountSum = scaleFormat(btn.accountSum),
+      accountTreeSum = scaleFormat(btn.subAccTreeSum),
+      account = btn.acctn.account,
+      commodity = btn.acctn.commodity.map(_.name)
     )
   }
 
-  protected implicit val encBalance: Encoder[Balance] = (bal: Balance) => {
+  protected def balanceToApi(balance:Balance): BalanceM = {
 
-    val (body, deltas) = jsonBalanceBody(bal)
-
-    def jsonBalanceRows = ("balanceRows", body.asJson)
-    def jsonDeltas = ("deltas", deltas.asJson)
-
-    bal.title.fold(
-      Json.obj(
-        jsonBalanceRows,
-        jsonDeltas)
-    )(title =>
-      Json.obj(
-        jsonTitle(title),
-        jsonBalanceRows,
-        jsonDeltas)
-    )
-  }
-
-  protected def jsonBalanceBody(balance: Balance): (Seq[Json], Seq[Json]) = {
-    val body = balance.bal.map(_.asJson(encBalanceTreeNode))
+    val body = balance.bal.map(btnToApi)
 
     val deltas = balance.deltas.toSeq
-      .sortBy({ case (cOpt, _) =>
-        cOpt.map(c => c.name).getOrElse("")
+      .map({ case (c, v) =>
+        Delta(
+          commodity = c.map(_.name),
+          delta = scaleFormat(v))
       })
-      .map({ case (commodityOpt, v) => {
-        def jsonDelta = ("delta", scaleFormat(v).asJson)
+      .sorted(OrderDelta)
 
-        commodityOpt.fold(
-          Json.obj(jsonDelta)
-        )(commodity =>
-          Json.obj(
-            jsonDelta,
-            ("commodity", commodity.name.asJson))
-        )
-      }
-      })
-
-    (body, deltas)
+    BalanceM(balance.title, body, deltas)
   }
 }
 
@@ -130,8 +93,8 @@ class BalanceReport(val mySettings: BalanceSettings) extends  BalanceReportLike(
 
     val  header = List(
       bal.metadata.fold(""){md => md.text()},
-      mySettings.title,
-      "-" * mySettings.title.length)
+      bal.title,
+      "-" * bal.title.length)
 
     if (body.isEmpty) {
       header
@@ -140,22 +103,10 @@ class BalanceReport(val mySettings: BalanceSettings) extends  BalanceReportLike(
     }
   }
 
-  protected def jsonBalance(bal: Balance): (String, Json) = {
-    ("balance", bal.asJson(encBalance))
-  }
-
   protected def jsonBalanceReport(bal: Balance): Json = {
-    bal.metadata.fold(
-      Json.obj(
-        jsonTitle(mySettings.title),
-        jsonBalance(bal))
-    )({ md =>
-      Json.obj(
-        jsonTitle(mySettings.title),
-        ("metadata", md.asJson()),
-        jsonBalance(bal)
-      )
-    })
+    Metadata.combine(
+      balanceToApi(bal).asJson,
+      bal.metadata)
   }
 
   protected def getBalance(txns: TxnData): Balance = {
@@ -165,7 +116,7 @@ class BalanceReport(val mySettings: BalanceSettings) extends  BalanceReportLike(
       new BalanceFilterByAccount(mySettings.accounts)
     }
 
-    Balance(None, txns, bf)
+    Balance(mySettings.title, txns, bf)
   }
 
   override
@@ -185,7 +136,7 @@ class BalanceReport(val mySettings: BalanceSettings) extends  BalanceReportLike(
           doRowOutputs(writers, txtBalanceReport(bal))
         }
         case JsonFormat() => {
-          doRowOutputs(writers, Seq(jsonBalanceReport(bal).spaces2))
+          doRowOutputs(writers, Seq(jsonBalanceReport(bal).pretty(printer)))
         }
       }
     })

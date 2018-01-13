@@ -1,9 +1,9 @@
 {
   "title" : "BALANCE GROUPS",
-  "balanceGroups" : [
+  "groups" : [
     {
       "title" : "2009-01+12:00",
-      "balanceRows" : [
+      "balances" : [
         {
           "accountSum" : "-20090101.01",
           "accountTreeSum" : "-20090101.01",
@@ -23,7 +23,7 @@
     },
     {
       "title" : "2009-01Z",
-      "balanceRows" : [
+      "balances" : [
         {
           "accountSum" : "-20090101.10",
           "accountTreeSum" : "-20090101.10",
@@ -43,7 +43,7 @@
     },
     {
       "title" : "2009-02Z",
-      "balanceRows" : [
+      "balances" : [
         {
           "accountSum" : "-20090214.00",
           "accountTreeSum" : "-20090214.00",
@@ -63,7 +63,7 @@
     },
     {
       "title" : "2009-12+02:00",
-      "balanceRows" : [
+      "balances" : [
         {
           "accountSum" : "-20091231.00",
           "accountTreeSum" : "-20091231.00",
@@ -83,7 +83,7 @@
     },
     {
       "title" : "2010-01-01:00",
-      "balanceRows" : [
+      "balances" : [
         {
           "accountSum" : "-20100104.00",
           "accountTreeSum" : "-20100104.00",
@@ -103,7 +103,7 @@
     },
     {
       "title" : "2010-01Z",
-      "balanceRows" : [
+      "balances" : [
         {
           "accountSum" : "-40200204.00",
           "accountTreeSum" : "-40200204.00",

@@ -119,16 +119,11 @@ class RegisterReport(val mySettings: RegisterSettings) extends ReportLike(mySett
   }
 
   protected def jsonRegisterReport(accounts: Filtering[RegisterPosting], txns: TxnData): Json = {
-    txns.metadata.fold(
+    Metadata.combine(
       Json.obj(
         jsonTitle(mySettings.title),
-        ("registerRows", doBody(accounts, txns.txns)))
-    )({ md =>
-      Json.obj(
-        jsonTitle(mySettings.title),
-        ("metadata", md.asJson()),
-        ("registerRows", doBody(accounts, txns.txns)))
-    })
+        ("transactions", doBody(accounts, txns.txns))),
+      txns.metadata)
   }
 
   protected def getFilters() = {

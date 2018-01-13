@@ -1,13 +1,13 @@
 {
-  "title" : "REGISTER",
   "metadata" : {
-    "gitStorage" : {
+    "git" : {
       "commit" : "a7938d9b61958d2cabea7503a7be89191d4fb31e",
       "ref" : "tag-test-01",
       "message" : "commit-id-01: 2nd"
     }
   },
-  "registerRows" : [
+  "title" : "REGISTER",
+  "transactions" : [
     {
       "txn" : {
         "timestamp" : "2017-02-01Z",

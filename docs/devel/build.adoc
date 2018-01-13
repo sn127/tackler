@@ -1,6 +1,6 @@
 = Building Tackler
 
-Tackler build is done by link:http://www.scala-sbt.org/[SBT].
+Tackler build is done by link:http://www.scala-sbt.org/[sbt].
 
 
 == Building and testing

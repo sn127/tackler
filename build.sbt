@@ -15,7 +15,15 @@
  *
  */
 import TacklerTests._
+import Dependencies._
 
+import sbtcrossproject.{crossProject, CrossType}
+
+lazy val noPublishSettings = Seq(
+  publish := {},
+  publishLocal := {},
+  publishArtifact := false
+)
 
 lazy val commonSettings = Seq(
   organization := "fi.sn127",
@@ -48,10 +56,14 @@ lazy val commonSettings = Seq(
     "-Ywarn-unused:privates",
     "-Ywarn-value-discard"
   ),
-  Compile / console / scalacOptions --= Seq("-Ywarn-unused:imports", "-Xfatal-warnings"),
+  Compile / console / scalacOptions --= Seq(
+    "-Ywarn-unused:imports",
+    "-Xfatal-warnings"
+  ),
   Compile / compile / wartremoverWarnings ++= Warts.allBut(
     Wart.ToString,
     Wart.NonUnitStatements,
+    Wart.PublicInference,
     Wart.Throw //https://github.com/puffnfresh/wartremover/commit/869763999fcc1fd685c1a8038c974854457b608f
   ),
   publishTo := Some(
@@ -67,15 +79,35 @@ lazy val commonSettings = Seq(
   * circular dependencies with sub-projects
   */
 lazy val tackler = (project in file(".")).
-  aggregate(core, cli).
-  dependsOn(core, cli).
+  aggregate(apiJS, apiJVM, core, cli).
+  dependsOn(apiJS, apiJVM, core, cli).
+  settings(noPublishSettings).
   settings(commonSettings: _*).
   settings(
-    publish / skip := true,
     run / fork := true
   )
 
+lazy val api = crossProject(JSPlatform, JVMPlatform).
+  crossType(CrossType.Pure).in(file("api")).
+  settings(commonSettings: _*).
+  settings(
+    name := "tackler-api",
+    libraryDependencies += "io.circe" %%% "circe-core" % circeVersion,
+    libraryDependencies += "io.circe" %%% "circe-generic" % circeVersion,
+    libraryDependencies += "io.circe" %%% "circe-parser" % circeVersion
+  ).
+  jvmSettings().
+  jsSettings(
+    Test / test := {}
+)
+
+lazy val apiJVM = api.jvm
+lazy val apiJS = api.js
+
+
+
 lazy val core = (project in file("core")).
+  dependsOn(apiJVM).
   enablePlugins(Antlr4Plugin).
   settings(commonSettings: _*).
   settings(
@@ -90,9 +122,9 @@ lazy val core = (project in file("core")).
 lazy val cli = (project in file("cli")).
   enablePlugins(BuildInfoPlugin).
   dependsOn(core).
+  settings(noPublishSettings).
   settings(commonSettings: _*).
   settings(
-    publish / skip := true,
     run / fork := true,
     fork := true,
     Test / baseDirectory := file((Test / baseDirectory).value + "/.."),

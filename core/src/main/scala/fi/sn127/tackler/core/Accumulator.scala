@@ -27,7 +27,7 @@ object Accumulator {
       .groupBy(groupOp).toSeq
       .sortBy(_._1)
       .par.map({case (groupBy, balGrpTxns) =>
-        Balance(Some(groupBy), TxnData(None, balGrpTxns), balanceFilter)
+        Balance(groupBy, TxnData(None, balGrpTxns), balanceFilter)
       })
       .filter(bal => !bal.isEmpty)
       .seq
