@@ -21,5 +21,5 @@ package object model {
   type Txns = Seq[Transaction]
   type Posts = Seq[Posting]
 
-  type RegisterEntry = (Transaction, Seq[RegisterPosting])
+  type RegisterEntry = (Transaction, Seq[AccumulatorPosting])
 }

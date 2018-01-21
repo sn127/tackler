@@ -4,7 +4,7 @@ image:https://travis-ci.org/sn127/tackler.svg?branch=stable["Build Status", link
 image:https://coveralls.io/repos/github/sn127/tackler/badge.svg?branch=stable["Build Status", link="https://coveralls.io/github/sn127/tackler?branch=stable"]
 image:https://maven-badges.herokuapp.com/maven-central/fi.sn127/tackler-core_2.12/badge.svg["Maven Central", link="https://maven-badges.herokuapp.com/maven-central/fi.sn127/tackler-core_2.12"]
 image:http://javadoc.io/badge/fi.sn127/tackler-core_2.12.svg?color=blue["javadoc", link="http://javadoc.io/page/fi.sn127/tackler-core_2.12/latest/fi/sn127/tackler/index.html"]
-
+image:https://www.scala-js.org/assets/badges/scalajs-0.6.17.svg["Scala.js",link="https://www.scala-js.org"]
 
 = Tackler
 
@@ -18,23 +18,24 @@ based double-entry accounting].
 == Features
 * Tackler is link:docs/performance.adoc[fast]
 * Support for link:docs/commodities.adoc[Commodities] and link:docs/currencies.adoc[Currencies]
+* Text and link:docs/json.adoc[JSON] output formats for reports
+** link:docs/server-api.adoc[Server API] for embedding Tackler core
+** link:docs/client-api.adoc[Client API] for JVM and JS environments
 * Integrated support with GIT version control system
 ** Can use plain filesystem or link:docs/git-storage.adoc[GIT repository] as data storage
 ** Natively supports splitting journal data to multiple files (shards)
 * Clean and simple link:docs/journal.adoc[journal format]
-* Supports UTF-8 characters in transaction data (link:tests/parser/ok/par-02.ref.identity.txn[descriptions], link:tests/parser/ok/par-02.ref.reg.txt[comments], link:tests/parser/ok/id-chars-01.ref.identity.txn[account names])
-* Supports ISO 8601 timestamps with link:tests/core/ok/time-dst-01.ref.identity.txn[timezones]
-  and link:tests/core/ok/time-nano-01.ref.identity.txn[nanosecond] resolution
 * Strict account name validation with link:./docs/accounts.conf[Chart of Accounts]
 * Multiple report and export types:
 ** link:docs/report-balance.adoc[Balance], link:docs/report-balance-group.adoc[Balance Groups] and link:docs/report-register.adoc[Register] Reports
 ** link:docs/export-equity.adoc[Equity] and link:docs/export-identity.adoc[Identity] Exports
-* Text and link:docs/json.adoc[JSON] output formats for reports
-** link:docs/server-api.adoc[Server API] for embedding Tackler core
-* Has good performance with link:docs/performance.adoc[very large set of transactions]
+* Supports UTF-8 characters in transaction data (link:tests/parser/ok/par-02.ref.identity.txn[descriptions], link:tests/parser/ok/par-02.ref.reg.txt[comments], link:tests/parser/ok/id-chars-01.ref.identity.txn[account names])
+* Supports ISO 8601 timestamps with link:tests/core/ok/time-dst-01.ref.identity.txn[timezones]
+  and link:tests/core/ok/time-nano-01.ref.identity.txn[nanosecond] resolution
+* Has good performance with link:docs/performance.adoc[large transaction set]
 ** Tackler is link:perf/results/hw00/[routinely tested] up to one million (1E6) transactions
 ** Tackler can process link:perf/results/readme.adoc[56000 txn/s] on Quad Core system
-** With large set of transactions Tackler is faster than link:docs/perf-others.adoc[ledger-cli or other similar tools]
+** With large transaction set, Tackler is faster than link:docs/perf-others.adoc[ledger-cli or other similar tools]
 * Near 100% test coverage, link:tests/tests.yaml[all features are extensively tested]
 * Extensive documentation: link:docs/readme.adoc[Index of Docs]
 
@@ -97,6 +98,7 @@ User documentation is located under docs:
 * link:./docs/accounts.conf[Example of Tackler Chart of Accounts]
 * link:./docs/trimix-filling-station.adoc[Example of Trimix Filling Station Accounting system (for scuba diving)]
 * link:./docs/server-api.adoc[Server API]
+* link:./docs/client-api.adoc[Client API]
 * link:./docs/devel/readme.adoc[Developer's documentation]
 
 
@@ -111,9 +113,10 @@ of major new features. These are listed on link:docs/tep/readme.adoc[TEP index].
 
 Extremely loosely defined roadmap is following:
 
+* Reporting Server as separate project 
 * Transaction filtering 
-* Profit and Loss (PnL) tracking
 * Extending support for Units
+* Profit and Loss (PnL) tracking
 ** Automatic conversions between different base units
 ** Support for unit handling with commodities  
 * Extending support for Currencies and Commodities
@@ -124,28 +127,34 @@ Extremely loosely defined roadmap is following:
 For release information and version history details,
 see link:./CHANGELOG.adoc[CHANGELOG].
 
-Tackler-core, which is supposed to be usable as separate component,
-is released on Maven Central Repository.
+Tackler-core is supposed to be usable as separate component.
+Tackler-api is released for JVM and JS environments, and it is intended
+to be used on the client side. See link:./docs/server-api.adoc[Server API]
+and link:./docs/client-api.adoc[Client API] for additional information.
 
-Dependency setting for SBT is:
+Dependency settings for SBT are:
 
-    libraryDependencies += "fi.sn127" %% "tackler-core" % "version-number"
+    libraryDependencies += "fi.sn127" %%  "tackler-core" % "version-number"
+    libraryDependencies += "fi.sn127" %%% "tackler-api"  % "version-number"
+
+These are released on Maven Central Repository.
 
 Tackler is under development, so if you enjoy calm seas
 then it might be better to look
 link:http://plaintextaccounting.org/[something else].
 
-However, complex backward non-compatible changes to Txns file format
+However, complex backward non-compatible changes to 
+link:./docs/journal.adoc[Journal file format]
 should be rare. At the moment Tackler is used in production for
 operational data set.
 
-Configuration files and command line interface are more likely
-to subjects of change.
+Configuration files, command line interface and Client API (data models)
+are more likely to subject of change.
 
 
 == Contributing to Tackler
 
-Contributions to the project are most welcome. Please see 
+Contributions to the project are most welcome. See
 link:./CONTRIBUTING.adoc[CONTRIBUTING] how you could help.
 
 Your pull requests can be merged only if you can certify 
@@ -161,18 +170,18 @@ then git will include that line for you with `git commit -s`.
 These settings can be done per repository basis, 
 so they don't have be global settings in your system. 
  
-Please make sure that you sign-off all your PR's commits. 
+Please make sure that you sign-off all your PR's commits.
 
 
 == Credits
 
-Please see link:./THANKS.adoc[THANKS] for full list of credits.
+See link:./THANKS.adoc[THANKS] for full list of credits.
 
 
 == License
 
 ....
-Copyright 2016-2017 SN127.fi Contributors
+Copyright 2016-2018 SN127.fi Contributors
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

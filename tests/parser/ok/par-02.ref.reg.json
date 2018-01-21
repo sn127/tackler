@@ -3,7 +3,7 @@
   "transactions" : [
     {
       "txn" : {
-        "timestamp" : "2017-01-01Z",
+        "timestamp" : "2017-01-01T00:00:00Z",
         "description" : "äöåÄÖÅéèÿ:äöåÄ:ÖÅéèÿ 空 風 風:空"
       },
       "postings" : [
@@ -21,7 +21,7 @@
     },
     {
       "txn" : {
-        "timestamp" : "2017-01-01Z",
+        "timestamp" : "2017-01-01T00:00:00Z",
         "code" : "!\"#¤%&/(=? @£€{[]}\\",
         "description" : "abc"
       },
@@ -40,7 +40,7 @@
     },
     {
       "txn" : {
-        "timestamp" : "2017-01-01Z",
+        "timestamp" : "2017-01-01T00:00:00Z",
         "code" : "abc",
         "description" : "!\"#¤%&/()=? @£€{[]}\\",
         "uuid" : "8898bd3d-1d12-4ccd-b8d9-f52c61093250"
@@ -60,7 +60,7 @@
     },
     {
       "txn" : {
-        "timestamp" : "2017-01-01Z",
+        "timestamp" : "2017-01-01T00:00:00Z",
         "code" : "abc",
         "description" : "123",
         "comments" : [
@@ -82,7 +82,7 @@
     },
     {
       "txn" : {
-        "timestamp" : "2017-01-01Z",
+        "timestamp" : "2017-01-01T00:00:00Z",
         "code" : "abc",
         "description" : "edf"
       },
@@ -101,7 +101,7 @@
     },
     {
       "txn" : {
-        "timestamp" : "2017-01-01Z",
+        "timestamp" : "2017-01-01T00:00:00Z",
         "code" : "abc",
         "description" : "edf xzy"
       },

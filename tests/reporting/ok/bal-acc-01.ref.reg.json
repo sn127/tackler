@@ -3,7 +3,7 @@
   "transactions" : [
     {
       "txn" : {
-        "timestamp" : "2017-01-01Z",
+        "timestamp" : "2017-01-01T00:00:01.001Z",
         "description" : "01"
       },
       "postings" : [
@@ -21,7 +21,7 @@
     },
     {
       "txn" : {
-        "timestamp" : "2017-01-01Z",
+        "timestamp" : "2017-01-01T00:00:01.002Z",
         "description" : "01"
       },
       "postings" : [
@@ -34,7 +34,7 @@
     },
     {
       "txn" : {
-        "timestamp" : "2017-01-01Z",
+        "timestamp" : "2017-01-01T00:00:02.003Z",
         "description" : "01"
       },
       "postings" : [
@@ -52,7 +52,7 @@
     },
     {
       "txn" : {
-        "timestamp" : "2017-01-02Z",
+        "timestamp" : "2017-01-02T00:00:00Z",
         "description" : "check that report filtering doesn't affect accumulator"
       },
       "postings" : [

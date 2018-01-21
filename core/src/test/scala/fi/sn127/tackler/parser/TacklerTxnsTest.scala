@@ -78,7 +78,7 @@ class TacklerTxnsTest extends FlatSpec {
 
     val txnData = tt.string2Txns(txnStr)
     assert(txnData.txns.length === 3)
-    assert(txnData.txns.head.desc.getOrElse("") === "str1")
-    assert(txnData.txns.last.desc.getOrElse("") === "str3")
+    assert(txnData.txns.head.header.description.getOrElse("") === "str1")
+    assert(txnData.txns.last.header.description.getOrElse("") === "str3")
   }
 }

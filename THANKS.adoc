@@ -27,14 +27,18 @@ Tests:
 
 Build-tools (used to build Tackler):
 
- * link:http://www.scala-sbt.org/[sbt]
- * link:https://github.com/ihji/sbt-antlr4[sbt-antlr4]
- * link:https://github.com/sbt/sbt-assembly[sbt-assembly]
- * link:https://github.com/sbt/sbt-buildinfo[sbt-buildinfo]
- * link:https://github.com/scoverage/sbt-coveralls[sbt-coveralls]
- * link:https://github.com/scoverage/sbt-scoverage[sbt-scoverage]
- * link:https://github.com/xerial/sbt-sonatype[sbt-sonatype]
- * link:https://github.com/wartremover/wartremover[WartRemover]
+ * Build, Release and Publish
+ ** link:http://www.scala-sbt.org/[sbt]
+ ** link:https://github.com/ihji/sbt-antlr4[sbt-antlr4]
+ ** link:https://github.com/sbt/sbt-buildinfo[sbt-buildinfo]
+ ** link:http://www.scala-js.org/[sbt-scalajs]
+ ** link:https://github.com/portable-scala/sbt-crossproject[sbt-crossproject]
+ ** link:https://github.com/sbt/sbt-assembly[sbt-assembly]
+ ** link:https://github.com/xerial/sbt-sonatype[sbt-sonatype]
+ * QA
+ ** link:https://github.com/scoverage/sbt-coveralls[sbt-coveralls]
+ ** link:https://github.com/scoverage/sbt-scoverage[sbt-scoverage]
+ ** link:https://github.com/wartremover/wartremover[WartRemover]
 
 
 Ideas and inspiration:

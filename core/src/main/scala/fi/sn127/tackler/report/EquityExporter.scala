@@ -19,7 +19,7 @@ import cats.implicits._
 import fi.sn127.tackler.core._
 import fi.sn127.tackler.model.{TxnData, TxnTS, Txns}
 
-class EquityExport(val settings: Settings) extends ExportLike {
+class EquityExporter(val settings: Settings) extends ExporterLike {
   private val mySettings = settings.Exports.Equity
 
   @SuppressWarnings(Array("org.wartremover.warts.TraversableOps"))
@@ -36,7 +36,7 @@ class EquityExport(val settings: Settings) extends ExportLike {
       Nil
     } else {
       val lastTxn = txns.last
-      val eqTxnHeader = TxnTS.isoZonedTS(lastTxn.date) + " " + lastTxn.uuid.map(u => "Equity: last txn (uuid): " + u.toString).getOrElse("Equity")
+      val eqTxnHeader = TxnTS.isoZonedTS(lastTxn.header.timestamp) + " " + lastTxn.header.uuid.map(u => "Equity: last txn (uuid): " + u.toString).getOrElse("Equity")
 
       bal.bal.groupBy(b => b.acctn.commStr).flatMap({ case (_, bs) =>
         val eqBalRow = if (bs.map(b => b.accountSum).sum === 0.0) {

@@ -3,7 +3,7 @@
   "transactions" : [
     {
       "txn" : {
-        "timestamp" : "2017-03-01Z"
+        "timestamp" : "2017-03-01T00:00:00Z"
       },
       "postings" : [
         {

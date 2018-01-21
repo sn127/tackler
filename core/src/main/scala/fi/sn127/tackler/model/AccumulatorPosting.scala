@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2017 Jani Averbach
+ * Copyright 2016-2018 Jani Averbach
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,13 +16,13 @@
  */
 package fi.sn127.tackler.model
 
-object OrderByRegPosting extends Ordering[RegisterPosting] {
-  def compare(before: RegisterPosting, after: RegisterPosting): Int = {
+object OrderByAccumulatorPosting extends Ordering[AccumulatorPosting] {
+  def compare(before: AccumulatorPosting, after: AccumulatorPosting): Int = {
     before.post.acctn.account.compareTo(after.post.acctn.account)
   }
 }
 
-final case class RegisterPosting(
+final case class AccumulatorPosting(
   post: Posting,
   runningTotal: BigDecimal
 ) {

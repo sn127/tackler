@@ -30,10 +30,10 @@ package fi.sn127
  *  - Acquire settings: [[fi.sn127.tackler.core.Settings$]]
  *  - Create sequence of Txns: [[fi.sn127.tackler.parser.TacklerTxns]]
  *  - Settings for reports, e.g. [[fi.sn127.tackler.report.BalanceSettings]]
- *  - Create actual report [[fi.sn127.tackler.report.BalanceReport]]
+ *  - Create actual report by [[fi.sn127.tackler.report.BalanceReporter]]
  *  - Acquire report
- *    - json object: [[fi.sn127.tackler.report.BalanceReport.jsonReport]]
- *    - io-output: [[fi.sn127.tackler.report.BalanceReport.writeReport]]
+ *    - json object: [[fi.sn127.tackler.report.BalanceReporter.jsonReport]]
+ *    - io-output: [[fi.sn127.tackler.report.BalanceReporter.writeReport]]
  */
 package object tackler {
 

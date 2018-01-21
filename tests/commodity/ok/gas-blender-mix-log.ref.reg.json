@@ -3,7 +3,7 @@
   "transactions" : [
     {
       "txn" : {
-        "timestamp" : "2017-05-01Z",
+        "timestamp" : "2017-05-01T00:00:00Z",
         "code" : "mix-1234",
         "description" : "tmx 18/45 D12L",
         "comments" : [
@@ -26,7 +26,7 @@
     },
     {
       "txn" : {
-        "timestamp" : "2017-05-01Z",
+        "timestamp" : "2017-05-01T00:00:00Z",
         "code" : "mix-1234",
         "description" : "tmx 18/45 D12L",
         "comments" : [

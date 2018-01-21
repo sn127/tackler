@@ -19,6 +19,7 @@ package fi.sn127.tackler.report
 import io.circe.optics.JsonPath
 import org.scalatest.FlatSpec
 
+import fi.sn127.tackler.api.{BalanceGroupReport, BalanceReport, RegisterReport}
 import fi.sn127.tackler.core.{GroupByIsoWeek, Settings}
 import fi.sn127.tackler.parser.TacklerTxns
 
@@ -56,13 +57,16 @@ class ReportApiTest extends FlatSpec {
    */
   it must "work with default settings" in {
     val balSettings = BalanceSettings(settings)
-    val rpt = new BalanceReport(balSettings)
+    val rpt = new BalanceReporter(balSettings)
 
     val report = rpt.jsonReport(txnData)
 
     assert(_title.getOption(report) === Some("BALANCE"))
     assert(_accountTreeSum.getOption(report) === Some("-45.00"))
     assert(_delta.getOption(report) === Some("0.00"))
+
+    val foo = report.as[BalanceReport]
+    assert(foo.right.toOption.map(_.title) === Some("BALANCE"))
   }
 
   /**
@@ -70,13 +74,16 @@ class ReportApiTest extends FlatSpec {
    */
   it must "accept arguments" in {
     val balCfg = BalanceSettings(settings, Some("Test-Balance"), Some(List("^e.*", "^a.*")))
-    val rpt = new BalanceReport(balCfg)
+    val rpt = new BalanceReporter(balCfg)
 
     val report = rpt.jsonReport(txnData)
 
     assert(_title.getOption(report) === Some("Test-Balance"))
     assert(_accountTreeSum.getOption(report) === Some("-45.00"))
     assert(_delta.getOption(report) === Some("-15.00"))
+
+    val foo = report.as[BalanceReport]
+    assert(foo.right.toOption.map(_.title) === Some("Test-Balance"))
   }
 
 
@@ -90,7 +97,7 @@ class ReportApiTest extends FlatSpec {
    */
   it must "work with default settings" in {
     val balGrpCfg = BalanceGroupSettings(settings)
-    val rpt = new BalanceGroupReport(balGrpCfg)
+    val rpt = new BalanceGroupReporter(balGrpCfg)
 
     val report = rpt.jsonReport(txnData)
 
@@ -98,6 +105,9 @@ class ReportApiTest extends FlatSpec {
     assert(_balgrp_title.getOption(report) === Some("2017-12Z"))
     assert(_balgrp_accountTreeSum.getOption(report) === Some("-45.00"))
     assert(_balgrp_delta.getOption(report) === Some("0.00"))
+
+    val foo = report.as[BalanceGroupReport]
+    assert(foo.right.toOption.map(_.title) === Some("BALANCE GROUPS"))
   }
 
   /**
@@ -105,7 +115,7 @@ class ReportApiTest extends FlatSpec {
    */
   it must "accept arguments" in {
     val balGrpCfg = BalanceGroupSettings(settings, Some("Test-BalGrp"), Some(List("^e.*", "^a.*")), Some(GroupByIsoWeek()))
-    val rpt = new BalanceGroupReport(balGrpCfg)
+    val rpt = new BalanceGroupReporter(balGrpCfg)
 
     val report = rpt.jsonReport(txnData)
 
@@ -113,6 +123,9 @@ class ReportApiTest extends FlatSpec {
     assert(_balgrp_title.getOption(report) === Some("2017-W50Z"))
     assert(_balgrp_accountTreeSum.getOption(report) === Some("-45.00"))
     assert(_balgrp_delta.getOption(report) === Some("-15.00"))
+
+    val foo = report.as[BalanceGroupReport]
+    assert(foo.right.toOption.map(_.title) === Some("Test-BalGrp"))
   }
 
 
@@ -124,12 +137,15 @@ class ReportApiTest extends FlatSpec {
    */
   it must "work with default settings" in {
     val regCfg = RegisterSettings(settings)
-    val rpt = new RegisterReport(regCfg)
+    val rpt = new RegisterReporter(regCfg)
 
     val report = rpt.jsonReport(txnData)
 
     assert(_title.getOption(report) === Some("REGISTER"))
     assert(_reg_txn_idx1_desc.getOption(report) === Some("txn-02")) // no filter
+
+    val foo = report.as[RegisterReport]
+    assert(foo.right.toOption.map(_.title) === Some("REGISTER"))
   }
 
   /**
@@ -137,11 +153,14 @@ class ReportApiTest extends FlatSpec {
    */
   it must "accepts arguments" in {
     val regCfg = RegisterSettings(settings, Some("Test-Register"), Some(List("^e.*")))
-    val rpt = new RegisterReport(regCfg)
+    val rpt = new RegisterReporter(regCfg)
 
     val report = rpt.jsonReport(txnData)
 
     assert(_title.getOption(report) === Some("Test-Register"))
     assert(_reg_txn_idx1_desc.getOption(report) === Some("txn-03")) // with filter
+
+    val foo = report.as[RegisterReport]
+    assert(foo.right.toOption.map(_.title) === Some("Test-Register"))
   }
 }

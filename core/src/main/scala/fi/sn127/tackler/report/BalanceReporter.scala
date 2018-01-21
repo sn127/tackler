@@ -19,11 +19,11 @@ package fi.sn127.tackler.report
 import io.circe._
 import io.circe.syntax._
 
-import fi.sn127.tackler.api.{BalanceItem, BalanceM, Delta, OrderDelta}
+import fi.sn127.tackler.api.{BalanceItem, BalanceReport, Delta, OrderByDelta}
 import fi.sn127.tackler.core._
-import fi.sn127.tackler.model.{BalanceTreeNode, Metadata, TxnData}
+import fi.sn127.tackler.model.{BalanceTreeNode, TxnData}
 
-abstract class BalanceReportLike(cfg: ReportSettings) extends ReportLike(cfg) {
+abstract class BalanceReporterLike(cfg: ReportSettings) extends ReportLike(cfg) {
 
   @SuppressWarnings(Array("org.wartremover.warts.TraversableOps"))
   protected def txtBalanceBody(balance: Balance): (Seq[String], String) = {
@@ -66,7 +66,7 @@ abstract class BalanceReportLike(cfg: ReportSettings) extends ReportLike(cfg) {
     )
   }
 
-  protected def balanceToApi(balance:Balance): BalanceM = {
+  protected def balanceToApi(balance:Balance): BalanceReport = {
 
     val body = balance.bal.map(btnToApi)
 
@@ -76,13 +76,13 @@ abstract class BalanceReportLike(cfg: ReportSettings) extends ReportLike(cfg) {
           commodity = c.map(_.name),
           delta = scaleFormat(v))
       })
-      .sorted(OrderDelta)
+      .sorted(OrderByDelta)
 
-    BalanceM(balance.title, body, deltas)
+    BalanceReport(balance.metadata, balance.title, body, deltas)
   }
 }
 
-class BalanceReport(val mySettings: BalanceSettings) extends  BalanceReportLike(mySettings) {
+class BalanceReporter(val mySettings: BalanceSettings) extends  BalanceReporterLike(mySettings) {
 
   override val name = mySettings.outputname
 
@@ -104,9 +104,7 @@ class BalanceReport(val mySettings: BalanceSettings) extends  BalanceReportLike(
   }
 
   protected def jsonBalanceReport(bal: Balance): Json = {
-    Metadata.combine(
-      balanceToApi(bal).asJson,
-      bal.metadata)
+    balanceToApi(bal).asJson
   }
 
   protected def getBalance(txns: TxnData): Balance = {

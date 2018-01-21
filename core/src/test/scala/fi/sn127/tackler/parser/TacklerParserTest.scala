@@ -56,7 +56,7 @@ class TacklerParserTest extends FlatSpec {
         |""".stripMargin
 
     val txnData = tt.string2Txns(txnStr)
-    assert(txnData.txns.head.desc.getOrElse("") === "äöåÄÖÅéèÿ風空")
+    assert(txnData.txns.head.header.description.getOrElse("") === "äöåÄÖÅéèÿ風空")
   }
 
   /**

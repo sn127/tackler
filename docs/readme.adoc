@@ -28,6 +28,7 @@
 === Embedding Tackler core
 
 * link:./server-api.adoc[Server API]
+* link:./client-api.adoc[Client API]
 * link:./json.adoc[Json Report output]
 
 === Tackler Enhancement Proposals

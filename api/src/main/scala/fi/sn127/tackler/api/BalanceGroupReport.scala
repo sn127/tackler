@@ -19,12 +19,13 @@ package fi.sn127.tackler.api
 import io.circe._
 import io.circe.generic.semiauto._
 
-final case class BalanceGroupM(
+final case class BalanceGroupReport(
+  metadata: Option[Metadata],
   title: String,
-  groups: Seq[BalanceM]
+  groups: Seq[BalanceReport]
 )
 
-object BalanceGroupM {
-  implicit val decodeBalanceGroupReport: Decoder[BalanceGroupM] = deriveDecoder[BalanceGroupM]
-  implicit val encodeBalanceGroupReport: Encoder[BalanceGroupM] = deriveEncoder[BalanceGroupM]
+object BalanceGroupReport {
+  implicit val decodeBalanceGroupReport: Decoder[BalanceGroupReport] = deriveDecoder[BalanceGroupReport]
+  implicit val encodeBalanceGroupReport: Encoder[BalanceGroupReport] = deriveEncoder[BalanceGroupReport]
 }

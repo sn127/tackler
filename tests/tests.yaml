@@ -1834,6 +1834,7 @@ features:
               name: ReportApiTest
               descriptions:
                 - desc: Balance with settings
+                - desc: deserialize by Client API
               references:
                 - ref: balance
           - test:
@@ -1841,6 +1842,7 @@ features:
               name: ReportApiTest
               descriptions:
                 - desc: Balance with custom arguments
+                - desc: deserialize by Client API
               references:
                 - ref: balance
           - test:
@@ -1848,6 +1850,7 @@ features:
               name: ReportApiTest
               descriptions:
                 - desc: Balance Group with settings
+                - desc: deserialize by Client API
               references:
                 - ref: balance-group
           - test:
@@ -1855,6 +1858,7 @@ features:
               name: ReportApiTest
               descriptions:
                 - desc: Balance Group with custom arguments
+                - desc: deserialize by Client API
               references:
                 - ref: balance-group
           - test:
@@ -1862,6 +1866,7 @@ features:
               name: ReportApiTest
               descriptions:
                 - desc: Register with settings
+                - desc: deserialize by Client API
               references:
                 - ref: register
           - test:
@@ -1869,6 +1874,7 @@ features:
               name: ReportApiTest
               descriptions:
                 - desc: Register with custom arguments
+                - desc: deserialize by Client API
               references:
                 - ref: register
 

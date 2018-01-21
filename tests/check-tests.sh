@@ -11,12 +11,14 @@
 # - check that all tests are recorded in test-db
 # - check that all JSON is valid (references and output)
 #
+sh_pykwalify=pykwalify
+
 exe_dir=$(dirname $0)
 
 test_db="$exe_dir/tests.yaml"
 
 echo "Check test-db:"
-pykwalify -v -s  "$exe_dir/tests-schema.yaml" -d  "$test_db"
+$sh_pykwalify -v -s  "$exe_dir/tests-schema.yaml" -d  "$test_db"
 
 grep ' id:' "$test_db" | sed 's/.*id: //' | sort | uniq -d
 

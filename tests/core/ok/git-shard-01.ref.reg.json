@@ -10,7 +10,7 @@
   "transactions" : [
     {
       "txn" : {
-        "timestamp" : "2017-01-31Z",
+        "timestamp" : "2017-01-31T00:00:00Z",
         "description" : "shard03",
         "uuid" : "c87adf25-bd3c-4050-a441-ddd701f2c53e"
       },
@@ -29,7 +29,7 @@
     },
     {
       "txn" : {
-        "timestamp" : "2017-02-01Z",
+        "timestamp" : "2017-02-01T00:00:00Z",
         "description" : "shard01",
         "uuid" : "4dba67d9-0f47-4c8e-a3bc-f31d2bae2de4"
       },
@@ -48,7 +48,7 @@
     },
     {
       "txn" : {
-        "timestamp" : "2017-02-02Z",
+        "timestamp" : "2017-02-02T00:00:00Z",
         "description" : "shard02",
         "uuid" : "7594bf5f-15b5-46ef-ab7b-21d3c5f19bdc"
       },

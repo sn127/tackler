@@ -8,6 +8,13 @@ transaction stream (or sub-selection of it) it generates different reports.
 Transaction stream is immutable and thread safe, and it is possible to make multiple reports
 over same set of txn data. Currently all transactions are held in memory.
 
+Dependency settings for SBT are:
+
+    libraryDependencies += "fi.sn127" %%  "tackler-core" % "version-number"
+
+This is released on Maven Central Repository.
+
+== Client API
 
 == Reading transactions
 
@@ -28,8 +35,12 @@ and it's companion object's helpers.
 Reports are done in three steps:
 
 1. Make settings for report (`BalanceSettings`)
-1. Instantiate report maker (`BalanceReport`)
+1. Instantiate report maker (`BalanceReporter`)
 1. Generate actual report (`balRpt.jsonReport(txnData)`)
+
+=== Consuming reports
+
+See link:./client-api.adoc[Client API] how to use generated reports on client side.
 
 
 == Example of usage of Server API

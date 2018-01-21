@@ -19,12 +19,12 @@ package fi.sn127.tackler.report
 import io.circe.Json
 import io.circe.syntax._
 
-import fi.sn127.tackler.api.BalanceGroupM
+import fi.sn127.tackler.api.{BalanceGroupReport, Metadata}
 import fi.sn127.tackler.core._
-import fi.sn127.tackler.model.{Metadata, Transaction, TxnData, TxnTS}
+import fi.sn127.tackler.model.{Transaction, TxnData, TxnTS}
 
 
-class BalanceGroupReport(val mySettings: BalanceGroupSettings) extends BalanceReportLike(mySettings) {
+class BalanceGroupReporter(val mySettings: BalanceGroupSettings) extends BalanceReporterLike(mySettings) {
 
   override val name: String = mySettings.outputname
 
@@ -61,19 +61,19 @@ class BalanceGroupReport(val mySettings: BalanceGroupSettings) extends BalanceRe
 
     val groupOp = mySettings.groupBy match {
       case GroupByYear() => { txn: Transaction =>
-        TxnTS.isoYear(txn.date)
+        TxnTS.isoYear(txn.header.timestamp)
       }
       case GroupByMonth() => { txn: Transaction =>
-        TxnTS.isoMonth(txn.date)
+        TxnTS.isoMonth(txn.header.timestamp)
       }
       case GroupByDate() => { txn: Transaction =>
-        TxnTS.isoDate(txn.date)
+        TxnTS.isoDate(txn.header.timestamp)
       }
       case GroupByIsoWeek() => { txn: Transaction =>
-        TxnTS.isoWeek(txn.date)
+        TxnTS.isoWeek(txn.header.timestamp)
       }
       case GroupByIsoWeekDate() => { txn: Transaction =>
-        TxnTS.isoWeekDate(txn.date)
+        TxnTS.isoWeekDate(txn.header.timestamp)
       }
     }
 
@@ -84,11 +84,7 @@ class BalanceGroupReport(val mySettings: BalanceGroupSettings) extends BalanceRe
 
     val bgs = balGrps.par.map(balanceToApi).seq
 
-    Metadata.combine(
-      BalanceGroupM(
-        mySettings.title,
-        bgs).asJson,
-      metadata)
+    BalanceGroupReport(metadata, mySettings.title, bgs).asJson
   }
 
   override

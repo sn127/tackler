@@ -44,20 +44,21 @@ object Delta {
   implicit val encodeDelta: Encoder[Delta] = deriveEncoder[Delta]
 }
 
-object OrderDelta extends Ordering[Delta] {
+object OrderByDelta extends Ordering[Delta] {
   def compare(before: Delta, after: Delta): Int = {
     before.compareTo(after)
   }
 }
 
 
-final case class BalanceM(
+final case class BalanceReport(
+  metadata: Option[Metadata],
   title: String,
   balances: Seq[BalanceItem],
   deltas: Seq[Delta]
 )
 
-object BalanceM {
-  implicit val decodeBalanceReport: Decoder[BalanceM] = deriveDecoder[BalanceM]
-  implicit val encodeBalanceReport: Encoder[BalanceM] = deriveEncoder[BalanceM]
+object BalanceReport {
+  implicit val decodeBalanceReport: Decoder[BalanceReport] = deriveDecoder[BalanceReport]
+  implicit val encodeBalanceReport: Encoder[BalanceReport] = deriveEncoder[BalanceReport]
 }

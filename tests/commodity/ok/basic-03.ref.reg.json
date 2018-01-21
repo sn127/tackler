@@ -3,7 +3,7 @@
   "transactions" : [
     {
       "txn" : {
-        "timestamp" : "2017-05-01Z",
+        "timestamp" : "2017-05-01T00:00:00Z",
         "description" : "basic commodity (EUR)"
       },
       "postings" : [
@@ -23,7 +23,7 @@
     },
     {
       "txn" : {
-        "timestamp" : "2017-05-02Z",
+        "timestamp" : "2017-05-02T00:00:00Z",
         "description" : "default with commodity (EUR)"
       },
       "postings" : [
@@ -43,7 +43,7 @@
     },
     {
       "txn" : {
-        "timestamp" : "2017-05-03Z",
+        "timestamp" : "2017-05-03T00:00:00Z",
         "description" : "no commodity"
       },
       "postings" : [
@@ -61,7 +61,7 @@
     },
     {
       "txn" : {
-        "timestamp" : "2017-05-04Z",
+        "timestamp" : "2017-05-04T00:00:00Z",
         "description" : "no commodity with default"
       },
       "postings" : [
@@ -79,7 +79,7 @@
     },
     {
       "txn" : {
-        "timestamp" : "2017-05-05Z",
+        "timestamp" : "2017-05-05T00:00:00Z",
         "description" : "basic commodity (USD)"
       },
       "postings" : [
@@ -99,7 +99,7 @@
     },
     {
       "txn" : {
-        "timestamp" : "2017-05-06Z",
+        "timestamp" : "2017-05-06T00:00:00Z",
         "description" : "default with commodity (USD)"
       },
       "postings" : [

@@ -28,36 +28,43 @@ if your plan is feasible and viable from project's perspective.
 +
     sbt clean coverageOn test coverageReport
     sbt coverageAggregate
-+
-. Explore code
-+
+
+== Explore code
+
 Directory structure follows Maven's layout and code has been divided to sub-projects
+
+link:./api[api]::
+Tackler Api (`tackler-api`)
++
+** link:./api/src/main/scala/fi/sn127/tackler/api/[api -> scala -> api] Client API (JVM and JS)
 +
 link:./core[core]::
-Tackler Core
+Tackler Core (`tackler-core`)
 +
-** link:./core/src/main/antlr4/[] ANTLR4 Grammar definition for Tackler input
-** link:./core/src/main/java/fi/sn127/tackler/parser/[] Java helpers for parser
-** link:./core/src/main/scala/fi/sn127/tackler/parser/[] Scala interface for Parser
-** link:./core/src/main/scala/fi/sn127/tackler/model/[]  Model object (Txn, Posting, etc)
-** link:./core/src/main/scala/fi/sn127/tackler/core/[] Core modules
-** link:./core/src/main/scala/fi/sn127/tackler/report/[] Reporting code
+** link:./core/src/main/antlr4/[core -> antlr4] ANTLR4 Grammar definition for Tackler input
+** link:./core/src/main/java/fi/sn127/tackler/parser/[core -> java -> parser] Java helpers for parser
+** link:./core/src/main/scala/fi/sn127/tackler/parser/[core -> scala -> parser] Scala interface for Parser
+** link:./core/src/main/scala/fi/sn127/tackler/model/[core -> scala -> model]  Model object (Txn, Posting, etc)
+** link:./core/src/main/scala/fi/sn127/tackler/core/[core -> scala -> core] Core modules
+** link:./core/src/main/scala/fi/sn127/tackler/report/[core -> scala -> report] Reporting code
 +
 link:./cli[cli]::
-Command Line Interface code
-** link:./cli/src/main/scala/fi/sn127/tackler/cli/[]
+* link:./cli/src/main/scala/fi/sn127/tackler/cli/[cli -> scala -> cli] Command Line Interface code
 +
 link:./tests[tests]::
 link:https://github.com/sn127/utils[DirSuite] based integration tests for Tackler.
 +
-** link:./tests/tests.yaml[] List of all tests and tested features
-** link:./tests/accumulator[] Tests for validating calculator and Accumulator operations
-** link:./tests/cli[] Tests for Command Line Interface verification
-** link:./tests/parser[] Parser and input recognition tests (valid and non-valid input)
-** link:./tests/core[] Tests for core components and features
-** link:./tests/reporting[] Tests to validate reporting
-** link:./tests/reset-ref.sh[] Tool to reset reference vectors with current output
+** link:./tests/tests.yaml[tests -> tests.yaml] List of all tests and tested features
+** link:./tests/accumulator[tests -> accumulator] Tests for validating calculator and Accumulator operations
+** link:./tests/cli[tests -> cli] Tests for Command Line Interface verification
+** link:./tests/parser[tests -> parser] Parser and input recognition tests (valid and non-valid input)
+** link:./tests/core[tests -> core] Tests for core components and features
+** link:./tests/reporting[tests -> reporting] Tests to validate reporting
+** link:./tests/reset-ref.sh[tests -> reset-ref.sh] Tool to reset reference vectors with current output
 
+=== API documents
+
+Also see link:docs/devel/readme.adoc[developer's documentation] and link:./docs/server-api.adoc[Server API] and link:./docs/client-api.adoc[Client API].
 
 == Developer Certificate of Origin
 

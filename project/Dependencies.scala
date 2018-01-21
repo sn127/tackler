@@ -42,7 +42,8 @@ object Dependencies {
   val circe_deps = Seq(
     "io.circe" %% "circe-core",
     "io.circe" %% "circe-generic",
-    "io.circe" %% "circe-parser"
+    "io.circe" %% "circe-parser",
+    "io.circe" %% "circe-java8"
   ).map(_ % circeVersion)
 
   val circe_deps_test = Seq(

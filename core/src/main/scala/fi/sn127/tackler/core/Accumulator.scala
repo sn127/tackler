@@ -33,7 +33,7 @@ object Accumulator {
       .seq
   }
 
-  def registerStream[T](txns: Txns, accounts: Filtering[RegisterPosting])(reporter: (RegisterEntry => Seq[T])): Seq[T] = {
+  def registerStream[T](txns: Txns, accounts: Filtering[AccumulatorPosting])(reporter: (RegisterEntry => Seq[T])): Seq[T] = {
 
     val registerEngine = new mutable.HashMap[String, BigDecimal]()
 
@@ -42,14 +42,14 @@ object Accumulator {
         val newTotal = registerEngine.getOrElse(p.atnKey, BigDecimal(0)) + p.amount
         registerEngine.update(p.atnKey, newTotal)
 
-        RegisterPosting(p, newTotal)
+        AccumulatorPosting(p, newTotal)
       })
 
       reporter((
         txn,
         registerPostings
           .filter(accounts.predicate)
-          .sorted(OrderByRegPosting)))
+          .sorted(OrderByAccumulatorPosting)))
     })
   }
 }

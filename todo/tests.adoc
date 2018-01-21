@@ -1,6 +1,9 @@
 
 = Tests TODO
 
+* [ ] JSON: serialize and de-serialize
+** [ ] metadata de-serialize tests
+
 * [x] equity: test when all postings balance (no need for balance account)
 ** [ ] equity -> input: above (not-null accounts are not allowed)
 ** [ ] equity -> input: check and fix equity chen equity account is part of input (valpos -tests)

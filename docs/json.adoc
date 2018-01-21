@@ -8,6 +8,8 @@ to user by UI as it is without further processing.
 
 JSON output does not contain null values, e.g. if field is null, it is dropped.
 
+link:./client-api.adoc[Client API] lists used data models for JSON serialization.
+
 == Example reports
 
 Supported reports with JSON output are `balance`, `balance-group` and `register`.

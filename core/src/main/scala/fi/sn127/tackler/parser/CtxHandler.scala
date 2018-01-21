@@ -22,6 +22,7 @@ import cats.implicits._
 
 import scala.collection.JavaConverters
 
+import fi.sn127.tackler.api.TxnHeader
 import fi.sn127.tackler.core.{AccountException, CommodityException, Settings}
 import fi.sn127.tackler.model.{AccountTreeNode, Commodity, Posting, Posts, Transaction, Txns}
 import fi.sn127.tackler.parser.TxnParser._
@@ -220,7 +221,7 @@ abstract class CtxHandler {
       List(Posting(ate, -amount, -amount, posts.head.txnCommodity, comment))
     })
 
-    Transaction(date, code, desc, uuid, comments, posts ++ last_posting.getOrElse(Nil))
+    Transaction(TxnHeader(date, code, desc, uuid, comments), posts ++ last_posting.getOrElse(Nil))
   }
 
   /**

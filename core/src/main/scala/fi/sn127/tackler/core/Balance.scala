@@ -18,6 +18,7 @@ package fi.sn127.tackler.core
 
 import cats.implicits._
 
+import fi.sn127.tackler.api.Metadata
 import fi.sn127.tackler.model._
 
 

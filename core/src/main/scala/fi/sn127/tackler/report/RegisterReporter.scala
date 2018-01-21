@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2017 Jani Averbach
+ * Copyright 2016-2018 Jani Averbach
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,14 +19,15 @@ package fi.sn127.tackler.report
 import io.circe.Json
 import io.circe.syntax._
 
+import fi.sn127.tackler.api.{RegisterPosting, RegisterReport, RegisterTxn}
 import fi.sn127.tackler.core._
 import fi.sn127.tackler.model.{RegisterEntry, _}
 
-class RegisterReport(val mySettings: RegisterSettings) extends ReportLike(mySettings) {
+class RegisterReporter(val mySettings: RegisterSettings) extends ReportLike(mySettings) {
 
   override val name = mySettings.outputname
 
-  protected def txtRegisterEntry(regEntry: RegisterEntry, regEntryPostings: Seq[RegisterPosting]): Seq[String] = {
+  protected def txtRegisterEntry(regEntry: RegisterEntry, regEntryPostings: Seq[AccumulatorPosting]): Seq[String] = {
 
     val txn = regEntry._1
 
@@ -48,40 +49,29 @@ class RegisterReport(val mySettings: RegisterSettings) extends ReportLike(mySett
     }
   }
 
-  protected def jsonRegisterEntry(registerEntry: RegisterEntry, regEntryPostings: Seq[RegisterPosting]): Option[Json] = {
+  protected def jsonRegisterEntry(registerEntry: RegisterEntry, regEntryPostings: Seq[AccumulatorPosting]): Seq[RegisterTxn] = {
 
     if (regEntryPostings.isEmpty) {
-      None
+      Seq.empty[RegisterTxn]
     }
     else {
-      def foo(c: Option[Commodity]): List[(String, Json)] = {
-        c.fold(
-          Nil: List[(String, Json)]
-        )(commodity =>
-          List(("commodity", commodity.name.asJson))
-        )
-      }
-
       val txn = registerEntry._1
 
-      val jsonPostings = regEntryPostings
+      val reportPostings = regEntryPostings
         .map(regPosting => {
-          val js = List(
-            ("account", regPosting.account.asJson),
-            ("amount", scaleFormat(regPosting.amount).asJson),
-            ("runningTotal", scaleFormat(regPosting.runningTotal).asJson)
-          ) ++ foo(regPosting.commodity)
-          Json.obj(js: _*)
+          RegisterPosting(
+            account = regPosting.account,
+            amount = scaleFormat(regPosting.amount),
+            runningTotal = scaleFormat(regPosting.runningTotal),
+            commodity = regPosting.commodity.map(_.name)
+          )
         })
 
-      Some(Json.obj(
-        ("txn", txn.txnHeaderToJson(TxnTS.isoDate)),
-        ("postings", jsonPostings.asJson)
-      ))
+      List(RegisterTxn(txn.header, reportPostings))
     }
   }
 
-  protected def txtRegisterReport(accounts: Filtering[RegisterPosting], txns: TxnData): Seq[String] = {
+  protected def txtRegisterReport(accounts: Filtering[AccumulatorPosting], txns: TxnData): Seq[String] = {
     val header = List(
       txns.metadata.fold("") { md => md.text() },
       mySettings.title,
@@ -102,28 +92,19 @@ class RegisterReport(val mySettings: RegisterSettings) extends ReportLike(mySett
     }
   }
 
-  protected def doBody(accounts: Filtering[RegisterPosting], txns: Txns): Json = {
+  protected def doBody(accounts: Filtering[AccumulatorPosting], txns: Txns): Seq[RegisterTxn] = {
 
-    val a = Accumulator.registerStream[Json](txns, accounts)({ (regEntry: RegisterEntry) =>
-
+    val a = Accumulator.registerStream[RegisterTxn](txns, accounts)({ (regEntry: RegisterEntry) =>
       val regEntryPostings = regEntry._2
-
-      jsonRegisterEntry(regEntry, regEntryPostings) match {
-        case Some(json) => { List(json) }
-
-        case None => Seq.empty[Json]
-      }
+      jsonRegisterEntry(regEntry, regEntryPostings)
     })
 
-    a.asJson
+    a
   }
 
-  protected def jsonRegisterReport(accounts: Filtering[RegisterPosting], txns: TxnData): Json = {
-    Metadata.combine(
-      Json.obj(
-        jsonTitle(mySettings.title),
-        ("transactions", doBody(accounts, txns.txns))),
-      txns.metadata)
+  protected def jsonRegisterReport(accounts: Filtering[AccumulatorPosting], txns: TxnData): Json = {
+
+    RegisterReport(txns.metadata, mySettings.title, doBody(accounts, txns.txns)).asJson
   }
 
   protected def getFilters() = {
@@ -149,7 +130,7 @@ class RegisterReport(val mySettings: RegisterSettings) extends ReportLike(mySett
           doRowOutputs(writers, txtRegisterReport(rrf, txns))
         }
         case JsonFormat() => {
-          doRowOutputs(writers, Seq(jsonRegisterReport(rrf, txns).spaces2))
+          doRowOutputs(writers, Seq(jsonRegisterReport(rrf, txns).pretty(printer)))
         }
       }
     })

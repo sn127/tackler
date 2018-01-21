@@ -3,7 +3,7 @@
   "transactions" : [
     {
       "txn" : {
-        "timestamp" : "2017-01-01Z",
+        "timestamp" : "2017-01-01T00:00:00Z",
         "description" : "txn-comments-01",
         "comments" : [
           "0101 comment"
@@ -24,7 +24,7 @@
     },
     {
       "txn" : {
-        "timestamp" : "2017-01-02Z",
+        "timestamp" : "2017-01-02T00:00:00Z",
         "description" : "txn-comments-01",
         "comments" : [
           "0102 comment #1",
@@ -46,7 +46,7 @@
     },
     {
       "txn" : {
-        "timestamp" : "2017-01-03Z",
+        "timestamp" : "2017-01-03T00:00:00Z",
         "description" : "txn-comments-01",
         "uuid" : "f78376b8-7e4e-49d5-9d6b-39d5e4dd0bb8"
       },
@@ -65,7 +65,7 @@
     },
     {
       "txn" : {
-        "timestamp" : "2017-01-04Z",
+        "timestamp" : "2017-01-04T00:00:00Z",
         "description" : "txn-comments-01",
         "uuid" : "7cea8674-d80c-4aaa-a129-0ee35dbea566",
         "comments" : [

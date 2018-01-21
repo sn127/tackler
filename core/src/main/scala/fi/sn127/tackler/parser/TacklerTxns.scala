@@ -34,8 +34,9 @@ import org.eclipse.jgit.treewalk.filter.{AndTreeFilter, PathFilter, PathSuffixFi
 import org.slf4j.{Logger, LoggerFactory}
 import resource.{makeManagedResource, managed, _}
 
+import fi.sn127.tackler.api.{GitInputReference, Metadata}
 import fi.sn127.tackler.core.{Settings, TacklerException}
-import fi.sn127.tackler.model.{GitMetadata, OrderByTxn, Transaction, TxnData}
+import fi.sn127.tackler.model.{OrderByTxn, Transaction, TxnData}
 
 /**
  * Helper methods for [[TacklerTxns]] and Txns Input handling.
@@ -263,13 +264,13 @@ class TacklerTxns(val settings: Settings) extends CtxHandler {
             }
           }
 
-          val meta = new GitMetadata(
-            inputRef.left.getOrElse("FIXED by commit"),
+          val meta = Some(new GitInputReference(
             commit.getName,
+            inputRef.left.toOption,
             commit.getShortMessage
-          )
+          ))
 
-          TxnData(Some(meta), txns.flatten.toSeq.sorted(OrderByTxn))
+          TxnData(Some(Metadata(meta)), txns.flatten.toSeq.sorted(OrderByTxn))
         })
       })
     })
