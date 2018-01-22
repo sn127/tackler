@@ -2,12 +2,12 @@
 
 Current release is:
 
- libraryDependencies += "fi.sn127" %%  "tackler-core" % "0.9.0-SNAPSHOT"
- libraryDependencies += "fi.sn127" %%% "tackler-api"  % "0.9.0-SNAPSHOT"
+ libraryDependencies += "fi.sn127" %%  "tackler-core" % "0.9.0"
+ libraryDependencies += "fi.sn127" %%% "tackler-api"  % "0.9.0"
 
 == Release history
 
-=== 0.9.0-SNAPSHOT
+=== 0.9.0
 
  * New link:./docs/client-api.adoc[client API] (`tackler-api`) library of  data models (JVM and JS environments).
  ** Publish JVM and JS version of `tackler-api.jar` on Maven Central Repository
@@ -26,7 +26,7 @@ Updated deps and tools:
  * Updatede dependencies
  ** ANTLR: 4.7.1 
  ** cats: 1.0.1
- ** circe: 0.9.0
+ ** circe: 0.9.1
  ** jgit: 4.10.0.201712302008-r
  * build
  ** sbt: 1.1.0
