@@ -16,9 +16,6 @@ Current release is:
  ** Use tackler-api and Circe for serializing JSON reports
 
 
-==== Fixes
-
-
 ==== Development
 
 Updated deps and tools:

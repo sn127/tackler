@@ -14,7 +14,6 @@ Dependency settings for SBT are:
 
 This is released on Maven Central Repository.
 
-== Client API
 
 == Reading transactions
 
