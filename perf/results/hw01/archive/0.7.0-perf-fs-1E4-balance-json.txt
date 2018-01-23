@@ -1,0 +1,58 @@
+exe: dist/tackler-cli-0.7.0.jar
+set: 1E4
+version: 0.7.0
+storage: fs
+report: balance
+formats: json
+
+
+Txns size: 10000
+
+Total processing time: 3487, parse: 2125, reporting: 385
+
+real	3.80s
+user	10.35s
+sys	0.55s
+mem	468216k (max)
+cpu	286%
+
+Txns size: 10000
+
+Total processing time: 3424, parse: 2078, reporting: 370
+
+real	3.72s
+user	9.91s
+sys	0.57s
+mem	468344k (max)
+cpu	282%
+
+Txns size: 10000
+
+Total processing time: 3416, parse: 2061, reporting: 390
+
+real	3.71s
+user	10.17s
+sys	0.53s
+mem	468416k (max)
+cpu	288%
+
+Txns size: 10000
+
+Total processing time: 3425, parse: 2081, reporting: 386
+
+real	3.73s
+user	10.07s
+sys	0.56s
+mem	471816k (max)
+cpu	285%
+
+Txns size: 10000
+
+Total processing time: 3426, parse: 2045, reporting: 409
+
+real	3.73s
+user	10.16s
+sys	0.53s
+mem	471748k (max)
+cpu	286%
+
