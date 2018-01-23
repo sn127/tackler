@@ -32,7 +32,7 @@ echo ""
 
 for i in 1 2 3 4 5; do 
 	/usr/bin/time -f "\nreal\t%es\nuser\t%Us\nsys\t%Ss\nmem\t%Mk (max)\ncpu\t%P" \
-	java -Xmx4G -Xms4G -jar "$exe_path" \
+	java -Xmx8G -Xms8G -jar "$exe_path" \
 	--cfg perf-$storage.conf \
 	--input.$fs.glob "**.txn" \
 	--input.$fs.dir data/perf-$trg/ \
