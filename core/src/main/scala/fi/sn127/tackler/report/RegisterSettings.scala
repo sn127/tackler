@@ -21,6 +21,8 @@ import fi.sn127.tackler.core.Settings
 class RegisterSettings(settings: Settings, myTitle: Option[String], myAccounts: Option[List[String]])
   extends ReportSettings(settings) {
 
+  val outputname = "reg"
+
   val title: String = myTitle match {
     case Some(t) => t
     case None => settings.Reports.Register.title

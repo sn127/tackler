@@ -16,6 +16,8 @@
  */
 package fi.sn127.tackler.model
 
+import fi.sn127.tackler.api.Metadata
+
 /**
  * Transaction data and associated metadata.
  *

@@ -1,57 +1,46 @@
 {
-  "title" : "REGISTER"
-,
-"registerRows" : [
-{
-  "txn" : {
-    "timestamp" : "2017-05-01Z",
-    "code" : "mix-1234",
-    "description" : "tmx 18/45 D12L",
-    "comments" : [
-      "Gas:He:Tank·102  Why is this '-' delta (neg)?",
-      "negative deltas would be better with starting pressures",
-      "e.g.: 247 -273 = -26 as tank delta",
-      "and (298 -25) -26 = 247 as end pressure",
-      "Also then user will see positive pressures, ",
-      "and rest of accunting will make more sense"
-    ]
-  },
-  "postings" : [
+  "title" : "REGISTER",
+  "transactions" : [
     {
-      "account" : "User:jaa127:He",
-      "amount" : "26.00",
-      "runningTotal" : "26.00",
-      "commodity" : "bar·He"
+      "txn" : {
+        "timestamp" : "2017-05-01T00:00:00Z",
+        "code" : "mix-1234",
+        "description" : "tmx 18/45 D12L",
+        "comments" : [
+          "Gas:He:Tank·102  Why is this '-' delta (neg)?",
+          "negative deltas would be better with starting pressures",
+          "e.g.: 247 -273 = -26 as tank delta",
+          "and (298 -25) -26 = 247 as end pressure",
+          "Also then user will see positive pressures, ",
+          "and rest of accunting will make more sense"
+        ]
+      },
+      "postings" : [
+        {
+          "account" : "User:jaa127:He",
+          "amount" : "26.00",
+          "runningTotal" : "26.00",
+          "commodity" : "bar·He"
+        }
+      ]
+    },
+    {
+      "txn" : {
+        "timestamp" : "2017-05-01T00:00:00Z",
+        "code" : "mix-1234",
+        "description" : "tmx 18/45 D12L",
+        "comments" : [
+          "this mix used 5 bar @ 50L tank"
+        ]
+      },
+      "postings" : [
+        {
+          "account" : "User:jaa127:O2",
+          "amount" : "5.00",
+          "runningTotal" : "5.00",
+          "commodity" : "bar·O2"
+        }
+      ]
     }
   ]
-}
-,
-{
-  "txn" : {
-    "timestamp" : "2017-05-01Z",
-    "code" : "mix-1234",
-    "description" : "tmx 18/45 D12L",
-    "comments" : [
-      "this mix used 5 bar @ 50L tank"
-    ]
-  },
-  "postings" : [
-    {
-      "account" : "User:jaa127:O2",
-      "amount" : "5.00",
-      "runningTotal" : "5.00",
-      "commodity" : "bar·O2"
-    }
-  ]
-}
-,
-{
-  "txn" : {
-    "timestamp" : null,
-    "description" : "end-sentry"
-  },
-  "postings" : [
-  ]
-}
-]
 }

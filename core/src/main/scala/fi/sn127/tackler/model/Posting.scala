@@ -19,6 +19,14 @@ import cats.implicits._
 
 import fi.sn127.tackler.core.TxnException
 
+/**
+ *
+ * @param acctn account information
+ * @param amount of this posting (in posting's own commodity)
+ * @param txnAmount this is amount as converted to Txn's commodity
+ * @param txnCommodity  txn's commodity (e.g. this is mixed commodity transaction)
+ * @param comment  of this posting, if any
+ */
 final case class Posting(
   acctn: AccountTreeNode,
   amount: BigDecimal,

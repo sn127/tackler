@@ -16,13 +16,11 @@
  */
 package fi.sn127.tackler.model
 import java.time.ZonedDateTime
-import java.util.UUID
 
 import cats.implicits._
 
+import fi.sn127.tackler.api.TxnHeader
 import fi.sn127.tackler.core.TxnException
-import io.circe.Json
-import io.circe.syntax._
 
 object OrderByTxn extends Ordering[Transaction] {
   def compare(before: Transaction, after: Transaction): Int = {
@@ -31,11 +29,7 @@ object OrderByTxn extends Ordering[Transaction] {
 }
 
 final case class Transaction(
-  date: ZonedDateTime,
-  code: Option[String],
-  desc: Option[String],
-  uuid: Option[UUID],
-  comments: Option[List[String]],
+  header: TxnHeader,
   posts: Posts) {
 
   if (BigDecimal(0).compareTo(Posting.txnSum(posts)) =!= 0) {
@@ -43,43 +37,10 @@ final case class Transaction(
   }
 
   /**
-   * Txn sorting logic.
-   *
-   * Input order of Txn can not be mandated, so there should
-   * be a stable way to sort transactions.
-   *
-   * Txn components are used in following order to find sort order
-   * (in case of previous components have produced "same" sort order):
-   *  timestamp, code, description, uuid
-   *
-   * If fully deterministic and safe "distributed txn source"-proof
-   * sort order is needed, then transactions must have UUIDs.
-   *
-   * @param otherTxn to be compared to this Txn
-   * @return 0 if the argument txn is equal to this Txn.
-   *         less than 0, if this Txn is (before in sorted set)
-   *         greater than 0, if this Txn is after (in sorted set)
+   * See TxnHeader on tackler-api for description of used logic.
    */
   def compareTo(otherTxn: Transaction): Int = {
-    val dateCmp = date.compareTo(otherTxn.date)
-    if (dateCmp =!= 0) {
-      dateCmp
-    } else {
-      val codeCmp = code.getOrElse("").compareTo(otherTxn.code.getOrElse(""))
-      if (0 =!= codeCmp) {
-        codeCmp
-      } else {
-        val descCmp = desc.getOrElse("").compareTo(otherTxn.desc.getOrElse(""))
-        if (0 =!= descCmp) {
-          descCmp
-        } else {
-          val uuidThis = uuid.map(_.toString).getOrElse("")
-          val uuidOther = otherTxn.uuid.map(_.toString).getOrElse("")
-          val uuidCmp = uuidThis.compareTo(uuidOther)
-          uuidCmp
-        }
-      }
-    }
+    header.compareTo(otherTxn.header)
   }
 
   /**
@@ -90,40 +51,7 @@ final case class Transaction(
    * @return new line terminated header of txn
    */
   def txnHeaderToString(indent: String, tsFormatter: (ZonedDateTime => String)): String = {
-    val codeStr = code.map(c => " (" + c + ") ")
-
-    val uuidStr = uuid.map(u => indent + ";:uuid: " + u.toString + "\n")
-    val commentsStr = comments.map(cs =>
-      cs.map(c => indent + "; " + c + "\n").mkString
-    )
-
-    tsFormatter(date) + codeStr.getOrElse(" ") + desc.getOrElse("") + "\n" +
-      uuidStr.getOrElse("") +
-      commentsStr.getOrElse("")
-  }
-
-  def txnHeaderToJson(tsFormatter: (ZonedDateTime => String)): Json = {
-    val js = List(
-      ("timestamp", tsFormatter(date).asJson)
-    ) ++ code.fold(
-      Nil: List[(String, Json)]
-    )(c =>
-      List(("code", c.asJson))
-    ) ++ desc.fold(
-      Nil: List[(String, Json)]
-    )(d =>
-      List(("description", d.asJson))
-    ) ++ uuid.fold(
-      Nil: List[(String, Json)]
-    )(u =>
-      List(("uuid", u.asJson))
-    ) ++ comments.fold(
-      Nil: List[(String, Json)]
-    )(c =>
-      List(("comments", c.asJson))
-    )
-
-    Json.obj(js: _*)
+    header.txnHeaderToString(indent, tsFormatter)
   }
 
   override def toString: String = {

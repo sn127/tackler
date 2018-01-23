@@ -24,6 +24,19 @@ class TacklerTxnsTest extends FlatSpec {
 
   behavior of "TacklerTxns with String"
 
+  it should "create git commitId by string" in {
+    assert(TacklerTxns.gitCommitId("1234567890") === Right[String,String]("1234567890"))
+  }
+
+  it should "create git ref by settings" in {
+    val settings = Settings()
+    assert(TacklerTxns.gitReference(settings) === Left[String,String]("master"))
+  }
+
+  it should "create git ref by string" in {
+    assert(TacklerTxns.gitReference("unit-test-ref") === Left[String,String]("unit-test-ref"))
+  }
+
   /**
    * test: 52836ff9-94de-4575-bfae-6b5afa971351
    */
@@ -63,9 +76,9 @@ class TacklerTxnsTest extends FlatSpec {
 
     val tt = new TacklerTxns(Settings())
 
-    val txns = tt.string2Txns(txnStr)
-    assert(txns.length === 3)
-    assert(txns.head.desc.getOrElse("") === "str1")
-    assert(txns.last.desc.getOrElse("") === "str3")
+    val txnData = tt.string2Txns(txnStr)
+    assert(txnData.txns.length === 3)
+    assert(txnData.txns.head.header.description.getOrElse("") === "str1")
+    assert(txnData.txns.last.header.description.getOrElse("") === "str3")
   }
 }

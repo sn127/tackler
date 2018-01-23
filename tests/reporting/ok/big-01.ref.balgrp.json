@@ -1,9 +1,9 @@
 {
   "title" : "BALANCE GROUP (TEST)",
-  "balanceGroups" : [
+  "groups" : [
     {
       "title" : "2017-03-01Z",
-      "balanceRows" : [
+      "balances" : [
         {
           "accountSum" : "12345678901234567890.1234568",
           "accountTreeSum" : "12345678901234567890.1234568",

@@ -24,7 +24,7 @@ object TacklerTests {
    * Prepare Tackler's test (e.g. clean up old output files)
    *
    * @param tests is path to test directory
-   * @param log for log output of Setup process
+   * @param log logger of Setup process (info and warning messages)
    */
   def setup(tests: String, log: Logger) = {
     val testsDir = File(tests)

@@ -20,7 +20,7 @@ import java.util.regex.Pattern
 
 import cats.implicits._
 
-import fi.sn127.tackler.model.{BalanceTreeNode, RegisterPosting}
+import fi.sn127.tackler.model.{BalanceTreeNode, AccumulatorPosting}
 
 
 /**
@@ -69,8 +69,8 @@ class BalanceFilterNonZeroByAccount(patterns: Seq[String]) extends BalanceFilter
 /**
  * Select all RegisterPostings (e.g. Account rows).
  */
-object AllRegisterPostings extends Filtering[RegisterPosting] {
-  override def predicate(x: RegisterPosting): Boolean = true
+object AllRegisterPostings extends Filtering[AccumulatorPosting] {
+  override def predicate(x: AccumulatorPosting): Boolean = true
 }
 
 /**
@@ -80,10 +80,10 @@ object AllRegisterPostings extends Filtering[RegisterPosting] {
  *
  * @param patterns list of account name regexs
  */
-final case class RegisterFilterByAccount(patterns: Seq[String]) extends Filtering[RegisterPosting]{
+final case class RegisterFilterByAccount(patterns: Seq[String]) extends Filtering[AccumulatorPosting]{
   private val regexs= patterns.map(name => {Pattern.compile(name)})
 
-  override def predicate(x: RegisterPosting): Boolean = {
+  override def predicate(x: AccumulatorPosting): Boolean = {
     regexs.exists(_.matcher(x.post.acctn.account).matches())
   }
 }

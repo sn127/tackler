@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2017 Jani Averbach
+ * Copyright 2016-2018 Jani Averbach
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,8 +16,7 @@
  */
 package fi.sn127.tackler.report
 
-import io.circe.Json
-import io.circe.syntax._
+import io.circe.{Json, Printer}
 
 import fi.sn127.tackler.model.TxnData
 
@@ -27,18 +26,14 @@ abstract class ReportLike(cfg: ReportConfiguration) extends OutputLike {
   private val maxScale = cfg.maxScale
 
   /**
+   * Json printer, spaces 2, drop nulls
+   */
+  val printer: Printer = Printer.spaces2.copy(dropNullValues = true)
+
+  /**
    * Report name part of output filename.
    */
   val name: String
-
-  /**
-   * Get report title as JSON-field
-   * @param title
-   * @return title as json field
-   */
-  def jsonTitle(title: String): (String, Json) = {
-    ("title", title.asJson)
-  }
 
   /**
    * Get decimal part of format string based on scale settings

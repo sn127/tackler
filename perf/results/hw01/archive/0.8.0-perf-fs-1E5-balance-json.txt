@@ -1,0 +1,63 @@
+exe: dist/tackler-cli-0.8.0.jar
+set: 1E5
+version: 0.8.0
+storage: fs
+report: balance
+formats: json
+
+
+13:41:21.970 INFO  fi.sn127.tackler.core.Settings - loading configuration with cfg-file: perf/perf-fs.conf
+Txns size: 100000
+
+Total processing time: 7478, parse: 5969, reporting: 533
+
+real	7.86s
+user	21.92s
+sys	2.85s
+mem	2332468k (max)
+cpu	314%
+
+13:41:29.845 INFO  fi.sn127.tackler.core.Settings - loading configuration with cfg-file: perf/perf-fs.conf
+Txns size: 100000
+
+Total processing time: 7502, parse: 5982, reporting: 552
+
+real	7.90s
+user	22.07s
+sys	2.77s
+mem	2334092k (max)
+cpu	314%
+
+13:41:37.740 INFO  fi.sn127.tackler.core.Settings - loading configuration with cfg-file: perf/perf-fs.conf
+Txns size: 100000
+
+Total processing time: 7572, parse: 6132, reporting: 492
+
+real	7.97s
+user	22.72s
+sys	2.72s
+mem	2340180k (max)
+cpu	319%
+
+13:41:45.723 INFO  fi.sn127.tackler.core.Settings - loading configuration with cfg-file: perf/perf-fs.conf
+Txns size: 100000
+
+Total processing time: 7852, parse: 6306, reporting: 572
+
+real	8.24s
+user	23.47s
+sys	2.80s
+mem	2351344k (max)
+cpu	318%
+
+13:41:53.998 INFO  fi.sn127.tackler.core.Settings - loading configuration with cfg-file: perf/perf-fs.conf
+Txns size: 100000
+
+Total processing time: 7533, parse: 5939, reporting: 582
+
+real	7.94s
+user	22.05s
+sys	2.89s
+mem	2354600k (max)
+cpu	314%
+

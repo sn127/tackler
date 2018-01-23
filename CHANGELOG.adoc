@@ -2,9 +2,36 @@
 
 Current release is:
 
- libraryDependencies += "fi.sn127" %% "tackler-core" % "0.8.0"
+ libraryDependencies += "fi.sn127" %%  "tackler-core" % "0.9.0"
+ libraryDependencies += "fi.sn127" %%% "tackler-api"  % "0.9.0"
 
 == Release history
+
+=== 0.9.0
+
+ * New link:./docs/client-api.adoc[client API] (`tackler-api`) library of  data models (JVM and JS environments).
+ ** Publish JVM and JS version of `tackler-api.jar` on Maven Central Repository
+ * Server API clean ups and enhancements (helper methods for Txns and report handling).
+ * JSON cleanups and changes (see diff of `tests` with `ignore-whitespace`)
+ ** Use tackler-api and Circe for serializing JSON reports
+
+
+==== Development
+
+Updated deps and tools:
+
+ * Updatede dependencies
+ ** ANTLR: 4.7.1 
+ ** cats: 1.0.1
+ ** circe: 0.9.1
+ ** jgit: 4.10.0.201712302008-r
+ * build
+ ** sbt: 1.1.0
+ ** sbt-antlr4: 0.8.1
+ ** sbt-scalajs: 0.6.21
+ ** sbt-crossproject: 0.3.0
+ ** sbt-scalajs-crossproject: 0.3.0
+
 
 === 0.8.0
 
@@ -43,7 +70,7 @@ Updated deps and tools:
 
  * JSON report format
  ** link:docs/tep/tep-1004.adoc[TEP-1004: JSON report output]
- * Update build chain to SBT 1.0
+ * Update build chain to sbt 1.0
 
 ==== Fixes
 
@@ -51,7 +78,7 @@ None.
 
 ==== Development
 
-Build is updated to SBT 1.0.
+Build is updated to sbt 1.0.
 
  * Updated dependencies
  ** libs

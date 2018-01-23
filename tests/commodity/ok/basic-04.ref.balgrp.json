@@ -1,9 +1,9 @@
 {
   "title" : "BALANCE GROUPS",
-  "balanceGroups" : [
+  "groups" : [
     {
       "title" : "2017-05Z",
-      "balanceRows" : [
+      "balances" : [
         {
           "accountSum" : "-300.00",
           "accountTreeSum" : "-300.00",

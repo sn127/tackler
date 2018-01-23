@@ -21,6 +21,8 @@ import fi.sn127.tackler.core.{GroupBy, Settings}
 class BalanceGroupSettings(settings: Settings, myTitle: Option[String], myAccounts: Option[List[String]], myGroupBy: Option[GroupBy])
   extends ReportSettings(settings) {
 
+  val outputname = "balgrp"
+
   val title: String = myTitle match {
     case Some(t) => t
     case None => settings.Reports.BalanceGroup.title

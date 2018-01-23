@@ -16,6 +16,7 @@ else
    fs=fs
 fi
 
+report_file=results/hwXX/$version-perf-$storage-$trg-$report-"$(echo $formats | tr ' ' '_')".txt
 
 (
 echo "exe: $exe_path"
@@ -27,9 +28,11 @@ echo "formats: $formats"
 echo ""
 echo ""
  
+# --input.git.ref $trg \
+
 for i in 1 2 3 4 5; do 
 	/usr/bin/time -f "\nreal\t%es\nuser\t%Us\nsys\t%Ss\nmem\t%Mk (max)\ncpu\t%P" \
-	java -Xmx4G -Xms4G -jar "$exe_path" \
+	java -Xmx8G -Xms8G -jar "$exe_path" \
 	--cfg perf-$storage.conf \
 	--input.$fs.glob "**.txn" \
 	--input.$fs.dir data/perf-$trg/ \
@@ -40,8 +43,8 @@ for i in 1 2 3 4 5; do
 
 	echo
 done
-) > results/hw00/$version-perf-$storage-$trg-$report-"$(echo $formats | tr ' ' '_')".txt  2>&1
+) > "$report_file"  2>&1
 
-#) > results/hw00/$version-perf-$storage-$trg-$report.txt  2>&1
-# --input.git.ref $trg \
+# clean up path prefix
+sed -i 's@/.*perf/@perf/@' "$report_file"
 

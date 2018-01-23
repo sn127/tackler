@@ -56,6 +56,8 @@ then amount could be left empty.
 
 Posting with zero amount is not allowed.
 
+See Accumulator section for information different types of postings
+(`Posting`, `AccumulatorPosting`, `RegisterPosting` (API)).
 
 ===== Account (acc)
 
@@ -87,8 +89,11 @@ line parameter].
 
 * AccountTreeNode, node in account tree (Chart of Accounts)
 * BalanceTreeNode, node (row) in balance report, contains it's own balance and balance of childs
-* RegisterPosting, posting which contains running total so far for this account
-
+* Different data types of postings
+** `Posting`, this is internal representation of original Txn Posting, as it was parsed
+** `AccumulatorPosting`, posting used and reported by Accumulator,
+this contains calculated data (running total so far for this account)
+** `RegisterPosting`, posting on Register report, this is used by API interface, and used for reporting
 
 == Parser
 

@@ -22,6 +22,7 @@ import cats.implicits._
 
 import scala.collection.JavaConverters
 
+import fi.sn127.tackler.api.TxnHeader
 import fi.sn127.tackler.core.{AccountException, CommodityException, Settings}
 import fi.sn127.tackler.model.{AccountTreeNode, Commodity, Posting, Posts, Transaction, Txns}
 import fi.sn127.tackler.parser.TxnParser._
@@ -29,7 +30,7 @@ import fi.sn127.tackler.parser.TxnParser._
 /**
  * Handler utilities for ANTLR Parser Contexts.
  *
- * This handlers convert Parser Contexts to
+ * These handlers convert Parser Contexts to
  * Tackler Model (to Transactions, Postings, etc).
  */
 abstract class CtxHandler {
@@ -187,19 +188,17 @@ abstract class CtxHandler {
       java.util.UUID.fromString(meta.text().getText.trim)
     })
 
-    // it seems that txnCtx.txn_comment is never null, even when there aren't any comments
-    // TODO: tests this?
-    val comments = Option(txnCtx.txn_comment()).fold[Option[List[String]]](
-      None
-    )(cs => {
-      val l = JavaConverters.asScalaIterator(cs.iterator())
+    // txnCtx.txn_comment is never null, even when there aren't any comments
+    // (in that case it will be an empty list)
+    val comments = {
+      val l = JavaConverters.asScalaIterator(txnCtx.txn_comment().iterator())
         .map(c => c.comment().text().getText).toList
       if (l.isEmpty) {
         None
       } else {
         Some(l)
       }
-    })
+    }
 
     val posts: Posts =
       JavaConverters.asScalaIterator(txnCtx.postings().posting().iterator()).map(p => {
@@ -222,7 +221,7 @@ abstract class CtxHandler {
       List(Posting(ate, -amount, -amount, posts.head.txnCommodity, comment))
     })
 
-    Transaction(date, code, desc, uuid, comments, posts ++ last_posting.getOrElse(Nil))
+    Transaction(TxnHeader(date, code, desc, uuid, comments), posts ++ last_posting.getOrElse(Nil))
   }
 
   /**

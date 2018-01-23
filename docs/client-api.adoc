@@ -1,0 +1,32 @@
+= Client API
+
+This document explains how to use Tackler API on JVM and JS environments.
+
+Tackler's client side api (`tackler-api`) has data models of reports which can be used on the client side.
+This api is provided for both  JVM and JS environments via ScalaJS.
+
+API data models:
+
+ * link:../api/src/main/scala/fi/sn127/tackler/api/BalanceReport.scala[BalanceReport]
+ * link:../api/src/main/scala/fi/sn127/tackler/api/BalanceGroupReport.scala[BalanceGroupReport]
+ * link:../api/src/main/scala/fi/sn127/tackler/api/RegisterReport.scala[RegisterReport]
+ * link:../api/src/main/scala/fi/sn127/tackler/api/Metadata.scala[Metadata]
+ * link:../api/src/main/scala/fi/sn127/tackler/api/TxnHeader.scala[TxnHeader]
+
+== JSON
+
+Client API provides JSON decoding via link:https://circe.github.io/circe/[Circe]:
+
+    val balReport: Either.RightProjection[DecodingFailure, BalanceReport] = jsonResult.as[BalanceReport].right
+
+
+There are tests utilizing de-serializing in
+link:../core/src/test/scala/fi/sn127/tackler/report/ReportApiTest.scala[core -> test -> report -> ReportApiTest]
+
+== tackler-api
+
+Dependency settings for SBT are:
+
+    libraryDependencies += "fi.sn127" %%% "tackler-api"  % "version-number"
+
+This is released on Maven Central Repository.

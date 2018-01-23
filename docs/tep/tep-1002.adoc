@@ -84,7 +84,7 @@ Changes to general reporting
 
 * [x] Reports should produce meta information about txns and report
 ** [x] human readable output (text-format)
-** [ ] machine readable: JSON?
+** [x] machine readable: JSON?
 
 * [x] Git backend specific information
 ** [x] commit
@@ -136,7 +136,7 @@ None at the moment (journal sidecar file?)
 ** [x] tackler.conf
 ** [x] accounts.conf
 ** [x] examples
-* [ ] Developer docs
+* [x] Developer docs
 
 
 == Tests

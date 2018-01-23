@@ -25,10 +25,15 @@
 * link:./devel/build.adoc[How to build]
 * link:./devel/design.adoc[General Design]
 
+=== Embedding Tackler core
+
+* link:./server-api.adoc[Server API]
+* link:./client-api.adoc[Client API]
+* link:./json.adoc[Json Report output]
 
 === Tackler Enhancement Proposals
 
-Tackler Enhancement Proposals (TEP) can be found under link:tep[tep-directory].
+Tackler Enhancement Proposals (TEP) are listed on link:./tep/readme.adoc[TEP Index].
 
 
 == Licenses of other components

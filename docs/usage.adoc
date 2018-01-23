@@ -12,6 +12,13 @@ If your installation follows recommended structure,
 then you can generate default reports immediately after 
 you put some transaction data under `txns`-directory.
 
+== Embedding Tackler
+
+For embedding Tackler see:
+
+* link:./server-api.adoc[Server API]
+* link:./client-api.adoc[Client API]
+* link:./json.adoc[Json Report output]
 
 == CLI
 

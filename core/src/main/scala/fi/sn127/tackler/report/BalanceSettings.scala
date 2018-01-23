@@ -21,6 +21,8 @@ import fi.sn127.tackler.core.Settings
 class BalanceSettings(settings: Settings, myTitle: Option[String], myAccounts: Option[List[String]])
   extends ReportSettings(settings) {
 
+  val outputname = "bal"
+
   val title: String = myTitle match {
     case Some(t) => t
     case None => settings.Reports.Balance.title

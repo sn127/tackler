@@ -18,7 +18,7 @@ package fi.sn127.tackler.core
 
 import scala.collection.mutable
 
-import fi.sn127.tackler.model.{BalanceTreeNode, RegisterEntry, RegisterPosting, Transaction, TxnData, Txns}
+import fi.sn127.tackler.model._
 
 object Accumulator {
 
@@ -27,25 +27,29 @@ object Accumulator {
       .groupBy(groupOp).toSeq
       .sortBy(_._1)
       .par.map({case (groupBy, balGrpTxns) =>
-        Balance(Some(groupBy), TxnData(None, balGrpTxns), balanceFilter)
+        Balance(groupBy, TxnData(None, balGrpTxns), balanceFilter)
       })
       .filter(bal => !bal.isEmpty)
       .seq
   }
 
-  def registerStream(txns: Txns)(reporter: (RegisterEntry => Unit)): Unit = {
+  def registerStream[T](txns: Txns, accounts: Filtering[AccumulatorPosting])(reporter: (RegisterEntry => Seq[T])): Seq[T] = {
 
     val registerEngine = new mutable.HashMap[String, BigDecimal]()
 
-    txns.foreach(txn => {
+    txns.flatMap(txn => {
       val registerPostings = txn.posts.map({ p =>
         val newTotal = registerEngine.getOrElse(p.atnKey, BigDecimal(0)) + p.amount
         registerEngine.update(p.atnKey, newTotal)
 
-        RegisterPosting(p, newTotal)
+        AccumulatorPosting(p, newTotal)
       })
 
-      reporter((txn, registerPostings))
+      reporter((
+        txn,
+        registerPostings
+          .filter(accounts.predicate)
+          .sorted(OrderByAccumulatorPosting)))
     })
   }
 }

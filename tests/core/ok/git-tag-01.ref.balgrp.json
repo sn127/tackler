@@ -1,16 +1,16 @@
 {
-  "title" : "BALANCE GROUPS",
   "metadata" : {
-    "gitStorage" : {
+    "git" : {
       "commit" : "a7938d9b61958d2cabea7503a7be89191d4fb31e",
       "ref" : "tag-test-01",
       "message" : "commit-id-01: 2nd"
     }
   },
-  "balanceGroups" : [
+  "title" : "BALANCE GROUPS",
+  "groups" : [
     {
       "title" : "2017-02Z",
-      "balanceRows" : [
+      "balances" : [
         {
           "accountSum" : "110.00",
           "accountTreeSum" : "110.00",

@@ -1,32 +1,22 @@
 {
-  "title" : "REGISTER (TEST)"
-,
-"registerRows" : [
-{
-  "txn" : {
-    "timestamp" : "2017-03-01Z"
-  },
-  "postings" : [
+  "title" : "REGISTER (TEST)",
+  "transactions" : [
     {
-      "account" : "a:b",
-      "amount" : "12345678901234567890.1234568",
-      "runningTotal" : "12345678901234567890.1234568"
-    },
-    {
-      "account" : "e:b",
-      "amount" : "-12345678901234567890.1234568",
-      "runningTotal" : "-12345678901234567890.1234568"
+      "txn" : {
+        "timestamp" : "2017-03-01T00:00:00Z"
+      },
+      "postings" : [
+        {
+          "account" : "a:b",
+          "amount" : "12345678901234567890.1234568",
+          "runningTotal" : "12345678901234567890.1234568"
+        },
+        {
+          "account" : "e:b",
+          "amount" : "-12345678901234567890.1234568",
+          "runningTotal" : "-12345678901234567890.1234568"
+        }
+      ]
     }
   ]
-}
-,
-{
-  "txn" : {
-    "timestamp" : null,
-    "description" : "end-sentry"
-  },
-  "postings" : [
-  ]
-}
-]
 }

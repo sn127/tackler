@@ -37,7 +37,7 @@ final case class Reports(settings: Settings) {
    * with all outputs and formats as parameters.
    * So for reporter it is possible to go through all Txns only once,
    * and it is possible to implement Reporter.writeReport in stream/iterator
-   * like fashion. This is especially important with RegisterReport which
+   * like fashion. This is especially important with RegisterReporter which
    * can produce big amount of report rows (as many as there are txns).
    *
    * @param outputBase basepath and basename of output
@@ -85,10 +85,10 @@ final case class Reports(settings: Settings) {
         })
 
         try {
-          val frmts = outputs.map({ case (frmt, closables) => frmt })
+          val frmts = outputs.map({ case (frmt, _) => frmt })
           reporter.writeReport(frmts, txnData)
         } finally {
-          outputs.foreach({ case (frmt, closables: Writers) => closables.foreach(c => c.close()) })
+          outputs.foreach({ case (_, closables: Writers) => closables.foreach(c => c.close()) })
         }
     }
 
@@ -116,7 +116,7 @@ final case class Reports(settings: Settings) {
    * @param exporter actual export producer, exporter.writeExport is called only once.
    */
   def writeExport(name: String, outputBase: Option[Path], txnData: TxnData,
-    exporter: ExportLike)
+    exporter: ExporterLike)
   : Unit = {
     outputBase.fold {
       log.warn("Report exporting: no output file is defined!")
@@ -136,25 +136,25 @@ final case class Reports(settings: Settings) {
 
     settings.Reporting.reports.foreach {
       case BalanceReportType() =>
-        val balReport = new BalanceReport("bal", BalanceSettings(settings))
+        val balReport = new BalanceReporter(BalanceSettings(settings))
         writeReport(outputBase, txnData, balReport, frmts)
 
       case BalanceGroupReportType() =>
-        val balgrpReport = new BalanceGroupReport("balgrp", BalanceGroupSettings(settings))
+        val balgrpReport = new BalanceGroupReporter(BalanceGroupSettings(settings))
         writeReport(outputBase, txnData, balgrpReport, frmts)
 
       case RegisterReportType() =>
-        val regReport = new RegisterReport("reg", RegisterSettings(settings))
+        val regReport = new RegisterReporter(RegisterSettings(settings))
         writeReport(outputBase, txnData, regReport, frmts)
     }
 
     settings.Reporting.exports.foreach {
       case EquityExportType() =>
-        val eqReport = new EquityExport(settings)
+        val eqReport = new EquityExporter(settings)
         writeExport("equity", outputBase, txnData, eqReport)
 
       case IdentityExportType() =>
-        val idReport = new IdentityExport(settings)
+        val idReport = new IdentityExporter(settings)
         writeExport("identity", outputBase, txnData, idReport)
     }
 

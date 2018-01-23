@@ -34,8 +34,67 @@ import org.eclipse.jgit.treewalk.filter.{AndTreeFilter, PathFilter, PathSuffixFi
 import org.slf4j.{Logger, LoggerFactory}
 import resource.{makeManagedResource, managed, _}
 
+import fi.sn127.tackler.api.{GitInputReference, Metadata}
 import fi.sn127.tackler.core.{Settings, TacklerException}
-import fi.sn127.tackler.model.{GitMetadata, OrderByTxn, Transaction, Txns, TxnData}
+import fi.sn127.tackler.model.{OrderByTxn, Transaction, TxnData}
+
+/**
+ * Helper methods for [[TacklerTxns]] and Txns Input handling.
+ */
+object TacklerTxns {
+  type GitInputSelector = Either[String, String]
+
+  private val log: Logger = LoggerFactory.getLogger(this.getClass)
+
+  /**
+   * Get input Txns paths based on configuration settings
+   *
+   * @param settings of base dir path and glob configuration
+   * @return sequence of input txn pahts
+   */
+  def inputPaths(settings: Settings): Seq[Path] = {
+    log.info("Tackler Txns: FS: dir = {}", settings.input_fs_dir.toString)
+    log.info("Tackler Txns: FS: glob = {}", settings.input_fs_glob)
+
+    File(settings.input_fs_dir)
+      .glob(settings.input_fs_glob)(visitOptions = File.VisitOptions.follow)
+      .map(f => f.path)
+      .toSeq
+  }
+
+  /**
+   * Make git commit id based input selector.
+   *
+   * @param commitId as string
+   * @return git input selector for commitId
+   */
+  def gitCommitId(commitId: String): GitInputSelector = {
+    Right[String, String](commitId)
+  }
+
+  /**
+   * Make git reference based input selector from settings
+   *
+   * @param settings containing git reference config
+   * @return git input selector for reference
+   */
+  @SuppressWarnings(Array("org.wartremover.warts.Overloading"))
+  def gitReference(settings: Settings) :  GitInputSelector = {
+    Left[String, String](settings.input_git_ref)
+  }
+
+  /**
+   * Make git reference based input selector
+   *
+   * @param reference git reference as string
+   * @return git input selector for reference
+   */
+  @SuppressWarnings(Array("org.wartremover.warts.Overloading"))
+  def gitReference(reference: String) :  GitInputSelector = {
+    Left[String, String](reference)
+  }
+
+}
 
 /**
  * Generate Transactions from selected inputs.
@@ -53,14 +112,15 @@ class TacklerTxns(val settings: Settings) extends CtxHandler {
   /**
    * Get Transactions from list of input paths.
    * Throws an exception in case of error.
+   * See also [[TacklerTxns.inputPaths]]
    *
-   * @param inputs input as seq of files
-   * @return Txns
+   * @param paths input as seq of files
+   * @return TxnData
    */
-  def paths2Txns(inputs: Seq[Path]): TxnData = {
+  def paths2Txns(paths: Seq[Path]): TxnData = {
 
     TxnData(None,
-      inputs.par.flatMap(inputPath => {
+      paths.par.flatMap(inputPath => {
       log.debug("txn: {}", inputPath.toString())
       val txnsCtx = TacklerParser.txnsFile(inputPath)
       handleTxns(txnsCtx)
@@ -72,18 +132,19 @@ class TacklerTxns(val settings: Settings) extends CtxHandler {
    * Basic git repository information is read from settings,
    * but input setting (ref or commit id) is an argument.
    * Throws an exception in case of error.
+   * See [[TacklerTxns.gitCommitId]] et.al.
    *
    * feature: 06b4a9b1-f48c-4b33-8811-1f32cdc44d7b
    * coverage: "sorted" tested by 1d2c22c1-e3fa-4cd4-a526-45318c15d13e
    *
    * @param inputRef Left(ref) or Right(commitId)
-   * @return Txns
+   * @return TxnData
    */
   @SuppressWarnings(Array(
     "org.wartremover.warts.Equals",
     "org.wartremover.warts.EitherProjectionPartial",
     "org.wartremover.warts.TraversableOps"))
-  def git2Txns(inputRef: Either[String, String]): TxnData = {
+  def git2Txns(inputRef: TacklerTxns.GitInputSelector): TxnData = {
 
     /*
      * Get Git repository as managed resource.
@@ -93,6 +154,7 @@ class TacklerTxns(val settings: Settings) extends CtxHandler {
      * @return repository as managed resource
      */
     def getRepo(gitdir: File): ManagedResource[Repository] = {
+      log.info("GIT: repo = {}", gitdir.toString())
       try {
         val repo = (new FileRepositoryBuilder)
           .setGitDir(gitdir.toJava)
@@ -114,15 +176,20 @@ class TacklerTxns(val settings: Settings) extends CtxHandler {
     val tmpResult = getRepo(settings.input_git_repository).flatMap(repository => {
 
       val commitId = if (inputRef.isLeft) {
-        val refOpt = Option(repository.findRef(inputRef.left.get))
+        val refStr = inputRef.left.get
+        log.info("GIT: reference = {}", refStr)
+
+        val refOpt = Option(repository.findRef(refStr))
         val ref = refOpt.getOrElse({
           throw new TacklerException("Git ref not found or it is invalid: [" + inputRef.left.get + "]")
         })
         ref.getObjectId
       } else {
+        val commitIdStr = inputRef.right.get
+        log.info("GIT: commitId = {}", commitIdStr)
         try {
           // resolve fails either with null or exceptions
-          Option(repository.resolve(inputRef.right.get))
+          Option(repository.resolve(commitIdStr))
             .getOrElse({
               // test: uuid: 7cb6af2e-3061-4867-96e3-ee175b87a114
               val msg = "Can not resolve given id: [" + inputRef.right.get + "]"
@@ -197,13 +264,13 @@ class TacklerTxns(val settings: Settings) extends CtxHandler {
             }
           }
 
-          val meta = new GitMetadata(
-            inputRef.left.getOrElse("FIXED by commit"),
+          val meta = Some(new GitInputReference(
             commit.getName,
+            inputRef.left.toOption,
             commit.getShortMessage
-          )
+          ))
 
-          TxnData(Some(meta), txns.flatten.toSeq.sorted(OrderByTxn))
+          TxnData(Some(Metadata(meta)), txns.flatten.toSeq.sorted(OrderByTxn))
         })
       })
     })
@@ -227,11 +294,11 @@ class TacklerTxns(val settings: Settings) extends CtxHandler {
    * coverage: "sorted" tested by 200aad57-9275-4d16-bdad-2f1c484bcf17
    *
    * @param input as text
-   * @return Txns
+   * @return TxnData
    */
-  def string2Txns(input: String): Txns = {
+  def string2Txns(input: String): TxnData = {
 
     val txnsCtx = TacklerParser.txnsText(input)
-    handleTxns(txnsCtx).sorted(OrderByTxn)
+    TxnData(None, handleTxns(txnsCtx).sorted(OrderByTxn))
   }
 }

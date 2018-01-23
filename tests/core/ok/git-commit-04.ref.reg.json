@@ -1,61 +1,49 @@
 {
-  "title" : "REGISTER",
   "metadata" : {
-    "gitStorage" : {
+    "git" : {
       "commit" : "a7938d9b61958d2cabea7503a7be89191d4fb31e",
-      "ref" : "FIXED by commit",
       "message" : "commit-id-01: 2nd"
     }
-  }
-,
-"registerRows" : [
-{
-  "txn" : {
-    "timestamp" : "2017-02-01Z",
-    "description" : "shard01",
-    "uuid" : "4dba67d9-0f47-4c8e-a3bc-f31d2bae2de4"
   },
-  "postings" : [
+  "title" : "REGISTER",
+  "transactions" : [
     {
-      "account" : "a",
-      "amount" : "10.00",
-      "runningTotal" : "10.00"
+      "txn" : {
+        "timestamp" : "2017-02-01T00:00:00Z",
+        "description" : "shard01",
+        "uuid" : "4dba67d9-0f47-4c8e-a3bc-f31d2bae2de4"
+      },
+      "postings" : [
+        {
+          "account" : "a",
+          "amount" : "10.00",
+          "runningTotal" : "10.00"
+        },
+        {
+          "account" : "e",
+          "amount" : "-10.00",
+          "runningTotal" : "-10.00"
+        }
+      ]
     },
     {
-      "account" : "e",
-      "amount" : "-10.00",
-      "runningTotal" : "-10.00"
+      "txn" : {
+        "timestamp" : "2017-02-02T00:00:00Z",
+        "description" : "shard02",
+        "uuid" : "7594bf5f-15b5-46ef-ab7b-21d3c5f19bdc"
+      },
+      "postings" : [
+        {
+          "account" : "a",
+          "amount" : "100.00",
+          "runningTotal" : "110.00"
+        },
+        {
+          "account" : "e",
+          "amount" : "-100.00",
+          "runningTotal" : "-110.00"
+        }
+      ]
     }
   ]
-}
-,
-{
-  "txn" : {
-    "timestamp" : "2017-02-02Z",
-    "description" : "shard02",
-    "uuid" : "7594bf5f-15b5-46ef-ab7b-21d3c5f19bdc"
-  },
-  "postings" : [
-    {
-      "account" : "a",
-      "amount" : "100.00",
-      "runningTotal" : "110.00"
-    },
-    {
-      "account" : "e",
-      "amount" : "-100.00",
-      "runningTotal" : "-110.00"
-    }
-  ]
-}
-,
-{
-  "txn" : {
-    "timestamp" : null,
-    "description" : "end-sentry"
-  },
-  "postings" : [
-  ]
-}
-]
 }

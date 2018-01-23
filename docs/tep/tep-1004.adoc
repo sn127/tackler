@@ -53,8 +53,8 @@ Changes to conf-settings
 
 === Future plans
 
- * API to have json reports (as part of backend).
- * Per report formatting switches (far-far-away)
+ * [x] API to have json reports (as part of backend).
+ * [x] Per report formatting switches (far-far-away)
 
 
 == Reporting
