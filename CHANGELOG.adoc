@@ -1,9 +1,9 @@
 = Tackler releases
 
-Current release is:
+Current published release is:
 
- libraryDependencies += "fi.sn127" %%  "tackler-core" % "0.10.0-SNAPSHOT"
- libraryDependencies += "fi.sn127" %%% "tackler-api"  % "0.10.0-SNAPSHOT"
+ libraryDependencies += "fi.sn127" %%  "tackler-core" % "0.9.0"
+ libraryDependencies += "fi.sn127" %%% "tackler-api"  % "0.9.0"
 
 == Release history
 
@@ -16,8 +16,20 @@ Current release is:
 Updated deps and tools:
 
  * Updated dependencies
+ ** cats: 1.1.0
+ ** circe: 0.9.3
+ ** scallop: 3.1.2
+ ** config: 1.3.3
+ ** jgit: 4.11.0.201803080745-r
+ ** scalatest: 3.0.5
  * build
-
+ ** scala: 1.12.6
+ ** sbt: 1.1.4
+ ** sbt-buildinfo: 0.9.0
+ ** sbt-coveralls: 1.2.4
+ ** sbt-crossproject: 0.4.0
+ ** sbt-scalajs: 0.6.22
+ ** sbt-scalajs-crossproject: 0.4.0
 
 === 0.9.0
 
