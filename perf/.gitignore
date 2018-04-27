@@ -3,3 +3,5 @@
 /out/
 /results/hwXX/
 /results/*/*-SNAPSHOT-*
+/results/*/*.png
+/*.png
