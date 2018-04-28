@@ -1,6 +1,9 @@
 = TEP-XXXX: name
 
-Description
+Single line description of enhancement
+
+Longer paragraph with high level explanation of enhancement
+
 
 
 == Journal file format
@@ -8,26 +11,44 @@ Description
 Journal file format changes, if any
 
 
+== CLI changes
+
+Changes to command line interface
+
+* [ ] item
+
+
+== CONF changes
+
+Changes to conf-settings
+
+* [ ] item
+
+
 == Machinery
 
 Changes to machinery
 
-* [ ] item1
-* [ ] item2
+* [ ] item
 
 
-=== CLI changes
+=== API changes
 
-Changes to command line interface
-
-* [ ] item1
+Api changes to server or client interfaces.
 
 
-=== CONF changes
+==== Server API changes
 
-Changes to conf-settings
+Changes to server API
 
-* [ ] item1
+* [ ] item
+
+
+==== Client API changes
+
+Changes to client API or JSON model
+
+* [ ] item
 
 
 === New dependencies
@@ -42,51 +63,46 @@ Changes to conf-settings
 ** [ ] Add license material to binary distribution
 
 
-=== Future plans
-
-How and where to go from here?
-
-
 == Reporting
 
 Changes to general reporting
 
-* [ ] item1
+* [ ] item
 
 
 === Balance report
 
 Changes to balance report
 
-* [ ] item1
+* [ ] item
 
 
 === Balance Group report
 
 Changes to balance group report
 
-* [ ] item1
+* [ ] item
 
 
 === Register report
 
 Changes to register report
 
-* [ ] item1
+* [ ] item
 
 
-=== Equity report
+=== Equity export
 
-Changes to equity report
+Changes to equity export
 
-* [ ] item1
+* [ ] item
 
 
-=== Identity report
+=== Identity export
 
-Changes to identity report
+Changes to identity export
 
-* [ ] item1
+* [ ] item
 
 
 == Documentation
@@ -104,35 +120,62 @@ Changes to identity report
 ** [ ] accounts.conf
 ** [ ] examples
 * [ ] Developer docs
+** [ ] API changes
+*** [ ] Server API changes
+*** [ ] Client API changes
+
+
+== Future plans
+
+How and where to go from here?
+
 
 == Tests
 
 Normal, ok-case tests to validate functionality:
 
-* [ ] test1
+* [ ] test
 
 === Errors
 
 Various error cases:
 
-* [ ] e: error test 1
+* [ ] e: error test
 
 === Perf
 
 Is there need to run or create new perf tests?
 
-* [ ] perf tests
+* [ ] perf test
 
-=== Metadata for test coverage tracking
+=== Metadata template for test coverage tracking
 
 ....
 features:
   - feature:
       id: uuid
-      subject: "one-line description of main feature"
+      subject: "todo: one-line description of main feature"
 
   - feature:
       id: uuid
       parent: uuid-of-parent
-      subject: "one-line description of sub feature"
+      subject: "todo: one-line description of sub feature"
+      tests:
+        errors:
+          - error:
+              id: uuid
+              name: "todo: name of test class/method or test description file"
+              desc: "todo: description"
+        operations:
+          - test:
+              id: uuid
+              name: "todo: name of test class/method or test description file"
+              descriptions:
+                - desc: "todo: description"
+              references:
+                - ref: balance
+                - ref: balance-group
+                - ref: register
+                - ref: identity
+		- ref: equity
 ....
