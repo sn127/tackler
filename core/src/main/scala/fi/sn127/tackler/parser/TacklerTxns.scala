@@ -236,7 +236,7 @@ class TacklerTxns(val settings: Settings) extends CtxHandler {
 
           // Handle files
           val txns: Iterator[Seq[Transaction]] = for {
-            n <- Iterator.continually(treeWalk.next()).takeWhile(p => p === true)
+            _ <- Iterator.continually(treeWalk.next()).takeWhile(p => p === true)
           } yield {
 
             val objectId = treeWalk.getObjectId(0)
