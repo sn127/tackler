@@ -8,7 +8,7 @@ addSbtPlugin("org.portable-scala" % "sbt-crossproject"         % "0.6.0")
 addSbtPlugin("org.portable-scala" % "sbt-scalajs-crossproject" % "0.6.0")
 
 // build & release
-addSbtPlugin("com.eed3si9n" % "sbt-assembly" % "0.14.8")
+addSbtPlugin("com.eed3si9n" % "sbt-assembly" % "0.14.9")
 
 // QA tools
 addSbtPlugin("org.scoverage" % "sbt-scoverage" % "1.5.1")
