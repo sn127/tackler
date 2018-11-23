@@ -1,0 +1,27 @@
+features:
+  - feature:
+      id: ab7695f6-9fba-4f5d-9d55-ea2c502b4ea4
+      subject: "Transaction filters"
+
+  - feature:
+      id: UUID
+      parent: UUID
+      subject: "todo: one-line description of sub feature"
+      tests:
+        errors:
+          - error:
+              id: uuid
+              name: "todo: name of test class/method or test description file"
+              desc: "todo: description"
+        operations:
+          - test:
+              id: uuid
+              name: "todo: name of test class/method or test description file"
+              descriptions:
+                - desc: "todo: description"
+              references:
+                - ref: balance
+                - ref: balance-group
+                - ref: register
+                - ref: identity
+                - ref: equity

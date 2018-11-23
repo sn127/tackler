@@ -1,0 +1,183 @@
+= TEP-1005: TXN Filter
+
+Transaction filters are used to filter txn stream based on transaction's attributes.
+
+Transaction filters can be used to define which transactions will be fed to the accounting engine.
+If transaction is filtered out, it will be disappear from transaction stream and vanish from
+engine's perspective. So it would not be part of any calculations or reports.
+
+The main usage for this feature is server interface at the moment.
+
+
+== Journal file format
+
+No journal file changes.
+
+== CLI changes
+
+There will be command line option to feed filter definition to the engine for testing purposes.
+
+* [ ] `--api-filter-def` Filter definition as json
+
+
+== CONF changes
+
+No configuration settings for filters.
+
+
+== Machinery
+
+There will be changes to the machine.
+
+* [ ] Translate filter definition to actual filter
+* [ ] Apply filter to the txn-stream
+
+
+=== API changes
+
+Server and client API will be changed to support filters.
+
+
+==== Server API changes
+
+Changes to server API. Items in italics will be implemented later.
+
+* [ ] filter json def
+* [ ] filter-tree
+** [ ] nodes
+*** [ ] *`AND`*
+*** [ ] _`OR`_
+*** [ ] _`NOT`_
+*** [ ] _`XOR`_
+** [ ] leaves
+*** [ ] Transcation header
+**** [ ] *`timestamp`*, ZonedDateTime
+**** [ ] *`code`*, String
+**** [ ] *`description`*, String
+**** [ ] *`uuid`*, String
+**** [ ] *`comments`*, String
+*** [ ] Transaction Postings
+**** [ ] *`acctn`*, String
+**** [ ] _`amount`_, BigDecimal
+**** [ ] _`txnAmount`_, BigDecimal
+**** [ ] *`txnCommodity`*, String
+**** [ ] *`comment`*, String
+
+
+==== Client API changes
+
+Changes to client API's JSON model
+
+* [ ] TODO: filter metadata
+
+
+=== New dependencies
+
+* [ ] link / url of new dependency
+** [ ] Add and check licenses: link / url
+** [ ] Is there NOTICE file(s)?
+** [ ] Add license under link:../licenses[doc/licenses]
+*** [ ] Add NOTICES under link:../licenses[doc/licenses]
+** [ ] Add link of license to link:../readme.adoc[index]
+** [ ] Add link to link:../../THANKS.adoc[THANKS]
+** [ ] Add license material to binary distribution
+
+
+== Reporting
+
+Filter definitions will be available with reports metadata.
+
+=== Balance report
+
+Changes to balance report
+
+* [ ] Include filter def into report's metadata
+
+
+=== Balance Group report
+
+Changes to balance group report
+
+* [ ] Include filter def into report's metadata
+
+
+=== Register report
+
+Changes to register report
+
+* [ ] Include filter def into report's metadata
+
+
+== Exporting
+
+Initial implementation of filters does not support Exports.
+
+=== Equity export
+
+No changes to equity export
+
+=== Identity export
+
+No changes to identity export
+
+== Documentation
+
+* [ ] link:../../CHANGELOG[]: add new item
+* [ ] User docs
+** [ ] user manual
+*** [ ] cli-arguments
+**** [ ] `--api-filter-def`
+* [ ] Developer docs
+** [ ] API changes
+*** [ ] Server API changes
+*** [ ] Client API changes
+
+
+== Future plans
+
+* Support filtering with exports.
+* Support complex filter trees
+* Implement rest or the filters
+
+
+== Tests
+
+Normal, ok-case tests to validate functionality:
+
+* [ ] filter json def
+* [ ] filters with report's metadata
+* [ ] filter-tree
+** [ ] nodes
+*** [ ] *`AND`*
+** [ ] leaves
+*** [ ] Transcation header
+**** [ ] *`timestamp`*, ZonedDateTime
+**** [ ] *`code`*, String
+**** [ ] *`description`*, String
+**** [ ] *`uuid`*, String
+**** [ ] *`comments`*, String
+*** [ ] Transaction Postings
+**** [ ] *`acctn`*, String
+**** [ ] *`txnCommodity`*, String
+**** [ ] *`comment`*, String
+
+
+=== Errors
+
+Tests for error cases:
+
+* [ ] e: Invalid filter definition
+* [ ] e: Result set after filtering is empty
+
+
+=== Perf
+
+Is there need to run or create new perf tests?
+
+* [ ] perf: Performance test with filtering enabled
+* [ ] perf: Run all tests with filtering engine (while no active filters)
+
+
+=== Metadata template for test coverage tracking
+
+link:./tep-1005/tests-1005.yml[TEP-1005 test cases]

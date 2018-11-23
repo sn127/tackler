@@ -65,9 +65,7 @@ Changes to client API or JSON model
 
 == Reporting
 
-Changes to general reporting
-
-* [ ] item
+Changes to reports or reporting
 
 
 === Balance report
@@ -90,6 +88,10 @@ Changes to register report
 
 * [ ] item
 
+
+== Exporting
+
+Changes to exports or exporting
 
 === Equity export
 
