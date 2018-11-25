@@ -43,19 +43,19 @@ Server and client API will be changed to support filters.
 Changes to server API. Items in italics will be implemented later.
 
 * [ ] filter json def
-* [ ] filter-tree
-** [ ] nodes
-*** [ ] *`AND`*
-*** [ ] _`OR`_
-*** [ ] _`NOT`_
+* [x] filter-tree
+** [x] nodes
+*** [x] `AND`
+*** [x] `OR`
+*** [x] `NOT`
 *** [ ] _`XOR`_
 ** [ ] leaves
-*** [ ] Transcation header
-**** [ ] *`timestamp`*, ZonedDateTime
-**** [ ] *`code`*, String
-**** [ ] *`description`*, String
-**** [ ] *`uuid`*, String
-**** [ ] *`comments`*, String
+*** [x] Transcation header
+**** [x] *`timestamp`*, ZonedDateTime
+**** [x] *`code`*, String
+**** [x] *`description`*, String
+**** [x] *`uuid`*, String
+**** [x] *`comments`*, String
 *** [ ] Transaction Postings
 **** [ ] *`acctn`*, String
 **** [ ] _`amount`_, BigDecimal
@@ -146,16 +146,20 @@ Normal, ok-case tests to validate functionality:
 
 * [ ] filter json def
 * [ ] filters with report's metadata
-* [ ] filter-tree
-** [ ] nodes
-*** [ ] *`AND`*
+* [x] filter tree
+** [x] logical nodes
+*** [x] *`AND`*
+*** [x] *`OR`*
+*** [x] *`NOT`*
 ** [ ] leaves
-*** [ ] Transcation header
-**** [ ] *`timestamp`*, ZonedDateTime
-**** [ ] *`code`*, String
-**** [ ] *`description`*, String
-**** [ ] *`uuid`*, String
-**** [ ] *`comments`*, String
+*** [x] Transcation header
+**** [x] *`timestamp`*, ZonedDateTime
+***** [x] *`begin`*, ZonedDateTime
+***** [x] *`end`*, ZonedDateTime
+**** [x] *`code`*, String
+**** [x] *`description`*, String
+**** [x] *`uuid`*, String
+**** [x] *`comments`*, String
 *** [ ] Transaction Postings
 **** [ ] *`acctn`*, String
 **** [ ] *`txnCommodity`*, String
@@ -178,6 +182,6 @@ Is there need to run or create new perf tests?
 * [ ] perf: Run all tests with filtering engine (while no active filters)
 
 
-=== Metadata template for test coverage tracking
+=== Test coverage tracking
 
-link:./tep-1005/tests-1005.yml[TEP-1005 test cases]
+link:../../tests/tests-1005.yml[TEP-1005 test cases]

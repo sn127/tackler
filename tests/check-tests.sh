@@ -13,16 +13,20 @@
 #
 sh_pykwalify=pykwalify
 
-exe_dir=$(dirname $0)
+exe_dir=$(dirname $(realpath $0))
 
-test_db="$exe_dir/tests.yaml"
+db_dir="$exe_dir"
 
-echo "Check test-db:"
-$sh_pykwalify -v -s  "$exe_dir/tests-schema.yaml" -d  "$test_db"
+echo "Check test DB YAML validity:"
+for test_db in "$db_dir/tests.yaml" "$db_dir/tests-1005.yml"
+do
+	$sh_pykwalify -v -s  "$exe_dir/tests-schema.yaml" -d  "$test_db"
 
 grep ' id:' "$test_db" | sed 's/.*id: //' | sort | uniq -d
+done
 
 # good enough for know
+test_db="$db_dir/tests.yaml"
 grep ' refid:' "$test_db" | sed 's/.*refid: //' | while read refid; 
 do  
 	egrep -q -L '.* id: +'$refid' *$' "$test_db" || echo $refid

@@ -17,6 +17,7 @@
 package fi.sn127.tackler.model
 
 import fi.sn127.tackler.api.Metadata
+import fi.sn127.tackler.filter.TxnFilter
 
 /**
  * Transaction data and associated metadata.
@@ -25,4 +26,16 @@ import fi.sn127.tackler.api.Metadata
  * @param txns transactions
  */
 final case class TxnData(metadata: Option[Metadata], txns: Txns) {
+
+  def filter(txnFilter: TxnFilter): TxnData = {
+    TxnData(
+      // TODO: create new instance of metadata based on filter
+      // TODO: handle multiple rounds of filtering (with correct info in metadata)
+      // TODO: e.g. multiple rounds == AND filter between rounds
+      metadata,
+      txns.filter(txn => {
+        txnFilter.filter(txn)
+      })
+    )
+  }
 }

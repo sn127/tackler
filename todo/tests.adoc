@@ -8,3 +8,6 @@
 ** [ ] equity -> input: above (not-null accounts are not allowed)
 ** [ ] equity -> input: check and fix equity chen equity account is part of input (valpos -tests)
 
+* [ ] test transaction sorting based on timestamps with cancelling offset (see test: 960cb7e7-b180-4276-a43b-714e53e1789b)
+      and comparison code for Transactions
+

@@ -53,7 +53,8 @@ final case class TxnHeader(
    *         greater than 0, if this Txn is after (in sorted set)
    */
   def compareTo(otherTxn: TxnHeader): Int = {
-    val dateCmp = timestamp.compareTo(otherTxn.timestamp)
+    // TODO: Write offset based test to expose bug in compare without toInstant
+    val dateCmp = timestamp.toInstant.compareTo(otherTxn.timestamp.toInstant)
     if (dateCmp =!= 0) {
       dateCmp
     } else {
