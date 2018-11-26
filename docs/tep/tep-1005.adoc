@@ -42,8 +42,10 @@ Server and client API will be changed to support filters.
 
 Changes to server API. Items in italics will be implemented later.
 
-* [ ] filter json def
+* [x] filter json def
 * [ ] filters with report's metadata
+** [ ] filters with report's metadata (text)
+** [ ] filters with report's metadata (json)
 * [x] filter-tree
 ** [x] nodes
 *** [x] `AND`
@@ -147,6 +149,8 @@ Normal, ok-case tests to validate functionality:
 
 * [ ] filter json def
 * [ ] filters with report's metadata
+** [ ] filters with report's metadata (text)
+** [ ] filters with report's metadata (json)
 * [x] filter tree
 ** [x] logical nodes
 *** [x] *`AND`*

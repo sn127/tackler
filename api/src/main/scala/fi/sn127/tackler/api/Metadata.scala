@@ -66,3 +66,7 @@ object GitInputReference {
   implicit val decodeBalanceItem: Decoder[GitInputReference] = deriveDecoder[GitInputReference]
   implicit val encodeBalanceItem: Encoder[GitInputReference] = deriveEncoder[GitInputReference]
 }
+
+final case class TxnFilter(filterDef: String) extends MetadataItem {
+  override def text(): String = filterDef
+}

@@ -16,23 +16,26 @@
  */
 package fi.sn127.tackler.model
 
-import fi.sn127.tackler.api.Metadata
-import fi.sn127.tackler.filter.TxnFilter
+import io.circe.syntax._
+
+import fi.sn127.tackler.api.{Metadata, MetadataItem, TxnFilter}
+import fi.sn127.tackler.filter.TxnFilterRoot
 
 /**
  * Transaction data and associated metadata.
  *
- * @param metadata for these transactions
+ * @param metadata optional metadata about these transactions
  * @param txns transactions
  */
 final case class TxnData(metadata: Option[Metadata], txns: Txns) {
 
-  def filter(txnFilter: TxnFilter): TxnData = {
+  def filter(txnFilter: TxnFilterRoot): TxnData = {
+
+    val filterInfo = Seq(TxnFilter(txnFilter.asJson.spaces2))
+    val mdis: Seq[MetadataItem] = metadata.map(_.metadataItems).getOrElse(Nil) ++ filterInfo
+
     TxnData(
-      // TODO: create new instance of metadata based on filter
-      // TODO: handle multiple rounds of filtering (with correct info in metadata)
-      // TODO: e.g. multiple rounds == AND filter between rounds
-      metadata,
+      Option(Metadata(mdis)),
       txns.filter(txn => {
         txnFilter.filter(txn)
       })

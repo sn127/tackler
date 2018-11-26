@@ -66,7 +66,7 @@ class TxnFilterHeaderTest extends TxnFilterTest {
   it must "filter by txn description" in {
     val txnFilter = TxnFilterDescription("abc.*")
 
-    val txnData = txnsAll.filter(txnFilter)
+    val txnData = txnsAll.filter(TxnFilterRoot(txnFilter))
 
     assert(txnData.txns.size === 1)
     assert(checkUUID(txnData, uuidTxn01))
@@ -78,7 +78,7 @@ class TxnFilterHeaderTest extends TxnFilterTest {
   it must "filter by txn code" in {
     val txnFilter = TxnFilterCode("ab.*")
 
-    val txnData = txnsAll.filter(txnFilter)
+    val txnData = txnsAll.filter(TxnFilterRoot(txnFilter))
 
     assert(txnData.txns.size === 1)
     assert(checkUUID(txnData, uuidTxn02))
@@ -90,7 +90,7 @@ class TxnFilterHeaderTest extends TxnFilterTest {
   it must "filter by txn UUID" in {
     val txnFilter = TxnFilterTxnUUID(UUID.fromString(uuidTxn02))
 
-    val txnData = txnsAll.filter(txnFilter)
+    val txnData = txnsAll.filter(TxnFilterRoot(txnFilter))
 
     assert(txnData.txns.size === 1)
     assert(checkUUID(txnData, uuidTxn02))
@@ -116,7 +116,7 @@ class TxnFilterHeaderTest extends TxnFilterTest {
 
     val txnFilter = TxnFilterTxnUUID(UUID.fromString(uuidTxn02))
 
-    val txnData = txnsNoUUIDAll.filter(txnFilter)
+    val txnData = txnsNoUUIDAll.filter(TxnFilterRoot(txnFilter))
 
     assert(txnData.txns.size === 0)
   }
@@ -127,7 +127,7 @@ class TxnFilterHeaderTest extends TxnFilterTest {
   it must "filter by txn comments" in {
     val txnFilter = TxnFilterTxnComments("ab.*")
 
-    val txnData = txnsAll.filter(txnFilter)
+    val txnData = txnsAll.filter(TxnFilterRoot(txnFilter))
 
     assert(txnData.txns.size === 1)
     assert(checkUUID(txnData, uuidTxn03))

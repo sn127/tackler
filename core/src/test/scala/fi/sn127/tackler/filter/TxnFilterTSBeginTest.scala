@@ -140,7 +140,7 @@ class TxnFilterTSBeginTest extends TxnFilterTest {
       0, 0, 0, 0,
       ZoneId.of("UTC")))
 
-    val txnData = txnsTSDate.filter(txnTSBeginFilter)
+    val txnData = txnsTSDate.filter(TxnFilterRoot(txnTSBeginFilter))
 
     assert(txnData.txns.size === 2)
     assert(checkUUID(txnData, uuidTSDate03))
@@ -156,7 +156,7 @@ class TxnFilterTSBeginTest extends TxnFilterTest {
       23, 0, 0, 0,
       ZoneId.of("UTC")))
 
-    val txnData = txnsTSTime.filter(txnTSBeginFilter)
+    val txnData = txnsTSTime.filter(TxnFilterRoot(txnTSBeginFilter))
 
     assert(txnData.txns.size === 2)
     assert(checkUUID(txnData, uuidTSTime02))
@@ -172,7 +172,7 @@ class TxnFilterTSBeginTest extends TxnFilterTest {
       14, 0, 0, 123456788,
       ZoneId.of("UTC")))
 
-    val txnData = txnsTSTNano.filter(txnTSBeginFilter)
+    val txnData = txnsTSTNano.filter(TxnFilterRoot(txnTSBeginFilter))
 
     assert(txnData.txns.size === 2)
     assert(checkUUID(txnData, uuidTSNano02))
@@ -188,7 +188,7 @@ class TxnFilterTSBeginTest extends TxnFilterTest {
       0, 0, 0, 0,
       ZoneId.of("UTC")))
 
-    val txnData = txnsTSZone.filter(txnTSBeginFilter)
+    val txnData = txnsTSZone.filter(TxnFilterRoot(txnTSBeginFilter))
 
     assert(txnData.txns.size === 2)
     assert(checkUUID(txnData, uuidTSZone02))

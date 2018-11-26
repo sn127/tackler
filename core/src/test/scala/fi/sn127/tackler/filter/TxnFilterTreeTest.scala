@@ -25,18 +25,6 @@ import fi.sn127.tackler.model.Transaction
 
 class TxnFilterTreeTest extends FlatSpec {
 
-  class TxnFilterFalse() extends TxnFilter {
-    override def filter(txn: Transaction): Boolean = {
-      false
-    }
-  }
-
-  class TxnFilterTrue() extends TxnFilter {
-    override def filter(txn: Transaction): Boolean = {
-      true
-    }
-  }
-
   val txnFilterFalse = new TxnFilterFalse()
   val txnFilterTrue = new TxnFilterTrue()
 
