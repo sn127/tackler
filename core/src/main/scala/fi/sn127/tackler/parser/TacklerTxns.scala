@@ -264,13 +264,13 @@ class TacklerTxns(val settings: Settings) extends CtxHandler {
             }
           }
 
-          val meta = Some(new GitInputReference(
+          val meta = new GitInputReference(
             commit.getName,
             inputRef.left.toOption,
             commit.getShortMessage
-          ))
+          )
 
-          TxnData(Some(Metadata(meta)), txns.flatten.toSeq.sorted(OrderByTxn))
+          TxnData(Some(Metadata(Seq(meta))), txns.flatten.toSeq.sorted(OrderByTxn))
         })
       })
     })
