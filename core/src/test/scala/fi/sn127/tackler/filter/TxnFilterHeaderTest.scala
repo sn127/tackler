@@ -63,7 +63,7 @@ class TxnFilterHeaderTest extends TxnFilterTest {
   /**
    * test: 59157c61-0ced-4b3a-ab8d-ec5edf7aafb4
    */
-  it must "filter by description" in {
+  it must "filter by txn description" in {
     val txnFilter = TxnFilterDescription("abc.*")
 
     val txnData = txnsAll.filter(txnFilter)
@@ -75,7 +75,7 @@ class TxnFilterHeaderTest extends TxnFilterTest {
   /**
    * test: 54c746cf-916f-4c24-8e53-d4306917a200
    */
-  it must "filter by code" in {
+  it must "filter by txn code" in {
     val txnFilter = TxnFilterCode("ab.*")
 
     val txnData = txnsAll.filter(txnFilter)
@@ -87,7 +87,7 @@ class TxnFilterHeaderTest extends TxnFilterTest {
   /**
    * test: f6f2853b-fce4-4577-8fc3-3089e717de0b
    */
-  it must "filter by UUID" in {
+  it must "filter by txn UUID" in {
     val txnFilter = TxnFilterTxnUUID(UUID.fromString(uuidTxn02))
 
     val txnData = txnsAll.filter(txnFilter)
@@ -97,9 +97,34 @@ class TxnFilterHeaderTest extends TxnFilterTest {
   }
 
   /**
+   * test: 6bf82dff-374a-4bf2-bdad-a882b59df932
+   */
+  it must "filter by txn UUID with no UUID" in {
+    val txnNoUUIDStr =
+      s"""2018-01-01 abc txn01
+         | ; xyz
+         | e  1
+         | a
+         |
+         |2018-04-01
+         | e:b:abc  1
+         | a
+         |
+         |""".stripMargin
+
+    val txnsNoUUIDAll = tt.string2Txns(txnNoUUIDStr)
+
+    val txnFilter = TxnFilterTxnUUID(UUID.fromString(uuidTxn02))
+
+    val txnData = txnsNoUUIDAll.filter(txnFilter)
+
+    assert(txnData.txns.size === 0)
+  }
+
+  /**
    * test: 8bad2776-51fa-4766-839a-1bb99df44f5c
    */
-  it must "filter by comments" in {
+  it must "filter by txn comments" in {
     val txnFilter = TxnFilterTxnComments("ab.*")
 
     val txnData = txnsAll.filter(txnFilter)

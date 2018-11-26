@@ -20,11 +20,17 @@ import cats.implicits._
 import fi.sn127.tackler.core.TxnException
 
 /**
+ * Note about commodity support:
+ * Native commodity of posting is commodity which is recorded by AccountTreeNode
+ *
+ * If there are multiple commodities in one transaction,
+ * then there is conversion between these commodities.
+ * Result of this conversion is called "txnAmount and txnCommodity"
  *
  * @param acctn account information
  * @param amount of this posting (in posting's own commodity)
- * @param txnAmount this is amount as converted to Txn's commodity
- * @param txnCommodity  txn's commodity (e.g. this is mixed commodity transaction)
+ * @param txnAmount mixed commodity txn, this is amount as converted to Txn's commodity (see note)
+ * @param txnCommodity mixed commodity txn, this txn's commodity (see note)
  * @param comment  of this posting, if any
  */
 final case class Posting(

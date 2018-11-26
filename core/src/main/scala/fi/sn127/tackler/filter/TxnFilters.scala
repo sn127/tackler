@@ -74,3 +74,63 @@ final case class TxnFilterTxnComments(regex: String) extends TxnFilterRegex(rege
   }
 }
 
+/*
+ *
+ * TXN: POSTINGS
+ *
+ */
+final case class TxnFilterPostingAccount(regex: String) extends TxnFilterRegex(regex) {
+
+  override def filter(txn: Transaction): Boolean = {
+    txn.posts.exists(p => rgx.matcher(p.acctn.account).matches())
+  }
+}
+
+
+final case class TxnFilterPostingComments(regex: String) extends TxnFilterRegex(regex) {
+
+  override def filter(txn: Transaction): Boolean = {
+    txn.posts.exists(p => {
+      p.comment.exists(rgx.matcher(_).matches())
+    })
+  }
+}
+
+final case class TxnFilterPostingAmountEqual(regex: String, amount: BigDecimal) extends TxnFilterRegex(regex) {
+
+  override def filter(txn: Transaction): Boolean = {
+    txn.posts.exists(p => {
+      rgx.matcher(p.acctn.account).matches() &&
+      p.amount.compare(amount) === 0
+    })
+  }
+}
+
+final case class TxnFilterPostingAmountLess(regex: String, amount: BigDecimal) extends TxnFilterRegex(regex) {
+
+  override def filter(txn: Transaction): Boolean = {
+    txn.posts.exists(p => {
+      rgx.matcher(p.acctn.account).matches() &&
+      p.amount.compare(amount) < 0
+    })
+  }
+}
+
+final case class TxnFilterPostingAmountGreater(regex: String, amount: BigDecimal) extends TxnFilterRegex(regex) {
+
+  override def filter(txn: Transaction): Boolean = {
+    txn.posts.exists(p => {
+      rgx.matcher(p.acctn.account).matches() &&
+      p.amount.compare(amount) > 0
+    })
+  }
+}
+
+final case class TxnFilterPostingCommodity(regex: String) extends TxnFilterRegex(regex) {
+
+  override def filter(txn: Transaction): Boolean = {
+    txn.posts.exists(p => {
+      p.acctn.commodity.exists(c => rgx.matcher(c.name).matches())
+    })
+  }
+}

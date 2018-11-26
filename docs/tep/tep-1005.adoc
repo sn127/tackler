@@ -43,25 +43,27 @@ Server and client API will be changed to support filters.
 Changes to server API. Items in italics will be implemented later.
 
 * [ ] filter json def
+* [ ] filters with report's metadata
 * [x] filter-tree
 ** [x] nodes
 *** [x] `AND`
 *** [x] `OR`
 *** [x] `NOT`
-*** [ ] _`XOR`_
-** [ ] leaves
+** [x] leaves
 *** [x] Transcation header
 **** [x] *`timestamp`*, ZonedDateTime
 **** [x] *`code`*, String
 **** [x] *`description`*, String
 **** [x] *`uuid`*, String
 **** [x] *`comments`*, String
-*** [ ] Transaction Postings
-**** [ ] *`acctn`*, String
-**** [ ] _`amount`_, BigDecimal
-**** [ ] _`txnAmount`_, BigDecimal
-**** [ ] *`txnCommodity`*, String
-**** [ ] *`comment`*, String
+*** [x] Postings
+**** [x] *`account`*, String
+**** [x] `amount`, (account, amount: String + BigDecimal)
+***** [x] `amount:exact`, BigDecimal
+***** [x] `amount:less`, BigDecimal
+***** [x] `amount:greater`, BigDecimal
+**** [x] *`commodity`*, String
+**** [x] *`comment`*, String
 
 
 ==== Client API changes
@@ -136,8 +138,7 @@ No changes to identity export
 == Future plans
 
 * Support filtering with exports.
-* Support complex filter trees
-* Implement rest or the filters
+* Support XOR-filter trees
 
 
 == Tests
@@ -151,7 +152,7 @@ Normal, ok-case tests to validate functionality:
 *** [x] *`AND`*
 *** [x] *`OR`*
 *** [x] *`NOT`*
-** [ ] leaves
+** [x] leaves
 *** [x] Transcation header
 **** [x] *`timestamp`*, ZonedDateTime
 ***** [x] *`begin`*, ZonedDateTime
@@ -160,10 +161,14 @@ Normal, ok-case tests to validate functionality:
 **** [x] *`description`*, String
 **** [x] *`uuid`*, String
 **** [x] *`comments`*, String
-*** [ ] Transaction Postings
-**** [ ] *`acctn`*, String
-**** [ ] *`txnCommodity`*, String
-**** [ ] *`comment`*, String
+*** [x] Postings
+**** [x] *`account`*, String
+**** [x] `amount`, (account, amount: String + BigDecimal)
+***** [x] `amount:exact`, BigDecimal
+***** [x] `amount:less`, BigDecimal
+***** [x] `amount:greater`, BigDecimal
+**** [x] *`commodity`*, String
+**** [x] *`comment`*, String
 
 
 === Errors

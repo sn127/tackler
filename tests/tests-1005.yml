@@ -249,26 +249,74 @@ features:
   - feature:
       id: 7b35834c-4bfa-4cb7-ba1d-cf6092952faf
       parent: ab7695f6-9fba-4f5d-9d55-ea2c502b4ea4
-      subject: "Txn filters for header data"
+      subject: "Txn filters based on Txn header data"
       tests:
         operations:
           - test:
               id: 59157c61-0ced-4b3a-ab8d-ec5edf7aafb4
               name: TxnFilterHeaderTest
               descriptions:
-                - desc: "filter by description"
+                - desc: "filter by txn description"
           - test:
               id: 54c746cf-916f-4c24-8e53-d4306917a200
               name: TxnFilterHeaderTest
               descriptions:
-                - desc: "filter by code"
+                - desc: "filter by txn code"
           - test:
               id: f6f2853b-fce4-4577-8fc3-3089e717de0b
               name: TxnFilterHeaderTest
               descriptions:
-                - desc: "filter by UUID"
+                - desc: "filter by txn UUID"
+          - test:
+              id: 6bf82dff-374a-4bf2-bdad-a882b59df932
+              name: TxnFilterHeaderTest
+              descriptions:
+                - desc: "filter by txn UUID with no UUID"
           - test:
               id: 8bad2776-51fa-4766-839a-1bb99df44f5c
               name: TxnFilterHeaderTest
               descriptions:
-                - desc: "filter by comments"
+                - desc: "filter by txn comments"
+
+  - feature:
+      id: 8eba20ab-2495-4f3a-8dab-1fbfee7c1863
+      parent: ab7695f6-9fba-4f5d-9d55-ea2c502b4ea4
+      subject: "Txn filters based on postings"
+      tests:
+        operations:
+          - test:
+              id: 7784049f-ef3e-4185-8d33-f8c78478eef1
+              name: TxnFilterPostingTest
+              descriptions:
+                - desc: "filter by posting account name with wildcard at begin"
+          - test:
+              id: 0a1e4848-cef0-46ec-9a50-cc209c45da63
+              name: TxnFilterPostingTest
+              descriptions:
+                - desc: "filter by posting account name with wildcard at end "
+          - test:
+              id: 0c1dcffe-152d-4959-89bb-2c48677ad171
+              name: TxnFilterPostingTest
+              descriptions:
+                - desc: "filter by posting comments"
+          - test:
+              id: de72fb67-14a7-4032-b2c2-b1049ecd0c35
+              name: TxnFilterPostingTest
+              descriptions:
+                - desc: "filter by posting amount (exact)"
+          - test:
+              id: 315d5ac3-28cf-417e-98bb-b738f209f5da
+              name: TxnFilterPostingTest
+              descriptions:
+                - desc: "filter by posting amount (less)"
+          - test:
+              id: b94b99d7-acfa-4a4b-871f-c1b6282738ff
+              name: TxnFilterPostingTest
+              descriptions:
+                - desc: "filter by posting amount (greater)"
+          - test:
+              id: cfb795cd-d323-4181-a76a-1e5ce957add7
+              name: TxnFilterPostingTest
+              descriptions:
+                - desc: "filter by posting commodity"
+
