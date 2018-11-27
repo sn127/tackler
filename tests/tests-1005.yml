@@ -320,3 +320,24 @@ features:
               descriptions:
                 - desc: "filter by posting commodity"
 
+  - feature:
+      id: c9b2129e-c01b-4e3f-8961-813b42b339d6
+      parent: ab7695f6-9fba-4f5d-9d55-ea2c502b4ea4
+      subject: "Txn filters as JSON"
+      tests:
+        operations:
+          - test:
+              id: 4cce4204-16b1-40a4-b1ea-ce11272d5824
+              name: TxnFilterJsonTest
+              descriptions:
+                - desc: "decode from JSON and then encode to text"
+          - test:
+              id: a49f8a0c-d612-453f-afd9-cb134100bf1f
+              name: TxnFilterJsonTest
+              descriptions:
+                - desc: "encode to JSON and text"
+          - test:
+              id: 283d64f6-4508-48ac-89a3-e70e25784330
+              name: TxnFilterJsonTest
+              descriptions:
+                - desc: "decode from JSON working filter"

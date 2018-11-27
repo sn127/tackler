@@ -21,33 +21,40 @@ import java.time.{ZoneId, ZonedDateTime}
 import fi.sn127.tackler.core.Settings
 import fi.sn127.tackler.parser.TacklerTxns
 
-class TxnFilterTSEndTest extends TxnFilterTest {
+class TxnFilterTxnTSBeginTest extends TxnFilterSpec {
 
   val tt = new TacklerTxns(Settings())
 
   val uuidTSDate01 = "22e17bf5-3da5-404d-aaff-e3cc668191ee"
   val uuidTSDate02 = "a88f4981-ebe7-4287-a59c-d444e3bd579a"
   val uuidTSDate03 = "16cf7363-45d2-480c-ac49-c710f4ea5f0d"
+  val uuidTSDate04 = "205d4a48-471c-4015-856c-1c827f8befdd"
 
   val txnStrTSDate =
-    s"""2018-01-01
-       | ;:uuid: ${uuidTSDate01}
-       | e  1
-       | a
-       |
-       |2018-02-01
-       | ;:uuid: ${uuidTSDate02}
-       | e  1
-       | a
-       |
-       |2018-03-01
-       | ;:uuid: ${uuidTSDate03}
-       | e  1
-       | a
-       |
-       |""".stripMargin
+    s"""2018-01-01 txn01
+      | ;:uuid: ${uuidTSDate01}
+      | e  1
+      | a
+      |
+      |2018-02-01 txn02
+      | ;:uuid: ${uuidTSDate02}
+      | e  1
+      | a
+      |
+      |2018-03-01 txn03
+      | ;:uuid: ${uuidTSDate03}
+      | e  1
+      | a
+      |
+      |2018-04-01 txn04
+      | ;:uuid: ${uuidTSDate04}
+      | e  1
+      | a
+      |
+      |""".stripMargin
 
   val txnsTSDate = tt.string2Txns(txnStrTSDate)
+
   val uuidTSTime01 = "ec1b0e67-f990-4761-9667-239a5a6cd46b"
   val uuidTSTime02 = "080ee755-04cf-44d8-94db-e89ca7b9cd13"
   val uuidTSTime03 = "03b13353-ee04-4faa-b139-d5b097f6b9b5"
@@ -122,68 +129,69 @@ class TxnFilterTSEndTest extends TxnFilterTest {
 
   val txnsTSZone = tt.string2Txns(txnStrTSZone)
 
-  behavior of "Timestamp filter: End"
+  behavior of "Timestamp filter: Begin"
+
   /**
-   * test: 42a42f07-dea5-45ee-b563-187f9121e1e1
+   * test: 701b2c27-d33c-4460-9a5e-64316c6ed946
    */
   it must "filter by date" in {
-    val txnFilter = TxnFilterTSEnd(
-      ZonedDateTime.of(
-        2018, 2, 1,
-        0, 0, 0, 0,
-        ZoneId.of("UTC")))
+    val txnTSBeginFilter = TxnFilterTxnTSBegin(ZonedDateTime.of(
+      2018, 3, 1,
+      0, 0, 0, 0,
+      ZoneId.of("UTC")))
 
-    val txnData = txnsTSDate.filter(TxnFilterRoot(txnFilter))
+    val txnData = txnsTSDate.filter(TxnFilterRoot(txnTSBeginFilter))
 
-    assert(txnData.txns.size === 1)
-    assert(checkUUID(txnData, uuidTSDate01))
+    assert(txnData.txns.size === 2)
+    assert(checkUUID(txnData, uuidTSDate03))
+    assert(checkUUID(txnData, uuidTSDate04))
   }
 
   /**
-   * test: 4e566d2b-da32-4336-9b7f-d7c4a59658d2
+   * test: ec7cf2bd-e10e-4f46-9baa-4096881a5fbb
    */
   it must "filter by time" in {
-    val txnFilter = TxnFilterTSEnd(
-      ZonedDateTime.of(
-        2018, 1, 1,
-        23, 0, 0, 0,
-        ZoneId.of("UTC")))
+    val txnTSBeginFilter = TxnFilterTxnTSBegin(ZonedDateTime.of(
+      2018, 1, 1,
+      23, 0, 0, 0,
+      ZoneId.of("UTC")))
 
-    val txnData = txnsTSTime.filter(TxnFilterRoot(txnFilter))
+    val txnData = txnsTSTime.filter(TxnFilterRoot(txnTSBeginFilter))
 
-    assert(txnData.txns.size === 1)
-    assert(checkUUID(txnData, uuidTSTime01))
+    assert(txnData.txns.size === 2)
+    assert(checkUUID(txnData, uuidTSTime02))
+    assert(checkUUID(txnData, uuidTSTime03))
   }
 
   /**
-   * test: f6081a60-92a9-4051-85d7-c993e3cc03be
+   * test: f1623bd0-f767-458e-bc68-6eadfa113fd1
    */
   it must "filter by nanoseconds" in {
-    val txnFilter = TxnFilterTSEnd(
-      ZonedDateTime.of(
-        2018, 1, 1,
-        14, 0, 0, 123456788,
-        ZoneId.of("UTC")))
+    val txnTSBeginFilter = TxnFilterTxnTSBegin(ZonedDateTime.of(
+      2018, 1, 1,
+      14, 0, 0, 123456788,
+      ZoneId.of("UTC")))
 
-    val txnData = txnsTSTNano.filter(TxnFilterRoot(txnFilter))
+    val txnData = txnsTSTNano.filter(TxnFilterRoot(txnTSBeginFilter))
 
-    assert(txnData.txns.size === 1)
-    assert(checkUUID(txnData, uuidTSNano01))
+    assert(txnData.txns.size === 2)
+    assert(checkUUID(txnData, uuidTSNano02))
+    assert(checkUUID(txnData, uuidTSNano03))
   }
 
   /**
-   * test: ab53df34-d22a-4256-9c4d-6d1ccf0ef32e
+   * test: 960cb7e7-b180-4276-a43b-714e53e1789b
    */
   it must "filter by timezone" in {
-    val txnFilter = TxnFilterTSEnd(
-      ZonedDateTime.of(
-        2018, 1, 4,
-        0, 0, 0, 0,
-        ZoneId.of("UTC")))
+    val txnTSBeginFilter = TxnFilterTxnTSBegin(ZonedDateTime.of(
+      2018, 1, 4,
+      0, 0, 0, 0,
+      ZoneId.of("UTC")))
 
-    val txnData = txnsTSZone.filter(TxnFilterRoot(txnFilter))
+    val txnData = txnsTSZone.filter(TxnFilterRoot(txnTSBeginFilter))
 
-    assert(txnData.txns.size === 1)
-    assert(checkUUID(txnData, uuidTSZone01))
+    assert(txnData.txns.size === 2)
+    assert(checkUUID(txnData, uuidTSZone02))
+    assert(checkUUID(txnData, uuidTSZone03))
   }
 }

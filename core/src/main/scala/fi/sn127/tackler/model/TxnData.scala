@@ -16,8 +16,6 @@
  */
 package fi.sn127.tackler.model
 
-import io.circe.syntax._
-
 import fi.sn127.tackler.api.{Metadata, MetadataItem, TxnFilter}
 import fi.sn127.tackler.filter.TxnFilterRoot
 
@@ -31,7 +29,7 @@ final case class TxnData(metadata: Option[Metadata], txns: Txns) {
 
   def filter(txnFilter: TxnFilterRoot): TxnData = {
 
-    val filterInfo = Seq(TxnFilter(txnFilter.asJson.spaces2))
+    val filterInfo = Seq(TxnFilter(txnFilter.text("")))
     val mdis: Seq[MetadataItem] = metadata.map(_.metadataItems).getOrElse(Nil) ++ filterInfo
 
     TxnData(

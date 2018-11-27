@@ -20,7 +20,7 @@ import org.scalatest.FlatSpec
 
 import fi.sn127.tackler.model.TxnData
 
-abstract class TxnFilterTest extends FlatSpec {
+abstract class TxnFilterSpec extends FlatSpec {
   def checkUUID(txnData: TxnData, uuid: String) = {
     txnData.txns.exists(txn => txn.header.uuid.map(u => u.toString).getOrElse("") === uuid)
   }

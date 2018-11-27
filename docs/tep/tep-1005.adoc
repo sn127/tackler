@@ -43,9 +43,9 @@ Server and client API will be changed to support filters.
 Changes to server API. Items in italics will be implemented later.
 
 * [x] filter json def
-* [ ] filters with report's metadata
-** [ ] filters with report's metadata (text)
-** [ ] filters with report's metadata (json)
+* [x] filters with report's metadata
+** [x] filters with report's metadata (text)
+** [x] filters with report's metadata (json)
 * [x] filter-tree
 ** [x] nodes
 *** [x] `AND`
@@ -72,20 +72,12 @@ Changes to server API. Items in italics will be implemented later.
 
 Changes to client API's JSON model
 
-* [ ] TODO: filter metadata
+* [x] filter metadata
 
 
 === New dependencies
 
-* [ ] link / url of new dependency
-** [ ] Add and check licenses: link / url
-** [ ] Is there NOTICE file(s)?
-** [ ] Add license under link:../licenses[doc/licenses]
-*** [ ] Add NOTICES under link:../licenses[doc/licenses]
-** [ ] Add link of license to link:../readme.adoc[index]
-** [ ] Add link to link:../../THANKS.adoc[THANKS]
-** [ ] Add license material to binary distribution
-
+None
 
 == Reporting
 
@@ -147,10 +139,10 @@ No changes to identity export
 
 Normal, ok-case tests to validate functionality:
 
-* [ ] filter json def
-* [ ] filters with report's metadata
-** [ ] filters with report's metadata (text)
-** [ ] filters with report's metadata (json)
+* [x] filter json def
+* [x] filters with report's metadata
+** [x] filters with report's metadata (text)
+** [x] filters with report's metadata (json)
 * [x] filter tree
 ** [x] logical nodes
 *** [x] *`AND`*

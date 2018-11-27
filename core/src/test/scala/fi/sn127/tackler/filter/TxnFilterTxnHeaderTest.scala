@@ -21,7 +21,7 @@ import java.util.UUID
 import fi.sn127.tackler.core.Settings
 import fi.sn127.tackler.parser.TacklerTxns
 
-class TxnFilterHeaderTest extends TxnFilterTest {
+class TxnFilterTxnHeaderTest extends TxnFilterSpec {
   val tt = new TacklerTxns(Settings())
 
   val uuidTxn01 = "22e17bf5-3da5-404d-aaff-e3cc668191ee"
@@ -64,7 +64,7 @@ class TxnFilterHeaderTest extends TxnFilterTest {
    * test: 59157c61-0ced-4b3a-ab8d-ec5edf7aafb4
    */
   it must "filter by txn description" in {
-    val txnFilter = TxnFilterDescription("abc.*")
+    val txnFilter = TxnFilterTxnDescription("abc.*")
 
     val txnData = txnsAll.filter(TxnFilterRoot(txnFilter))
 
@@ -76,7 +76,7 @@ class TxnFilterHeaderTest extends TxnFilterTest {
    * test: 54c746cf-916f-4c24-8e53-d4306917a200
    */
   it must "filter by txn code" in {
-    val txnFilter = TxnFilterCode("ab.*")
+    val txnFilter = TxnFilterTxnCode("ab.*")
 
     val txnData = txnsAll.filter(TxnFilterRoot(txnFilter))
 

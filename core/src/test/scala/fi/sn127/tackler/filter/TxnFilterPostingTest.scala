@@ -19,7 +19,7 @@ package fi.sn127.tackler.filter
 import fi.sn127.tackler.core.Settings
 import fi.sn127.tackler.parser.TacklerTxns
 
-class TxnFilterPostingTest extends TxnFilterTest {
+class TxnFilterPostingTest extends TxnFilterSpec {
   val tt = new TacklerTxns(Settings())
 
   val uuidTxn01 = "22e17bf5-3da5-404d-aaff-e3cc668191ee"
@@ -68,7 +68,7 @@ class TxnFilterPostingTest extends TxnFilterTest {
    * test: 7784049f-ef3e-4185-8d33-f8c78478eef1
    */
   it must "filter by account name with wildcard at begin" in {
-    val txnFilter = TxnFilterTreeAND(List(TxnFilterPostingAccount(".*:abc")))
+    val txnFilter = TxnFilterListAND(List(TxnFilterPostingAccount(".*:abc")))
 
     val txnData = txnsAll.filter(TxnFilterRoot(txnFilter))
 
@@ -92,7 +92,7 @@ class TxnFilterPostingTest extends TxnFilterTest {
    * test: 0c1dcffe-152d-4959-89bb-2c48677ad171
    */
   it must "filter by posting comments" in {
-    val txnFilter = TxnFilterPostingComments("abc.*")
+    val txnFilter = TxnFilterPostingComment("abc.*")
 
     val txnData = txnsAll.filter(TxnFilterRoot(txnFilter))
 
