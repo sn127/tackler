@@ -1,0 +1,4 @@
+# format: exec
+# test:uuid: 66bc6ec3-991f-41b6-a347-b3f492bc6f65
+# desc: invalid regex
+exec:--cfg;tests/cli/ex.conf;--input.file;../ok/filters.txn;--accounts.strict;false;--api-filter-def;{ "txnFilter": { "TxnFilterTxnDescription": { "regex": "*" } } };

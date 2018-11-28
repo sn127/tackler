@@ -50,7 +50,9 @@ final case class TxnFilterRoot(txnFilter: TxnFilter) extends TxnFilter {
   }
 
   override def text(indent: String): String = {
-    txnFilter.text(indent) + "\n"
+    val myIndent = indent + "  "
+    indent + "Filter:" + "\n" +
+      txnFilter.text(myIndent) + "\n"
   }
 }
 object TxnFilterRoot {
@@ -146,7 +148,7 @@ sealed abstract class TxnFilterRegex(regex: String) extends TxnFilter {
   val target: String
 
   override def text(indent: String): String = {
-    indent +  target + ": " + s"${regex}"
+    indent +  target + ": " + "\"" + s"${regex}" + "\""
   }
 }
 
@@ -219,7 +221,7 @@ sealed abstract class TxnFilterPosting(regex: String, amount: BigDecimal) extend
   override def text(indent: String): String = {
     val myIndent = indent + "  "
     indent +  target + "\n" +
-      myIndent + "account: " + s"${regex}" + "\n" +
+      myIndent + "account: " + "\"" + s"${regex}" + "\"" +"\n" +
       myIndent + "amount " + opTxt + " " + amount.toString
   }
 }

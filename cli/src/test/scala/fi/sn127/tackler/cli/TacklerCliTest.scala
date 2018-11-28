@@ -17,6 +17,7 @@
 package fi.sn127.tackler.cli
 
 import java.nio.file.{Files, NoSuchFileException, Path, Paths}
+import java.util.regex.PatternSyntaxException
 
 import better.files.File
 import org.rogach.scallop.exceptions.{ExcessArguments, RequiredOptionNotFound, UnknownOption, ValidationFailure}
@@ -116,6 +117,12 @@ class TacklerCliTest extends DirSuiteLike {
 
   runDirSuiteTestCases(basedir, Glob("cli/ex/UnknownOption-*.exec")) { args: Array[String] =>
     assertThrows[UnknownOption]{
+      TacklerCli.runExceptions(args)
+    }
+  }
+
+  runDirSuiteTestCases(basedir, Glob("cli/ex/PatternSyntaxException-*.exec")) { args: Array[String] =>
+    assertThrows[PatternSyntaxException] {
       TacklerCli.runExceptions(args)
     }
   }

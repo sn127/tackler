@@ -1,0 +1,4 @@
+# format: exec
+# test:uuid: 39fed28a-1157-4cda-98de-cfe8fa1ce5b5
+# desc: filter all transactions out of stream. Result should be an exception (empty txns)
+exec:--cfg;tests/cli/ex.conf;--input.file;../ok/filters.txn;--accounts.strict;false;--api-filter-def;{ "txnFilter": { "TxnFilterTxnDescription": { "regex": "this-wont-be-matched" }}};

@@ -1,0 +1,4 @@
+# format: exec
+# test:uuid: a6031106-1bf7-47cf-8837-0c77566db79d
+# desc: git and filter, validate metadata
+exec:--cfg;tests/core/git-ok.conf;--input.git.commit;a7938d9b;--output;out.git-and-filter-01;--reporting.exports;identity;equity;--reporting.reports;balance;balance-group;register;--reporting.formats;txt;json;--api-filter-def;{ "txnFilter": { "TxnFilterTxnDescription": { "regex": "shard01" }}};

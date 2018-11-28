@@ -75,6 +75,14 @@ class TacklerCliArgs(args: Seq[String]) extends ScallopConf(args) {
   val input_git_commit: ScallopOption[String] = opt[String](
     name="input.git.commit", required = false, noshort = true)
 
+  /*
+   * This is mostly used for testing,
+   * Hence api at begin and dot instead of dash
+   */
+  val api_filter_def: ScallopOption[String] = opt[String](
+    name="api-filter-def", required = false, noshort = true)
+
+
   //
   // CLI-args which overrides Config settings.
   //

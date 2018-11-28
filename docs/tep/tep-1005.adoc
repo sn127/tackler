@@ -17,7 +17,7 @@ No journal file changes.
 
 There will be command line option to feed filter definition to the engine for testing purposes.
 
-* [ ] `--api-filter-def` Filter definition as json
+* [x] `--api-filter-def` Filter definition as json
 
 
 == CONF changes
@@ -29,8 +29,8 @@ No configuration settings for filters.
 
 There will be changes to the machine.
 
-* [ ] Translate filter definition to actual filter
-* [ ] Apply filter to the txn-stream
+* [x] Translate filter definition to actual filter
+* [x] Apply filter to the txn-stream
 
 
 === API changes
@@ -43,9 +43,9 @@ Server and client API will be changed to support filters.
 Changes to server API. Items in italics will be implemented later.
 
 * [x] filter json def
-* [x] filters with report's metadata
-** [x] filters with report's metadata (text)
-** [x] filters with report's metadata (json)
+* [x] report metadata with filters
+** [x] text
+** [x] json
 * [x] filter-tree
 ** [x] nodes
 *** [x] `AND`
@@ -87,21 +87,21 @@ Filter definitions will be available with reports metadata.
 
 Changes to balance report
 
-* [ ] Include filter def into report's metadata
+* [x] Include filter def into report's metadata
 
 
 === Balance Group report
 
 Changes to balance group report
 
-* [ ] Include filter def into report's metadata
+* [x] Include filter def into report's metadata
 
 
 === Register report
 
 Changes to register report
 
-* [ ] Include filter def into report's metadata
+* [x] Include filter def into report's metadata
 
 
 == Exporting
@@ -133,6 +133,8 @@ No changes to identity export
 
 * Support filtering with exports.
 * Support XOR-filter trees
+* API objects for JS
+** Better JSON representation in metadata
 
 
 == Tests
@@ -140,9 +142,13 @@ No changes to identity export
 Normal, ok-case tests to validate functionality:
 
 * [x] filter json def
-* [x] filters with report's metadata
-** [x] filters with report's metadata (text)
-** [x] filters with report's metadata (json)
+* [x] report metadata with filters
+** [x] text
+** [x] json
+* [x] reports
+** [x] balance report's metadata
+** [x] balance-group report's metadata
+** [x] register report's metadata
 * [x] filter tree
 ** [x] logical nodes
 *** [x] *`AND`*
@@ -171,8 +177,8 @@ Normal, ok-case tests to validate functionality:
 
 Tests for error cases:
 
-* [ ] e: Invalid filter definition
-* [ ] e: Result set after filtering is empty
+* [x] e: Invalid filter definition
+* [x] e: Result set after filtering is empty
 
 
 === Perf

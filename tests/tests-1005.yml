@@ -341,3 +341,56 @@ features:
               name: TxnFilterJsonTest
               descriptions:
                 - desc: "decode from JSON working filter"
+
+  - feature:
+      id: 1c0ead5d-4f4c-44d8-b21e-29a2ad31ee8e
+      parent: ab7695f6-9fba-4f5d-9d55-ea2c502b4ea4
+      subject: "cli: --api.filter.def"
+      tests:
+        errors:
+          - error:
+              id: 39fed28a-1157-4cda-98de-cfe8fa1ce5b5
+              name: tests/cli/ex/TxnException-filters-01.exec
+              desc: "filter all transactions out of stream."
+          - error:
+              id: 5a80bd1d-118c-4f3c-b89b-142059bcb3be
+              name: tests/cli/ex/TxnException-filters-02.exec
+              desc: "invalid json at parse level"
+          - error:
+              id: d2e7dd30-8ead-43b2-8986-4cb416167a28
+              name: tests/cli/ex/TxnException-filters-03.exec
+              desc: "invalid json, can not be decoded correctly"
+          - error:
+              id: 66bc6ec3-991f-41b6-a347-b3f492bc6f65
+              name: tests/cli/ex/PatternSyntaxException-filters-04.exec
+              desc: "invalid reqex"
+        operations:
+          - test:
+              id: 515ba0be-b571-4a7f-a2a3-28dc1e545228
+              name: tests/cli/ok/filters-01.exec
+              descriptions:
+                - desc: "Filter definition can be read from cli"
+                - desc: "Filter definitions is printed to stdout"
+                - desc: "Filter definitions are printed in reports"
+                - desc: "Filter definition is active and used"
+              references:
+                - ref: balance
+                - ref: balance-group
+                - ref: register
+  - feature:
+      id: c9c2c645-79a3-4594-ab75-350bea400f66
+      parent: ab7695f6-9fba-4f5d-9d55-ea2c502b4ea4
+      subject: "Chaining metadata"
+      tests:
+        operations:
+          - test:
+              id: a6031106-1bf7-47cf-8837-0c77566db79d
+              name: tests/core/ok/git-and-filter-01.exec
+              descriptions:
+                - desc: "git and filter"
+              references:
+                - ref: balance
+                - ref: balance-group
+                - ref: register
+                - ref: equity
+                - ref: identity

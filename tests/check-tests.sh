@@ -26,10 +26,11 @@ grep ' id:' "$test_db" | sed 's/.*id: //' | sort | uniq -d
 done
 
 # good enough for know
-test_db="$db_dir/tests.yaml"
-grep ' refid:' "$test_db" | sed 's/.*refid: //' | while read refid; 
+test_db01="$db_dir/tests.yaml"
+test_db02="$db_dir/tests-1005.yml"
+grep ' refid:' $test_db01 $test_db02 | sed 's/.*refid: //' | while read refid; 
 do  
-	egrep -q -L '.* id: +'$refid' *$' "$test_db" || echo $refid
+	egrep -q -L '.* id: +'$refid' *$' "$test_db01" "$test_db02" || echo $refid
 done
 
 echo "Check missing uuid:"
@@ -40,13 +41,13 @@ find "$exe_dir" -name '*.exec' | xargs sed -n 's/.*test:uuid: \(.*\)/\1/p' | sor
 
 echo "Check tests with missing test-db records:"
 lonelies=$(mktemp /tmp/exists-no-test-db.XXXXXX)
-trap "rm -f $mkf" 0
+trap "rm -f $lonelies" 0
 
 find "$exe_dir" -name '*.exec' |\
 	xargs grep 'test:uuid:' |\
 	sed 's/.*test:uuid: //' |\
 	while read uuid; do
-		echo "$(grep -c $uuid $test_db): $uuid"
+		echo "$(grep -c $uuid $test_db01 $test_db02): $uuid"
 	done |\
 	grep '^0:' |\
 	sed 's/^0: //' > $lonelies

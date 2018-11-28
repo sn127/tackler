@@ -121,29 +121,30 @@ class TxnFilterJsonTest extends TxnFilterSpec  {
       |""".stripMargin
 
   val filterTextStr =
-    """AND
+    """Filter:
       |  AND
-      |    Txn TS: begin 2018-01-01T10:11:22.345+02:00
-      |    Txn TS: end   2018-12-01T14:11:22.678+02:00
-      |    Txn Code: txn.code
-      |    Txn Description: txn.desc
-      |    Txn UUID: 29c548db-deb7-44bd-a6a2-e5e4258d256a
-      |    Txn Comments: txn.comments
-      |  OR
-      |    Posting Account: posting:account
-      |    Posting Amount
-      |      account: posting:amount:equal
-      |      amount == 1
-      |    Posting Amount
-      |      account: posting.amount:less
-      |      amount < 2
-      |    Posting Amount
-      |      account: posting.amount:greater
-      |      amount > 123456789123456789.012345678901234567890123456789
-      |    Posting Commodity: posting.commodity
-      |    Posting Comment: posting.comment
-      |  NOT
-      |    Txn Description: not-me-not
+      |    AND
+      |      Txn TS: begin 2018-01-01T10:11:22.345+02:00
+      |      Txn TS: end   2018-12-01T14:11:22.678+02:00
+      |      Txn Code: "txn.code"
+      |      Txn Description: "txn.desc"
+      |      Txn UUID: 29c548db-deb7-44bd-a6a2-e5e4258d256a
+      |      Txn Comments: "txn.comments"
+      |    OR
+      |      Posting Account: "posting:account"
+      |      Posting Amount
+      |        account: "posting:amount:equal"
+      |        amount == 1
+      |      Posting Amount
+      |        account: "posting.amount:less"
+      |        amount < 2
+      |      Posting Amount
+      |        account: "posting.amount:greater"
+      |        amount > 123456789123456789.012345678901234567890123456789
+      |      Posting Commodity: "posting.commodity"
+      |      Posting Comment: "posting.comment"
+      |    NOT
+      |      Txn Description: "not-me-not"
       |""".stripMargin
 
   val tt = new TacklerTxns(Settings())
