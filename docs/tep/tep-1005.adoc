@@ -45,7 +45,7 @@ Changes to server API. Items in italics will be implemented later.
 * [x] filter json def
 * [x] report metadata with filters
 ** [x] text
-** [x] json
+** [PP] json
 * [x] filter-tree
 ** [x] nodes
 *** [x] `AND`
@@ -72,7 +72,11 @@ Changes to server API. Items in italics will be implemented later.
 
 Changes to client API's JSON model
 
-* [x] filter metadata
+* [x] filter json def
+** [PP] Client API model objects for filters
+* [x] report metadata with filters
+** [x] text
+** [PP] json
 
 
 === New dependencies
@@ -118,23 +122,30 @@ No changes to identity export
 
 == Documentation
 
-* [ ] link:../../CHANGELOG[]: add new item
-* [ ] User docs
-** [ ] user manual
-*** [ ] cli-arguments
-**** [ ] `--api-filter-def`
-* [ ] Developer docs
-** [ ] API changes
-*** [ ] Server API changes
-*** [ ] Client API changes
+* [x] link:../../CHANGELOG[]: add new item
+* [x] User docs
+** [x] user manual
+*** [x] cli-arguments
+**** [x] `--api-filter-def`
+* [x] Developer docs
+** [x] API changes
+*** [x] Server API changes
+*** [x] Client API changes
+** [PP] Add metadata example to JSON doc (git-and-filter-01)
 
 
-== Future plans
+== Future plans and Postponed (PP) features
 
 * Support filtering with exports.
 * Support XOR-filter trees
 * API objects for JS
-** Better JSON representation in metadata
+
+=== Postponed (PP) features
+
+* [PP] Client API model objects for filters
+* [PP] Better JSON representation in metadata
+* [PP] perf: Performance test with filtering enabled
+* [PP] perf: Run all tests with filtering engine (while no active filters)
 
 
 == Tests
@@ -144,7 +155,7 @@ Normal, ok-case tests to validate functionality:
 * [x] filter json def
 * [x] report metadata with filters
 ** [x] text
-** [x] json
+** [PP] json
 * [x] reports
 ** [x] balance report's metadata
 ** [x] balance-group report's metadata
@@ -185,8 +196,8 @@ Tests for error cases:
 
 Is there need to run or create new perf tests?
 
-* [ ] perf: Performance test with filtering enabled
-* [ ] perf: Run all tests with filtering engine (while no active filters)
+* [PP] perf: Performance test with filtering enabled
+* [PP] perf: Run all tests with filtering engine (while no active filters)
 
 
 === Test coverage tracking

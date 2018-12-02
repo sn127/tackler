@@ -23,6 +23,19 @@ Client API provides JSON decoding via link:https://circe.github.io/circe/[Circe]
 There are tests utilizing de-serializing in
 link:../core/src/test/scala/fi/sn127/tackler/report/ReportApiTest.scala[core -> test -> report -> ReportApiTest]
 
+
+== Transaction Filters
+
+There is an option to filter transactions based on attributes of single transaction.
+See link./txn-filters.adoc[Transaction Filters] for general information about these filters.
+
+There are several examples of how to use complex Transaction Tree filters in test suite:
+* link:../core/src/test/scala/fi/sn127/tackler/filter/TxnFilterJsonTest.scala[core -> tests -> filter -> TxnFilterJsonTest]
+
+At the moment there is no Client API model objects for filters,
+so only pure JSON representation can be used on the Client API side.
+
+
 == tackler-api
 
 Dependency settings for SBT are:

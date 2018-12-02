@@ -127,9 +127,13 @@ Changes to identity export
 *** [ ] Client API changes
 
 
-== Future plans
+== Future plans and Postponed (PP) features
 
 How and where to go from here?
+
+=== Postponed (PP) features
+
+Anything which wasn't implemented?
 
 
 == Tests
