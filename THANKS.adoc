@@ -1,6 +1,6 @@
 = Credits
 
-Tackler has been originally written by Jani Averbach from scratch.
+Tackler has been originally written by sn127.fi from scratch.
 Following projects have provided valuable contributions,
 feedback, inspiration and ideas for this project. Thank you for your help!
 
