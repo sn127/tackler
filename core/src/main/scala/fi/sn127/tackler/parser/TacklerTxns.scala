@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2018 sn127.fi
+ * Copyright 2016-2018 SN127.fi
  *
  * git2Txns is based on example
  * by: Copyright 2013, 2014 Dominik Stadler

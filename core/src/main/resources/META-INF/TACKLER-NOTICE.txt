@@ -2,5 +2,5 @@ fi.sn127.tackler
 Copyright 2016-2018 SN127.fi Contributors
 
 This product includes software developed at
-sn127.fi (https://github.com/sn127/).
+SN127.fi (https://github.com/sn127/).
 
