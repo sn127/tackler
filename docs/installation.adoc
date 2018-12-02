@@ -39,9 +39,9 @@ After above steps, content of demo folder should be:
 ./txns/journal.txn
 ----
 
-Now you can run following command line:
+Now you can run following command on that demo folder:
 
- java -jar tackler-cli.jar --accounts.strict=false
+ java -jar ./tackler-cli.jar --accounts.strict=false
 
 This will produce balance and register reports without account name validation.
 
