@@ -1,0 +1,35 @@
+{
+  "metadata" : {
+    "metadataItems" : [
+      {
+        "GitInputReference" : {
+          "commit" : "a7938d9b61958d2cabea7503a7be89191d4fb31e",
+          "message" : "commit-id-01: 2nd"
+        }
+      },
+      {
+        "TxnFilter" : {
+          "filterDef" : "Filter:\n  Txn Description: \"shard01\"\n"
+        }
+      }
+    ]
+  },
+  "title" : "BALANCE",
+  "balances" : [
+    {
+      "accountSum" : "10.00",
+      "accountTreeSum" : "10.00",
+      "account" : "a"
+    },
+    {
+      "accountSum" : "-10.00",
+      "accountTreeSum" : "-10.00",
+      "account" : "e"
+    }
+  ],
+  "deltas" : [
+    {
+      "delta" : "0.00"
+    }
+  ]
+}

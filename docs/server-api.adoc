@@ -28,6 +28,16 @@ can then be fed to different reports.  See
 link:../core/src/main/scala/fi/sn127/tackler/parser/TacklerTxns.scala[core -> main -> parser -> TacklerTxns]
 and it's companion object's helpers.
 
+== Filtering transactions
+
+There is an option to filter transactions based on attributes of single transaction.
+See link./txn-filters.adoc[Transaction Filters] for general information about these filters.
+
+Transaction filters are defined in the package:
+link:../core/src/main/scala/fi/sn127/tackler/filter/[core -> main -> filter]
+
+Example of usage of filters can be be seen various filter tests.
+See link:../core/src/test/scala/fi/sn127/tackler/filter/[core -> test -> filter].
 
 == Generating reports
 

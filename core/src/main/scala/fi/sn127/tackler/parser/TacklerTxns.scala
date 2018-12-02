@@ -236,7 +236,7 @@ class TacklerTxns(val settings: Settings) extends CtxHandler {
 
           // Handle files
           val txns: Iterator[Seq[Transaction]] = for {
-            n <- Iterator.continually(treeWalk.next()).takeWhile(p => p === true)
+            _ <- Iterator.continually(treeWalk.next()).takeWhile(p => p === true)
           } yield {
 
             val objectId = treeWalk.getObjectId(0)
@@ -264,13 +264,13 @@ class TacklerTxns(val settings: Settings) extends CtxHandler {
             }
           }
 
-          val meta = Some(new GitInputReference(
+          val meta = new GitInputReference(
             commit.getName,
             inputRef.left.toOption,
             commit.getShortMessage
-          ))
+          )
 
-          TxnData(Some(Metadata(meta)), txns.flatten.toSeq.sorted(OrderByTxn))
+          TxnData(Some(Metadata(Seq(meta))), txns.flatten.toSeq.sorted(OrderByTxn))
         })
       })
     })

@@ -23,10 +23,18 @@ sealed abstract trait MetadataItem {
   def text(): String
 }
 
-final case class Metadata(git: Option[GitInputReference]) {
+object MetadataItem {
+  @SuppressWarnings(Array("org.wartremover.warts.Nothing"))
+  implicit val decodeBalanceItem: Decoder[MetadataItem] = deriveDecoder[MetadataItem]
+
+  @SuppressWarnings(Array("org.wartremover.warts.Nothing"))
+  implicit val encodeBalanceItem: Encoder[MetadataItem] = deriveEncoder[MetadataItem]
+}
+
+final case class Metadata(metadataItems: Seq[MetadataItem]) {
 
   def text(): String = {
-    git.map(_.text()).getOrElse("")
+    metadataItems.map(_.text()).mkString("\n")
   }
 }
 
@@ -57,4 +65,8 @@ final case class GitInputReference(commit: String, ref: Option[String], message:
 object GitInputReference {
   implicit val decodeBalanceItem: Decoder[GitInputReference] = deriveDecoder[GitInputReference]
   implicit val encodeBalanceItem: Encoder[GitInputReference] = deriveEncoder[GitInputReference]
+}
+
+final case class TxnFilter(filterDef: String) extends MetadataItem {
+  override def text(): String = filterDef
 }

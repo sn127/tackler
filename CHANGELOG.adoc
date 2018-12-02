@@ -9,6 +9,12 @@ Current published release is:
 
 === 0.10.0-SNAPSHOT
 
+* Transaction filters:
+** link:./docs/txn-filters.adoc[Txn filter overview]
+** link:./docs/server-api.adoc[Txn filters on the server side]
+** link:./docs/client-api.adoc[Txn filters on the client side]
+** link:./docs/tep/tep-1005.adoc[TEP-1005: Txn Filters]
+
 ==== Fixes
 
 ==== Development
@@ -16,20 +22,24 @@ Current published release is:
 Updated deps and tools:
 
  * Updated dependencies
- ** cats: 1.1.0
- ** circe: 0.9.3
- ** scallop: 3.1.2
+ ** better-files: 3.6.0
+ ** cats: 1.4.0
+ ** circe: 0.10.1
+ ** scallop: 3.1.3
  ** config: 1.3.3
- ** jgit: 4.11.0.201803080745-r
+ ** jgit: 5.1.3.201810200350-r
  ** scalatest: 3.0.5
  * build
- ** scala: 1.12.6
- ** sbt: 1.1.4
+ ** scala: 2.12.7
+ ** sbt: 1.2.4
+ ** sbt-assembly: 0.14.9
  ** sbt-buildinfo: 0.9.0
  ** sbt-coveralls: 1.2.4
- ** sbt-crossproject: 0.4.0
- ** sbt-scalajs: 0.6.22
- ** sbt-scalajs-crossproject: 0.4.0
+ ** sbt-crossproject: 0.6.0
+ ** sbt-scalajs: 0.6.25
+ ** sbt-scalajs-crossproject: 0.6.0
+ ** sbt-wartremover: 2.3.7
+
 
 === 0.9.0
 

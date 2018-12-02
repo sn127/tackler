@@ -116,6 +116,20 @@ Addition to configuration, Git reference or commit id can be given from command 
 These options are mutually exclusive with each other and with filesystem storage arguments (`input.fs.*`).
 
 
+===== Transaction Filtering
+
+There is an option to filter transactions based on attributes of single transaction.
+This interface is mostly meant to be used by link:./client-api.adoc[Client]
+and link:./server-api.adoc[Server] API.  See link./txn-filters.adoc[Transaction Filters]
+for general information about these filters.
+
+There is however command line option to provide filter definition.
+Transaction filter (tree) is defined by `--api-filter-def`, which will take filter definition as JSON.
+
+There are several examples of complex Transaction Tree filters in test suite:
+* link:../core/src/test/scala/fi/sn127/tackler/filter/TxnFilterJsonTest.scala[core -> tests -> filter -> TxnFilterJsonTest]
+* link:../tests/cli/ok/filters-01.exec[tests -> cli -> ok -> filters-01.exec]
+
 ==== Reporting
 
 Ordering of transaction is done by comparing `time`, `code`, `description` or `uuid`, 

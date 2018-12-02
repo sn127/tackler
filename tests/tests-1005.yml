@@ -1,0 +1,396 @@
+features:
+  - feature:
+      id: ab7695f6-9fba-4f5d-9d55-ea2c502b4ea4
+      subject: "Transaction filters"
+
+  - feature:
+      id: 2bb7784e-0698-4136-8b4c-3ccd849cd712
+      parent: ab7695f6-9fba-4f5d-9d55-ea2c502b4ea4
+      subject: "Complex logical filter trees"
+
+  - feature:
+      id: 91832cb2-7e1e-4e98-9685-b1a746761f4b
+      parent: 2bb7784e-0698-4136-8b4c-3ccd849cd712
+      subject: "filter tree: AND-node"
+      tests:
+        operations:
+          - test:
+              id: 2bd7fa78-adda-4f35-93eb-9b602bb3667e
+              name: TxnFilterNodeTest
+              descriptions:
+                - desc: "AND(false, false)"
+
+          - test:
+              id: 11d4409c-93e2-4670-b2d5-65073980ba2d
+              name: TxnFilterNodeTest
+              descriptions:
+                - desc: "AND(false, true)"
+
+          - test:
+              id: 7635059e-1828-48f7-9799-5bb0d327f446
+              name: TxnFilterNodeTest
+              descriptions:
+                - desc: "AND(true, false)"
+
+          - test:
+              id: bd589c45-4c80-4ccd-9f2f-49caf964d2a5
+              name: TxnFilterNodeTest
+              descriptions:
+                - desc: "AND(true, true)"
+
+          - test:
+              id: feb1a75c-cea8-40db-b4bf-ef4d59d49c9e
+              name: TxnFilterNodeTest
+              descriptions:
+                - desc: "AND(true, false, true)"
+
+          - test:
+              id: 456c6b08-7e61-410b-8a36-c3c47d6355b0
+              name: TxnFilterNodeTest
+              descriptions:
+                - desc: "AND(true, true, false)"
+
+          - test:
+              id: 54cbd549-5567-4b19-bc20-a3de146fff40
+              name: TxnFilterNodeTest
+              descriptions:
+                - desc: "AND(filter, AND(...))"
+
+          - test:
+              id: 6e544624-ad3e-4920-9946-7eaf94febfb5
+              name: TxnFilterNodeTest
+              descriptions:
+                - desc: "AND(filter, OR(...))"
+
+          - test:
+              id: ef81d4c1-9d5e-47f2-ab7c-646fbc49e268
+              name: TxnFilterNodeTest
+              descriptions:
+                - desc: "AND(filter, NOT(...))"
+
+          - test:
+              id: b2e5d857-e02c-4313-9ca7-9aa765033343
+              name: TxnFilterNodeTest
+              descriptions:
+                - desc: "AND(AND(...), OR(...))"
+
+          - test:
+              id: dab44c95-834c-438a-8543-a73547284f03
+              name: TxnFilterNodeTest
+              descriptions:
+                - desc: "AND(filter, AND(...), OR(...), NOT(...))"
+
+  - feature:
+      id: 1036aa18-21b8-436f-8319-d77f1b446cb0
+      parent: 2bb7784e-0698-4136-8b4c-3ccd849cd712
+      subject: "filter tree: OR-node"
+      tests:
+        operations:
+          - test:
+              id: c6036b88-6032-4005-84d5-a9d29cc4b283
+              name: TxnFilterNodeTest
+              descriptions:
+                - desc: "OR(false, false)"
+
+          - test:
+              id: 0e03ed8a-23ad-48f1-af49-2b0967d573e3
+              name: TxnFilterNodeTest
+              descriptions:
+                - desc: "OR(false, true)"
+
+          - test:
+              id: 9aefdc26-b4bc-4e42-b0a8-ea2aefec7cde
+              name: TxnFilterNodeTest
+              descriptions:
+                - desc: "OR(true, false)"
+
+          - test:
+              id: ace886f3-a1cb-454e-9f7f-3c4c449a5ab2
+              name: TxnFilterNodeTest
+              descriptions:
+                - desc: "OR(true, true)"
+
+          - test:
+              id: 8b5afb02-b3f1-4b2b-a599-dda2f5b95884
+              name: TxnFilterNodeTest
+              descriptions:
+                - desc: "OR(false, true, false)"
+
+          - test:
+              id: 0666ff4f-88af-42af-b415-1b73658731c7
+              name: TxnFilterNodeTest
+              descriptions:
+                - desc: "OR(false, false, true)"
+
+          - test:
+              id: b75466f3-f7bf-4e7f-9865-e2937a5d968d
+              name: TxnFilterNodeTest
+              descriptions:
+                - desc: "OR(filter, AND(...))"
+
+          - test:
+              id: 9029ad79-bbea-4c0c-a0e0-09c8b1b04188
+              name: TxnFilterNodeTest
+              descriptions:
+                - desc: "OR(filter, OR(...))"
+
+          - test:
+              id: b01bfc0d-0f6d-409b-8101-4647c70d1409
+              name: TxnFilterNodeTest
+              descriptions:
+                - desc: "OR(filter, NOT(...))"
+
+          - test:
+              id: e8c40011-4aef-4639-98e2-1362a0961db8
+              name: TxnFilterNodeTest
+              descriptions:
+                - desc: "OR(AND(...), OR(...))"
+
+          - test:
+              id: 4b127707-c83b-418b-9703-849ee304a19c
+              name: TxnFilterNodeTest
+              descriptions:
+                - desc: "OR(filter, AND(...), OR(...), NOT(...))"
+
+  - feature:
+      id: 408c026b-0d31-4d38-9f09-b21505b15ce4
+      parent: 2bb7784e-0698-4136-8b4c-3ccd849cd712
+      subject: "filter tree: NOT-node"
+      tests:
+        operations:
+          - test:
+              id: 32aa1190-d5f2-40eb-a494-3cb7969ab65a
+              name: TxnFilterNodeTest
+              descriptions:
+                - desc: "NOT(false)"
+
+          - test:
+              id: 08126158-2262-41f4-aa34-5695023d7a9b
+              name: TxnFilterNodeTest
+              descriptions:
+                - desc: "NOT(true)"
+
+          - test:
+              id: b280271f-a0a6-41e1-aa49-305b9f4a791e
+              name: TxnFilterNodeTest
+              descriptions:
+                - desc: "NOT(NOT(...))"
+
+          - test:
+              id: 3e03d091-4f06-44d3-8bf5-285c85178ff9
+              name: TxnFilterNodeTest
+              descriptions:
+                - desc: "NOT(OR(...))"
+
+          - test:
+              id: 0c549c6e-f3b7-4614-b874-31db1110c41c
+              name: TxnFilterNodeTest
+              descriptions:
+                - desc: "NOT(AND(...))"
+
+  - feature:
+      id: 7c0d146b-fec7-4f25-8a9e-b4b591a93ecf
+      parent: ab7695f6-9fba-4f5d-9d55-ea2c502b4ea4
+      subject: "Txn time based filters"
+
+  - feature:
+      id: 35597046-0d16-47b0-924c-877e14d648da
+      parent: 7c0d146b-fec7-4f25-8a9e-b4b591a93ecf
+      subject: "Txn time filter: begin"
+      tests:
+        operations:
+          - test:
+              id: 701b2c27-d33c-4460-9a5e-64316c6ed946
+              name: TxnFilterTSBeginTest
+              descriptions:
+                - desc: "filter by date"
+          - test:
+              id: ec7cf2bd-e10e-4f46-9baa-4096881a5fbb
+              name: TxnFilterTSBeginTest
+              descriptions:
+                - desc: "filter by time"
+          - test:
+              id: f1623bd0-f767-458e-bc68-6eadfa113fd1
+              name: TxnFilterTSBeginTest
+              descriptions:
+                - desc: "filter by nanoseconds"
+          - test:
+              id: 960cb7e7-b180-4276-a43b-714e53e1789b
+              name: TxnFilterTSBeginTest
+              descriptions:
+                - desc: "filter by timezone"
+
+  - feature:
+      id: 73e21769-d4c6-49d2-afbf-d72150ab6eb4
+      parent: 7c0d146b-fec7-4f25-8a9e-b4b591a93ecf
+      subject: "Txn time filter: end"
+      tests:
+        operations:
+          - test:
+              id: 42a42f07-dea5-45ee-b563-187f9121e1e1
+              name: TxnFilterTSEndTest
+              descriptions:
+                - desc: "filter by date"
+          - test:
+              id: 4e566d2b-da32-4336-9b7f-d7c4a59658d2
+              name: TxnFilterTSEndTest
+              descriptions:
+                - desc: "filter by time"
+          - test:
+              id: f6081a60-92a9-4051-85d7-c993e3cc03be
+              name: TxnFilterTSEndTest
+              descriptions:
+                - desc: "filter by nanoseconds"
+          - test:
+              id: ab53df34-d22a-4256-9c4d-6d1ccf0ef32e
+              name: TxnFilterTSEndTest
+              descriptions:
+                - desc: "filter by timezone"
+  - feature:
+      id: 7b35834c-4bfa-4cb7-ba1d-cf6092952faf
+      parent: ab7695f6-9fba-4f5d-9d55-ea2c502b4ea4
+      subject: "Txn filters based on Txn header data"
+      tests:
+        operations:
+          - test:
+              id: 59157c61-0ced-4b3a-ab8d-ec5edf7aafb4
+              name: TxnFilterHeaderTest
+              descriptions:
+                - desc: "filter by txn description"
+          - test:
+              id: 54c746cf-916f-4c24-8e53-d4306917a200
+              name: TxnFilterHeaderTest
+              descriptions:
+                - desc: "filter by txn code"
+          - test:
+              id: f6f2853b-fce4-4577-8fc3-3089e717de0b
+              name: TxnFilterHeaderTest
+              descriptions:
+                - desc: "filter by txn UUID"
+          - test:
+              id: 6bf82dff-374a-4bf2-bdad-a882b59df932
+              name: TxnFilterHeaderTest
+              descriptions:
+                - desc: "filter by txn UUID with no UUID"
+          - test:
+              id: 8bad2776-51fa-4766-839a-1bb99df44f5c
+              name: TxnFilterHeaderTest
+              descriptions:
+                - desc: "filter by txn comments"
+
+  - feature:
+      id: 8eba20ab-2495-4f3a-8dab-1fbfee7c1863
+      parent: ab7695f6-9fba-4f5d-9d55-ea2c502b4ea4
+      subject: "Txn filters based on postings"
+      tests:
+        operations:
+          - test:
+              id: 7784049f-ef3e-4185-8d33-f8c78478eef1
+              name: TxnFilterPostingTest
+              descriptions:
+                - desc: "filter by posting account name with wildcard at begin"
+          - test:
+              id: 0a1e4848-cef0-46ec-9a50-cc209c45da63
+              name: TxnFilterPostingTest
+              descriptions:
+                - desc: "filter by posting account name with wildcard at end "
+          - test:
+              id: 0c1dcffe-152d-4959-89bb-2c48677ad171
+              name: TxnFilterPostingTest
+              descriptions:
+                - desc: "filter by posting comments"
+          - test:
+              id: de72fb67-14a7-4032-b2c2-b1049ecd0c35
+              name: TxnFilterPostingTest
+              descriptions:
+                - desc: "filter by posting amount (exact)"
+          - test:
+              id: 315d5ac3-28cf-417e-98bb-b738f209f5da
+              name: TxnFilterPostingTest
+              descriptions:
+                - desc: "filter by posting amount (less)"
+          - test:
+              id: b94b99d7-acfa-4a4b-871f-c1b6282738ff
+              name: TxnFilterPostingTest
+              descriptions:
+                - desc: "filter by posting amount (greater)"
+          - test:
+              id: cfb795cd-d323-4181-a76a-1e5ce957add7
+              name: TxnFilterPostingTest
+              descriptions:
+                - desc: "filter by posting commodity"
+
+  - feature:
+      id: c9b2129e-c01b-4e3f-8961-813b42b339d6
+      parent: ab7695f6-9fba-4f5d-9d55-ea2c502b4ea4
+      subject: "Txn filters as JSON"
+      tests:
+        operations:
+          - test:
+              id: 4cce4204-16b1-40a4-b1ea-ce11272d5824
+              name: TxnFilterJsonTest
+              descriptions:
+                - desc: "decode from JSON and then encode to text"
+          - test:
+              id: a49f8a0c-d612-453f-afd9-cb134100bf1f
+              name: TxnFilterJsonTest
+              descriptions:
+                - desc: "encode to JSON and text"
+          - test:
+              id: 283d64f6-4508-48ac-89a3-e70e25784330
+              name: TxnFilterJsonTest
+              descriptions:
+                - desc: "decode from JSON working filter"
+
+  - feature:
+      id: 1c0ead5d-4f4c-44d8-b21e-29a2ad31ee8e
+      parent: ab7695f6-9fba-4f5d-9d55-ea2c502b4ea4
+      subject: "cli: --api.filter.def"
+      tests:
+        errors:
+          - error:
+              id: 39fed28a-1157-4cda-98de-cfe8fa1ce5b5
+              name: tests/cli/ex/TxnException-filters-01.exec
+              desc: "filter all transactions out of stream."
+          - error:
+              id: 5a80bd1d-118c-4f3c-b89b-142059bcb3be
+              name: tests/cli/ex/TxnException-filters-02.exec
+              desc: "invalid json at parse level"
+          - error:
+              id: d2e7dd30-8ead-43b2-8986-4cb416167a28
+              name: tests/cli/ex/TxnException-filters-03.exec
+              desc: "invalid json, can not be decoded correctly"
+          - error:
+              id: 66bc6ec3-991f-41b6-a347-b3f492bc6f65
+              name: tests/cli/ex/PatternSyntaxException-filters-04.exec
+              desc: "invalid reqex"
+        operations:
+          - test:
+              id: 515ba0be-b571-4a7f-a2a3-28dc1e545228
+              name: tests/cli/ok/filters-01.exec
+              descriptions:
+                - desc: "Filter definition can be read from cli"
+                - desc: "Filter definitions is printed to stdout"
+                - desc: "Filter definitions are printed in reports"
+                - desc: "Filter definition is active and used"
+              references:
+                - ref: balance
+                - ref: balance-group
+                - ref: register
+  - feature:
+      id: c9c2c645-79a3-4594-ab75-350bea400f66
+      parent: ab7695f6-9fba-4f5d-9d55-ea2c502b4ea4
+      subject: "Chaining metadata"
+      tests:
+        operations:
+          - test:
+              id: a6031106-1bf7-47cf-8837-0c77566db79d
+              name: tests/core/ok/git-and-filter-01.exec
+              descriptions:
+                - desc: "git and filter"
+              references:
+                - ref: balance
+                - ref: balance-group
+                - ref: register
+                - ref: equity
+                - ref: identity

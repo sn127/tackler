@@ -1,0 +1,42 @@
+= Transaction Filters
+
+Transaction stream can be filtered to select which transactions are part of reports and calculations.
+
+Transaction stream can be filtered based on several attributes of single transaction.
+If transaction is not included into stream and it is filtered out,
+then all data regarding that transaction will not be used with any calculation.
+
+Transaction filters can be combined with logical `AND`, `OR` and `NOT` operations and
+it is possible to create filter trees by combining logical filters and filters
+for single transactions.
+
+
+== Logical filters
+
+There are following logical filters:
+
+* `AND`, logical and, e.g. all filters must be true for combination to be true
+* `OR`, logical or, e.g. if any of filters is true, then combination is true
+* `NOT`, logical not, e.g. reverse result (false -> true, true -> false)
+
+
+== Transaction filters
+
+There are following filters based on transaction attributes:
+
+* Transaction header
+** Time
+*** Begin: timestamp is on or after specified time
+*** End: timestamp is before specified time
+** Code: matches specified regex
+** Description: matches specified regex
+** UUID: is same as specified UUID
+** Txn Comments: any of Txn's comments matches specified regex
+* Postings
+** Account: matches specified regex
+** Amount
+*** exact: value is same as specified value, for specified account (regex)
+*** less than: value is less than specified value, for specified account (regex)
+*** greater than: value is greater than specified value, for specified account (regex)
+** Commodity: matches specified regex
+** Posting Comment: matches specified regex

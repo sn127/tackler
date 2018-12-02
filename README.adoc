@@ -29,6 +29,7 @@ based double-entry accounting].
 * Multiple report and export types:
 ** link:docs/report-balance.adoc[Balance], link:docs/report-balance-group.adoc[Balance Groups] and link:docs/report-register.adoc[Register] Reports
 ** link:docs/export-equity.adoc[Equity] and link:docs/export-identity.adoc[Identity] Exports
+* Support for link:./docs/txn-filters.adoc[Transaction Filters]
 * Supports UTF-8 characters in transaction data (link:tests/parser/ok/par-02.ref.identity.txn[descriptions], link:tests/parser/ok/par-02.ref.reg.txt[comments], link:tests/parser/ok/id-chars-01.ref.identity.txn[account names])
 * Supports ISO 8601 timestamps with link:tests/core/ok/time-dst-01.ref.identity.txn[timezones]
   and link:tests/core/ok/time-nano-01.ref.identity.txn[nanosecond] resolution

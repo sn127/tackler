@@ -19,8 +19,10 @@ import java.nio.file.{Files, NoSuchFileException, Path, Paths}
 
 import better.files._
 import org.slf4j.{Logger, LoggerFactory}
+import io.circe.parser.decode
 
 import fi.sn127.tackler.core.{FilesystemStorageType, GitStorageType, Settings, TacklerException, TxnException}
+import fi.sn127.tackler.filter.TxnFilterRoot
 import fi.sn127.tackler.model.TxnData
 import fi.sn127.tackler.parser.{TacklerParseException, TacklerTxns}
 import fi.sn127.tackler.report.Reports
@@ -119,6 +121,7 @@ object TacklerCli {
    *
    * @param args cmd line args
    */
+  @SuppressWarnings(Array("org.wartremover.warts.EitherProjectionPartial"))
   def runExceptions(args: Array[String]): Unit = {
     val tsStart = System.currentTimeMillis()
 
@@ -131,7 +134,7 @@ object TacklerCli {
 
     val tsParseStart = System.currentTimeMillis()
 
-    val txnData: TxnData = settings.input_storage match {
+    val txnDataAll: TxnData = settings.input_storage match {
       case GitStorageType() => {
         val inputRef = getInputRef(cliCfg, settings)
         tt.git2Txns(inputRef)
@@ -141,6 +144,24 @@ object TacklerCli {
         val paths = getInputPaths(cliCfg, settings)
         tt.paths2Txns(paths)
       }
+    }
+
+    val txnData = cliCfg.api_filter_def.toOption.fold({
+      // cli: api-filter-def: NO
+      txnDataAll
+    }) { filterJsonStr =>
+      // cli: api-filter-def: YES
+
+      val jsonDecodeResult = decode[TxnFilterRoot](filterJsonStr)
+
+      if (jsonDecodeResult.isLeft) {
+        val err = jsonDecodeResult.left.get
+        throw new TxnException("JSON parse error: " + err.getMessage())
+      }
+
+      jsonDecodeResult.toOption.map(txnFilterRoot => {
+        txnDataAll.filter(txnFilterRoot)
+      }).getOrElse(txnDataAll) // this is not possible
     }
 
     if (txnData.txns.isEmpty) {
@@ -189,6 +210,9 @@ object TacklerCli {
         FAILURE
       case ex: NoSuchFileException =>
         Console.err.println("Error: File not found: " + ex.getMessage)
+        FAILURE
+      case ex: java.util.regex.PatternSyntaxException =>
+        Console.err.println("Error: regexp syntax error: " + ex.getMessage)
         FAILURE
       case ex: TacklerParseException =>
         Console.err.println("" +

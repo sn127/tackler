@@ -17,8 +17,8 @@
 
 // build-build deps (TestSetup etc.)
 
-scalaVersion := "2.12.6"
+scalaVersion := "2.12.7"
 
-libraryDependencies += "com.github.pathikrit" %% "better-files" % "3.4.0"
+libraryDependencies += "com.github.pathikrit" %% "better-files" % "3.6.0"
 libraryDependencies += "com.typesafe" % "config" % "1.3.3"
 

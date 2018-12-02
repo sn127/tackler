@@ -1,0 +1,4 @@
+# format: exec
+# test:uuid: d2e7dd30-8ead-43b2-8986-4cb416167a28
+# desc: invalid json, can not be decoded correctly
+exec:--cfg;tests/cli/ex.conf;--input.file;../ok/filters.txn;--accounts.strict;false;--api-filter-def;{ "txnFilter": { "TxnFilterWhicWontBeThere": { "regex": "a.*" }}};
