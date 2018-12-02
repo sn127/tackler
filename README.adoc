@@ -115,7 +115,6 @@ of major new features. These are listed on link:docs/tep/readme.adoc[TEP index].
 Extremely loosely defined roadmap is following:
 
 * Reporting Server as separate project 
-* Transaction filtering 
 * Extending support for Units
 * Profit and Loss (PnL) tracking
 ** Automatic conversions between different base units
