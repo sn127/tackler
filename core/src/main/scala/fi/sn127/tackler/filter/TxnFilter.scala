@@ -77,7 +77,7 @@ final class TxnFilterTrue() extends TxnFilter {
 
 
 
-sealed trait TxnFilterList extends TxnFilter {
+sealed trait TxnFilters extends TxnFilter {
   val txnFilters: Seq[TxnFilter]
   val opTxt: String
 
@@ -87,7 +87,7 @@ sealed trait TxnFilterList extends TxnFilter {
   }
 }
 
-final case class TxnFilterListAND(txnFilters: Seq[TxnFilter]) extends TxnFilterList() {
+final case class TxnFiltersAND(txnFilters: Seq[TxnFilter]) extends TxnFilters() {
   val opTxt = "AND"
 
   override def filter(txn: Transaction): Boolean = {
@@ -96,7 +96,7 @@ final case class TxnFilterListAND(txnFilters: Seq[TxnFilter]) extends TxnFilterL
 }
 
 
-sealed case class TxnFilterListOR(txnFilters: Seq[TxnFilter]) extends TxnFilterList {
+sealed case class TxnFilterListOR(txnFilters: Seq[TxnFilter]) extends TxnFilters {
   val opTxt = "OR"
 
   override def filter(txn: Transaction): Boolean = {

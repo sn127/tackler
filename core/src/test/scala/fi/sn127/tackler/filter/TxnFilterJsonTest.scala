@@ -28,10 +28,10 @@ class TxnFilterJsonTest extends TxnFilterSpec  {
   val filterJsonStr =
     """{
       |  "txnFilter" : {
-      |    "TxnFilterListAND" : {
+      |    "TxnFiltersAND" : {
       |      "txnFilters" : [
       |        {
-      |          "TxnFilterListAND" : {
+      |          "TxnFiltersAND" : {
       |            "txnFilters" : [
       |              {
       |                "TxnFilterTxnTSBegin" : {
@@ -205,8 +205,8 @@ class TxnFilterJsonTest extends TxnFilterSpec  {
    */
   it must "encode to JSON and text" in {
     val txnFilter = TxnFilterRoot(
-      TxnFilterListAND(List[TxnFilter](
-        TxnFilterListAND(List[TxnFilter](
+      TxnFiltersAND(List[TxnFilter](
+        TxnFiltersAND(List[TxnFilter](
           TxnFilterTxnTSBegin(ZonedDateTime.parse("2018-01-01T10:11:22.345+02:00")),
           TxnFilterTxnTSEnd(ZonedDateTime.parse("2018-12-01T14:11:22.678+02:00")),
           TxnFilterTxnCode("txn.code"),
@@ -241,7 +241,7 @@ class TxnFilterJsonTest extends TxnFilterSpec  {
       """
         |{
         |  "txnFilter" : {
-        |    "TxnFilterListAND" : {
+        |    "TxnFiltersAND" : {
         |      "txnFilters" : [
         |        {
         |          "TxnFilterPostingAccount" : {
