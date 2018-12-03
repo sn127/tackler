@@ -1,0 +1,23 @@
+= Tackler Test Tracking Database (T3DB)
+
+Tackler has test tracking "database" for test coverage tracking.
+
+It's collection of YAML files, where features, error and success case 
+tests are tracked.
+
+Main purpose of the database is that it to try to find features 
+which are not tested at all, trying to find minimal amount of overlapping 
+tests for desired test coverage and trying to find duplicate tests.
+
+It also provides reverse mapping from test to features which are tested 
+by that test.
+
+
+== Files of T3DB
+
+There are several files for T3DB:
+
+* link:./tests.yml[Main T3DB]
+* link:./tests-1005.yml[T3DB for TEP-1005]
+* link:./tests-schema.yml[Schema for T3DB] (YAML is world worst schmema language)
+* link:./tests-tmpl.yml[Template for T3DB entries]

@@ -37,7 +37,7 @@ based double-entry accounting].
 ** Tackler is link:perf/results/hw00/[routinely tested] up to one million (1E6) transactions
 ** Tackler can process link:perf/results/readme.adoc[56000 txn/s] on Quad Core system
 ** With large transaction set, Tackler is faster than link:docs/perf-others.adoc[ledger-cli or other similar tools]
-* Near 100% test coverage, link:tests/tests.yaml[all features are extensively tested]
+* Near 100% test coverage, link:tests/tests.adoc[all features are extensively tested]
 * Extensive documentation: link:docs/readme.adoc[Index of Docs]
 
 
