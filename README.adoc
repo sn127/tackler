@@ -91,15 +91,16 @@ and journal parsing is done with link:http://www.antlr.org/[ANTLR4].
 
 User documentation is located under docs:
 
-* link:./docs/readme.adoc[Index of all documentation]
+* link:./docs/readme.adoc[Index of Documentation]
+* link:./docs/installation.adoc[Installation Manual]
 * link:./docs/journal.adoc[Tackler journal format]
-* link:./docs/usage.adoc[Usage of Tackler]
-* link:./docs/configuration.adoc[Overview of Tackler Configuration]
-* link:./docs/tackler.conf[Example of Tackler configuration]
-* link:./docs/accounts.conf[Example of Tackler Chart of Accounts]
+* link:./docs/usage.adoc[Usage Guide]
+* link:./docs/configuration.adoc[Configuration Manual]
+* link:./docs/tackler.conf[Example of Tackler Conf. (tackler.conf)]
+* link:./docs/accounts.conf[Example of Tackler Chart of Accounts (accounts.conf)]
 * link:./docs/trimix-filling-station.adoc[Example of Trimix Filling Station Accounting system (for scuba diving)]
-* link:./docs/server-api.adoc[Server API]
-* link:./docs/client-api.adoc[Client API]
+* link:./docs/server-api.adoc[Server API documentation]
+* link:./docs/client-api.adoc[Client API documentation]
 * link:./docs/devel/readme.adoc[Developer's documentation]
 
 

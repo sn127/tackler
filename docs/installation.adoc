@@ -1,12 +1,14 @@
-= Installation
+= Installation Manual
 
-To use tackler you need
+This is installation manual for tackler command line.
+
+To use tackler cli you will need
 
   * Java Runtime Environment (Java 8)
   * Tackler command line binary (`tackler-cli.jar`-file)
 
 
-== Mimimal setup
+== Minimal setup
 
 The absolute minimum to run tackler is following setup:
 
@@ -90,7 +92,7 @@ You can also provide path to configuration file with `--cfg` option.
 More sensible setup would be:
 
 ....
-./bin/tackler-cli-x.y.z.jar
+./bin/tackler-cli.jar
 ./bin/tackler.conf
 ./bin/accounts.conf
 ./txns/
@@ -125,14 +127,15 @@ tackler {
 
 With this setup, it is possible to run Tackler by:
 
- java -jar bin/tackler-cli-x.y.z.jar
+ java -jar ./bin/tackler-cli.jar
 
 and it will just work.
 
+There are more examples how to use tackler in link:./usage.adoc[Usage Guide].
 
 == Configuration
 
-Please see link:./configuration.adoc[configuration] for information about how to tailor and configure system.
+Please see link:./configuration.adoc[Configuration Manual] for information about how to tailor and configure system.
 
 You can override some of the configuration varibles with CLI arguments.
 These configuration variables, and command line switches are documented

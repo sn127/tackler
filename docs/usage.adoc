@@ -1,4 +1,6 @@
-= Usage
+= Usage Guide
+
+This is general usage guide for tackler reporting engine.
 
 To use tackler you have to have
 
@@ -22,19 +24,20 @@ For embedding Tackler see:
 
 == CLI
 
-After you have link:installation.adoc[installed Tackler], and you have some transaction data,
-you can run tackler with command:
+See link:installation.adoc[installation guide] for minimal setup and recommendations for production setups.
 
-   java -jar tackler-cli-1.2.3.jar
+After you have installed tackler and you have some transaction data you can run tackler with command:
 
-Where `1.2.3` is version number of your installation.
+   java -jar tackler-cli.jar
+
+(If you created minimal setup based on link:installation.adoc[installation guide])
 
 To skip automatic configuration discovery mechanism, you can provide path 
 to configuration file with `--cfg` argument.
 
-   java tackler-cli-1.2.3.jar --cfg=/path/to/my/tackler.conf
+   java tackler-cli.jar --cfg=/path/to/my/tackler.conf
 
-See link:installation.adoc[installation guide] for minimal and recommended setup.
+See tackler's link:./configuration.adoc[Configuration Manual] for how to configure tackler.
 
 
 === Input and output

@@ -1,18 +1,21 @@
-= Configuration
+= Configuration Manual
 
-Tackler configuration is controlled by conf-files
-and by command line options.
+Tackler configuration is controlled by conf-files and command line options.
 
-Example configuration files: link:./tackler.conf[] and  link:./accounts.conf[]
-have example values and documentation for all configuration variables.
+There are provided configuration files for link:./tackler.conf[tackler.conf]
+and example of link:./accounts.conf[accounts.conf] included in documentation folder.
+
+These have examples and documentation for all available configuration variables.
 
 You can override some of the configuration varibles with CLI options.
-These configuration options, and command line switches are documented
-on link:./tackler.conf[tackler.conf].
 
-Tackler configuration file format is HOCON, there is extensive 
-documentation available on by
-link:https://github.com/typesafehub/config/blob/master/HOCON.md[HOCON project at github].
+These configuration options which can be overridden by command line are documented
+in link:./tackler.conf[tackler.conf] by 'CLI:' notation.
+
+
+Tackler configuration file format is based HOCON syntax.
+There is extensive documentation of HOCON and its capabilities available by
+link:https://github.com/typesafehub/config/blob/master/HOCON.md[typesafe's HOCON project at github].
 
 
 == Configuration finding and resolution rules
@@ -43,4 +46,4 @@ Relative basedir-paths are always relative to the used cfg-file.
 
 If it is external conf-file, then it is conf-file's directory.
 
-If it is internal, embeddeed conf, then it is directory where executed jar is located.
+If it is internal, embedded conf, then it is directory where executed jar is located.
