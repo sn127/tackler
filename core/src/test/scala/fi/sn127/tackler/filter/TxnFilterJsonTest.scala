@@ -18,9 +18,11 @@ package fi.sn127.tackler.filter
 
 import java.time.ZonedDateTime
 import java.util.UUID
+
 import io.circe.syntax._
 import io.circe.parser.decode
 
+import fi.sn127.tackler.api._
 import fi.sn127.tackler.core.Settings
 import fi.sn127.tackler.parser.TacklerTxns
 
@@ -67,7 +69,7 @@ class TxnFilterJsonTest extends TxnFilterSpec  {
       |          }
       |        },
       |        {
-      |          "TxnFilterListOR" : {
+      |          "TxnFiltersOR" : {
       |            "txnFilters" : [
       |              {
       |                "TxnFilterPostingAccount" : {
@@ -106,7 +108,7 @@ class TxnFilterJsonTest extends TxnFilterSpec  {
       |          }
       |        },
       |        {
-      |          "TxnFilterNodeNOT" : {
+      |          "TxnFilterNOT" : {
       |            "txnFilter" : {
       |              "TxnFilterTxnDescription" : {
       |                "regex" : "not-me-not"
@@ -214,7 +216,7 @@ class TxnFilterJsonTest extends TxnFilterSpec  {
           TxnFilterTxnUUID(UUID.fromString("29c548db-deb7-44bd-a6a2-e5e4258d256a")),
           TxnFilterTxnComments("txn.comments"),
         )),
-        TxnFilterListOR(List[TxnFilter](
+        TxnFiltersOR(List[TxnFilter](
           TxnFilterPostingAccount("posting:account"),
           TxnFilterPostingAmountEqual("posting:amount:equal", 1),
           TxnFilterPostingAmountLess("posting.amount:less", 2),
@@ -223,7 +225,7 @@ class TxnFilterJsonTest extends TxnFilterSpec  {
           TxnFilterPostingCommodity("posting.commodity"),
           TxnFilterPostingComment("posting.comment"),
         )),
-        TxnFilterNodeNOT(
+        TxnFilterNOT(
           TxnFilterTxnDescription("not-me-not")
         )
       ))

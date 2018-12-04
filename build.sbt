@@ -95,7 +95,8 @@ lazy val api = crossProject(JSPlatform, JVMPlatform).
     libraryDependencies += "io.circe" %%% "circe-core" % circeVersion,
     libraryDependencies += "io.circe" %%% "circe-generic" % circeVersion,
     libraryDependencies += "io.circe" %%% "circe-java8" % circeVersion,
-    libraryDependencies += "io.circe" %%% "circe-parser" % circeVersion
+    libraryDependencies += "io.circe" %%% "circe-parser" % circeVersion,
+    libraryDependencies += "org.scalatest" %%% "scalatest" % scalatestVersion % Test
   ).
   jvmSettings(
   ).

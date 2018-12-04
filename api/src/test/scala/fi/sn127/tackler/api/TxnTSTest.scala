@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  */
-package fi.sn127.tackler.model
+package fi.sn127.tackler.api
 
 import java.time.ZonedDateTime
 

@@ -14,26 +14,19 @@
  * limitations under the License.
  *
  */
-package fi.sn127.tackler.filter
+package fi.sn127.tackler.api
 
 import java.time.ZonedDateTime
 import java.util.UUID
 
-import fi.sn127.tackler.model.{Transaction, TxnTS}
-import cats.implicits._
 import io.circe.{Decoder, Encoder}
 import io.circe.generic.semiauto.{deriveDecoder, deriveEncoder}
 
+// Circe with java8 time: https://github.com/circe/circe/issues/378
+import io.circe.java8.time.decodeZonedDateTime
+import io.circe.java8.time.encodeZonedDateTime
 
 sealed trait TxnFilter {
-  /**
-   * Test if txn satisfies a filter.
-   *
-   * @param txn to be tested against filter
-   * @return true if satisfies a predicate, false otherwise
-   */
-  def filter(txn: Transaction): Boolean
-
   def text(indent: String): String = indent
 }
 object TxnFilter {
@@ -45,10 +38,6 @@ object TxnFilter {
 }
 
 final case class TxnFilterRoot(txnFilter: TxnFilter) extends TxnFilter {
-  override def filter(txn: Transaction): Boolean = {
-    txnFilter.filter(txn)
-  }
-
   override def text(indent: String): String = {
     val myIndent = indent + "  "
     indent + "Filter:" + "\n" +
@@ -64,17 +53,10 @@ object TxnFilterRoot {
 }
 
 final class TxnFilterFalse() extends TxnFilter {
-  override def filter(txn: Transaction): Boolean = {
-    false
-  }
 }
 
 final class TxnFilterTrue() extends TxnFilter {
-  override def filter(txn: Transaction): Boolean = {
-    true
-  }
 }
-
 
 
 sealed trait TxnFilters extends TxnFilter {
@@ -90,25 +72,13 @@ sealed trait TxnFilters extends TxnFilter {
 final case class TxnFiltersAND(txnFilters: Seq[TxnFilter]) extends TxnFilters() {
   val opTxt = "AND"
 
-  override def filter(txn: Transaction): Boolean = {
-    txnFilters.forall(f => f.filter(txn))
-  }
 }
 
-
-sealed case class TxnFilterListOR(txnFilters: Seq[TxnFilter]) extends TxnFilters {
+sealed case class TxnFiltersOR(txnFilters: Seq[TxnFilter]) extends TxnFilters {
   val opTxt = "OR"
-
-  override def filter(txn: Transaction): Boolean = {
-    txnFilters.exists(f => f.filter(txn) === true )
-  }
 }
 
-sealed case class TxnFilterNodeNOT(txnFilter: TxnFilter) extends TxnFilter {
-  override def filter(txn: Transaction): Boolean = {
-    txnFilter.filter(txn) === false
-  }
-
+sealed case class TxnFilterNOT(txnFilter: TxnFilter) extends TxnFilter {
   override def text(indent: String): String = {
     val myIndent = indent + "  "
     indent + "NOT\n" + txnFilter.text(myIndent)
@@ -124,24 +94,17 @@ sealed abstract class TxnFilterTxnTS(ts: ZonedDateTime) extends TxnFilter {
   }
 }
 
+// Circe with java8 time: https://github.com/circe/circe/issues/378
 final case class TxnFilterTxnTSBegin(begin: ZonedDateTime) extends TxnFilterTxnTS(begin) {
   val opTxt = "begin"
-
-  override def filter(txn: Transaction): Boolean = {
-    // why to toInstant? see test: 960cb7e7-b180-4276-a43b-714e53e1789b
-    // offsets which cancel each others won't compare correctly otherwise
-    begin.toInstant.compareTo(txn.header.timestamp.toInstant) <= 0
-  }
 }
 
+// Circe with java8 time: https://github.com/circe/circe/issues/378
 final case class TxnFilterTxnTSEnd(end: ZonedDateTime) extends TxnFilterTxnTS(end) {
   val opTxt = "end  "
-
-  override def filter(txn: Transaction): Boolean = {
-    txn.header.timestamp.toInstant.isBefore(end.toInstant)
-  }
 }
 
+// Circe with java8 time: https://github.com/circe/circe/issues/378
 sealed abstract class TxnFilterRegex(regex: String) extends TxnFilter {
   val rgx = java.util.regex.Pattern.compile(regex)
 
@@ -156,24 +119,14 @@ sealed abstract class TxnFilterRegex(regex: String) extends TxnFilter {
 final case class TxnFilterTxnDescription(regex: String) extends TxnFilterRegex(regex) {
   val target = "Txn Description"
 
-  override def filter(txn: Transaction): Boolean = {
-    rgx.matcher(txn.header.description.getOrElse("")).matches
-  }
 }
 
 final case class TxnFilterTxnCode(regex: String) extends TxnFilterRegex(regex) {
   val target = "Txn Code"
-
-  override def filter(txn: Transaction): Boolean = {
-    rgx.matcher(txn.header.code.getOrElse("")).matches
-  }
 }
 
 
 final case class TxnFilterTxnUUID(uuid: UUID) extends TxnFilter {
-  override def filter(txn: Transaction): Boolean = {
-    txn.header.uuid.exists(_ === uuid)
-  }
 
   override def text(indent: String): String = {
     indent +  "Txn UUID: " + uuid.toString
@@ -182,16 +135,8 @@ final case class TxnFilterTxnUUID(uuid: UUID) extends TxnFilter {
 
 final case class TxnFilterTxnComments(regex: String) extends TxnFilterRegex(regex) {
   val target = "Txn Comments"
-
-  override def filter(txn: Transaction): Boolean = {
-    txn.header.comments.map(cmts => {
-      cmts.exists(c => rgx.matcher(c).matches())
-    }) match {
-      case Some(b) => b
-      case None => false
-    }
-  }
 }
+
 /*
  *
  * TXN: POSTINGS
@@ -200,19 +145,11 @@ final case class TxnFilterTxnComments(regex: String) extends TxnFilterRegex(rege
 final case class TxnFilterPostingAccount(regex: String) extends TxnFilterRegex(regex) {
   val target = "Posting Account"
 
-  override def filter(txn: Transaction): Boolean = {
-    txn.posts.exists(p => rgx.matcher(p.acctn.account).matches())
-  }
 }
 
 final case class TxnFilterPostingComment(regex: String) extends TxnFilterRegex(regex) {
   val target = "Posting Comment"
 
-  override def filter(txn: Transaction): Boolean = {
-    txn.posts.exists(p => {
-      p.comment.exists(rgx.matcher(_).matches())
-    })
-  }
 }
 
 sealed abstract class TxnFilterPosting(regex: String, amount: BigDecimal) extends TxnFilterRegex(regex) {
@@ -230,12 +167,6 @@ final case class TxnFilterPostingAmountEqual(regex: String, amount: BigDecimal) 
   val target = "Posting Amount"
   val opTxt: String = "=="
 
-  override def filter(txn: Transaction): Boolean = {
-    txn.posts.exists(p => {
-      rgx.matcher(p.acctn.account).matches() &&
-        p.amount.compare(amount) === 0
-    })
-  }
 }
 
 
@@ -243,33 +174,16 @@ final case class TxnFilterPostingAmountLess(regex: String, amount: BigDecimal) e
   val target = "Posting Amount"
   val opTxt: String = "<"
 
-  override def filter(txn: Transaction): Boolean = {
-    txn.posts.exists(p => {
-      rgx.matcher(p.acctn.account).matches() &&
-        p.amount.compare(amount) < 0
-    })
-  }
 }
 
 final case class TxnFilterPostingAmountGreater(regex: String, amount: BigDecimal) extends TxnFilterPosting(regex, amount) {
   val target = "Posting Amount"
   val opTxt: String = ">"
 
-  override def filter(txn: Transaction): Boolean = {
-    txn.posts.exists(p => {
-      rgx.matcher(p.acctn.account).matches() &&
-        p.amount.compare(amount) > 0
-    })
-  }
 }
 
 
 final case class TxnFilterPostingCommodity(regex: String) extends TxnFilterRegex(regex) {
   val target = "Posting Commodity"
 
-  override def filter(txn: Transaction): Boolean = {
-    txn.posts.exists(p => {
-      p.acctn.commodity.exists(c => rgx.matcher(c.name).matches())
-    })
-  }
 }

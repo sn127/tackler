@@ -18,6 +18,7 @@ package fi.sn127.tackler.filter
 
 import java.time.{ZoneId, ZonedDateTime}
 
+import fi.sn127.tackler.api.{TxnFilterRoot, TxnFilterTxnTSBegin}
 import fi.sn127.tackler.core.Settings
 import fi.sn127.tackler.parser.TacklerTxns
 

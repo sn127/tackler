@@ -76,7 +76,7 @@ Changes to client API's JSON model
 ** [PP] Client API model objects for filters
 * [x] report metadata with filters
 ** [x] text
-** [PP] json
+** [x] json
 
 
 === New dependencies
@@ -131,7 +131,7 @@ No changes to identity export
 ** [x] API changes
 *** [x] Server API changes
 *** [x] Client API changes
-** [PP] Add metadata example to JSON doc (git-and-filter-01)
+** [x] Add metadata example to JSON doc (git-and-filter-01)
 
 
 == Future plans and Postponed (PP) features
@@ -142,8 +142,8 @@ No changes to identity export
 
 === Postponed (PP) features
 
-* [PP] Client API model objects for filters
-* [PP] Better JSON representation in metadata
+* [x] Client API model objects for filters
+* [x] Better JSON representation in metadata
 * [PP] perf: Performance test with filtering enabled
 * [PP] perf: Run all tests with filtering engine (while no active filters)
 
@@ -155,7 +155,7 @@ Normal, ok-case tests to validate functionality:
 * [x] filter json def
 * [x] report metadata with filters
 ** [x] text
-** [PP] json
+** [x] json
 * [x] reports
 ** [x] balance report's metadata
 ** [x] balance-group report's metadata
