@@ -21,12 +21,14 @@ import java.util.UUID
 
 import io.circe.syntax._
 import io.circe.parser.decode
+import org.scalatest.FunSpecLike
 
 import fi.sn127.tackler.api._
 import fi.sn127.tackler.core.Settings
+import fi.sn127.tackler.model.TxnData
 import fi.sn127.tackler.parser.TacklerTxns
 
-class TxnFilterJsonTest extends TxnFilterSpec  {
+class TxnFilterJsonTest extends TxnFilterSpec with FunSpecLike {
   val filterJsonStr =
     """{
       |  "txnFilter" : {
@@ -191,21 +193,49 @@ class TxnFilterJsonTest extends TxnFilterSpec  {
 
   val txnsAll = tt.string2Txns(txnStr)
 
-  behavior of "Txn filters JSON decoding and encoding"
+  describe("Decoding JSON to Txn Filter") {
+    /**
+     * test: 4cce4204-16b1-40a4-b1ea-ce11272d5824
+     */
+    it("decode from JSON and then encode to text") {
+      val txnFilterRoot = decode[TxnFilterRoot](filterJsonStr)
 
-  /**
-   * test: 4cce4204-16b1-40a4-b1ea-ce11272d5824
-   */
-  it must "decode from JSON and then encode to text" in {
-    val txnFilterRoot = decode[TxnFilterRoot](filterJsonStr)
+      assert(filterTextStr === txnFilterRoot.right.get.text(""))
+    }
 
-    assert(filterTextStr === txnFilterRoot.right.get.text(""))
+    /**
+     * test: 283d64f6-4508-48ac-89a3-e70e25784330
+     */
+    it("decode working filter from JSON") {
+      val filterStr =
+        """
+          |{
+          |  "txnFilter" : {
+          |    "TxnFiltersAND" : {
+          |      "txnFilters" : [
+          |        {
+          |          "TxnFilterPostingAccount" : {
+          |            "regex" : ".*:abc"
+          |          }
+          |        }
+          |      ]
+          |    }
+          |  }
+          |}
+        """.stripMargin
+
+      val txnFilterRoot = decode[TxnFilterRoot](filterStr)
+
+      val txnData = txnsAll.filter(txnFilterRoot.right.get)
+
+      assert(txnData.txns.size === 1)
+      assert(checkUUID(txnData, uuidTxn04))
+    }
   }
 
-  /**
-   * test: a49f8a0c-d612-453f-afd9-cb134100bf1f
-   */
-  it must "encode to JSON and text" in {
+  describe("Encode Filter and it's metadata") {
+    val txnData = TxnData(None, Seq.empty)
+
     val txnFilter = TxnFilterRoot(
       TxnFiltersAND(List[TxnFilter](
         TxnFiltersAND(List[TxnFilter](
@@ -231,36 +261,136 @@ class TxnFilterJsonTest extends TxnFilterSpec  {
       ))
     )
 
-    assert(filterJsonStr === txnFilter.asJson + "\n")
-    assert(filterTextStr === txnFilter.text(""))
+    /**
+     * test: 3624a7b3-3668-45ee-9580-aa64fb955a33
+     */
+    it("encode filter to JSON") {
+      assert(filterJsonStr === txnFilter.asJson + "\n")
+    }
+
+    /**
+     * test: f3213817-fe0c-4bec-b6be-b3396bad8114
+     */
+    it("encode filter to TEXT") {
+      assert(filterTextStr === txnFilter.text(""))
+    }
+
+    /**
+     * test: 2b56249e-4dff-445f-b30c-427c7c29e8e1
+     */
+    it("encode metadata as JSON") {
+      val metadataJson =
+        """{
+          |  "metadataItems" : [
+          |    {
+          |      "TxnFilterDefinition" : {
+          |        "txnFilterRoot" : {
+          |          "txnFilter" : {
+          |            "TxnFiltersAND" : {
+          |              "txnFilters" : [
+          |                {
+          |                  "TxnFiltersAND" : {
+          |                    "txnFilters" : [
+          |                      {
+          |                        "TxnFilterTxnTSBegin" : {
+          |                          "begin" : "2018-01-01T10:11:22.345+02:00"
+          |                        }
+          |                      },
+          |                      {
+          |                        "TxnFilterTxnTSEnd" : {
+          |                          "end" : "2018-12-01T14:11:22.678+02:00"
+          |                        }
+          |                      },
+          |                      {
+          |                        "TxnFilterTxnCode" : {
+          |                          "regex" : "txn.code"
+          |                        }
+          |                      },
+          |                      {
+          |                        "TxnFilterTxnDescription" : {
+          |                          "regex" : "txn.desc"
+          |                        }
+          |                      },
+          |                      {
+          |                        "TxnFilterTxnUUID" : {
+          |                          "uuid" : "29c548db-deb7-44bd-a6a2-e5e4258d256a"
+          |                        }
+          |                      },
+          |                      {
+          |                        "TxnFilterTxnComments" : {
+          |                          "regex" : "txn.comments"
+          |                        }
+          |                      }
+          |                    ]
+          |                  }
+          |                },
+          |                {
+          |                  "TxnFiltersOR" : {
+          |                    "txnFilters" : [
+          |                      {
+          |                        "TxnFilterPostingAccount" : {
+          |                          "regex" : "posting:account"
+          |                        }
+          |                      },
+          |                      {
+          |                        "TxnFilterPostingAmountEqual" : {
+          |                          "regex" : "posting:amount:equal",
+          |                          "amount" : 1
+          |                        }
+          |                      },
+          |                      {
+          |                        "TxnFilterPostingAmountLess" : {
+          |                          "regex" : "posting.amount:less",
+          |                          "amount" : 2
+          |                        }
+          |                      },
+          |                      {
+          |                        "TxnFilterPostingAmountGreater" : {
+          |                          "regex" : "posting.amount:greater",
+          |                          "amount" : 123456789123456789.012345678901234567890123456789
+          |                        }
+          |                      },
+          |                      {
+          |                        "TxnFilterPostingCommodity" : {
+          |                          "regex" : "posting.commodity"
+          |                        }
+          |                      },
+          |                      {
+          |                        "TxnFilterPostingComment" : {
+          |                          "regex" : "posting.comment"
+          |                        }
+          |                      }
+          |                    ]
+          |                  }
+          |                },
+          |                {
+          |                  "TxnFilterNOT" : {
+          |                    "txnFilter" : {
+          |                      "TxnFilterTxnDescription" : {
+          |                        "regex" : "not-me-not"
+          |                      }
+          |                    }
+          |                  }
+          |                }
+          |              ]
+          |            }
+          |          }
+          |        }
+          |      }
+          |    }
+          |  ]
+          |}
+          |""".stripMargin
+
+      assert(metadataJson === txnData.filter(txnFilter).metadata.map(m => m.asJson).getOrElse("") + "\n")
+    }
+
+    /**
+     * test: f26027f1-b9d5-4f87-a173-9ffac1b1b862
+     */
+    it("encode metadata as TEXT") {
+      assert(filterTextStr === txnData.filter(txnFilter).metadata.map(m => m.text()).getOrElse(""))
+    }
   }
 
-  /**
-   * test: 283d64f6-4508-48ac-89a3-e70e25784330
-   */
-  it must "decode from JSON working filter" in {
-    val filterStr =
-      """
-        |{
-        |  "txnFilter" : {
-        |    "TxnFiltersAND" : {
-        |      "txnFilters" : [
-        |        {
-        |          "TxnFilterPostingAccount" : {
-        |            "regex" : ".*:abc"
-        |          }
-        |        }
-        |      ]
-        |    }
-        |  }
-        |}
-      """.stripMargin
-
-    val txnFilterRoot = decode[TxnFilterRoot](filterStr)
-
-    val txnData = txnsAll.filter(txnFilterRoot.right.get)
-
-    assert(txnData.txns.size === 1)
-    assert(checkUUID(txnData, uuidTxn04))
-  }
 }

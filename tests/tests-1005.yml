@@ -323,7 +323,7 @@ features:
   - feature:
       id: c9b2129e-c01b-4e3f-8961-813b42b339d6
       parent: ab7695f6-9fba-4f5d-9d55-ea2c502b4ea4
-      subject: "Txn filters as JSON"
+      subject: "Txn filters as JSON or TEXT"
       tests:
         operations:
           - test:
@@ -332,10 +332,25 @@ features:
               descriptions:
                 - desc: "decode from JSON and then encode to text"
           - test:
-              id: a49f8a0c-d612-453f-afd9-cb134100bf1f
+              id: 3624a7b3-3668-45ee-9580-aa64fb955a33
               name: TxnFilterJsonTest
               descriptions:
-                - desc: "encode to JSON and text"
+                - desc: "encode to JSON"
+          - test:
+              id: f3213817-fe0c-4bec-b6be-b3396bad8114
+              name: TxnFilterJsonTest
+              descriptions:
+                - desc: "encode to TEXT"
+          - test:
+              id: 2b56249e-4dff-445f-b30c-427c7c29e8e1
+              name: TxnFilterJsonTest
+              descriptions:
+                - desc: "encode metadata as JSON"
+          - test:
+              id: f26027f1-b9d5-4f87-a173-9ffac1b1b862
+              name: TxnFilterJsonTest
+              descriptions:
+                - desc: "encode metadata as TEXT"
           - test:
               id: 283d64f6-4508-48ac-89a3-e70e25784330
               name: TxnFilterJsonTest

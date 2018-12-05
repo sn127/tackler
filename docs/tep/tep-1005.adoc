@@ -45,7 +45,7 @@ Changes to server API. Items in italics will be implemented later.
 * [x] filter json def
 * [x] report metadata with filters
 ** [x] text
-** [PP] json
+** [x] json
 * [x] filter-tree
 ** [x] nodes
 *** [x] `AND`
@@ -73,7 +73,7 @@ Changes to server API. Items in italics will be implemented later.
 Changes to client API's JSON model
 
 * [x] filter json def
-** [PP] Client API model objects for filters
+** [x] Client API model objects for filters
 * [x] report metadata with filters
 ** [x] text
 ** [x] json
