@@ -18,8 +18,8 @@ package object filter {
         case tf: TxnFilterRoot => TxnFilterRootF.filter(tf, txn)
 
         // Logicals
-        case tf: TxnFiltersAND => TxnFiltersANDF.filter(tf, txn)
-        case tf: TxnFiltersOR => TxnFilterORF.filter(tf, txn)
+        case tf: TxnFilterAND => TxnFilterANDF.filter(tf, txn)
+        case tf: TxnFilterOR => TxnFilterORF.filter(tf, txn)
         case tf: TxnFilterNOT => TxnFilterNOTF.filter(tf, txn)
 
         // TXN Header
@@ -66,16 +66,16 @@ package object filter {
     }
   }
 
-  implicit object TxnFiltersANDF extends CanTxnFilter[TxnFiltersAND] {
+  implicit object TxnFilterANDF extends CanTxnFilter[TxnFilterAND] {
 
-    override def filter(tf: TxnFiltersAND, txn: Transaction): Boolean = {
+    override def filter(tf: TxnFilterAND, txn: Transaction): Boolean = {
       tf.txnFilters.forall(f => f.filter(txn))
     }
   }
 
-  implicit object TxnFilterORF extends CanTxnFilter[TxnFiltersOR] {
+  implicit object TxnFilterORF extends CanTxnFilter[TxnFilterOR] {
 
-    override def filter(tf: TxnFiltersOR, txn: Transaction): Boolean = {
+    override def filter(tf: TxnFilterOR, txn: Transaction): Boolean = {
       tf.txnFilters.exists(f => f.filter(txn) === true)
     }
   }

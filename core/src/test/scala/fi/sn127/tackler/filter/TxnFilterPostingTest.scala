@@ -71,7 +71,7 @@ class TxnFilterPostingTest extends TxnFilterSpec with FlatSpecLike {
    * test: 7784049f-ef3e-4185-8d33-f8c78478eef1
    */
   it must "filter by account name with wildcard at begin" in {
-    val txnFilter = TxnFiltersAND(List(TxnFilterPostingAccount(".*:abc")))
+    val txnFilter =TxnFilterPostingAccount(".*:abc")
 
     val txnData = txnsAll.filter(TxnFilterRoot(txnFilter))
 

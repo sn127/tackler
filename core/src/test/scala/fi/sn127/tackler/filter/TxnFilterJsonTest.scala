@@ -32,10 +32,10 @@ class TxnFilterJsonTest extends TxnFilterSpec with FunSpecLike {
   val filterJsonStr =
     """{
       |  "txnFilter" : {
-      |    "TxnFiltersAND" : {
+      |    "TxnFilterAND" : {
       |      "txnFilters" : [
       |        {
-      |          "TxnFiltersAND" : {
+      |          "TxnFilterAND" : {
       |            "txnFilters" : [
       |              {
       |                "TxnFilterTxnTSBegin" : {
@@ -71,7 +71,7 @@ class TxnFilterJsonTest extends TxnFilterSpec with FunSpecLike {
       |          }
       |        },
       |        {
-      |          "TxnFiltersOR" : {
+      |          "TxnFilterOR" : {
       |            "txnFilters" : [
       |              {
       |                "TxnFilterPostingAccount" : {
@@ -211,11 +211,17 @@ class TxnFilterJsonTest extends TxnFilterSpec with FunSpecLike {
         """
           |{
           |  "txnFilter" : {
-          |    "TxnFiltersAND" : {
+          |    "TxnFilterAND" : {
           |      "txnFilters" : [
           |        {
           |          "TxnFilterPostingAccount" : {
           |            "regex" : ".*:abc"
+          |          }
+          |        },
+          |        {
+          |          "TxnFilterPostingAmountGreater" : {
+          |            "regex" : ".*:abc",
+          |            "amount" : 2.99
           |          }
           |        }
           |      ]
@@ -231,14 +237,66 @@ class TxnFilterJsonTest extends TxnFilterSpec with FunSpecLike {
       assert(txnData.txns.size === 1)
       assert(checkUUID(txnData, uuidTxn04))
     }
+
+    /**
+     * test: 2671b0ff-8b8d-42c8-95ae-e2dcf4d15ab0
+     */
+    it("reject JSON AND filter with only one filter") {
+      val filterStr =
+        """
+          |{
+          |  "txnFilter" : {
+          |    "TxnFilterAND" : {
+          |      "txnFilters" : [
+          |        {
+          |          "TxnFilterPostingAccount" : {
+          |            "regex" : ".*:abc"
+          |          }
+          |        }
+          |      ]
+          |    }
+          |  }
+          |}
+        """.stripMargin
+
+      assertThrows[IllegalArgumentException] {
+        val _ = decode[TxnFilterRoot](filterStr)
+      }
+    }
+
+    /**
+     * test: 00754b91-91e4-4ace-b4e4-0f43ff599939
+     */
+    it("reject JSON OR filter with only one filter") {
+      val filterStr =
+        """
+          |{
+          |  "txnFilter" : {
+          |    "TxnFilterOR" : {
+          |      "txnFilters" : [
+          |        {
+          |          "TxnFilterPostingAccount" : {
+          |            "regex" : ".*:abc"
+          |          }
+          |        }
+          |      ]
+          |    }
+          |  }
+          |}
+        """.stripMargin
+
+      assertThrows[IllegalArgumentException] {
+        val _ = decode[TxnFilterRoot](filterStr)
+      }
+    }
   }
 
   describe("Encode Filter and it's metadata") {
     val txnData = TxnData(None, Seq.empty)
 
     val txnFilter = TxnFilterRoot(
-      TxnFiltersAND(List[TxnFilter](
-        TxnFiltersAND(List[TxnFilter](
+      TxnFilterAND(List[TxnFilter](
+        TxnFilterAND(List[TxnFilter](
           TxnFilterTxnTSBegin(ZonedDateTime.parse("2018-01-01T10:11:22.345+02:00")),
           TxnFilterTxnTSEnd(ZonedDateTime.parse("2018-12-01T14:11:22.678+02:00")),
           TxnFilterTxnCode("txn.code"),
@@ -246,7 +304,7 @@ class TxnFilterJsonTest extends TxnFilterSpec with FunSpecLike {
           TxnFilterTxnUUID(UUID.fromString("29c548db-deb7-44bd-a6a2-e5e4258d256a")),
           TxnFilterTxnComments("txn.comments"),
         )),
-        TxnFiltersOR(List[TxnFilter](
+        TxnFilterOR(List[TxnFilter](
           TxnFilterPostingAccount("posting:account"),
           TxnFilterPostingAmountEqual("posting:amount:equal", 1),
           TxnFilterPostingAmountLess("posting.amount:less", 2),
@@ -286,10 +344,10 @@ class TxnFilterJsonTest extends TxnFilterSpec with FunSpecLike {
           |      "TxnFilterDefinition" : {
           |        "txnFilterRoot" : {
           |          "txnFilter" : {
-          |            "TxnFiltersAND" : {
+          |            "TxnFilterAND" : {
           |              "txnFilters" : [
           |                {
-          |                  "TxnFiltersAND" : {
+          |                  "TxnFilterAND" : {
           |                    "txnFilters" : [
           |                      {
           |                        "TxnFilterTxnTSBegin" : {
@@ -325,7 +383,7 @@ class TxnFilterJsonTest extends TxnFilterSpec with FunSpecLike {
           |                  }
           |                },
           |                {
-          |                  "TxnFiltersOR" : {
+          |                  "TxnFilterOR" : {
           |                    "txnFilters" : [
           |                      {
           |                        "TxnFilterPostingAccount" : {

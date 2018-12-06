@@ -122,16 +122,33 @@ These options are mutually exclusive with each other and with filesystem storage
 ===== Transaction Filtering
 
 There is an option to filter transactions based on attributes of single transaction.
-This interface is mostly meant to be used by link:./client-api.adoc[Client]
-and link:./server-api.adoc[Server] API.  See link./txn-filters.adoc[Transaction Filters]
-for general information about these filters.
+See link:./txn-filters.adoc[Transaction Filters] for general information about these filters.
 
-There is however command line option to provide filter definition.
-Transaction filter (tree) is defined by `--api-filter-def`, which will take filter definition as JSON.
+At the momemnt this interface is mostly meant to be used by
+link:./client-api.adoc[Client] and link:./server-api.adoc[Server] API, but it can be also used with
+tacker cli.
 
-There are several examples of complex Transaction Tree filters in test suite:
-* link:../core/src/test/scala/fi/sn127/tackler/filter/TxnFilterJsonTest.scala[core -> tests -> filter -> TxnFilterJsonTest]
-* link:../tests/cli/ok/filters-01.exec[tests -> cli -> ok -> filters-01.exec]
+There is a command line option to provide filter definition by `--api-filter-def`,
+which t will take transcation filter definition as JSON:
+
+Belows is an example of filter to find all transactions where there is "ice-cream"
+on description field for transaction.
+
+Filter is defined as below (on single line):
+----
+--api-filter-def '{ "txnFilter": { "TxnFilterTxnDescription": { "regex": ".*ice-cream.*" } } }'
+----
+
+Second example is more complex combination of filters to find all transactions which have
+code as starting "#" and description starts as "txn-".
+
+That filter is defined as (on single line):
+----
+--api-filter-def '{ "txnFilter": { "TxnFilterAND" : { "txnFilters" : [ { "TxnFilterTxnCode": { "regex": "#.*" } },  { "TxnFilterTxnDescription": { "regex": "txn-.*" } } ] } } }'
+----
+
+See link:./txn-filters.adoc[Transaction Filters] for more information.
+
 
 ==== Reporting
 

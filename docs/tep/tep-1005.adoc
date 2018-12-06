@@ -144,8 +144,8 @@ No changes to identity export
 
 * [x] Client API model objects for filters
 * [x] Better JSON representation in metadata
-* [PP] perf: Performance test with filtering enabled
-* [PP] perf: Run all tests with filtering engine (while no active filters)
+* [x] perf: Performance test with filtering enabled
+* [x] perf: Run all tests with filtering engine (while no active filters)
 
 
 == Tests
@@ -194,10 +194,11 @@ Tests for error cases:
 
 === Perf
 
-Is there need to run or create new perf tests?
+Initial implementation as sealed trait implementation without
+implicits is on commit-id: `1c2c21f941bbf4b231e605e81ec8eb57dc3fa50a`
 
-* [PP] perf: Performance test with filtering enabled
-* [PP] perf: Run all tests with filtering engine (while no active filters)
+* [x] perf: Performance test with filtering enabled
+* [x] perf: Run all tests with filtering engine (while no active filters)
 
 
 === Test coverage tracking

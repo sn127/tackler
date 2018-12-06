@@ -63,18 +63,20 @@ sealed trait TxnFilters extends TxnFilter {
   val txnFilters: Seq[TxnFilter]
   val opTxt: String
 
+  require(txnFilters.size > 1, "There must be at least two TxnFilters")
+
   override def text(indent: String): String = {
     val myIndent = indent + "  "
     indent +  opTxt + "\n" + txnFilters.map(f => f.text(myIndent)).mkString("\n")
   }
 }
 
-final case class TxnFiltersAND(txnFilters: Seq[TxnFilter]) extends TxnFilters() {
+final case class TxnFilterAND(txnFilters: Seq[TxnFilter]) extends TxnFilters() {
   val opTxt = "AND"
 
 }
 
-sealed case class TxnFiltersOR(txnFilters: Seq[TxnFilter]) extends TxnFilters {
+sealed case class TxnFilterOR(txnFilters: Seq[TxnFilter]) extends TxnFilters {
   val opTxt = "OR"
 }
 

@@ -23,7 +23,7 @@ import org.scalatest.FlatSpec
 import fi.sn127.tackler.api._
 import fi.sn127.tackler.model.Transaction
 
-class TxnFiltersTest extends FlatSpec {
+class TxnFilterTest extends FlatSpec {
 
 
   val txnFilterFalse = new TxnFilterFalse()
@@ -34,10 +34,19 @@ class TxnFiltersTest extends FlatSpec {
   behavior of "AND"
 
   /**
+   * test: aa8aa459-b100-403e-98ea-7381ca58727d
+   */
+  it should "reject AND filter with only one filter" in {
+    assertThrows[IllegalArgumentException] {
+      val _ = TxnFilterAND(Seq[TxnFilter](txnFilterTrue))
+    }
+  }
+
+  /**
    * test: 2bd7fa78-adda-4f35-93eb-9b602bb3667e
    */
   it should "AND(false, false)" in {
-    val txnFilter = TxnFiltersAND(List[TxnFilter](
+    val txnFilter = TxnFilterAND(List[TxnFilter](
       txnFilterFalse,
       txnFilterFalse))
 
@@ -48,7 +57,7 @@ class TxnFiltersTest extends FlatSpec {
    * test: 11d4409c-93e2-4670-b2d5-65073980ba2d
    */
   it should "AND(false, true)" in {
-    val txnFilter = TxnFiltersAND(List[TxnFilter](
+    val txnFilter = TxnFilterAND(List[TxnFilter](
       txnFilterFalse,
       txnFilterTrue))
 
@@ -59,7 +68,7 @@ class TxnFiltersTest extends FlatSpec {
    * test: 7635059e-1828-48f7-9799-5bb0d327f446
    */
   it should "AND(true, false)" in {
-    val txnFilter = TxnFiltersAND(List[TxnFilter](
+    val txnFilter = TxnFilterAND(List[TxnFilter](
       txnFilterTrue,
       txnFilterFalse))
 
@@ -70,7 +79,7 @@ class TxnFiltersTest extends FlatSpec {
    * test: bd589c45-4c80-4ccd-9f2f-49caf964d2a5
    */
   it should "AND(true, true)" in {
-    val txnFilter = TxnFiltersAND(List[TxnFilter](
+    val txnFilter = TxnFilterAND(List[TxnFilter](
       txnFilterTrue,
       txnFilterTrue))
 
@@ -81,7 +90,7 @@ class TxnFiltersTest extends FlatSpec {
    * test: feb1a75c-cea8-40db-b4bf-ef4d59d49c9e
    */
   it should "AND(true, false, true)" in {
-    val txnFilter = TxnFiltersAND(List[TxnFilter](
+    val txnFilter = TxnFilterAND(List[TxnFilter](
       txnFilterTrue,
       txnFilterFalse,
       txnFilterTrue
@@ -94,7 +103,7 @@ class TxnFiltersTest extends FlatSpec {
    * test: 456c6b08-7e61-410b-8a36-c3c47d6355b0
    */
   it should "AND(true, true, false)" in {
-    val txnFilter = TxnFiltersAND(List[TxnFilter](
+    val txnFilter = TxnFilterAND(List[TxnFilter](
       txnFilterTrue,
       txnFilterTrue,
       txnFilterFalse
@@ -108,9 +117,9 @@ class TxnFiltersTest extends FlatSpec {
    */
   it should "AND(filter, AND(...))" in {
     val txnFilter =
-      TxnFiltersAND(List[TxnFilter](
+      TxnFilterAND(List[TxnFilter](
         txnFilterTrue,
-        TxnFiltersAND(List[TxnFilter](
+        TxnFilterAND(List[TxnFilter](
           txnFilterFalse,
           txnFilterTrue
         ))
@@ -124,9 +133,9 @@ class TxnFiltersTest extends FlatSpec {
    */
   it should "AND(filter, OR(...))" in {
     val txnFilter =
-      TxnFiltersAND(List[TxnFilter](
+      TxnFilterAND(List[TxnFilter](
         txnFilterTrue,
-        TxnFiltersOR(List[TxnFilter](
+        TxnFilterOR(List[TxnFilter](
           txnFilterFalse,
           txnFilterTrue
         ))
@@ -140,7 +149,7 @@ class TxnFiltersTest extends FlatSpec {
    */
   it should "AND(filter, NOT(...))" in {
     val txnFilter =
-      TxnFiltersAND(List[TxnFilter](
+      TxnFilterAND(List[TxnFilter](
         txnFilterTrue,
         TxnFilterNOT(
           txnFilterFalse)
@@ -154,12 +163,12 @@ class TxnFiltersTest extends FlatSpec {
    */
   it should "AND(AND(...), OR(...))" in {
     val txnFilter =
-      TxnFiltersAND(List[TxnFilter](
-        TxnFiltersAND(List[TxnFilter](
+      TxnFilterAND(List[TxnFilter](
+        TxnFilterAND(List[TxnFilter](
           txnFilterTrue,
           txnFilterTrue
         )),
-        TxnFiltersOR(List[TxnFilter](
+        TxnFilterOR(List[TxnFilter](
           txnFilterFalse,
           txnFilterTrue
         ))
@@ -173,13 +182,13 @@ class TxnFiltersTest extends FlatSpec {
    */
   it should "AND(filter, AND(...), OR(...), NOT(...))" in {
     val txnFilter =
-      TxnFiltersAND(List[TxnFilter](
+      TxnFilterAND(List[TxnFilter](
         txnFilterTrue,
-        TxnFiltersAND(List[TxnFilter](
+        TxnFilterAND(List[TxnFilter](
           txnFilterTrue,
           txnFilterTrue
         )),
-        TxnFiltersOR(List[TxnFilter](
+        TxnFilterOR(List[TxnFilter](
           txnFilterFalse,
           txnFilterTrue
         )),
@@ -195,10 +204,20 @@ class TxnFiltersTest extends FlatSpec {
   behavior of "OR"
 
   /**
+   * test: f9088d6f-d3ae-4120-b420-e77d0ea26f11
+   */
+  it should "reject OR filter with only one filter" in {
+    assertThrows[IllegalArgumentException] {
+      val _ = TxnFilterAND(Seq[TxnFilter](txnFilterTrue))
+    }
+  }
+
+
+  /**
    * test: c6036b88-6032-4005-84d5-a9d29cc4b283
    */
   it should "OR(false, false)" in {
-    val txnFilter = TxnFiltersOR(List[TxnFilter](
+    val txnFilter = TxnFilterOR(List[TxnFilter](
       txnFilterFalse,
       txnFilterFalse))
 
@@ -209,7 +228,7 @@ class TxnFiltersTest extends FlatSpec {
    * test: 0e03ed8a-23ad-48f1-af49-2b0967d573e3
    */
   it should "OR(false, true)" in {
-    val txnFilter = TxnFiltersOR(List[TxnFilter](
+    val txnFilter = TxnFilterOR(List[TxnFilter](
       txnFilterFalse,
       txnFilterTrue))
 
@@ -220,7 +239,7 @@ class TxnFiltersTest extends FlatSpec {
    * test: 9aefdc26-b4bc-4e42-b0a8-ea2aefec7cde
    */
   it should "OR(true, false)" in {
-    val txnFilter = TxnFiltersOR(List[TxnFilter](
+    val txnFilter = TxnFilterOR(List[TxnFilter](
       txnFilterTrue,
       txnFilterFalse))
 
@@ -231,7 +250,7 @@ class TxnFiltersTest extends FlatSpec {
    * test: ace886f3-a1cb-454e-9f7f-3c4c449a5ab2
    */
   it should "OR(true, true)" in {
-    val txnFilter = TxnFiltersOR(List[TxnFilter](
+    val txnFilter = TxnFilterOR(List[TxnFilter](
       txnFilterTrue,
       txnFilterTrue))
 
@@ -242,7 +261,7 @@ class TxnFiltersTest extends FlatSpec {
    * test: 8b5afb02-b3f1-4b2b-a599-dda2f5b95884
    */
   it should "OR(false, true, false)" in {
-    val txnFilter = TxnFiltersOR(List[TxnFilter](
+    val txnFilter = TxnFilterOR(List[TxnFilter](
       txnFilterFalse,
       txnFilterTrue,
       txnFilterFalse
@@ -255,7 +274,7 @@ class TxnFiltersTest extends FlatSpec {
    * test: 0666ff4f-88af-42af-b415-1b73658731c7
    */
   it should "OR(false, false, true)" in {
-    val txnFilter = TxnFiltersOR(List[TxnFilter](
+    val txnFilter = TxnFilterOR(List[TxnFilter](
       txnFilterFalse,
       txnFilterFalse,
       txnFilterTrue
@@ -269,9 +288,9 @@ class TxnFiltersTest extends FlatSpec {
    */
   it should "OR(filter, AND(...))" in {
     val txnFilter =
-      TxnFiltersOR(List[TxnFilter](
+      TxnFilterOR(List[TxnFilter](
         txnFilterFalse,
-        TxnFiltersAND(List[TxnFilter](
+        TxnFilterAND(List[TxnFilter](
           txnFilterTrue,
           txnFilterTrue
         ))
@@ -285,9 +304,9 @@ class TxnFiltersTest extends FlatSpec {
    */
   it should "OR(filter, OR(...))" in {
     val txnFilter =
-      TxnFiltersOR(List[TxnFilter](
+      TxnFilterOR(List[TxnFilter](
         txnFilterFalse,
-        TxnFiltersOR(List[TxnFilter](
+        TxnFilterOR(List[TxnFilter](
           txnFilterFalse,
           txnFilterTrue
         ))
@@ -301,7 +320,7 @@ class TxnFiltersTest extends FlatSpec {
    */
   it should "OR(filter, NOT(...))" in {
     val txnFilter =
-      TxnFiltersOR(List[TxnFilter](
+      TxnFilterOR(List[TxnFilter](
         txnFilterFalse,
         TxnFilterNOT(
           txnFilterFalse)
@@ -315,12 +334,12 @@ class TxnFiltersTest extends FlatSpec {
    */
   it should "OR(AND(...), OR(...))" in {
     val txnFilter =
-      TxnFiltersOR(List[TxnFilter](
-        TxnFiltersAND(List[TxnFilter](
+      TxnFilterOR(List[TxnFilter](
+        TxnFilterAND(List[TxnFilter](
           txnFilterTrue,
           txnFilterTrue
         )),
-        TxnFiltersOR(List[TxnFilter](
+        TxnFilterOR(List[TxnFilter](
           txnFilterFalse,
           txnFilterFalse
         ))
@@ -334,13 +353,13 @@ class TxnFiltersTest extends FlatSpec {
    */
   it should "OR(filter, AND(...), OR(...), NOT(...))" in {
     val txnFilter =
-      TxnFiltersOR(List[TxnFilter](
+      TxnFilterOR(List[TxnFilter](
         txnFilterFalse,
-        TxnFiltersAND(List[TxnFilter](
+        TxnFilterAND(List[TxnFilter](
           txnFilterFalse,
           txnFilterTrue
         )),
-        TxnFiltersOR(List[TxnFilter](
+        TxnFilterOR(List[TxnFilter](
           txnFilterFalse,
           txnFilterTrue
         )),
@@ -397,7 +416,7 @@ class TxnFiltersTest extends FlatSpec {
   it should "NOT(OR(...))" in {
     val txnFilter =
       TxnFilterNOT(
-        TxnFiltersOR(List[TxnFilter](
+        TxnFilterOR(List[TxnFilter](
           txnFilterFalse,
           txnFilterTrue)))
 
@@ -410,7 +429,7 @@ class TxnFiltersTest extends FlatSpec {
   it should "NOT(AND(...))" in {
     val txnFilter =
       TxnFilterNOT(
-        TxnFiltersAND(List[TxnFilter](
+        TxnFilterAND(List[TxnFilter](
           txnFilterFalse,
           txnFilterTrue)))
 
