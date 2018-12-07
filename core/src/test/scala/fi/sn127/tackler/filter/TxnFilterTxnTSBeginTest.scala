@@ -18,10 +18,13 @@ package fi.sn127.tackler.filter
 
 import java.time.{ZoneId, ZonedDateTime}
 
+import org.scalatest.FlatSpecLike
+
+import fi.sn127.tackler.api.{TxnFilterDefinition, TxnFilterTxnTSBegin}
 import fi.sn127.tackler.core.Settings
 import fi.sn127.tackler.parser.TacklerTxns
 
-class TxnFilterTxnTSBeginTest extends TxnFilterSpec {
+class TxnFilterTxnTSBeginTest extends TxnFilterSpec with FlatSpecLike {
 
   val tt = new TacklerTxns(Settings())
 
@@ -140,7 +143,7 @@ class TxnFilterTxnTSBeginTest extends TxnFilterSpec {
       0, 0, 0, 0,
       ZoneId.of("UTC")))
 
-    val txnData = txnsTSDate.filter(TxnFilterRoot(txnTSBeginFilter))
+    val txnData = txnsTSDate.filter(TxnFilterDefinition(txnTSBeginFilter))
 
     assert(txnData.txns.size === 2)
     assert(checkUUID(txnData, uuidTSDate03))
@@ -156,7 +159,7 @@ class TxnFilterTxnTSBeginTest extends TxnFilterSpec {
       23, 0, 0, 0,
       ZoneId.of("UTC")))
 
-    val txnData = txnsTSTime.filter(TxnFilterRoot(txnTSBeginFilter))
+    val txnData = txnsTSTime.filter(TxnFilterDefinition(txnTSBeginFilter))
 
     assert(txnData.txns.size === 2)
     assert(checkUUID(txnData, uuidTSTime02))
@@ -172,7 +175,7 @@ class TxnFilterTxnTSBeginTest extends TxnFilterSpec {
       14, 0, 0, 123456788,
       ZoneId.of("UTC")))
 
-    val txnData = txnsTSTNano.filter(TxnFilterRoot(txnTSBeginFilter))
+    val txnData = txnsTSTNano.filter(TxnFilterDefinition(txnTSBeginFilter))
 
     assert(txnData.txns.size === 2)
     assert(checkUUID(txnData, uuidTSNano02))
@@ -188,7 +191,7 @@ class TxnFilterTxnTSBeginTest extends TxnFilterSpec {
       0, 0, 0, 0,
       ZoneId.of("UTC")))
 
-    val txnData = txnsTSZone.filter(TxnFilterRoot(txnTSBeginFilter))
+    val txnData = txnsTSZone.filter(TxnFilterDefinition(txnTSBeginFilter))
 
     assert(txnData.txns.size === 2)
     assert(checkUUID(txnData, uuidTSZone02))

@@ -21,8 +21,8 @@ import better.files._
 import org.slf4j.{Logger, LoggerFactory}
 import io.circe.parser.decode
 
+import fi.sn127.tackler.api.TxnFilterDefinition
 import fi.sn127.tackler.core.{FilesystemStorageType, GitStorageType, Settings, TacklerException, TxnException}
-import fi.sn127.tackler.filter.TxnFilterRoot
 import fi.sn127.tackler.model.TxnData
 import fi.sn127.tackler.parser.{TacklerParseException, TacklerTxns}
 import fi.sn127.tackler.report.Reports
@@ -152,7 +152,7 @@ object TacklerCli {
     }) { filterJsonStr =>
       // cli: api-filter-def: YES
 
-      val jsonDecodeResult = decode[TxnFilterRoot](filterJsonStr)
+      val jsonDecodeResult = decode[TxnFilterDefinition](filterJsonStr)
 
       if (jsonDecodeResult.isLeft) {
         val err = jsonDecodeResult.left.get

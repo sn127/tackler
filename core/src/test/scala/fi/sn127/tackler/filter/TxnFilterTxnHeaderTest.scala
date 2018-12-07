@@ -18,10 +18,13 @@ package fi.sn127.tackler.filter
 
 import java.util.UUID
 
+import org.scalatest.FlatSpecLike
+
+import fi.sn127.tackler.api.{TxnFilterDefinition, TxnFilterTxnCode, TxnFilterTxnComments, TxnFilterTxnDescription, TxnFilterTxnUUID}
 import fi.sn127.tackler.core.Settings
 import fi.sn127.tackler.parser.TacklerTxns
 
-class TxnFilterTxnHeaderTest extends TxnFilterSpec {
+class TxnFilterTxnHeaderTest extends TxnFilterSpec with FlatSpecLike {
   val tt = new TacklerTxns(Settings())
 
   val uuidTxn01 = "22e17bf5-3da5-404d-aaff-e3cc668191ee"
@@ -66,7 +69,7 @@ class TxnFilterTxnHeaderTest extends TxnFilterSpec {
   it must "filter by txn description" in {
     val txnFilter = TxnFilterTxnDescription("abc.*")
 
-    val txnData = txnsAll.filter(TxnFilterRoot(txnFilter))
+    val txnData = txnsAll.filter(TxnFilterDefinition(txnFilter))
 
     assert(txnData.txns.size === 1)
     assert(checkUUID(txnData, uuidTxn01))
@@ -78,7 +81,7 @@ class TxnFilterTxnHeaderTest extends TxnFilterSpec {
   it must "filter by txn code" in {
     val txnFilter = TxnFilterTxnCode("ab.*")
 
-    val txnData = txnsAll.filter(TxnFilterRoot(txnFilter))
+    val txnData = txnsAll.filter(TxnFilterDefinition(txnFilter))
 
     assert(txnData.txns.size === 1)
     assert(checkUUID(txnData, uuidTxn02))
@@ -90,7 +93,7 @@ class TxnFilterTxnHeaderTest extends TxnFilterSpec {
   it must "filter by txn UUID" in {
     val txnFilter = TxnFilterTxnUUID(UUID.fromString(uuidTxn02))
 
-    val txnData = txnsAll.filter(TxnFilterRoot(txnFilter))
+    val txnData = txnsAll.filter(TxnFilterDefinition(txnFilter))
 
     assert(txnData.txns.size === 1)
     assert(checkUUID(txnData, uuidTxn02))
@@ -116,7 +119,7 @@ class TxnFilterTxnHeaderTest extends TxnFilterSpec {
 
     val txnFilter = TxnFilterTxnUUID(UUID.fromString(uuidTxn02))
 
-    val txnData = txnsNoUUIDAll.filter(TxnFilterRoot(txnFilter))
+    val txnData = txnsNoUUIDAll.filter(TxnFilterDefinition(txnFilter))
 
     assert(txnData.txns.size === 0)
   }
@@ -127,7 +130,7 @@ class TxnFilterTxnHeaderTest extends TxnFilterSpec {
   it must "filter by txn comments" in {
     val txnFilter = TxnFilterTxnComments("ab.*")
 
-    val txnData = txnsAll.filter(TxnFilterRoot(txnFilter))
+    val txnData = txnsAll.filter(TxnFilterDefinition(txnFilter))
 
     assert(txnData.txns.size === 1)
     assert(checkUUID(txnData, uuidTxn03))

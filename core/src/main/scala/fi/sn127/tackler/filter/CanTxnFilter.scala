@@ -16,12 +16,8 @@
  */
 package fi.sn127.tackler.filter
 
-import org.scalatest.Assertions._
+import fi.sn127.tackler.model.Transaction
 
-import fi.sn127.tackler.model.TxnData
-
-abstract class TxnFilterSpec  {
-  def checkUUID(txnData: TxnData, uuid: String) = {
-    txnData.txns.exists(txn => txn.header.uuid.map(u => u.toString).getOrElse("") === uuid)
-  }
+trait CanTxnFilter[A] {
+  def filter(tf: A, txn: Transaction): Boolean
 }

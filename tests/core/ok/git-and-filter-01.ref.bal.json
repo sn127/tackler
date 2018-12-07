@@ -8,8 +8,14 @@
         }
       },
       {
-        "TxnFilter" : {
-          "filterDef" : "Filter:\n  Txn Description: \"shard01\"\n"
+        "TxnFilterMetadata" : {
+          "txnFilterDef" : {
+            "txnFilter" : {
+              "TxnFilterTxnDescription" : {
+                "regex" : "shard01"
+              }
+            }
+          }
         }
       }
     ]

@@ -28,7 +28,7 @@ lazy val noPublishSettings = Seq(
 lazy val commonSettings = Seq(
   organization := "fi.sn127",
   version := "0.10.0-SNAPSHOT",
-  scalaVersion := "2.12.7",
+  scalaVersion := "2.12.8",
   compileOrder := CompileOrder.JavaThenScala,
   scalacOptions ++= Seq(
     "-deprecation",
@@ -95,7 +95,8 @@ lazy val api = crossProject(JSPlatform, JVMPlatform).
     libraryDependencies += "io.circe" %%% "circe-core" % circeVersion,
     libraryDependencies += "io.circe" %%% "circe-generic" % circeVersion,
     libraryDependencies += "io.circe" %%% "circe-java8" % circeVersion,
-    libraryDependencies += "io.circe" %%% "circe-parser" % circeVersion
+    libraryDependencies += "io.circe" %%% "circe-parser" % circeVersion,
+    libraryDependencies += "org.scalatest" %%% "scalatest" % scalatestVersion % Test
   ).
   jvmSettings(
   ).

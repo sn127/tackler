@@ -19,10 +19,9 @@ package fi.sn127.tackler.api
 import io.circe._
 import io.circe.generic.semiauto.{deriveDecoder, deriveEncoder}
 
-sealed abstract trait MetadataItem {
+sealed trait MetadataItem {
   def text(): String
 }
-
 object MetadataItem {
   @SuppressWarnings(Array("org.wartremover.warts.Nothing"))
   implicit val decodeBalanceItem: Decoder[MetadataItem] = deriveDecoder[MetadataItem]
@@ -37,10 +36,9 @@ final case class Metadata(metadataItems: Seq[MetadataItem]) {
     metadataItems.map(_.text()).mkString("\n")
   }
 }
-
 object Metadata {
-  implicit val decodeBalanceItem: Decoder[Metadata] = deriveDecoder[Metadata]
-  implicit val encodeBalanceItem: Encoder[Metadata] = deriveEncoder[Metadata]
+  implicit val decodeMetadata: Decoder[Metadata] = deriveDecoder[Metadata]
+  implicit val encodeMetadata: Encoder[Metadata] = deriveEncoder[Metadata]
 }
 
 /**
@@ -62,11 +60,6 @@ final case class GitInputReference(commit: String, ref: Option[String], message:
   }
 }
 
-object GitInputReference {
-  implicit val decodeBalanceItem: Decoder[GitInputReference] = deriveDecoder[GitInputReference]
-  implicit val encodeBalanceItem: Encoder[GitInputReference] = deriveEncoder[GitInputReference]
-}
-
-final case class TxnFilter(filterDef: String) extends MetadataItem {
-  override def text(): String = filterDef
+final case class TxnFilterMetadata(txnFilterDef: TxnFilterDefinition) extends MetadataItem {
+  override def text(): String = txnFilterDef.text("")
 }

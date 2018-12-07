@@ -45,7 +45,7 @@ Changes to server API. Items in italics will be implemented later.
 * [x] filter json def
 * [x] report metadata with filters
 ** [x] text
-** [PP] json
+** [x] json
 * [x] filter-tree
 ** [x] nodes
 *** [x] `AND`
@@ -73,10 +73,10 @@ Changes to server API. Items in italics will be implemented later.
 Changes to client API's JSON model
 
 * [x] filter json def
-** [PP] Client API model objects for filters
+** [x] Client API model objects for filters
 * [x] report metadata with filters
 ** [x] text
-** [PP] json
+** [x] json
 
 
 === New dependencies
@@ -131,7 +131,7 @@ No changes to identity export
 ** [x] API changes
 *** [x] Server API changes
 *** [x] Client API changes
-** [PP] Add metadata example to JSON doc (git-and-filter-01)
+** [x] Add metadata example to JSON doc (git-and-filter-01)
 
 
 == Future plans and Postponed (PP) features
@@ -142,10 +142,10 @@ No changes to identity export
 
 === Postponed (PP) features
 
-* [PP] Client API model objects for filters
-* [PP] Better JSON representation in metadata
-* [PP] perf: Performance test with filtering enabled
-* [PP] perf: Run all tests with filtering engine (while no active filters)
+* [x] Client API model objects for filters
+* [x] Better JSON representation in metadata
+* [x] perf: Performance test with filtering enabled
+* [x] perf: Run all tests with filtering engine (while no active filters)
 
 
 == Tests
@@ -155,7 +155,7 @@ Normal, ok-case tests to validate functionality:
 * [x] filter json def
 * [x] report metadata with filters
 ** [x] text
-** [PP] json
+** [x] json
 * [x] reports
 ** [x] balance report's metadata
 ** [x] balance-group report's metadata
@@ -194,10 +194,11 @@ Tests for error cases:
 
 === Perf
 
-Is there need to run or create new perf tests?
+Initial implementation as sealed trait implementation without
+implicits is on commit-id: `1c2c21f941bbf4b231e605e81ec8eb57dc3fa50a`
 
-* [PP] perf: Performance test with filtering enabled
-* [PP] perf: Run all tests with filtering engine (while no active filters)
+* [x] perf: Performance test with filtering enabled
+* [x] perf: Run all tests with filtering engine (while no active filters)
 
 
 === Test coverage tracking

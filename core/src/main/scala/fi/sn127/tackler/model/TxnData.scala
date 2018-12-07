@@ -16,20 +16,30 @@
  */
 package fi.sn127.tackler.model
 
-import fi.sn127.tackler.api.{Metadata, MetadataItem, TxnFilter}
-import fi.sn127.tackler.filter.TxnFilterRoot
+import fi.sn127.tackler.api.{Metadata, MetadataItem, TxnFilterMetadata, TxnFilterDefinition}
+import fi.sn127.tackler.filter._
 
 /**
  * Transaction data and associated metadata.
  *
  * @param metadata optional metadata about these transactions
- * @param txns transactions
+ * @param txns     transactions
  */
 final case class TxnData(metadata: Option[Metadata], txns: Txns) {
 
-  def filter(txnFilter: TxnFilterRoot): TxnData = {
+  /**
+   * Filter this TxnData based on provided transaction filter.
+   * Resulting txn sequence will contain only those transaction
+   * which are selected by filter.
+   *
+   * @param txnFilter is transaction filter definition
+   * @return new [[TxnData]] which contains filtered txn sequence.
+   *         Metadata of returned [[TxnData]] is augmented with TxnFilterMetadata item
+   *         which contains information about used filter.
+   */
+  def filter(txnFilter: TxnFilterDefinition): TxnData = {
 
-    val filterInfo = Seq(TxnFilter(txnFilter.text("")))
+    val filterInfo = Seq(TxnFilterMetadata(txnFilter))
     val mdis: Seq[MetadataItem] = metadata.map(_.metadataItems).getOrElse(Nil) ++ filterInfo
 
     TxnData(

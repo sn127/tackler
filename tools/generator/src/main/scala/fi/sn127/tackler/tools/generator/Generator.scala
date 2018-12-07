@@ -69,7 +69,7 @@ object Generator {
       compatStr match {
         case (tsStr, valSpace) =>
 
-          val txn = tsStr + s" $i\n" +
+          val txn = tsStr + " " + s"(#%07d)".format(i) + " " + s"txn-%d".format(i) + "\n" +
             s""" $expensesAcc$valSpace$d.0000001
                | $assetsAcc
                |
