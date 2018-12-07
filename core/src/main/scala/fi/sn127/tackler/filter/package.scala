@@ -72,9 +72,9 @@ package object filter {
   }
 
 
-  implicit object TxnFilterRootF extends CanTxnFilter[TxnFilterRoot] {
+  implicit object TxnFilterDefinitionF extends CanTxnFilter[TxnFilterDefinition] {
 
-    override def filter(tf: TxnFilterRoot, txn: Transaction): Boolean = {
+    override def filter(tf: TxnFilterDefinition, txn: Transaction): Boolean = {
       tf.txnFilter.filter(txn)
     }
   }

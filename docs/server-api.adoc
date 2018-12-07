@@ -53,13 +53,13 @@ Below is an example of how filter can be created from JSON string:
 
 ----
 import io.circe.parser.decode
-import fi.sn127.tackler.api.TxnFilterRoot
+import fi.sn127.tackler.api.TxnFilterDefinition
 
 val filterJsonStr = """{ "txnFilter": { "TxnFilterTxnCode" : { "regex" : "#123" } } }"""
 
-val txnFilterRoot = decode[TxnFilterRoot](filterJsonStr)
+val txnFilterDef = decode[TxnFilterDefinition](filterJsonStr)
 
-// txnFilterRoot: Either[io.circe.Error,fi.sn127.tackler.api.TxnFilterRoot] = Right(TxnFilterRoot(TxnFilterTxnCode(#123)))
+// txnFilterDef: Either[io.circe.Error,fi.sn127.tackler.api.TxnFilterDefinition] = Right(TxnFilterDefinition(TxnFilterTxnCode(#123)))
 ----
 
 See link:../core/src/test/scala/fi/sn127/tackler/filter/TxnFilterJsonTest.scala[core -> test -> filter -> TxnFilterJsonTest]

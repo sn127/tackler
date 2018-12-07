@@ -60,6 +60,6 @@ final case class GitInputReference(commit: String, ref: Option[String], message:
   }
 }
 
-final case class TxnFilterDefinition(txnFilterRoot: TxnFilterRoot) extends MetadataItem {
-  override def text(): String = txnFilterRoot.text("")
+final case class TxnFilterMetadata(txnFilterDef: TxnFilterDefinition) extends MetadataItem {
+  override def text(): String = txnFilterDef.text("")
 }

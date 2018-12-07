@@ -60,13 +60,14 @@ link:../core/src/test/scala/fi/sn127/tackler/filter/TxnFilterJsonTest.scala[core
 
 ==== Top Level component
 
-Each Transaction Filter Tree contains a root element which is defined as:
+Each transaction filter definition contains a root element which is defined as:
 
 ----
 { "txnFilter" : <TxnFilter> }
 ----
 
-where `TxnFilter` is definition of an one transaction filter.
+where `TxnFilter` is definition of top-level transaction filter. That top-level transaction
+filter can be logical filter or transaction property filter.
 
 
 ==== Logical Filters

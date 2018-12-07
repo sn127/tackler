@@ -129,7 +129,7 @@ link:./client-api.adoc[Client] and link:./server-api.adoc[Server] API, but it ca
 tacker cli.
 
 There is a command line option to provide filter definition by `--api-filter-def`,
-which t will take transcation filter definition as JSON:
+which will take transcation filter definition as JSON:
 
 Belows is an example of filter to find all transactions where there is "ice-cream"
 on description field for transaction.

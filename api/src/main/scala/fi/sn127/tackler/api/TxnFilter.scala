@@ -45,19 +45,19 @@ object TxnFilter {
  *
  * @param txnFilter
  */
-final case class TxnFilterRoot(txnFilter: TxnFilter) {
+final case class TxnFilterDefinition(txnFilter: TxnFilter) {
   def text(indent: String): String = {
     val myIndent = indent + "  "
     indent + "Filter:" + "\n" +
       txnFilter.text(myIndent) + "\n"
   }
 }
-object TxnFilterRoot {
+object TxnFilterDefinition {
   @SuppressWarnings(Array("org.wartremover.warts.Nothing"))
-  implicit val decodeTxnFilterRoot: Decoder[TxnFilterRoot] = deriveDecoder[TxnFilterRoot]
+  implicit val decodeTxnFilterDefinition: Decoder[TxnFilterDefinition] = deriveDecoder[TxnFilterDefinition]
 
   @SuppressWarnings(Array("org.wartremover.warts.Nothing"))
-  implicit val encodeTxnFilterRoot: Encoder[TxnFilterRoot] = deriveEncoder[TxnFilterRoot]
+  implicit val encodeTxnFilterDefinition: Encoder[TxnFilterDefinition] = deriveEncoder[TxnFilterDefinition]
 }
 
 /**

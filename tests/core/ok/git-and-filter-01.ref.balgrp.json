@@ -8,8 +8,8 @@
         }
       },
       {
-        "TxnFilterDefinition" : {
-          "txnFilterRoot" : {
+        "TxnFilterMetadata" : {
+          "txnFilterDef" : {
             "txnFilter" : {
               "TxnFilterTxnDescription" : {
                 "regex" : "shard01"

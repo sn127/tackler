@@ -73,7 +73,7 @@ class TxnFilterPostingTest extends TxnFilterSpec with FlatSpecLike {
   it must "filter by account name with wildcard at begin" in {
     val txnFilter =TxnFilterPostingAccount(".*:abc")
 
-    val txnData = txnsAll.filter(TxnFilterRoot(txnFilter))
+    val txnData = txnsAll.filter(TxnFilterDefinition(txnFilter))
 
     assert(txnData.txns.size === 1)
     assert(checkUUID(txnData, uuidTxn04))
@@ -85,7 +85,7 @@ class TxnFilterPostingTest extends TxnFilterSpec with FlatSpecLike {
   it must "filter by account name with wildcard at end " in {
     val txnFilter = TxnFilterPostingAccount("e:abc.*")
 
-    val txnData = txnsAll.filter(TxnFilterRoot(txnFilter))
+    val txnData = txnsAll.filter(TxnFilterDefinition(txnFilter))
 
     assert(txnData.txns.size === 1)
     assert(checkUUID(txnData, uuidTxn05))
@@ -97,7 +97,7 @@ class TxnFilterPostingTest extends TxnFilterSpec with FlatSpecLike {
   it must "filter by posting comments" in {
     val txnFilter = TxnFilterPostingComment("abc.*")
 
-    val txnData = txnsAll.filter(TxnFilterRoot(txnFilter))
+    val txnData = txnsAll.filter(TxnFilterDefinition(txnFilter))
 
     assert(txnData.txns.size === 1)
     assert(checkUUID(txnData, uuidTxn02))
@@ -109,7 +109,7 @@ class TxnFilterPostingTest extends TxnFilterSpec with FlatSpecLike {
   it must "filter by posting amount (exact)" in {
     val txnFilter = TxnFilterPostingAmountEqual("e:.*", BigDecimal(1.000000001))
 
-    val txnData = txnsAll.filter(TxnFilterRoot(txnFilter))
+    val txnData = txnsAll.filter(TxnFilterDefinition(txnFilter))
 
     assert(txnData.txns.size === 1)
     assert(checkUUID(txnData, uuidTxn01))
@@ -121,7 +121,7 @@ class TxnFilterPostingTest extends TxnFilterSpec with FlatSpecLike {
   it must "filter by posting amount (less)" in {
     val txnFilter = TxnFilterPostingAmountLess("e:.*", BigDecimal(2))
 
-    val txnData = txnsAll.filter(TxnFilterRoot(txnFilter))
+    val txnData = txnsAll.filter(TxnFilterDefinition(txnFilter))
 
     assert(txnData.txns.size === 2)
     assert(checkUUID(txnData, uuidTxn01))
@@ -134,7 +134,7 @@ class TxnFilterPostingTest extends TxnFilterSpec with FlatSpecLike {
   it must "filter by posting amount (greater)" in {
     val txnFilter = TxnFilterPostingAmountGreater("e:.*", BigDecimal(2))
 
-    val txnData = txnsAll.filter(TxnFilterRoot(txnFilter))
+    val txnData = txnsAll.filter(TxnFilterDefinition(txnFilter))
 
     assert(txnData.txns.size === 2)
     assert(checkUUID(txnData, uuidTxn04))
@@ -147,7 +147,7 @@ class TxnFilterPostingTest extends TxnFilterSpec with FlatSpecLike {
   it must "filter by posting commodity" in {
     val txnFilter = TxnFilterPostingCommodity("EU.*")
 
-    val txnData = txnsAll.filter(TxnFilterRoot(txnFilter))
+    val txnData = txnsAll.filter(TxnFilterDefinition(txnFilter))
 
     assert(txnData.txns.size === 2)
     assert(checkUUID(txnData, uuidTxn03))

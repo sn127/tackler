@@ -198,7 +198,7 @@ class TxnFilterJsonTest extends TxnFilterSpec with FunSpecLike {
      * test: 4cce4204-16b1-40a4-b1ea-ce11272d5824
      */
     it("decode from JSON and then encode to text") {
-      val txnFilterRoot = decode[TxnFilterRoot](filterJsonStr)
+      val txnFilterRoot = decode[TxnFilterDefinition](filterJsonStr)
 
       assert(filterTextStr === txnFilterRoot.right.get.text(""))
     }
@@ -230,7 +230,7 @@ class TxnFilterJsonTest extends TxnFilterSpec with FunSpecLike {
           |}
         """.stripMargin
 
-      val txnFilterRoot = decode[TxnFilterRoot](filterStr)
+      val txnFilterRoot = decode[TxnFilterDefinition](filterStr)
 
       val txnData = txnsAll.filter(txnFilterRoot.right.get)
 
@@ -260,7 +260,7 @@ class TxnFilterJsonTest extends TxnFilterSpec with FunSpecLike {
         """.stripMargin
 
       assertThrows[IllegalArgumentException] {
-        val _ = decode[TxnFilterRoot](filterStr)
+        val _ = decode[TxnFilterDefinition](filterStr)
       }
     }
 
@@ -286,7 +286,7 @@ class TxnFilterJsonTest extends TxnFilterSpec with FunSpecLike {
         """.stripMargin
 
       assertThrows[IllegalArgumentException] {
-        val _ = decode[TxnFilterRoot](filterStr)
+        val _ = decode[TxnFilterDefinition](filterStr)
       }
     }
   }
@@ -294,7 +294,7 @@ class TxnFilterJsonTest extends TxnFilterSpec with FunSpecLike {
   describe("Encode Filter and it's metadata") {
     val txnData = TxnData(None, Seq.empty)
 
-    val txnFilter = TxnFilterRoot(
+    val txnFilter = TxnFilterDefinition(
       TxnFilterAND(List[TxnFilter](
         TxnFilterAND(List[TxnFilter](
           TxnFilterTxnTSBegin(ZonedDateTime.parse("2018-01-01T10:11:22.345+02:00")),
@@ -341,8 +341,8 @@ class TxnFilterJsonTest extends TxnFilterSpec with FunSpecLike {
         """{
           |  "metadataItems" : [
           |    {
-          |      "TxnFilterDefinition" : {
-          |        "txnFilterRoot" : {
+          |      "TxnFilterMetadata" : {
+          |        "txnFilterDef" : {
           |          "txnFilter" : {
           |            "TxnFilterAND" : {
           |              "txnFilters" : [
