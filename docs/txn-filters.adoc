@@ -10,19 +10,24 @@ Transaction filters can be combined with logical `AND`, `OR` and `NOT` operation
 it is possible to create filter trees by combining logical filters and filters
 for single transactions.
 
-For tackler cli usage of transaction filters, see link:./usage.adoc[Usage Guide].
+Usage of transaction filters:
 
+* See link:./usage.adoc[Usage Guide] for using transaction filters with
+`tackler-cli.jar` CLI application.
+* See link:./server-api.adoc[Server API document] for using transaction filters with embedded `tackler-core`.
+* See link:./client-api.adoc[Client API document] for data model of transaction filters for JS/JVM `tackler-api`.
+* For actual definition of transaction filters, keep reading this document.
 
-== Logical filters
+== Logical transaction filters
 
-There are following logical filters:
+There are following logical transaction filters:
 
 * `AND`: all filters must select txn, so that it will be selected
-* `OR`: if any of filters selects txn, then it's selected
-* `NOT`: reverses result (selected txn will be unselected, unselected to be selected)
+* `OR`: if any of filters select txn, then it's selected
+* `NOT`: reverses result (selected will be unselected, unselected will be selected)
 
 
-== Transaction filters
+== Transaction property filters
 
 Transaction filters select transactions based on single transaction's
 properties and attributes.
@@ -206,6 +211,9 @@ Posting Amount (egual) selects transactions which have a posting for specified a
 with exactly same amount as specified amount.
 
 ----
+ Q: Why there is also account regex as parameter?
+ A: For consistency with less and greater, where it's mandatory.
+
 {
   "TxnFilterPostingAmountEqual" : {
     "regex" : "<regex>",
@@ -221,6 +229,13 @@ Posting Amount (less) selects transactions which have a posting for specified ac
 with amount that is less than specified amount.
 
 ----
+ Q: Why there is also account regex as parameter?
+ A: Sum of all postings inside transaction must be zero.
+    If you select "less than some positive amount",
+    then all transactions will match, because there must
+    be postings with negative amounts in every transaction
+    to zero out whole transaction.
+
 {
   "TxnFilterPostingAmountLess" : {
     "regex" : "<regex>",
@@ -236,6 +251,13 @@ Posting Amount (greater) selects transactions which have a posting for specified
 with amount that is greater than specified amount.
 
 ----
+ Q: Why there is also account regex as parameter?
+ A: Sum of all postings inside transaction must be zero.
+    If you select "more than some negative amount",
+    then all transactions will match, because there must
+    be postings with positive amounts in every transaction
+    to zero out whole transaction.
+
 {
   "TxnFilterPostingAmountGreater" : {
     "regex" : "<regex>",

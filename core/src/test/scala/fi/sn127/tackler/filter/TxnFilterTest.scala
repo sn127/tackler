@@ -26,8 +26,8 @@ import fi.sn127.tackler.model.Transaction
 class TxnFilterTest extends FlatSpec {
 
 
-  val txnFilterFalse = new TxnFilterFalse()
-  val txnFilterTrue = new TxnFilterTrue()
+  val txnFilterFalse = new TxnFilterNone()
+  val txnFilterTrue = new TxnFilterAll()
 
   val txn = Transaction(TxnHeader(ZonedDateTime.now(), None, None, None, None), Seq.empty)
 

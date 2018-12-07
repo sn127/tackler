@@ -37,8 +37,16 @@ object TxnFilter {
   implicit val encodeTxnFilter: Encoder[TxnFilter] = deriveEncoder[TxnFilter]
 }
 
-final case class TxnFilterRoot(txnFilter: TxnFilter) extends TxnFilter {
-  override def text(indent: String): String = {
+/**
+ * Top-level container element of transaction filter definition.
+ *
+ * Transaction filter definitions can form tree-like structures,
+ * and this is mandatory root node of transaction filter definition.
+ *
+ * @param txnFilter
+ */
+final case class TxnFilterRoot(txnFilter: TxnFilter) {
+  def text(indent: String): String = {
     val myIndent = indent + "  "
     indent + "Filter:" + "\n" +
       txnFilter.text(myIndent) + "\n"
@@ -52,11 +60,15 @@ object TxnFilterRoot {
   implicit val encodeTxnFilterRoot: Encoder[TxnFilterRoot] = deriveEncoder[TxnFilterRoot]
 }
 
-final class TxnFilterFalse() extends TxnFilter {
-}
+/**
+ * Deselects all transactions.
+ */
+final class TxnFilterNone() extends TxnFilter
 
-final class TxnFilterTrue() extends TxnFilter {
-}
+/**
+ * Selects all transactions.
+ */
+final class TxnFilterAll() extends TxnFilter
 
 
 sealed trait TxnFilters extends TxnFilter {
@@ -71,15 +83,30 @@ sealed trait TxnFilters extends TxnFilter {
   }
 }
 
+/**
+ * Logical AND, e.g. selects transaction if and only if all contained filters select it.
+ *
+ * @param txnFilters sequence of [[TxnFilter]] filters. There must be at least two filters.
+ */
 final case class TxnFilterAND(txnFilters: Seq[TxnFilter]) extends TxnFilters() {
   val opTxt = "AND"
 
 }
 
+/**
+ * Logical OR, e.g. selects transaction any (or all) contained filters select it.
+ *
+ * @param txnFilters sequence of [[TxnFilter]] filters. There must be at least two filters.
+ */
 sealed case class TxnFilterOR(txnFilters: Seq[TxnFilter]) extends TxnFilters {
   val opTxt = "OR"
 }
 
+/**
+ * Logical NOT, e.g. selects all deselected transactions, and deselect all selected transactions.
+ *
+ * @param txnFilter which will be negated.
+ */
 sealed case class TxnFilterNOT(txnFilter: TxnFilter) extends TxnFilter {
   override def text(indent: String): String = {
     val myIndent = indent + "  "
@@ -89,6 +116,7 @@ sealed case class TxnFilterNOT(txnFilter: TxnFilter) extends TxnFilter {
 }
 
 sealed abstract class TxnFilterTxnTS(ts: ZonedDateTime) extends TxnFilter {
+  // Circe with java8 time: https://github.com/circe/circe/issues/378
   val opTxt: String
 
   override def text(indent: String): String = {
@@ -96,17 +124,26 @@ sealed abstract class TxnFilterTxnTS(ts: ZonedDateTime) extends TxnFilter {
   }
 }
 
-// Circe with java8 time: https://github.com/circe/circe/issues/378
+/**
+ * Selects transaction if txn timestamp is on or after specified time.
+ *
+ * @param begin txn timestamp must be on or after this
+ */
 final case class TxnFilterTxnTSBegin(begin: ZonedDateTime) extends TxnFilterTxnTS(begin) {
+  // Circe with java8 time: https://github.com/circe/circe/issues/378
   val opTxt = "begin"
 }
 
-// Circe with java8 time: https://github.com/circe/circe/issues/378
+/**
+ * Selects transaction if txn timestamp is before of specified time.
+ *
+ * @param end txn timestamp is before of specified time.
+ */
 final case class TxnFilterTxnTSEnd(end: ZonedDateTime) extends TxnFilterTxnTS(end) {
+  // Circe with java8 time: https://github.com/circe/circe/issues/378
   val opTxt = "end  "
 }
 
-// Circe with java8 time: https://github.com/circe/circe/issues/378
 sealed abstract class TxnFilterRegex(regex: String) extends TxnFilter {
   val rgx = java.util.regex.Pattern.compile(regex)
 
@@ -116,18 +153,41 @@ sealed abstract class TxnFilterRegex(regex: String) extends TxnFilter {
     indent +  target + ": " + "\"" + s"${regex}" + "\""
   }
 }
+/**
+ * Selects transaction if txn timestamp is on or after specified time.
+ *
+ * @param begin txn timestamp must be on or after this
+ */
 
 
+/**
+ * Select transaction if regular expression matches txn description.
+ *
+ * Used regular expression engine is java.util.regex.Pattern.
+ *
+ * @param regex to match txn description
+ */
 final case class TxnFilterTxnDescription(regex: String) extends TxnFilterRegex(regex) {
   val target = "Txn Description"
 
 }
 
+/**
+ * Select transaction if regular expression matches txn code.
+ *
+ * Used regular expression engine is java.util.regex.Pattern.
+ *
+ * @param regex to match txn code.
+ */
 final case class TxnFilterTxnCode(regex: String) extends TxnFilterRegex(regex) {
   val target = "Txn Code"
 }
 
-
+/**
+ * Select transaction if txn UUID is same as specified uuid.
+ *
+ * @param uuid
+ */
 final case class TxnFilterTxnUUID(uuid: UUID) extends TxnFilter {
 
   override def text(indent: String): String = {
@@ -135,6 +195,13 @@ final case class TxnFilterTxnUUID(uuid: UUID) extends TxnFilter {
   }
 }
 
+/**
+ * Select transaction if regular expression matches any of txn comments.
+ *
+ * Used regular expression engine is java.util.regex.Pattern.
+ *
+ * @param regex to match any of txn comments.
+ */
 final case class TxnFilterTxnComments(regex: String) extends TxnFilterRegex(regex) {
   val target = "Txn Comments"
 }
@@ -144,11 +211,28 @@ final case class TxnFilterTxnComments(regex: String) extends TxnFilterRegex(rege
  * TXN: POSTINGS
  *
  */
+
+/**
+ * Select transaction if regular expression matches
+ * any of this transactions's posting accounts.
+ *
+ * Used regular expression engine is java.util.regex.Pattern.
+ *
+ * @param regex to match any of this transaction's posting accounts
+ */
 final case class TxnFilterPostingAccount(regex: String) extends TxnFilterRegex(regex) {
   val target = "Posting Account"
 
 }
 
+/**
+ * Select transaction if regular expression matches
+ * any of this transaction's posting comment.
+ *
+ * Used regular expression engine is java.util.regex.Pattern.
+ *
+ * @param regex to match any of this transaction's posting comment.
+ */
 final case class TxnFilterPostingComment(regex: String) extends TxnFilterRegex(regex) {
   val target = "Posting Comment"
 
@@ -165,27 +249,80 @@ sealed abstract class TxnFilterPosting(regex: String, amount: BigDecimal) extend
   }
 }
 
+/**
+ * Select transaction if regular expression matches
+ * any of this transaction's posting account
+ * and at the same time amount of that posting is equal
+ * with specified amount.
+ *
+ * Q: Why there is also account regex as parameter?
+ * A: For consistency with less and greater, where it's mandatory.
+ *
+ * Used regular expression engine is java.util.regex.Pattern.
+ *
+ * @param regex to match any of this transaction's posting accounts
+ * @param amount amount of that matched account (by regex) must be exactly this
+ */
 final case class TxnFilterPostingAmountEqual(regex: String, amount: BigDecimal) extends TxnFilterPosting(regex, amount) {
   val target = "Posting Amount"
   val opTxt: String = "=="
-
 }
 
 
+/**
+ * Select transaction if regular expression matches
+ * any of this transaction's posting account
+ * and at the same time amount of that posting is less
+ * than specified amount.
+ *
+ * Q: Why there is also account regex as parameter?
+ * A: Sum of all postings inside transaction must be zero.
+ *    If you select "less than some positive amount",
+ *    be postings with negative amounts in every transaction
+ *    to zero out the whole transaction.
+ *
+ * Used regular expression engine is java.util.regex.Pattern.
+ *
+ * @param regex to match any of this transaction's posting accounts
+ * @param amount amount of matched account (by regex) must be less than this
+ */
 final case class TxnFilterPostingAmountLess(regex: String, amount: BigDecimal) extends TxnFilterPosting(regex, amount) {
   val target = "Posting Amount"
   val opTxt: String = "<"
-
 }
 
+/**
+ * Select transaction if regular expression matches
+ * any of this transaction's posting account
+ * and at the same time amount of that posting is less
+ * than specified amount.
+ *
+ * Q: Why there is also account regex as parameter?
+ * A: Sum of all postings inside transaction must be zero.
+ *    If you select "more than some negative amount",
+ *    then all transactions will match, because there must
+ *    be postings with positive amounts in every transaction
+ *    to zero out the whole transaction.
+ *
+ * Used regular expression engine is java.util.regex.Pattern.
+ *
+ * @param regex to match any of this transaction's posting accounts
+ * @param amount amount of matched account (by regex) must be greater than this
+ */
 final case class TxnFilterPostingAmountGreater(regex: String, amount: BigDecimal) extends TxnFilterPosting(regex, amount) {
   val target = "Posting Amount"
   val opTxt: String = ">"
-
 }
 
 
+/**
+ * Select transaction if regular expression matches
+ * any of this transaction's posting commodity.
+ *
+ * Used regular expression engine is java.util.regex.Pattern.
+ *
+ * @param regex to match posting commodity
+ */
 final case class TxnFilterPostingCommodity(regex: String) extends TxnFilterRegex(regex) {
   val target = "Posting Commodity"
-
 }

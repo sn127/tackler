@@ -27,6 +27,16 @@ import fi.sn127.tackler.filter._
  */
 final case class TxnData(metadata: Option[Metadata], txns: Txns) {
 
+  /**
+   * Filter this TxnData based on provided transaction filter.
+   * Resulting txn sequence will contain only those transaction
+   * which are selected by filter.
+   *
+   * @param txnFilter is transaction filter definition
+   * @return new [[TxnData]] which contains filtered txn sequence.
+   *         Metadata of returned [[TxnData]] is augmented with TxnFilterDefinition item
+   *         which contains information about used filter.
+   */
   def filter(txnFilter: TxnFilterRoot): TxnData = {
 
     val filterInfo = Seq(TxnFilterDefinition(txnFilter))

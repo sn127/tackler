@@ -5,13 +5,14 @@ This document explains how to use Tackler API on JVM and JS environments.
 Tackler's client side api (`tackler-api`) has data models of reports which can be used on the client side.
 This api is provided for both  JVM and JS environments via ScalaJS.
 
-API data models:
+link:../api/src/main/scala/fi/sn127/tackler/api/[Tackler API] data models:
 
  * link:../api/src/main/scala/fi/sn127/tackler/api/BalanceReport.scala[BalanceReport]
  * link:../api/src/main/scala/fi/sn127/tackler/api/BalanceGroupReport.scala[BalanceGroupReport]
  * link:../api/src/main/scala/fi/sn127/tackler/api/RegisterReport.scala[RegisterReport]
  * link:../api/src/main/scala/fi/sn127/tackler/api/Metadata.scala[Metadata]
  * link:../api/src/main/scala/fi/sn127/tackler/api/TxnHeader.scala[TxnHeader]
+ * link:../api/src/main/scala/fi/sn127/tackler/api/TxnFilter.scala[TxnFilter]
 
 == JSON
 
@@ -27,13 +28,15 @@ link:../core/src/test/scala/fi/sn127/tackler/report/ReportApiTest.scala[core -> 
 == Transaction Filters
 
 There is an option to filter transactions based on attributes of single transaction.
-See link./txn-filters.adoc[Transaction Filters] for general information about these filters.
+See link:./txn-filters.adoc[Transaction Filters] for general information about these filters.
 
-There are several examples of how to use complex Transaction Tree filters in test suite:
-* link:../core/src/test/scala/fi/sn127/tackler/filter/TxnFilterJsonTest.scala[core -> tests -> filter -> TxnFilterJsonTest]
+Transaction filters data model is defined in
+link:../api/src/main/scala/fi/sn127/tackler/api/TxnFilter.scala[api -> TxnFilter], and it is available for JVM and JS environments.
+See link:./txn-filters.adoc[Transaction Filters] document for full list of
+available filters.
 
-At the moment there is no Client API model objects for filters,
-so only pure JSON representation can be used on the Client API side.
+There are several examples of how to define complex transaction filters in the test suite:
+link:../core/src/test/scala/fi/sn127/tackler/filter[core -> tests -> filter]
 
 
 == tackler-api

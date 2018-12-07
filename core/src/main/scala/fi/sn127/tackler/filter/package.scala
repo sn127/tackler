@@ -1,3 +1,19 @@
+/*
+ * Copyright 2018 SN127.fi
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
 package fi.sn127.tackler
 
 import fi.sn127.tackler.api._
@@ -11,11 +27,8 @@ package object filter {
     def filter(tfABC: TxnFilter, txn: Transaction): Boolean = {
 
       tfABC match {
-        case tf: TxnFilterFalse => TxnFilterFalseF.filter(tf, txn)
-        case tf: TxnFilterTrue => TxnFilterTrueF.filter(tf, txn)
-
-        // FilterRoot
-        case tf: TxnFilterRoot => TxnFilterRootF.filter(tf, txn)
+        case tf: TxnFilterNone => TxnFilterNoneF.filter(tf, txn)
+        case tf: TxnFilterAll => TxnFilterAllF.filter(tf, txn)
 
         // Logicals
         case tf: TxnFilterAND => TxnFilterANDF.filter(tf, txn)
@@ -50,12 +63,12 @@ package object filter {
   /*
    * Test utilities
    */
-  implicit object TxnFilterFalseF extends CanTxnFilter[TxnFilterFalse] {
-    override def filter(tf: TxnFilterFalse, txn: Transaction): Boolean = false
+  implicit object TxnFilterNoneF extends CanTxnFilter[TxnFilterNone] {
+    override def filter(tf: TxnFilterNone, txn: Transaction): Boolean = false
   }
 
-  implicit object TxnFilterTrueF extends CanTxnFilter[TxnFilterTrue] {
-    override def filter(tf: TxnFilterTrue, txn: Transaction): Boolean = true
+  implicit object TxnFilterAllF extends CanTxnFilter[TxnFilterAll] {
+    override def filter(tf: TxnFilterAll, txn: Transaction): Boolean = true
   }
 
 
