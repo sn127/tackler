@@ -8,7 +8,8 @@ filter="$5"
 
 storage=fs
 
-version=$(java -jar $exe_path --version | sed 's/Version: \([^ ]\+\) \[.*/\1/')
+build="$(java -jar $exe_path --version | sed 's/^Version: //')"
+version="$(echo $build | sed 's/\([^ ]\+\) \[.*/\1/')"
 
 if [ "$version" = "0.4.1" ]; then
    fs=txn
@@ -27,6 +28,7 @@ report_file=results/hwXX/$version-perf-$flt-$storage-$trg-$report-"$(echo $forma
 
 (
 echo "exe: $exe_path"
+echo "build: $build"
 echo "set: $trg"
 echo "version: $version"
 echo "storage: $storage"
