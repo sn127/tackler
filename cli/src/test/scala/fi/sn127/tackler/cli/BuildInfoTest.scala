@@ -27,7 +27,7 @@ class BuildInfoTest extends FlatSpec {
   }
 
   it should "scalaVersion" in {
-    assert(BuildInfo.scalaVersion.startsWith("2.12."))
+    assert(BuildInfo.scalaVersion.startsWith("2.12.8"))
   }
 
   it should "name" in {
@@ -35,11 +35,11 @@ class BuildInfoTest extends FlatSpec {
   }
 
   it should "sbtVersion" in {
-    assert(BuildInfo.sbtVersion.startsWith("1.2.4"))
+    assert(BuildInfo.sbtVersion.startsWith("1.2.7"))
   }
 
   it should "builtAtMillis" in {
-    assert(BuildInfo.builtAtMillis > 1539189472000L)
+    assert(BuildInfo.builtAtMillis > 1544125765000L)
   }
 
   it should "toString" in {
