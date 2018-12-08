@@ -7,6 +7,14 @@ Current published release is:
 
 == Release history
 
+=== 0.11.0-SNAPSHOT
+
+==== Fixes
+
+==== Development
+
+
+
 === 0.10.0
 
 New features of this release are
