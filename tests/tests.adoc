@@ -19,5 +19,5 @@ There are several files for T3DB:
 
 * link:./tests.yml[Main T3DB]
 * link:./tests-1005.yml[T3DB for TEP-1005]
-* link:./tests-schema.yml[Schema for T3DB] (YAML is world worst schmema language)
+* link:./tests-schema.yml[Schema for T3DB (YAML is the worst schema language in the world)]
 * link:./tests-tmpl.yml[Template for T3DB entries]

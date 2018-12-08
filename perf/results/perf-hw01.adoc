@@ -1,0 +1,21 @@
+= HW01 (laptop) performance results
+
+----
+cpu: Intel(R) Core(TM) i5-2540M CPU @ 2.60GHz
+hd: Intel(R) SSD 535
+mem: 16GB
+----
+Raw test results: link:./hw01/[HW01 (laptop)]
+
+
+== perf-1E3
+image::perf-hw01-1E3.svg[]
+
+== perf-1E4
+image::perf-hw01-1E4.svg[]
+
+== perf-1E5
+image::perf-hw01-1E5.svg[]
+
+== perf-1E6
+image::perf-hw01-1E6.svg[]

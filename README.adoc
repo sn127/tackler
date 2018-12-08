@@ -34,9 +34,8 @@ based double-entry accounting].
 * Supports ISO 8601 timestamps with link:tests/core/ok/time-dst-01.ref.identity.txn[timezones]
   and link:tests/core/ok/time-nano-01.ref.identity.txn[nanosecond] resolution
 * Has good performance with link:docs/performance.adoc[large transaction set]
-** Tackler is link:perf/results/hw00/[routinely tested] up to one million (1E6) transactions
-** Tackler can process link:perf/results/readme.adoc[56000 txn/s] on Quad Core system
-** With large transaction set, Tackler is faster than link:docs/perf-others.adoc[ledger-cli or other similar tools]
+** Tackler is link:perf/results/perf-hw00.adoc[tested up to one million (1E6)] transactions
+** Tackler can parse and process link:perf/results/readme.adoc[56000 txn/s] on Quad Core system
 * Near 100% test coverage, link:tests/tests.adoc[all features are extensively tested]
 * Extensive documentation: link:docs/readme.adoc[Index of Docs]
 

@@ -1,0 +1,21 @@
+= HW00 (server) performance results
+
+----
+cpu: Intel(R) Xeon(R) CPU E3-1265L V2 @ 2.50GHz
+hd: Intel® SSD 530 Series
+mem: 32GB
+----
+Raw test results: link:./hw00/[HW00 (server)]
+
+
+== perf-1E3
+image::perf-hw00-1E3.svg[]
+
+== perf-1E4
+image::perf-hw00-1E4.svg[]
+
+== perf-1E5
+image::perf-hw00-1E5.svg[]
+
+== perf-1E6
+image::perf-hw00-1E6.svg[]
