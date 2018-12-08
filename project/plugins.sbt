@@ -16,5 +16,5 @@ addSbtPlugin("org.scoverage" % "sbt-coveralls" % "1.2.4")
 addSbtPlugin("org.wartremover" % "sbt-wartremover" % "2.3.7")
 
 // Publishing
-addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % "2.0")
+addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % "2.3")
 

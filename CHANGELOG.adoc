@@ -13,7 +13,11 @@ Current published release is:
 
 ==== Development
 
+Updated deps and tools:
 
+ * Updated dependencies
+ * build
+ ** sbt-sonatype: 2.3
 
 === 0.10.0
 

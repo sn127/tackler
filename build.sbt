@@ -66,12 +66,7 @@ lazy val commonSettings = Seq(
     Wart.PublicInference,
     Wart.Throw //https://github.com/puffnfresh/wartremover/commit/869763999fcc1fd685c1a8038c974854457b608f
   ),
-  publishTo := Some(
-    if (isSnapshot.value)
-      Opts.resolver.sonatypeSnapshots
-    else
-      Opts.resolver.sonatypeStaging
-  ),
+  publishTo := sonatypePublishTo.value,
 )
 
 /**

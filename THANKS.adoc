@@ -34,7 +34,7 @@ Build-tools (used to build Tackler):
  ** link:http://www.scala-js.org/[sbt-scalajs]
  ** link:https://github.com/portable-scala/sbt-crossproject[sbt-crossproject]
  ** link:https://github.com/sbt/sbt-assembly[sbt-assembly]
- ** link:https://github.com/xerial/sbt-sonatype[sbt-sonatype]
+ ** link:https://github.com/xerial/sbt-sonatype[sbt-sonatype] 
  * QA
  ** link:https://github.com/scoverage/sbt-coveralls[sbt-coveralls]
  ** link:https://github.com/scoverage/sbt-scoverage[sbt-scoverage]
