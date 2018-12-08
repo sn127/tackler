@@ -2,12 +2,12 @@
 
 Current published release is:
 
- libraryDependencies += "fi.sn127" %%  "tackler-core" % "0.9.0"
- libraryDependencies += "fi.sn127" %%% "tackler-api"  % "0.9.0"
+ libraryDependencies += "fi.sn127" %%  "tackler-core" % "0.10.0"
+ libraryDependencies += "fi.sn127" %%% "tackler-api"  % "0.10.0"
 
 == Release history
 
-=== 0.10.0-SNAPSHOT
+=== 0.10.0
 
 New features of this release are
 link:./docs/txn-filters.adoc[transaction filters]
