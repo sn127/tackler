@@ -1,0 +1,74 @@
+exe: dist/tackler-cli-0.10.0.jar
+build: 0.10.0 [2018-12-07 16:00:41.018]
+set: 1E6
+version: 0.10.0
+storage: fs
+report: register
+formats: txt json
+filter: 
+
+00:54:05.240 INFO  fi.sn127.tackler.core.Settings - loading configuration with cfg-file: perf/perf-fs.conf
+00:54:05.586 INFO  fi.sn127.tackler.parser.TacklerTxns$ - Tackler Txns: FS: dir = perf/data/perf-1E6
+00:54:05.587 INFO  fi.sn127.tackler.parser.TacklerTxns$ - Tackler Txns: FS: glob = **.txn
+Txns size: 1000000
+
+Total processing time: 87095, parse: 29123, reporting: 56968
+
+real	92.00s
+user	185.43s
+sys	19.79s
+mem	8689140k (max)
+cpu	223%
+
+00:55:35.750 INFO  fi.sn127.tackler.core.Settings - loading configuration with cfg-file: perf/perf-fs.conf
+00:55:36.083 INFO  fi.sn127.tackler.parser.TacklerTxns$ - Tackler Txns: FS: dir = perf/data/perf-1E6
+00:55:36.084 INFO  fi.sn127.tackler.parser.TacklerTxns$ - Tackler Txns: FS: glob = **.txn
+Txns size: 1000000
+
+Total processing time: 93432, parse: 34584, reporting: 57779
+
+real	96.48s
+user	184.25s
+sys	21.81s
+mem	8702724k (max)
+cpu	213%
+
+00:57:12.931 INFO  fi.sn127.tackler.core.Settings - loading configuration with cfg-file: perf/perf-fs.conf
+00:57:13.264 INFO  fi.sn127.tackler.parser.TacklerTxns$ - Tackler Txns: FS: dir = perf/data/perf-1E6
+00:57:13.265 INFO  fi.sn127.tackler.parser.TacklerTxns$ - Tackler Txns: FS: glob = **.txn
+Txns size: 1000000
+
+Total processing time: 93844, parse: 34172, reporting: 58698
+
+real	96.88s
+user	190.10s
+sys	21.30s
+mem	8724332k (max)
+cpu	218%
+
+00:58:49.884 INFO  fi.sn127.tackler.core.Settings - loading configuration with cfg-file: perf/perf-fs.conf
+00:58:50.215 INFO  fi.sn127.tackler.parser.TacklerTxns$ - Tackler Txns: FS: dir = perf/data/perf-1E6
+00:58:50.216 INFO  fi.sn127.tackler.parser.TacklerTxns$ - Tackler Txns: FS: glob = **.txn
+Txns size: 1000000
+
+Total processing time: 98296, parse: 34826, reporting: 62488
+
+real	99.57s
+user	198.00s
+sys	21.04s
+mem	8297448k (max)
+cpu	219%
+
+01:00:28.908 INFO  fi.sn127.tackler.core.Settings - loading configuration with cfg-file: perf/perf-fs.conf
+01:00:29.270 INFO  fi.sn127.tackler.parser.TacklerTxns$ - Tackler Txns: FS: dir = perf/data/perf-1E6
+01:00:29.271 INFO  fi.sn127.tackler.parser.TacklerTxns$ - Tackler Txns: FS: glob = **.txn
+Txns size: 1000000
+
+Total processing time: 89019, parse: 29628, reporting: 58327
+
+real	91.48s
+user	189.15s
+sys	20.16s
+mem	8651028k (max)
+cpu	228%
+

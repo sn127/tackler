@@ -19,7 +19,7 @@ fi
 
 
 if [ -n "$filter" ]; then 
-       flt="filter"
+       flt="flt"
 else
        flt="all"
 fi
