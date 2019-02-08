@@ -1,7 +1,0 @@
-# format: exec
-# test:uuid: 7f847843-d14d-4bea-8f8d-beb94ea675b4
-#
-# Example reports
-#
-# Tank pressures
-exec:--cfg;tests/commodity/gb.conf;--reporting.accounts;^Gas:.*:Tank.*;--reporting.reports;balance;--output;out.gas-blender-tanks;

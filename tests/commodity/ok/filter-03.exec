@@ -1,3 +1,0 @@
-# format: exec
-# test:uuid: 09e9a673-4730-4a03-b73a-5959730450f6
-exec:--cfg;tests/commodity/ok.conf;--input.file;basic-03.txn;--output;out.filter-03;--reporting.accounts;^a.*;

@@ -1,4 +1,0 @@
-# format: exec
-# test:uuid: a32df7bb-b499-4f7b-98c8-5103ceac82fb
-# empty transaction set
-exec:--cfg;tests/core/ex/git-empty-txns.conf;

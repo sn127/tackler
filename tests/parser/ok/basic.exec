@@ -1,3 +1,0 @@
-# format: exec
-# test:uuid: ba71f292-cc3e-406f-991e-8dd82a7cf87c
-exec:--cfg;tests/parser/ok.conf;--input.file;basic.txn;--output;out.basic;

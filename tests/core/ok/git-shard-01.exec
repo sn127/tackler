@@ -1,4 +1,0 @@
-# format: exec
-# test:uuid: 1d2c22c1-e3fa-4cd4-a526-45318c15d13e
-# shard and cli ref
-exec:--cfg;tests/core/git-ok.conf;--input.git.ref;shard-01;--output;out.git-shard-01;--reporting.exports;identity;equity;--reporting.reports;balance;balance-group;register;--reporting.formats;txt;json;

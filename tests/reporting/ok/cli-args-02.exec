@@ -1,3 +1,0 @@
-# format: exec
-# test:uuid: 25d62f31-e420-4c46-8397-664983753c7f
-exec:--cfg;tests/reporting/cli-args.conf;--input.file;reporting.txn;--output;out.cli-args-02;--reporting.accounts;^not.*;

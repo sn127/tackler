@@ -1,4 +1,0 @@
-# format: exec
-# test:uuid: 7752eee6-d3cf-4084-93c0-cb43a093fdd0
-# commit-id 2rd by abbrev commit id
-exec:--cfg;tests/core/git-ok.conf;--input.git.commit;a7938d9b;--output;out.git-commit-04;--reporting.exports;identity;equity;--reporting.reports;balance;balance-group;register;--reporting.formats;txt;json;

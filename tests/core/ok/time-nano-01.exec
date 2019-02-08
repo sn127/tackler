@@ -1,3 +1,0 @@
-# format: exec
-# test:uuid: de406118-eb73-4621-9b9b-6e26d512cf05
-exec:--cfg;tests/core/ok.conf;--input.file;time-nano.txn;--output;out.time-nano-01;

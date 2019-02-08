@@ -1,3 +1,0 @@
-# format: exec
-# test:uuid: 8ffe3683-3934-4358-840d-fb00fe8fd788
-exec:--cfg;tests/reporting/group-by/iso-week.conf;--output;out.zoned-iso-week;--input.fs.glob;**ts-zoned*.txn;

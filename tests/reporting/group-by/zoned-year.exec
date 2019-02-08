@@ -1,3 +1,0 @@
-# format: exec
-# test:uuid: 29f80e87-070a-4707-a5f7-770a7731c9ec
-exec:--cfg;tests/reporting/group-by/year.conf;--output;out.zoned-year;--input.fs.glob;**ts-zoned*.txn;

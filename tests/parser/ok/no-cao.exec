@@ -1,5 +1,0 @@
-# format: exec
-# test:uuid: 8a046e2a-2bed-4ac3-aa42-1dbc31fd78fd
-# no-cao
-# input.fs.dir + glob from cfg
-exec:--cfg;tests/parser/no-cao.conf;--output;out.no-cao;

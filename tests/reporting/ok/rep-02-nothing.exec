@@ -1,3 +1,0 @@
-# format: exec
-# test:uuid: 289df07b-a047-488f-bbe0-4d61cce21421
-exec:--cfg;tests/reporting/nothing.conf;--reporting.formats;txt;json;--input.file;reporting.txn;--output;out.rep-02-nothing;

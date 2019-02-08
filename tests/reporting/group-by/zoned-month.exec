@@ -1,3 +1,0 @@
-# format: exec
-# test:uuid: 94e0bddc-4d1b-4133-992d-e314134d0fcc
-exec:--cfg;tests/reporting/group-by/month.conf;--output;out.zoned-month;--input.fs.glob;**ts-zoned*.txn;

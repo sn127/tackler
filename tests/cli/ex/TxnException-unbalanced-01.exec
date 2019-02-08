@@ -1,3 +1,0 @@
-# format: exec
-# test:uuid: 178a3269-76e9-4bb4-abcd-62806817573e
-exec:--cfg;tests/cli/ex.conf;--accounts.strict;false;--input.file;unbalanced.txn;

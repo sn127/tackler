@@ -1,3 +1,0 @@
-# format: exec
-# test:uuid: 0c1a7d18-90eb-4f2b-b8b6-9bc36cd5ff73
-exec:--cfg;tests/commodity/ex.conf;--input.file;mixed-comm.txn;

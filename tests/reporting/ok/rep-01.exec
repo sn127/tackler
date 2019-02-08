@@ -1,3 +1,0 @@
-# format: exec
-# test:uuid: c6da0aef-125f-4d33-9780-ffaa9e724499
-exec:--cfg;tests/reporting/ok.conf;--input.file;reporting.txn;--output;out.rep-01;--reporting.console;true;

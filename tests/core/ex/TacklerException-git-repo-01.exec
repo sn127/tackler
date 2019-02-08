@@ -1,4 +1,0 @@
-# format: exec
-# test:uuid: 4569085c-04a8-4330-9c03-d07ea0935f22
-# repo not found
-exec:--cfg;tests/core/ex/git-repo-not-found.conf;

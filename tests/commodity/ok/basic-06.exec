@@ -1,4 +1,0 @@
-# format: exec
-# test:uuid: 0dae7dfd-c816-4a77-afff-a372e1802026
-# commodity name match root account
-exec:--cfg;tests/commodity/ok.conf;--reporting.formats;txt;json;--input.file;basic-06.txn;--output;out.basic-06;

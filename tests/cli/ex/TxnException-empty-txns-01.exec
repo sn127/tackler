@@ -1,3 +1,0 @@
-# format: exec
-# test:uuid: 90d57e1a-eda6-4856-b757-bfc678ac2a82
-exec:--cfg;tests/cli/ex.conf;--input.fs.dir=empty-txns;--input.fs.glob;txn*.txn;

@@ -1,3 +1,0 @@
-# format: exec
-# test:uuid: 7d95bef8-6aaa-4706-a276-d206752d017b
-exec:--cfg;tests/reporting/ok.register-acc.conf;--input.file;reporting.txn;--output;out.register-acc-01;

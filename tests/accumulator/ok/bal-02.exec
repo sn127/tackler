@@ -1,3 +1,0 @@
-# format: exec
-# test:uuid: fb5c09d2-dfbf-41b7-9412-81bcf37f0c76
-exec:--cfg;tests/accumulator/ok.conf;--input.file;bal-02.txn;--output;out.bal-02;

@@ -1,3 +1,0 @@
-# format: exec
-# test:uuid: 54cb6baa-6c3d-4196-94bc-b6fd37ed0b57
-exec:--cfg;tests/commodity/ok.conf;--input.file;valpos-01.txn;--output;out.valpos-01;

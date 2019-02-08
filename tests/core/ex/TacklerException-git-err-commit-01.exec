@@ -1,4 +1,0 @@
-# format: exec
-# test:uuid: c233295d-08b9-49b5-b384-634fc8432e64
-# commit not found
-exec:--cfg;tests/core/git-ok.conf;--input.git.commit;ef88456ffae9eb546d115833f2ad66d48a8e268b;

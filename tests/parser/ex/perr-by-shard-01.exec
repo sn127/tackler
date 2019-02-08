@@ -1,3 +1,0 @@
-# format: exec
-# test:uuid: 0e2a5c79-0594-4c4f-aa65-b31bff877b53
-exec:--cfg;tests/parser/ok.conf;--input.fs.dir=../ex/perr-txns;--input.fs.glob;txn*.txn;

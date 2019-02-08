@@ -1,3 +1,0 @@
-# format: exec
-# test:uuid: 97c7193f-281f-4103-b5e2-7397433ba79c
-exec:--cfg;tests/cli/ex.conf;--input.fs.dir=txns-not-found;--input.fs.glob;txn*.txn;

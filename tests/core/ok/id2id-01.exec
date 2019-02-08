@@ -1,5 +1,0 @@
-# format: exec
-# test:uuid: 1d731709-1e85-4fe6-b209-aad46cca5551
-exec:--cfg;tests/core/id2id.conf;--output;out.id2id-01-1st;
-# second stage, eat our own dog food
-exec:--cfg;tests/core/id2id-2nd.conf;--input.file;out.id2id-01-1st.identity.txn;--output;out.id2id-01;

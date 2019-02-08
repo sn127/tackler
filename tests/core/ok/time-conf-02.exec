@@ -1,3 +1,0 @@
-# format: exec
-# test:uuid: 2c4566b8-0424-4561-9265-087215c2d243
-exec:--cfg;tests/core/zoneid-helsinki.conf;--input.file;time-plain.txn;--output;out.time-conf-02;

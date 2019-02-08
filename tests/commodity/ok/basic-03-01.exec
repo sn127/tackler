@@ -1,5 +1,0 @@
-# format: exec
-# test:uuid: 7616a6e8-8492-4fe7-9921-ae00f86af2cd
-exec:--cfg;tests/commodity/ok.conf;--input.file;basic-03.txn;--output;out.basic-03-01-step1;
-#
-exec:--cfg;tests/commodity/ok.conf;--input.file;out.basic-03-01-step1.identity.txn;--output;out.basic-03-01;

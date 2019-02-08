@@ -1,8 +1,0 @@
-Filter:
-  Txn Description: "ab.*"
-
-REGISTER
---------
-2017-03-01Z abc
-            a                                           -300.00            -300.00
-            e:b:c                                        300.00             300.00

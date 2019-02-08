@@ -1,4 +1,0 @@
-# format: exec
-# test:uuid: 14b7e8eb-d168-48b2-86e7-8d922f306ad0
-# ref format is invalid
-exec:--cfg;tests/core/git-ok.conf;--input.git.ref;^^^;

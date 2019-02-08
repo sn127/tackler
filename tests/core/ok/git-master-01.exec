@@ -1,4 +1,0 @@
-# format: exec
-# test:uuid: 292f250d-7cb2-4114-92e1-10f9a8d5b381
-# basic git test with master branch, default config
-exec:--cfg;tests/core/git-ok.conf;--output;out.git-master-01;

@@ -1,3 +1,0 @@
-# format: exec
-# test:uuid: ed89d638-70fa-474c-b88f-be03df6231df
-exec:--cfg;tests/reporting/group-by/date.conf;--output;out.date;

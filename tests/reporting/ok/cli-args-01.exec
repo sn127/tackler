@@ -1,3 +1,0 @@
-# format: exec
-# test:uuid: 9f0d3896-ce0b-415b-8d96-ad40e5177b45
-exec:--cfg;tests/reporting/cli-args.conf;--input.file;reporting.txn;--output;out.cli-args-01;--reporting.reports;balance;balance-group;

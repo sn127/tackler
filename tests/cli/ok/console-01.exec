@@ -1,3 +1,0 @@
-# format: exec
-# test:uuid: 940ed68b-7f1c-41fe-bab9-aefd8cf60b3a
-exec:--cfg;tests/cli/ok.conf;--input.fs.dir;console-txns;--input.fs.glob;**.txn;--output;out.console-01;--accounts.strict;false;

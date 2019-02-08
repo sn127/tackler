@@ -1,4 +1,0 @@
-# format: exec
-# test:uuid: 4b507e08-b90e-4a6f-9c6b-4fef7c58d9fe
-# ref which is not found
-exec:--cfg;tests/core/git-ok.conf;--input.git.ref;not-found-ref;

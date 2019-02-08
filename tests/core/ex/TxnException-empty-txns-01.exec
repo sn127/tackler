@@ -1,3 +1,0 @@
-# format: exec
-# test:uuid: 8722a7e2-04fd-4b32-a259-e16ca882a725
-exec:--cfg;tests/core/ex/ex-empty-txns.conf;

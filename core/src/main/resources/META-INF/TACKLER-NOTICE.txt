@@ -1,6 +1,0 @@
-fi.sn127.tackler
-Copyright 2016-2018 SN127.fi Contributors
-
-This product includes software developed at
-SN127.fi (https://github.com/sn127/).
-

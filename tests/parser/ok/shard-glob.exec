@@ -1,3 +1,0 @@
-# format: exec
-# test:uuid: 31a128f5-d1a2-4d93-beee-6599344ece57
-exec:--cfg;tests/parser/ok.conf;--input.fs.dir=txns;--input.fs.glob;txn*.txn;--output;out.shard-glob;

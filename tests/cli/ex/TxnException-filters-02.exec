@@ -1,4 +1,0 @@
-# format: exec
-# test:uuid: 5a80bd1d-118c-4f3c-b89b-142059bcb3be
-# desc: invalid json at parse level
-exec:--cfg;tests/cli/ex.conf;--input.file;../ok/filters.txn;--accounts.strict;false;--api-filter-def;{ "txnFilter": { "TxnFilterTxnDescription": { "regex": "this-wont-be-matched" }};

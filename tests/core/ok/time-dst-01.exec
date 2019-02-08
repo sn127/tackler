@@ -1,4 +1,0 @@
-# format: exec
-# test:uuid: 203c42c0-6660-4c0a-b991-e55c86e06da3
-# Spring / Autum DST switch
-exec:--cfg;tests/core/zoneid.conf;--input.file;time-dst.txn;--output;out.time-dst-01;

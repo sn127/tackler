@@ -1,7 +1,0 @@
-# format: exec
-# test:uuid: 334203d1-a147-48ab-8ec2-50ce006cc9cc
-#
-# Example reports
-#
-# Used gas (saldo) by users
-exec:--cfg;tests/commodity/gb.conf;--reporting.accounts;^User:.*:.*;--reporting.reports;balance;--output;out.gas-blender-saldo;

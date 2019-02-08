@@ -1,7 +1,0 @@
-/**/target/
-/tests/**/out.*
-/tmp/
-/.idea/
-/**/*.sc
-*.swp
-/data/

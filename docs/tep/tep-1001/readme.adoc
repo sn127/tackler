@@ -1,7 +1,0 @@
-= Subfeatures of Units and Commodities
-
-List of subfeatures of link:../tep-1001.adoc[Units and Commodities]
-
-* link:units.adoc[Units]
-* link:commodities.adoc[Commodities]
-* link:tests.adoc[Units]

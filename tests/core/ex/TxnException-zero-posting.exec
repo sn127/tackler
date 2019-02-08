@@ -1,3 +1,0 @@
-# format: exec
-# test:uuid: 71d06779-dce9-4499-b54a-0af85b33ac44
-exec:--cfg;tests/core/ex.conf;--input.file;zero-posting.txn;

@@ -1,3 +1,0 @@
-# format: exec
-# test:uuid: 0f862997-95b1-4e06-bc5f-bc170c7594ff
-exec:--cfg;tests/reporting/ok.conf;--reporting.exports;identity;--reporting.reports;balance;balance-group;register;--reporting.formats;txt;json;--input.file;big.txn;--output;out.big-01;

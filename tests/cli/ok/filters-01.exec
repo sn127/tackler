@@ -1,3 +1,0 @@
-# format: exec
-# test:uuid: 515ba0be-b571-4a7f-a2a3-28dc1e545228
-exec:--cfg;tests/cli/ok.conf;--input.file;filters.txn;--output;out.filters-01;--api-filter-def;{ "txnFilter": { "TxnFilterTxnDescription": { "regex": "ab.*" }}};

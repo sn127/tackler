@@ -1,6 +1,0 @@
-# format: exec
-# test:uuid: 7b8073e2-8264-4eba-b282-5bfb8e1718d2
-#
-# Example reports
-# Billing
-exec:--cfg;tests/commodity/gb-billing.conf;--output;out.gas-blender-billing;

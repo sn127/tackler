@@ -1,4 +1,0 @@
-# format: exec
-# test:uuid: 7cb6af2e-3061-4867-96e3-ee175b87a114
-# can not resolve 
-exec:--cfg;tests/core/git-ok.conf;--input.git.commit;^^HEAD;

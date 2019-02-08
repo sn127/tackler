@@ -1,4 +1,0 @@
-# format: exec
-# test:uuid: 25452d77-aae5-414c-a6a6-bd60f090731e
-# parser error with shard data
-exec:--cfg;tests/core/git-ok.conf;--input.git.ref;error-01;

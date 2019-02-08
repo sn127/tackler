@@ -1,6 +1,0 @@
-2017-05-04 sell four ACME at 120.04 EUR
- ; mis-match with value position commodities
- Assets:Stocks -4 ACME @ 120.04 EUR
- Assets:Cash 480.16 ACME
-
-

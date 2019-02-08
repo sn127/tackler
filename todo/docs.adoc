@@ -1,9 +1,0 @@
-= Docs TODO
-
-* [ ] Examples
-
-* [ ] Check documentations for commodityes and accounts map (see: tests/commodity/ok-accounts.conf)
-
-* [x] JSON: Developer docs
-** [x] Collect data and examples from link:../tep/tep-1004.adoc[TEP-1004: JSON report output]
-

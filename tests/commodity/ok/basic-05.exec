@@ -1,5 +1,0 @@
-# format: exec
-# test:uuid: aeffbcc2-bcc4-40f3-9b37-03dbca3bff88
-#
-# Test correct behaviour with AccountTree and commodities, take 2
-exec:--cfg;tests/commodity/ok.conf;--input.file;basic-05.txn;--output;out.basic-05;
